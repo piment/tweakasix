@@ -67,8 +67,24 @@ let total = (parseInt(boPrice)+parseInt(nePrice)+parseInt(piPrice))
           ))}
       </select>
       Metal:
-      <select name="" id=""></select>
-      Wiring :<select name="" id=""></select>
+      <select name="" id="">
+      {itemsList
+          .filter((item) => item.variation_id)
+          .map((filteredItem) => (
+            <option value={filteredItem.price}>
+              {filteredItem.name} {filteredItem.variation}{filteredItem.price}$
+            </option>
+          ))}
+      </select>
+      Wiring :<select name="" id="">
+      {itemsList
+          .filter((item) => item.id_category === 4)
+          .map((filteredItem) => (
+            <option value={filteredItem.price}>
+              {filteredItem.name} {filteredItem.price}$
+            </option>
+          ))}
+      </select>
     </div>
     <h3>{total}</h3>
     </div>
