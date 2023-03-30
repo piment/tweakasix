@@ -1,15 +1,30 @@
 import { useState } from "react";
 import "./App.css";
-import axios from "axios";
-import ItemsManager from "./components/ItemsManager";
-import Selector from "./components/Selector";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Home from "./components/Home";
 
 function App() {
 
   return (
     <div className="App">
-   <Selector/>
-    </div>
+
+    <Router>
+            <Routes>
+              <Route
+                path="/"
+                element={<Home/>}
+              />
+              {/* <Route
+                path="/favoris"
+                element={<Favoris eventArrayFromAPI={eventArrayFromAPI} />}
+              /> */}
+              {/* <Route path="/aboutus" element={<Aboutus/>} /> */}
+              {/* <Route path="/event/:id" element={<Detailspretext />} /> */}
+            </Routes>
+          </Router>
+        </div>
   );
 }
 

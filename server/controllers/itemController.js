@@ -20,4 +20,15 @@ const getItems = (req,res) => {
     })
 }
 
-module.exports = {getItems}
+
+const addGuitar = (req, res) => {
+  const movieName = req.body;
+  console.log(movieName)
+
+  // const movieReview = req.body.movieReview;
+  // const sqlInsert =
+  // "INSERT INTO movie_reviews (movieName, movieReview) VALUE (?,?);";
+  // db.query(sqlInsert, [movieName, movieReview], (err, result) => {
+  // });
+}
+module.exports = {getItems, addGuitar}

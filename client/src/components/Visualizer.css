@@ -1,0 +1,9 @@
+.visualizer{
+    /* height: 84%; */
+    width: 80vw;
+border: blue solid 2px;
+margin-bottom: 10vh;
+}
+.canvas{
+  height: auto
+}

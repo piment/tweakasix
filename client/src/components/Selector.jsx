@@ -4,11 +4,14 @@ import axios from "axios";
 import Body from "./Body";
 import Neck from "./Neck";
 import Pickups from "./Pickups";
+import Visualizer from "./Visualizer";
+import './Selector.css'
 
 function Selector() {
   const initialValues = {
     name: "",
     price: 0,
+    id:0
   };
   const [itemsList, setItemsList] = useState([]);
   const [variationList, setVariationList] = useState([]);
@@ -25,8 +28,10 @@ function Selector() {
     });
   };
 
-  const saveGuitar = () => {
-    axios.post("http://localhost:3001/saveguitar");
+  const addGuitar = () => {
+    axios.post("http://localhost:3001/items/saveguitar", {
+body, neck, pickup1, pickup2
+    })
   };
 
   const total = parseInt(body.price) + parseInt(neck.price) + parseInt(pickup1.price)+ parseInt(pickup2.price)
@@ -36,13 +41,13 @@ function Selector() {
 
   // console.log(body)
   return (
-    <div>
+    <div className="main-select">
       <div className="selector-section">
 
         <Body itemsList={itemsList} setBody={setBody}/>
         <Neck itemsList={itemsList} setNeck={setNeck}/>
         <Pickups itemsList={itemsList} setPickup1={setPickup1} setPickup2={setPickup2}/>
- 
+ <div>
         Wiring :
         <select name="" id="">
           {itemsList
@@ -54,21 +59,26 @@ function Selector() {
             ))}
         </select>
       </div>
-   
-      <h3>
-        {body.name}.................................. {body.price}
-      </h3>
-      <h3>
-        {neck.name} ..................................{neck.price}
-      </h3>
-      <h3>
-        {pickup1.name} ..................................{pickup1.price}
-      </h3>  
-      <h3>
-        {pickup2.name} ..................................{pickup2.price}
-      </h3> 
+   </div>
+   <div className="visu-sum">
+   <Visualizer/>
+   <div className="list-sum">
+
+      <div className="item-price">
+       <span> {body.name}</span> <span>{body.price}$</span>
+      </div >
+      <div className="item-price">
+      <span> {neck.name}</span>  <span>{neck.price}$</span>
+      </div >
+      <div className="item-price">
+      <span>{pickup1.name}</span>  <span>{pickup1.price}$</span>
+      </div >  
+      <div className="item-price">
+      <span> {pickup2.name} </span> <span>{pickup2.price}$</span>
+      </div > 
        <h3>{total}$</h3>
-      <button>Save this guitar</button>
+      <button onClick={addGuitar}>Save this guitar</button>
+   </div></div>
     </div>
   );
 }

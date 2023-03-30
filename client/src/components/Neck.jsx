@@ -13,8 +13,9 @@ function Neck({itemsList, setNeck}) {
           id=""
           onChange={(e) =>
             setNeck({
-              name: e.target.value.split(" ")[0],
-              price: e.target.value.split(" ")[1],
+              name: e.target.value.split(",")[0],
+              price: e.target.value.split(",")[1],
+              id: e.target.value.split(",")[2]
             })
           }
         >
@@ -22,7 +23,7 @@ function Neck({itemsList, setNeck}) {
             .filter((item) => item.id_category === 2)
             .map((filteredItem, key) => (
               <option
-
+              value={[filteredItem.name ,filteredItem.price,filteredItem.id]}
                 key={key}
               >
                 {filteredItem.name} {filteredItem.price}$
