@@ -3,27 +3,37 @@ import React from "react";
 import axios from "axios";
 
 function Selector() {
+  const initialValues = {
+    bodyname : '',
+    bodyprice : 0
+  }
   const [itemsList, setItemsList] = useState([]);
-  const [boPrice, setBoPrice] = useState(0);
-  const [nePrice, setNePrice] = useState(0);
-  const [piPrice, setPiPrice] = useState(0);
-
+  // const [boPrice, setBoPrice] = useState(0);
+  // const [nePrice, setNePrice] = useState(0);
+  // const [piPrice, setPiPrice] = useState(0);
+  const [body, setBody] = useState(initialValues);
+  const [neck, setNeck] = useState({});
+  const [pickup, setPickup] = useState({});
 
 
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
-      setItemsList(res.data);
+      console.log(res.data)
+      setItemsList(res.data[0]);
     });
   };
 
+  const handleBody = (e) => {
+    // const { name, value } = e.target;
+    console.log(e.target.value)
+    // const name = e.target.getAttribute("name");
+    // setBody({...body, bodyname: e.target.value});
+  };
+// let total = (parseInt(boPrice)+parseInt(nePrice)+parseInt(piPrice))
 
-
-console.log(boPrice)
-
-
-let total = (parseInt(boPrice)+parseInt(nePrice)+parseInt(piPrice))
-
-
+const saveGuitar = () => {
+  axios.post("http://localhost:3001/saveguitar")
+}
 
 
 
@@ -37,11 +47,11 @@ let total = (parseInt(boPrice)+parseInt(nePrice)+parseInt(piPrice))
     <div>
     <div className="selector-section">
       Body:
-      <select name="" id="" onChange={(e) => {setBoPrice(e.target.value)}}>
+      <select  onChange={(e) => handleBody(e)}>
         {itemsList
           .filter((item) => item.id_category === 1)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
+          .map((filteredItem, key) => (
+            <option  value={filteredItem.value} key={key} >
               {filteredItem.name} {filteredItem.price}$
             </option>
           ))}
@@ -86,7 +96,9 @@ let total = (parseInt(boPrice)+parseInt(nePrice)+parseInt(piPrice))
           ))}
       </select>
     </div>
-    <h3>{total}</h3>
+    {/* <h3>{total}</h3> */}
+  {body.bodyname}
+    <button>Save this guitar</button>
     </div>
   );
 }
