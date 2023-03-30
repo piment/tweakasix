@@ -4,101 +4,149 @@ import axios from "axios";
 
 function Selector() {
   const initialValues = {
-    bodyname : '',
-    bodyprice : 0
-  }
+    name: "",
+    price: "",
+  };
   const [itemsList, setItemsList] = useState([]);
-  // const [boPrice, setBoPrice] = useState(0);
-  // const [nePrice, setNePrice] = useState(0);
-  // const [piPrice, setPiPrice] = useState(0);
+  const [variationList, setVariationList] = useState([]);
   const [body, setBody] = useState(initialValues);
-  const [neck, setNeck] = useState({});
-  const [pickup, setPickup] = useState({});
-
+  const [neck, setNeck] = useState(initialValues);
+  const [pickup, setPickup] = useState(initialValues);
 
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
-      console.log(res.data)
+      console.log(res.data);
       setItemsList(res.data[0]);
+      setVariationList(res.data[1])
     });
   };
 
-  const handleBody = (e) => {
-    // const { name, value } = e.target;
-    console.log(e.target.value)
-    // const name = e.target.getAttribute("name");
-    // setBody({...body, bodyname: e.target.value});
+  const saveGuitar = () => {
+    axios.post("http://localhost:3001/saveguitar");
   };
-// let total = (parseInt(boPrice)+parseInt(nePrice)+parseInt(piPrice))
 
-const saveGuitar = () => {
-  axios.post("http://localhost:3001/saveguitar")
-}
-
-
-
-
+  const total = parseInt(body.price) + parseInt(neck.price)
   useEffect(() => {
     getItems();
   }, []);
 
-
+  // console.log(body)
   return (
     <div>
-    <div className="selector-section">
-      Body:
-      <select  onChange={(e) => handleBody(e)}>
-        {itemsList
-          .filter((item) => item.id_category === 1)
-          .map((filteredItem, key) => (
-            <option  value={filteredItem.value} key={key} >
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Neck:
-      <select name="" id="" onChange={(e) => setNePrice(e.target.value)}>
-        {itemsList
-          .filter((item) => item.id_category === 2)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Pickups
-      <select name="" id="" onChange={(e) => setPiPrice(e.target.value)}>
-        {itemsList
-          .filter((item) => item.id_category === 3)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Metal:
-      <select name="" id="">
-      {itemsList
-          .filter((item) => item.variation_id)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.variation}{filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Wiring :<select name="" id="">
-      {itemsList
-          .filter((item) => item.id_category === 4)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-    </div>
-    {/* <h3>{total}</h3> */}
-  {body.bodyname}
-    <button>Save this guitar</button>
+      <div className="selector-section">
+        Body:
+        <select
+          onChange={(e) =>
+            setBody({
+              name: e.target.value.split(",")[1],
+              price: e.target.value.split(",")[0],
+            })
+          }
+        >
+          {itemsList
+            .filter((item) => item.id_category === 1)
+            .map((filteredItem, key) => (
+              <option
+                name={filteredItem.name}
+                value={[parseInt(filteredItem.price), filteredItem.name]}
+                key={key}
+              >
+                {filteredItem.name} {filteredItem.price}$
+              </option>
+            ))}
+        </select>
+        Neck:
+        <select
+          name=""
+          id=""
+          onChange={(e) =>
+            setNeck({
+              name: e.target.value.split(",")[1],
+              price: e.target.value.split(",")[0],
+            })
+          }
+        >
+          {itemsList
+            .filter((item) => item.id_category === 2)
+            .map((filteredItem, key) => (
+              <option
+                name={filteredItem.name}
+                value={[parseInt(filteredItem.price), filteredItem.name]}
+                key={key}
+              >
+                {filteredItem.name} {filteredItem.price}$
+              </option>
+            ))}
+        </select>
+       Neck Pickups
+        <select
+          name=""
+          id=""
+          onChange={(e) =>
+            setPickup({
+              name: e.target.value.split(",")[1],
+              price: e.target.value.split(",")[0],
+            })
+          }
+        >
+          {itemsList
+            .filter((item) => item.id_category === 3 && !item.name.includes('Bridge'))
+            .map((filteredItem, key) => (
+              <option
+              name={filteredItem.name}
+              value={[parseInt(filteredItem.price), filteredItem.name]}
+              key={key}
+            >
+                {filteredItem.name} {filteredItem.price}$
+              </option>
+            ))}
+        </select>
+        Bridge Pickup
+        <select
+          name=""
+          id=""
+          onChange={(e) =>
+            setPickup({
+              name: e.target.value.split(",")[1],
+              price: e.target.value.split(",")[0],
+            })
+          }
+        >
+          {itemsList
+            .filter((item) => item.id_category === 3 && !item.name.includes('Neck'))
+            .map((filteredItem, key) => (
+              <option
+              name={filteredItem.name}
+              value={[parseInt(filteredItem.price), filteredItem.name]}
+              key={key}
+            >
+                {filteredItem.name} {filteredItem.price}$
+              </option>
+            ))}
+        </select>
+        Wiring :
+        <select name="" id="">
+          {itemsList
+            .filter((item) => item.id_category === 4)
+            .map((filteredItem) => (
+              <option value={filteredItem.price}>
+                {filteredItem.name} {filteredItem.price}$
+              </option>
+            ))}
+        </select>
+      </div>
+   
+      <h3>
+        {body.name}.................................. {body.price}$
+      </h3>
+      <h3>
+        {neck.name} ..................................{neck.price}$
+      </h3>
+      <h3>
+        {pickup.name} ..................................{pickup.price}$
+      </h3>  
+       <h3>{total}</h3>
+      <button>Save this guitar</button>
     </div>
   );
 }

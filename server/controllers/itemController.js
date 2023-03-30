@@ -8,12 +8,13 @@ const db = mysql.createPool({
   user: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
+  multipleStatements: true
 });
 
 
 const getItems = (req,res) => {
     const sqlSelect = 
-    "SELECT * FROM item;"
+    "SELECT * FROM item ;SELECT * FROM variation;"
     db.query(sqlSelect,(err, result) => {
         res.send(result)
     })
