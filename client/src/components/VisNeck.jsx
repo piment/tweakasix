@@ -16,7 +16,7 @@ function VisNeck(props) {
   });
 
   const gtrMat = new THREE.MeshPhysicalMaterial({color: "#ff55ff", side : THREE.DoubleSide})
-  console.log(model);
+
   return (
 
      <group ref={neckRef}>

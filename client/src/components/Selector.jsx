@@ -13,6 +13,10 @@ function Selector() {
     price: 0,
     id:0
   };
+
+  const [bodyColors, setBodyColors] = useState({})
+
+  
   const [itemsList, setItemsList] = useState([]);
   const [variationList, setVariationList] = useState([]);
   const [body, setBody] = useState(initialValues);
@@ -39,7 +43,7 @@ body, neck, pickup1, pickup2
     getItems();
   }, []);
 
-  // console.log(body)
+
   return (
     <div className="main-select">
       <div className="selector-section">
@@ -61,7 +65,7 @@ body, neck, pickup1, pickup2
       </div>
    </div>
    <div className="visu-sum">
-   <Visualizer/>
+   <Visualizer setBodyColors={setBodyColors}/>
    <div className="list-sum">
 
       <div className="item-price">

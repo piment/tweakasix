@@ -22,13 +22,15 @@ const getItems = (req,res) => {
 
 
 const addGuitar = (req, res) => {
-  const movieName = req.body;
-  console.log(movieName)
+  const tablefront = req.body.tablefront
+  const tableback = req.body.tableback
+  const binding = req.body.binding
+  const side = req.body.side
 
   // const movieReview = req.body.movieReview;
-  // const sqlInsert =
-  // "INSERT INTO movie_reviews (movieName, movieReview) VALUE (?,?);";
-  // db.query(sqlInsert, [movieName, movieReview], (err, result) => {
-  // });
+  const sqlInsert =
+  "INSERT INTO body_color (tablefront, tableback, binding, side) VALUE (?,?,?,?);";
+  db.query(sqlInsert, [tablefront, tableback, binding, side], (err, result) => {
+  });
 }
 module.exports = {getItems, addGuitar}
