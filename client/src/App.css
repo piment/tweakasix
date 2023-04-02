@@ -3,6 +3,7 @@
   margin: 0 auto;
   /* padding: 2rem; */
   text-align: center;
+
 }
 
 .logo {
@@ -15,5 +16,9 @@
 .App {
   display: flex;
   flex-direction: column;
+
 }
 
+/* .App:not(.visualizer) {
+  cursor:
+} */
