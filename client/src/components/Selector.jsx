@@ -14,11 +14,11 @@ function Selector() {
     id:0
   };
 
-  const [bodyColors, setBodyColors] = useState({})
+
 
   
   const [itemsList, setItemsList] = useState([]);
-  const [variationList, setVariationList] = useState([]);
+  const [guitarsList, setGuitarsList] = useState([])
   const [body, setBody] = useState(initialValues);
   const [neck, setNeck] = useState(initialValues);
   const [pickup1, setPickup1] = useState(initialValues);
@@ -38,9 +38,17 @@ body, neck, pickup1, pickup2
     })
   };
 
+  const getGuitars = () =>{
+    axios.get("http://localhost:3001/items/getguitars",{}).then((res) => {
+
+setGuitarsList(res.data)
+    })
+  }
+
   const total = parseInt(body.price) + parseInt(neck.price) + parseInt(pickup1.price)+ parseInt(pickup2.price)
   useEffect(() => {
     getItems();
+    getGuitars()
   }, []);
 
 
@@ -65,7 +73,7 @@ body, neck, pickup1, pickup2
       </div>
    </div>
    <div className="visu-sum">
-   <Visualizer setBodyColors={setBodyColors}/>
+   <Visualizer guitarsList={guitarsList}/>
    <div className="list-sum">
 
       <div className="item-price">
@@ -82,6 +90,12 @@ body, neck, pickup1, pickup2
       </div > 
        <h3>{total}$</h3>
       <button onClick={addGuitar}>Save this guitar</button>
+      <button
+      //  style={{position : 'absolute', left: '400px'}}
+      // onClick={addGuitar}
+      onClick={ (e) => (
+        e.stopPropagation(),getGuitars())}
+      >Get guitars</button>
    </div></div>
     </div>
   );

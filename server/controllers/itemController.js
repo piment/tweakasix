@@ -33,4 +33,14 @@ const addGuitar = (req, res) => {
   db.query(sqlInsert, [tablefront, tableback, binding, side], (err, result) => {
   });
 }
-module.exports = {getItems, addGuitar}
+
+
+const getGuitars = (req,res) => {
+  const sqlSelect = 
+  "SELECT * FROM body_color"
+  db.query(sqlSelect,(err, result) => {
+      res.send(result)
+  })
+}
+
+module.exports = {getItems, addGuitar, getGuitars}
