@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Xaboule/basetweak/issues"
   },
-  "homepage": "https://github.com/Xaboule/basetweak#readme"
+  "homepage": "https://github.com/Xaboule/basetweak#readme",
+  "dependencies": {
+  
+  }
 }

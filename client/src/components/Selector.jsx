@@ -26,7 +26,7 @@ function Selector() {
 
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
-      console.log(res.data);
+
       setItemsList(res.data[0]);
       setVariationList(res.data[1])
     });
@@ -64,8 +64,8 @@ setGuitarsList(res.data)
         <select name="" id="">
           {itemsList
             .filter((item) => item.id_category === 4)
-            .map((filteredItem) => (
-              <option value={filteredItem}>
+            .map((filteredItem, key) => (
+              <option value={filteredItem} key={key}>
                 {filteredItem.name} {filteredItem.price}$
               </option>
             ))}

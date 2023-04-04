@@ -4,10 +4,18 @@ import logo from '../assets/img/tweakasix.png'
 import axios from "axios";
 import './Home.css'
 import Selector from './Selector';
+import { useDispatch, useSelector } from 'react-redux';
+import { addColor } from '../features/Colors';
 
 
 function Home() {
+  const dispatch = useDispatch()
 
+const colorList = useSelector((state) => state.colors.value)
+useEffect(()=> {
+
+  console.log('home' ,colorList)
+},)
 
   return (
     <div className='home'>  
@@ -15,7 +23,9 @@ function Home() {
     <img src={logo} alt="logo" className='logo'/>
   
     <Selector/>
-  
+  <div>
+    {Object.keys(colorList).map((color, key) => {return <h4 key={key}>{colorList[color]} </h4>})}
+  </div>
         </div>
 
 
