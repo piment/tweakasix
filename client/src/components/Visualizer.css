@@ -1,0 +1,32 @@
+.visualizer{
+    /* height: 84%; */
+    height:60vh;
+    width: 70vw;
+border: blue solid 2px;
+margin-bottom: 10vh;
+}
+.canvas{
+  height: 60vh;
+  /* background-color: rgb(230, 230, 230); */
+}
+.picker-h1 {
+    position: absolute;
+    top: 65%;
+    left: 100px;
+    padding: 0;
+    margin: 40px;
+    font-size: 3em;
+    font-weight: 600;
+    line-height: 0.7em;
+    letter-spacing: -4px;
+    color: #272730;
+  }
+  
+  .picker {
+    position: absolute !important;
+    top: 75%;
+    left: 200px;
+    width: 90px !important;
+    height: 90px !important;
+  }
+  

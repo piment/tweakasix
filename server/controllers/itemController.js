@@ -8,15 +8,39 @@ const db = mysql.createPool({
   user: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
+  multipleStatements: true
 });
 
 
 const getItems = (req,res) => {
     const sqlSelect = 
-    "SELECT * FROM item;"
+    "SELECT * FROM item ;SELECT * FROM variation;"
     db.query(sqlSelect,(err, result) => {
         res.send(result)
     })
 }
 
-module.exports = {getItems}
+
+const addGuitar = (req, res) => {
+  const tablefront = req.body.tablefront
+  const tableback = req.body.tableback
+  const binding = req.body.binding
+  const side = req.body.side
+
+  // const movieReview = req.body.movieReview;
+  const sqlInsert =
+  "INSERT INTO body_color (tablefront, tableback, binding, side) VALUE (?,?,?,?);";
+  db.query(sqlInsert, [tablefront, tableback, binding, side], (err, result) => {
+  });
+}
+
+
+const getGuitars = (req,res) => {
+  const sqlSelect = 
+  "SELECT * FROM body_color"
+  db.query(sqlSelect,(err, result) => {
+      res.send(result)
+  })
+}
+
+module.exports = {getItems, addGuitar, getGuitars}

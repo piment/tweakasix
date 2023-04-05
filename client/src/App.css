@@ -1,72 +1,24 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
+  text-align: center;
 
 }
 
-.App{
-  display: flex;
-flex-direction: column;
+.logo {
+  height: 12em;
+  /* padding: 1.5em; */
+  will-change: filter;
+  transition: filter 300ms;
 }
 
-.informations{
+.App {
   display: flex;
   flex-direction: column;
 
 }
 
-.informations input{
-
-width : 60vw;
-height : 1rem;
-margin: 5px;
-}
-
-.informations button{
-
-  width : 60vw;
-  height : 3rem;
-  margin-top: 15px;
-  }
-  
-  .informations button:hover{
-    cursor:pointer
-
-  }
-
-  .employees{
-    display: flex;
-    flex-direction: column;
-  
-  }
-
-  .employees button{
-
-    width : 60vw;
-    height : 3rem;
-    margin-top: 15px;
-    }
-    
-    .employees button:hover{
-      cursor:pointer
-  
-    }
-
-    .emp{
-      border: black solid 2px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 10px;
-    }
-
-    .selector-section{
-      display: flex;
-      border: black solid 2px;
-      flex-direction: column;
-      width: 60vw;
-    }
-    .selector-section select {
-      margin-bottom: 5px;
-    }
+/* .App:not(.visualizer) {
+  cursor:
+} */

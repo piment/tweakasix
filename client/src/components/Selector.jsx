@@ -1,92 +1,102 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
+import Body from "./Body";
+import Neck from "./Neck";
+import Pickups from "./Pickups";
+import Visualizer from "./Visualizer";
+import './Selector.css'
 
 function Selector() {
-  const [itemsList, setItemsList] = useState([]);
-  const [boPrice, setBoPrice] = useState(0);
-  const [nePrice, setNePrice] = useState(0);
-  const [piPrice, setPiPrice] = useState(0);
-
-
-
-  const getItems = () => {
-    axios.get("http://localhost:3001/items", {}).then((res) => {
-      setItemsList(res.data);
-    });
+  const initialValues = {
+    name: "",
+    price: 0,
+    id:0
   };
 
 
 
-console.log(boPrice)
+  
+  const [itemsList, setItemsList] = useState([]);
+  const [guitarsList, setGuitarsList] = useState([])
+  const [body, setBody] = useState(initialValues);
+  const [neck, setNeck] = useState(initialValues);
+  const [pickup1, setPickup1] = useState(initialValues);
+  const [pickup2, setPickup2] = useState(initialValues);
 
+  const getItems = () => {
+    axios.get("http://localhost:3001/items", {}).then((res) => {
 
-let total = (parseInt(boPrice)+parseInt(nePrice)+parseInt(piPrice))
+      setItemsList(res.data[0]);
+      setVariationList(res.data[1])
+    });
+  };
 
+  const addGuitar = () => {
+    axios.post("http://localhost:3001/items/saveguitar", {
+body, neck, pickup1, pickup2
+    })
+  };
 
+  const getGuitars = () =>{
+    axios.get("http://localhost:3001/items/getguitars",{}).then((res) => {
 
+setGuitarsList(res.data)
+    })
+  }
 
-
-
+  const total = parseInt(body.price) + parseInt(neck.price) + parseInt(pickup1.price)+ parseInt(pickup2.price)
   useEffect(() => {
     getItems();
+    getGuitars()
   }, []);
 
 
   return (
-    <div>
-    <div className="selector-section">
-      Body:
-      <select name="" id="" onChange={(e) => {setBoPrice(e.target.value)}}>
-        {itemsList
-          .filter((item) => item.id_category === 1)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Neck:
-      <select name="" id="" onChange={(e) => setNePrice(e.target.value)}>
-        {itemsList
-          .filter((item) => item.id_category === 2)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Pickups
-      <select name="" id="" onChange={(e) => setPiPrice(e.target.value)}>
-        {itemsList
-          .filter((item) => item.id_category === 3)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Metal:
-      <select name="" id="">
-      {itemsList
-          .filter((item) => item.variation_id)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.variation}{filteredItem.price}$
-            </option>
-          ))}
-      </select>
-      Wiring :<select name="" id="">
-      {itemsList
-          .filter((item) => item.id_category === 4)
-          .map((filteredItem) => (
-            <option value={filteredItem.price}>
-              {filteredItem.name} {filteredItem.price}$
-            </option>
-          ))}
-      </select>
-    </div>
-    <h3>{total}</h3>
+    <div className="main-select">
+      <div className="selector-section">
+
+        <Body itemsList={itemsList} setBody={setBody}/>
+        <Neck itemsList={itemsList} setNeck={setNeck}/>
+        <Pickups itemsList={itemsList} setPickup1={setPickup1} setPickup2={setPickup2}/>
+ <div>
+        Wiring :
+        <select name="" id="">
+          {itemsList
+            .filter((item) => item.id_category === 4)
+            .map((filteredItem, key) => (
+              <option value={filteredItem} key={key}>
+                {filteredItem.name} {filteredItem.price}$
+              </option>
+            ))}
+        </select>
+      </div>
+   </div>
+   <div className="visu-sum">
+   <Visualizer guitarsList={guitarsList}/>
+   <div className="list-sum">
+
+      <div className="item-price">
+       <span> {body.name}</span> <span>{body.price}$</span>
+      </div >
+      <div className="item-price">
+      <span> {neck.name}</span>  <span>{neck.price}$</span>
+      </div >
+      <div className="item-price">
+      <span>{pickup1.name}</span>  <span>{pickup1.price}$</span>
+      </div >  
+      <div className="item-price">
+      <span> {pickup2.name} </span> <span>{pickup2.price}$</span>
+      </div > 
+       <h3>{total}$</h3>
+      <button onClick={addGuitar}>Save this guitar</button>
+      <button
+      //  style={{position : 'absolute', left: '400px'}}
+      // onClick={addGuitar}
+      onClick={ (e) => (
+        e.stopPropagation(),getGuitars())}
+      >Get guitars</button>
+   </div></div>
     </div>
   );
 }
