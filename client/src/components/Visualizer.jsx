@@ -37,15 +37,20 @@ const handleSelectGuitar = (e) => {
       binding: status.colorList.binding,
       tablefront: status.colorList.tablefront,
       tableback: status.colorList.tableback,
+      
     });
   };
 
 
   useEffect(() => {
     // colorList
-    // setColorList(colus)
+    setColorList(colus)
     dispatch(addColor(status.colorList));
   }, [status]);
+
+  
+
+
 
   function Picker() {
     const snap = useSnapshot(status);
@@ -86,7 +91,6 @@ const handleSelectGuitar = (e) => {
           <Environment preset="city" background blur={2} />
 
           <ambientLight intensity={1} />
-          <VisNeck />
           <Modelos status={status} />
         </Canvas>
         <Picker />
