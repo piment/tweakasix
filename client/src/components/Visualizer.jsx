@@ -106,11 +106,11 @@ const handleSelectGuitar = (e) => {
           handleSelectGuitar(e)
         }
         >
-          {guitarsList.map((guitar, key) => (
+          {guitarsList &&(guitarsList.map((guitar, key) => (
             <option value={guitar.id} key={key}>
               {guitar.id}
             </option>
-          ))}
+          )))}
         </select>
       </div>
     </div>
