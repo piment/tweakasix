@@ -30,6 +30,8 @@ body {
   /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
+  background-image: url('/wood.jpg');
+  background-size: cover
 }
 
 h1 {

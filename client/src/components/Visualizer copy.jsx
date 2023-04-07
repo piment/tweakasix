@@ -1,19 +1,40 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Environment, Clone } from "@react-three/drei";
+import { OrbitControls, useGLTF, Environment, Clone, Html } from "@react-three/drei";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { useSnapshot } from "valtio";
 import { HexColorPicker } from "react-colorful";
+import { useControls } from "leva";
 
-function Modelos({ status }) {
+function Modelos({ status}) {
   const state = status;
   const ref = useRef();
   const snap = useSnapshot(state);
   const [hovered, set] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/335full.glb");
+
+
+
+  
+const controls = useControls({
+  gloss:{
+    value: 0,
+    min:0,
+    max: 1,
+    step:0.01
+  },
+  colors :{
+    value : snap.colorList.side
+    
+  }
+    })
+
+
+
+
 
 
   useEffect(() => {
@@ -29,57 +50,30 @@ function Modelos({ status }) {
           auto
         )}'), default`);
     }
-  }, [hovered]);
+  }, [hovered, state]);
 
 
 
-// function Cloun() {
 
-//   return (
-//     <group>
-//     <mesh
-//     castShadow
-//     receiveShadow
-//     geometry={nodes.side.geometry}
-//     material={materials.side}
-//     material-color={snap.colorList.side}
-//   />
+materials.varnish = new THREE.MeshPhysicalMaterial({ transparent:true, opacity:0.2, roughness: 0.01, metalness: controls.gloss})
+materials.metalpieces.metalness = 1,
+materials.metalpieces.roughness = 0,
+materials.pickup_cover.metalness = 1,
+materials.pickup_cover.roughness = 0
 
- 
-//   <mesh
-//     castShadow
-//     receiveShadow
-//     geometry={nodes.binding.geometry}
-//     material={materials.binding}
-//     material-color={snap.colorList.binding}
-//   />
-//   <mesh
-//     castShadow
-//     receiveShadow
-//     geometry={nodes.tableback.geometry}
-//     material={materials.tableback}
-//     material-color={snap.colorList.tableback}
-//   />
-//   <mesh
-//     castShadow
-//     receiveShadow
-//     geometry={nodes.tablefront.geometry}
-//     material={materials.tablefront}
-//     material-color={snap.colorList.tablefront}
-//   />
-//   </group>
-//   )
-//   }
 
-const clouzi = nodes.side.clone()
-clouzi.material = new THREE.MeshStandardMaterial({color:'blue', transparent:true, opacity: 0.2})
-console.log(clouzi)
+
 
 
 
   return (
-    <><primitive object={clouzi} scale={1.01} position={[0,-0.5,0]} />
-
+    <>
+{/* <Html as="div" >
+  <input type='range'
+  onClick={(e) => (
+    e.preventDefault()
+  )}></input>
+</Html> */}
     <group
       // {...props}
       dispose={null}
@@ -92,7 +86,7 @@ console.log(clouzi)
         e.stopPropagation(), (state.current = e.object.material.name)
       )}
     >
-      {/* <Cloun/> */}
+
 
  <mesh
         castShadow
@@ -116,6 +110,7 @@ console.log(clouzi)
         geometry={nodes.tableback.geometry}
         material={materials.tableback}
         material-color={snap.colorList.tableback}
+   
       />
       <mesh
         castShadow
@@ -237,7 +232,13 @@ console.log(clouzi)
           material={materials.strings}
         />
 
-
+<mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.varnish.geometry}
+        material={materials.varnish}
+      // visible={false}
+      />
         
       </group>
     
