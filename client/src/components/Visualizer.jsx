@@ -87,9 +87,13 @@ function Visualizer({ guitarsList }) {
           <ambientLight intensity={1} />
           <Modelos  status={status} />
         </Canvas>
-        <Picker />
+        {/* <Picker /> */}
         <Leva
-    
+    onClick={(e) => (
+      e.preventDefault(), 
+      // (state.current = e.object.material.name)
+    console.log(e)
+      )}
         flat 
         oneLineLabels
         hideTitleBar 
@@ -113,11 +117,11 @@ function Visualizer({ guitarsList }) {
             handleSelectGuitar(e)
           }
         >
-          {guitarsList.map((guitar, key) => (
+          {guitarsList &&(guitarsList.map((guitar, key) => (
             <option value={guitar.id} key={key}>
               {guitar.id}
             </option>
-          ))}
+          )))}
         </select>
       </div>
     </div>

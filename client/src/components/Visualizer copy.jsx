@@ -17,6 +17,7 @@ function Modelos({ status}) {
   const { nodes, materials } = useGLTF("/guitar/335full.glb");
 
 
+  // const debouncedApply = debounce((color) => { applyColor(color) }, 1000)
 
   
 const controls = useControls({
@@ -26,10 +27,15 @@ const controls = useControls({
     max: 1,
     step:0.01
   },
-  colors :{
-    value : snap.colorList.side
-    
+  side :{
+    value:
+    state.colorList.side,
+    onChange: (c) => {
+      state.colorList.side = c
+    }
   }
+    
+  
     })
 
 
@@ -68,12 +74,7 @@ materials.pickup_cover.roughness = 0
 
   return (
     <>
-{/* <Html as="div" >
-  <input type='range'
-  onClick={(e) => (
-    e.preventDefault()
-  )}></input>
-</Html> */}
+
     <group
       // {...props}
       dispose={null}
@@ -83,8 +84,9 @@ materials.pickup_cover.roughness = 0
       onPointerOut={(e) => e.intersections.length === 0 && set(null)}
       onPointerMissed={() => (state.current = null)}
       onClick={(e) => (
-        e.stopPropagation(), (state.current = e.object.material.name)
-      )}
+        // e.stopPropagation(), (state.current = e.object.material.name)
+      console.log(e)
+        )}
     >
 
 
