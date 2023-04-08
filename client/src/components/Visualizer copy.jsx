@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Environment, Clone, Html } from "@react-three/drei";
+import { OrbitControls, useGLTF, Environment, Clone, Html, Decal, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
@@ -156,7 +156,7 @@ materials.pickup_cover.metalness = 1,
 materials.pickup_cover.roughness = 0
 
 
-
+const reactMap = useTexture("/wood.jpg")
 
 
 
@@ -208,7 +208,20 @@ materials.pickup_cover.roughness = 0
         geometry={nodes.tablefront.geometry}
         material={materials.tablefront}
         material-color={snap.colorList.tablefront}
-      />
+        
+      >
+        <Decal mesh={ref} >
+           <meshPhysicalMaterial
+             roughness={0.2}
+             transparent
+             depthTest={false}
+             map={reactMap}
+             alphaTest={0}
+             polygonOffset={true}
+             polygonOffsetFactor={-10}
+           />
+           </Decal>
+        </mesh>
       <mesh
         castShadow
         receiveShadow

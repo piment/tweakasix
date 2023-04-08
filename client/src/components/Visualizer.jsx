@@ -56,31 +56,31 @@ function Visualizer({ guitarsList }) {
 
 
 
-  function Picker() {
-    const snap = useSnapshot(status);
+  // function Picker() {
+  //   const snap = useSnapshot(status);
 
-    return (
-      <div style={{ display: snap.current ? "block" : "none" }}>
-        <HexColorPicker
-          className="picker"
-          color={snap.colorList[snap.current]}
-          onChange={(color) => {
-            status.colorList[snap.current] = color;
-          }}
-          onPointerUp={() =>
-            dispatch(
-              addColor({
-                ...status.colorList,
-                ...snap.current,
-                [snap.current]: status.colorList[snap.current],
-              })
-            )
-          }
-        />
-        <h1 className="picker-h1">{snap.current}</h1>
-      </div>
-    );
-  }
+  //   return (
+  //     <div style={{ display: snap.current ? "block" : "none" }}>
+  //       <HexColorPicker
+  //         className="picker"
+  //         color={snap.colorList[snap.current]}
+  //         onChange={(color) => {
+  //           status.colorList[snap.current] = color;
+  //         }}
+  //         onPointerUp={() =>
+  //           dispatch(
+  //             addColor({
+  //               ...status.colorList,
+  //               ...snap.current,
+  //               [snap.current]: status.colorList[snap.current],
+  //             })
+  //           )
+  //         }
+  //       />
+  //       <h1 className="picker-h1">{snap.current}</h1>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="mainviz">
