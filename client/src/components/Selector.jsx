@@ -26,9 +26,8 @@ function Selector() {
 
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
-
       setItemsList(res.data[0]);
-      setVariationList(res.data[1])
+      // setVariationList(res.data[1])
     });
   };
 
@@ -46,8 +45,8 @@ setGuitarsList(res.data)
 
   const total = parseInt(body.price) + parseInt(neck.price) + parseInt(pickup1.price)+ parseInt(pickup2.price)
   useEffect(() => {
-    getItems();
     getGuitars()
+    getItems();
   }, []);
 
 
