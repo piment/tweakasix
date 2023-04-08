@@ -23,9 +23,9 @@ useEffect(()=> {
     <img src={logo} alt="logo" className='logo'/>
   
     <Selector/>
-  <div>
+  {/* <div>
     {Object.keys(colorList).map((color, key) => {return <h4 key={key}>{colorList[color]} </h4>})}
-  </div>
+  </div> */}
         </div>
 
 

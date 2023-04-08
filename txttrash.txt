@@ -1,0 +1,32 @@
+materials: 
+    side
+    binding
+    tablefront
+    tableback
+    neckwood
+    fretboard
+    fretbinding
+    frets
+    inlay
+    nut
+    metalpieces
+    pickup_cover
+    pickup_ring
+    knobs
+    un_black
+    strings
+
+
+
+
+
+      fretbinding
+      fretboard
+      inlay
+      nut
+      frets
+      knobs
+      pickup_cover
+      pickup_ring
+      neckwood
+      metalpieces
