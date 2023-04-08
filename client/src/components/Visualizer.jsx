@@ -34,6 +34,16 @@ function Visualizer({ guitarsList }) {
       binding: status.colorList.binding,
       tablefront: status.colorList.tablefront,
       tableback: status.colorList.tableback,
+   neckwood: status.colorList.neckwood,
+       fretboard: status.colorList.fretboard,
+       fretbinding: status.colorList.fretbinding,
+       frets: status.colorList.frets,
+       inlay: status.colorList.inlay,
+       nut: status.colorList.nut,
+       metalpieces: status.colorList.metalpieces,
+       pickup_cover: status.colorList.pickup_cover,
+       pickup_ring: status.colorList.pickup_ring,
+       knobs: status.colorList.knobs
     });
   };
 

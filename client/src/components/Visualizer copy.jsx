@@ -33,8 +33,96 @@ const controls = useControls({
     onChange: (c) => {
       state.colorList.side = c
     }
-  }
-    
+  },
+  binding :{
+    value:
+    state.colorList.binding,
+    onChange: (c) => {
+      state.colorList.binding = c
+    }
+  },
+  tablefront :{
+    value:
+    state.colorList.tablefront,
+    onChange: (c) => {
+      state.colorList.tablefront = c
+    }
+  },
+  tableback :{
+    value:
+    state.colorList.tableback,
+    onChange: (c) => {
+      state.colorList.tableback = c
+    }
+  },
+  neckwood :{
+    value:
+    state.colorList.neckwood,
+    onChange: (c) => {
+      state.colorList.neckwood = c
+    }
+  },
+  fretboard :{
+    value:
+    state.colorList.fretboard,
+    onChange: (c) => {
+      state.colorList.fretboard = c
+    }
+  },
+  fretbinding :{
+    value:
+    state.colorList.fretbinding,
+    onChange: (c) => {
+      state.colorList.fretbinding = c
+    }
+  },
+  frets :{
+    value:
+    state.colorList.frets,
+    onChange: (c) => {
+      state.colorList.frets = c
+    }
+  },
+  inlay :{
+    value:
+    state.colorList.inlay,
+    onChange: (c) => {
+      state.colorList.inlay = c
+    }
+  },  
+  nut :{
+    value:
+    state.colorList.nut,
+    onChange: (c) => {
+      state.colorList.nut = c
+    }
+  },
+  metalpieces :{
+    value:
+    state.colorList.metalpieces,
+    onChange: (c) => {
+      state.colorList.metalpieces = c
+    }
+  },  pickup_cover :{
+    value:
+    state.colorList.pickup_cover,
+    onChange: (c) => {
+      state.colorList.pickup_cover = c
+    }
+  },  pickup_ring :{
+    value:
+    state.colorList.pickup_ring,
+    onChange: (c) => {
+      state.colorList.pickup_ring = c
+    }
+  }, 
+  knobs :{
+    value:
+    state.colorList.knobs,
+    onChange: (c) => {
+      state.colorList.knobs = c
+    }
+  },
   
     })
 
