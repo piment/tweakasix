@@ -9,6 +9,8 @@ import Modelos from "./Visualizer copy";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../features/Colors";
 import {Leva, useControls} from 'leva'
+import {Perf} from 'r3f-perf'
+import MyDropzone from "./Dropzone";
 
 
 function Visualizer({ guitarsList }) {
@@ -96,9 +98,13 @@ function Visualizer({ guitarsList }) {
 
           <ambientLight intensity={1} />
           <Modelos  status={status} />
+          <Perf
+          deepAnalyze = {true}
+          />
         </Canvas>
+        <MyDropzone/>
         {/* <Picker /> */}
-        <Leva
+        {/* <Leva
     onClick={(e) => (
       e.preventDefault(), 
       // (state.current = e.object.material.name)
@@ -108,8 +114,8 @@ function Visualizer({ guitarsList }) {
         oneLineLabels
         hideTitleBar 
        
-      />
-      
+      /> */}
+
       </div>
       <button
         style={{ position: "absolute" }}
