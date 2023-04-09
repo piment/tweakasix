@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/Xaboule/basetweak#readme",
   "dependencies": {
-  
+    "react-filepond": "^7.1.2"
   }
 }

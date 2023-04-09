@@ -98,10 +98,10 @@ function Visualizer({ guitarsList }) {
 
           <ambientLight intensity={1} />
           <Modelos  status={status} files={files}/>
-          <Perf
+          {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}
-          />
+          /> */}
         </Canvas>
         <MyDropzone setFiles={setFiles} files={files}/>
         {/* <Picker /> */}

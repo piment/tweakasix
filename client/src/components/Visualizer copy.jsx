@@ -14,7 +14,7 @@ function Modelos({ status, files}) {
   const ref = useRef();
   const snap = useSnapshot(state);
   const [hovered, set] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/335full2-v2.glb");
+  const { nodes, materials } = useGLTF("/guitar/335whole OPT.glb");
 
 
   // const debouncedApply = debounce((color) => { applyColor(color) }, 1000)
@@ -147,7 +147,7 @@ const controls = useControls({
   }, [hovered, state]);
 
 
-
+materials.un_black = new THREE.MeshBasicMaterial({color : "black"})
 
 materials.varnish = new THREE.MeshStandardMaterial({ transparent:true, opacity:0.2, roughness: 0.01, metalness: controls.gloss})
 materials.metalpieces.metalness = 1,
@@ -224,7 +224,7 @@ const reactMap = useTexture(
              transparent
             //  depthTest={false}
              map={reactMap}
-             alphaTest={0} 
+            //  alphaTest={0} 
              polygonOffset={true}
              polygonOffsetFactor={-10}
              side={THREE.FrontSide}
@@ -357,5 +357,5 @@ const reactMap = useTexture(
     </>
   );
 }
-
+useGLTF.preload("/335whole OPT.glb");
 export default Modelos;
