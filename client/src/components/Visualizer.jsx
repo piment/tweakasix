@@ -56,7 +56,7 @@ function Visualizer({ guitarsList }) {
   }, [status]);
 
 
-
+    const [files, setFiles] = useState([]);
 
   // function Picker() {
   //   const snap = useSnapshot(status);
@@ -97,12 +97,13 @@ function Visualizer({ guitarsList }) {
           <Environment preset="city" background blur={2} />
 
           <ambientLight intensity={1} />
-          <Modelos  status={status} />
+          <Modelos  status={status} files={files}/>
           <Perf
           deepAnalyze = {true}
+    position={'top-left'}
           />
         </Canvas>
-        <MyDropzone/>
+        <MyDropzone setFiles={setFiles} files={files}/>
         {/* <Picker /> */}
         {/* <Leva
     onClick={(e) => (

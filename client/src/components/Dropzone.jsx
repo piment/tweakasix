@@ -1,22 +1,46 @@
-import React, {useCallback} from 'react'
-import {useDropzone} from 'react-dropzone'
+import React, {useCallback, useState} from 'react'
+import { FilePond, registerPlugin } from 'react-filepond';
 
-function MyDropzone() {
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-  }, [])
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
 
-  return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      {
-        isDragActive ?
-          <p>Drop the files here ...</p> :
-          <p>Drag 'n' drop some files here, or click to select files</p>
-      }
-    </div>
-  )
+
+
+
+
+// Import the Image EXIF Orientation and Image Preview plugins
+// Note: These need to be installed separately
+// `npm i filepond-plugin-image-preview filepond-plugin-image-exif-orientation --save`
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+// import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
+// Register the plugins
+registerPlugin(FilePondPluginImageExifOrientation, 
+  // FilePondPluginImagePreview
+  );
+
+// Our app
+function MyDropzone({setFiles}) {
+    // const [files, setFiles] = useState([]);
+    // console.log(files)
+    return (
+        <div className="Dropzone">
+            <FilePond
+                // files={files}
+                onupdatefiles={setFiles}
+                allowMultiple={true}
+                maxFiles={3}
+                server={null}
+                name="files"
+                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+            />
+        </div>
+    );
 }
+
+
+
+
 
 export default MyDropzone
