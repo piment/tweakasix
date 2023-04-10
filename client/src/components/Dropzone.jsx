@@ -1,84 +1,56 @@
 import React, {useCallback, useState} from 'react'
-import { FilePond, registerPlugin } from 'react-filepond';
+import Dropzone from 'react-dropzone'
+import {useDropzone} from 'react-dropzone'
 
-// Import FilePond styles
-import 'filepond/dist/filepond.min.css';
-
-
-
-
-
-// Import the Image EXIF Orientation and Image Preview plugins
-// Note: These need to be installed separately
-// `npm i filepond-plugin-image-preview filepond-plugin-image-exif-orientation --save`
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-import axios from 'axios';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-
-// Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, 
-  FilePondPluginImagePreview
-  );
-
-  const serverPort = 'http://localhost:3001'
-
-// Our app
 function MyDropzone() {
-    const [files, setFiles] = useState([]);
-    const handlUpload = () => {
-        axios.post('http://localhost:3001/upload', files)
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader()
+
+      reader.onabort = () => console.log('file reading was aborted')
+      reader.onerror = () => console.log('file reading has failed')
+      reader.onload = () => {
+      // Do whatever you want with the file contents
+        const binaryStr = reader.result
+        // console.log(binaryStr)
+      }
+      reader.readAsArrayBuffer(file)
+      console.log(acceptedFiles)
+    })
+    
+  }, [])
+
+  async function returnPathDirectories(directoryHandle) {
+    // Get a file handle by showing a file picker:
+    const handle = await self.showOpenFilePicker();
+    if (!handle) {
+      // User cancelled, or otherwise failed to open a file.
+      return;
     }
-    // console.log(files)
+  
+    // Check if handle exists inside directory our directory handle
+    const relativePaths = await directoryHandle.resolve(handle);
+  
+    if (relativePath === null) {
+      // Not inside directory handle
+    } else {
+      // relativePath is an array of names, giving the relative path
+  
+      for (const name of relativePaths) {
+        // log each entry
+        console.log(name);
+      }
+    }
+  }
+  const {getRootProps, getInputProps} = useDropzone({onDrop})
 
-    
-console.log(files.file)
-
-    return (
-        <div className="Dropzone">
-    
-            <FilePond
-                files={files}
-                onupdatefiles={setFiles}
-                allowMultiple={false}
-                // maxFiles={3}
-                server={serverPort + '/upload'}
-        
-                // server={{ 
-                //     load: (src, load) => {
-                //         console.log(src)
-                //       // load file here and return file object to load
-                //       fetch(src)
-                //          .then(res => res.blob())
-                //          .then(load);
-                //     }
-                //   }}
-                //   files={files}
-
-                // server={{
-                //           process: {
-                //             url: "/upload",
-                //             // headers: {
-                //             //   Authorization: `Bearer eyJH18ui0...`,
-                //             // },
-                //             ondata: (formData) => {
-                //             //   formData.append('extraField', value);
-                //             console.log(formData)
-                //               return formData;
-                //             },
-                //             onload: () => {
-                //               props.onUploadComplete();
-                //             },
-                //           }
-                //         }}
-              
-                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-            />
-        </div>
-    );
+  return (
+    <div {...getRootProps()}>
+      <input {...getInputProps()} />
+      <p>Drag 'n' drop some files here, or click to select files</p>
+    </div>
+  )
 }
-
-
 
 
 
