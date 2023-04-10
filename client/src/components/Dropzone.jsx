@@ -1,57 +1,80 @@
-import React, {useCallback, useState} from 'react'
-import Dropzone from 'react-dropzone'
+import axios from 'axios'
+import React, {useCallback, useEffect} from 'react'
+import { useState } from 'react'
 import {useDropzone} from 'react-dropzone'
 
 function MyDropzone() {
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader()
-
-      reader.onabort = () => console.log('file reading was aborted')
-      reader.onerror = () => console.log('file reading has failed')
-      reader.onload = () => {
-      // Do whatever you want with the file contents
-        const binaryStr = reader.result
-        // console.log(binaryStr)
-      }
-      reader.readAsArrayBuffer(file)
-      console.log(acceptedFiles)
+//   const [pic, setPic] = useState([])
+const path = 'http://localhost:3001/stocked/'
+const imgs = []
+  const onDrop = useCallback(acceptedFiles => {
+      imgs.push(acceptedFiles[0])
+    //   console.log(imgs)
+    const formData = new FormData();
+    formData.append('file', imgs[imgs.length -1]);
+    axios.post("http://localhost:3001/upload/", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
     })
-    
+    // console.log(pic);
+    // axios.post("http://localhost:3001/upload", formData, {
+    //   headers: {
+    //     "content-type": "multipart/form-data",
+    //   },
+    // }); //I need to change this line
   }, [])
 
-  async function returnPathDirectories(directoryHandle) {
-    // Get a file handle by showing a file picker:
-    const handle = await self.showOpenFilePicker();
-    if (!handle) {
-      // User cancelled, or otherwise failed to open a file.
-      return;
+const [getPic, setGetPic] = useState([])
+
+useEffect(() =>{
+axios.get('http://localhost:3001/stocked').then(response =>
+{
+  let filesReached = []
+
+  filesReached.push(response.data)
+  console.log(filesReached)
+      setGetPic(filesReached)
+//       // tablo.push(response.data)
+//       // return tablo
     }
-  
-    // Check if handle exists inside directory our directory handle
-    const relativePaths = await directoryHandle.resolve(handle);
-  
-    if (relativePath === null) {
-      // Not inside directory handle
-    } else {
-      // relativePath is an array of names, giving the relative path
-  
-      for (const name of relativePaths) {
-        // log each entry
-        console.log(name);
-      }
-    }
-  }
-  const {getRootProps, getInputProps} = useDropzone({onDrop})
+    )
+
+// .then(console.log(getPic)
+// )
+},[] )
+
+
+// console.log(getPic)
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
+    <>
+        <form encType="multipart/form-data">
     <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
+
+      <input {...getInputProps()} type='file' />
+      {
+          isDragActive ?
+          <p>Drop the files here ...</p> :
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        }
+
     </div>
+        </form>
+        {/* <div>
+    {getPic &&(
+        <div style={{height : '10vh'}}>
+            {getPic.map((m, key) =>{
+        //    <div >{m}</div>
+        <img src={path + m[4]} key={key}/>
+            console.log(path + m[4])
+            })}
+        </div>
+    )}
+
+</div> */}
+</>
   )
 }
-
-
-
 export default MyDropzone
