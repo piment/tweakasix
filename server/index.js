@@ -22,7 +22,14 @@ var storage = multer.diskStorage(
 const upload = multer({ storage: storage } )
 
 
+const fs = require('fs')
+const path = require('path')
 
+const fullPath = path.join(__dirname, '/stocked')
+const files = fs.readdirSync(fullPath)
+
+try { files.forEach( file => console.log(file) ) }
+catch (error) { console.log(error) }
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,7 +44,7 @@ app.use(
 );
 app.use(express.json());
 
-app.use(express.static(__dirname + "./stocked"));
+app.use('/stocked', express.static(__dirname + "./stocked"));
 // app.use(express.static((__dirname, "public")));
 
 // route for file upload
@@ -51,9 +58,11 @@ app.post("/upload",upload.single('file'),(req, res, next) => {
 });
 
 app.get('/stocked', (req, res) => {
-  console.log(req.file)
+  // console.log(files)
   // req('./stocked')
+  res.send(files)
   // res.sendFiles((__dirname, "./stocked"))
+  // res.send(res)
 })
 // app.post("/create", (req, res) => {
 //   const name = req.body.name;

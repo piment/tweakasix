@@ -3,9 +3,10 @@ import React, {useCallback, useEffect} from 'react'
 import { useState } from 'react'
 import {useDropzone} from 'react-dropzone'
 
+
 function MyDropzone() {
 //   const [pic, setPic] = useState([])
-const path = 'http://localhost:3001/stocked/'
+const path = '../../../server/stocked'
 const imgs = []
   const onDrop = useCallback(acceptedFiles => {
       imgs.push(acceptedFiles[0])
