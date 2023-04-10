@@ -5,7 +5,21 @@ const app = express();
 const port = 3001;
 const mysql = require("mysql2");
 const cors = require("cors");
+const multer  = require('multer')
 
+// setup multer for file upload
+var storage = multer.diskStorage(
+    {
+      destination: function (req, file, cb) {
+        cb(null, './stocked')
+      },
+        filename: function (req, file, cb ) {
+            cb( null, 'file');
+        }
+    }
+);
+
+const upload = multer({ storage: storage } )
 
 
 
@@ -23,8 +37,27 @@ app.use(
 );
 app.use(express.json());
 
+// app.use(express.static(__dirname + "/../build"));
 
+// route for file upload
+app.post("/upload",upload.single('file'),(req, res) => {
+    // console.log(req.body + " file successfully uploaded !!");
+      console.log(req.file + " file successfully uploaded !!");
+      res.send(req.file);
+    (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.send(result);
+              }
+            }
+});
 
+app.get('/stocked', (req, res) => {
+  req('./stocked',(err, result) =>{
+    console.log(result)
+  })
+})
 // app.post("/create", (req, res) => {
 //   const name = req.body.name;
 //   const age = req.body.age;
