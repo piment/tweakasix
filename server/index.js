@@ -22,14 +22,24 @@ var storage = multer.diskStorage(
 const upload = multer({ storage: storage } )
 
 
-const fs = require('fs')
-const path = require('path')
+// const fs = require('fs')
+// const path = require('path')
 
-const fullPath = path.join(__dirname, '/stocked')
-const files = fs.readdirSync(fullPath)
+// const fullPath = path.join(__dirname, '/stocked')
+// const files = fs.readdirSync(fullPath)
 
-try { files.forEach( file => console.log(file) ) }
-catch (error) { console.log(error) }
+// try { files.forEach( file => console.log(file) ) }
+// catch (error) { console.log(error) }
+
+
+const testFolder = './stocked/';
+const fs = require('fs');
+
+fs.readdir(testFolder, (err, files) => {
+  files.forEach(file => {
+    console.log(file);
+  });
+});
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,7 +70,7 @@ app.post("/upload",upload.single('file'),(req, res, next) => {
 app.get('/stocked', (req, res) => {
   // console.log(files)
   // req('./stocked')
-  res.send(files)
+  // res.send(files)
   // res.sendFiles((__dirname, "./stocked"))
   // res.send(res)
 })
