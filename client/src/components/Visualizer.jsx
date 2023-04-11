@@ -7,7 +7,7 @@ import { HexColorPicker } from "react-colorful";
 import { proxy, snapshot, useSnapshot } from "valtio";
 import Modelos from "./Modelos";
 import { useDispatch, useSelector } from "react-redux";
-import { addColor } from "../features/Colors";
+import { addColor} from "../features/Colors";
 import { Leva, useControls } from "leva";
 import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
@@ -24,13 +24,13 @@ function Visualizer({ guitarsList }) {
   const handleSelectGuitar = (e) => {
     const chosen = guitarsList.filter((item) => item.id == e.target.value);
     setColorList(chosen[0]);
-
+    // dispatch(addColor(chosen[0]));
   };
 
   const dispatch = useDispatch();
 
   const status = proxy({
-    colorList
+    colorList,
   });
   const addGuitar = () => {
     axios.post("http://localhost:3001/items/saveguitar", {
@@ -52,11 +52,12 @@ function Visualizer({ guitarsList }) {
     });
   };
   
-
+  console.log('STATUUUUUUUS', status.colorList)
   useEffect(() => {
     // colorList
     setColorList(colus);
     dispatch(addColor(status.colorList));
+
 
   }, [status]);
 
@@ -81,6 +82,7 @@ function Visualizer({ guitarsList }) {
 
   //   // )
   // }, [dropped]);
+  console.log(status)
 
   return (
     <div className="mainviz">

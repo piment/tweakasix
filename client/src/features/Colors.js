@@ -4,7 +4,7 @@ import axios from 'axios'
 export const colorSlice = createSlice({
   name: "colors",
   initialState: {
-    value: {
+ value :{
       side: "#ffffff",
       binding: "#ffffff",
       tablefront: "#ffffff",
@@ -20,7 +20,7 @@ export const colorSlice = createSlice({
       neckwood: "#ffffff",
       metalpieces: "#ffffff",
       texture_path : "stocked/1681244850051.png"
-    },
+    }
   },
 
   reducers: {
@@ -43,12 +43,16 @@ export const colorSlice = createSlice({
 
     },
     dropTrigger: (state, action) => {
-      console.log('prems' + state.value)
+    //   // console.log('prems' + state.value)
      state.value.texture_path = action.payload
-     console.log('deuz', state.value)
+    //  console.log('deuz', state.value)
+    },
+    setColor : (state, action) => {
+      console.log(action.payload)
+      // state[action.payload.part] =  action.payload.color
     }
   },
 });
 
-export const { addColor, dropTrigger } = colorSlice.actions;
+export const { addColor, dropTrigger, setColor} = colorSlice.actions;
 export default colorSlice.reducer;

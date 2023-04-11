@@ -28,7 +28,7 @@ function Modelos({ status, allTx }) {
 
   const lastTexture = allTx[0];
   const path = "http://localhost:3001/";
-
+  const colorList = useSelector((state) => state.colors.value);
 
 
   const controls = useControls({
@@ -169,7 +169,6 @@ function Modelos({ status, allTx }) {
 const texture_path = useSelector((state) => state.colors.value.texture_path)
 //  console.log(state.colorList.texture_path)
   const reactMap = useTexture(path + texture_path)
-  console.log(path + texture_path)
   // console.log(txUse)
   materials.tablefront.map = reactMap
 //  txUse 
