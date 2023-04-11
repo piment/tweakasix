@@ -18,6 +18,7 @@ export const colorSlice = createSlice({
       pickup_ring: "#ffffff",
       neckwood: "#ffffff",
       metalpieces: "#ffffff",
+      texture_path : "pipipipi"
     },
   },
 
@@ -37,6 +38,8 @@ export const colorSlice = createSlice({
       state.value.pickup_ring = action.payload.pickup_ring;
       state.value.neckwood = action.payload.neckwood;
       state.value.metalpieces = action.payload.metalpieces;
+      state.value.texture_path = action.payload.texture_path
+      console.log(state.value.texture_path)
     },
   },
 });

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback} from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import "./Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
@@ -8,10 +8,9 @@ import { proxy, snapshot, useSnapshot } from "valtio";
 import Modelos from "./Visualizer copy";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../features/Colors";
-import {Leva, useControls} from 'leva'
-import {Perf} from 'r3f-perf'
+import { Leva, useControls } from "leva";
+import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
-
 
 function Visualizer({ guitarsList }) {
   const [selectGuitar, setSelectGuitar] = useState("");
@@ -36,85 +35,48 @@ function Visualizer({ guitarsList }) {
       binding: status.colorList.binding,
       tablefront: status.colorList.tablefront,
       tableback: status.colorList.tableback,
-   neckwood: status.colorList.neckwood,
-       fretboard: status.colorList.fretboard,
-       fretbinding: status.colorList.fretbinding,
-       frets: status.colorList.frets,
-       inlay: status.colorList.inlay,
-       nut: status.colorList.nut,
-       metalpieces: status.colorList.metalpieces,
-       pickup_cover: status.colorList.pickup_cover,
-       pickup_ring: status.colorList.pickup_ring,
-       knobs: status.colorList.knobs
+      neckwood: status.colorList.neckwood,
+      fretboard: status.colorList.fretboard,
+      fretbinding: status.colorList.fretbinding,
+      frets: status.colorList.frets,
+      inlay: status.colorList.inlay,
+      nut: status.colorList.nut,
+      metalpieces: status.colorList.metalpieces,
+      pickup_cover: status.colorList.pickup_cover,
+      pickup_ring: status.colorList.pickup_ring,
+      knobs: status.colorList.knobs,
+      texture_path : status.colorList.texture_path
     });
   };
+  
 
   useEffect(() => {
     // colorList
     setColorList(colus);
     dispatch(addColor(status.colorList));
+
   }, [status]);
 
+  // console.log(status.colorList.texture_path)
+  const [files, setFiles] = useState([]);
 
-    const [files, setFiles] = useState([]);
+console.log(colus)
 
-  // function Picker() {
-  //   const snap = useSnapshot(status);
+  const [allTx, setAllTx] = useState([]);
+  // console.log(path)
+  useEffect(() => {
+    axios.get("http://localhost:3001/stocked").then((response) => {
+      let filesReached = [];
 
-  //   return (
-  //     <div style={{ display: snap.current ? "block" : "none" }}>
-  //       <HexColorPicker
-  //         className="picker"
-  //         color={snap.colorList[snap.current]}
-  //         onChange={(color) => {
-  //           status.colorList[snap.current] = color;
-  //         }}
-  //         onPointerUp={() =>
-  //           dispatch(
-  //             addColor({
-  //               ...status.colorList,
-  //               ...snap.current,
-  //               [snap.current]: status.colorList[snap.current],
-  //             })
-  //           )
-  //         }
-  //       />
-  //       <h1 className="picker-h1">{snap.current}</h1>
-  //     </div>
-  //   );
-  // }
-  const path = 'http://localhost:3001'
-  const imgs = []
-  const onDrop = useCallback(acceptedFiles => {
-      imgs.push(acceptedFiles[0])
-    //   console.log(imgs)
-    const formData = new FormData();
-    formData.append('file', imgs[imgs.length -1]);
-    axios.post("http://localhost:3001/upload/", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-    })
+      filesReached.push(response.data);
+      setAllTx(filesReached[0]);
+ 
    
-  }, [])
+      
+    });
 
-const [allTx, setAllTx] = useState([])
-// console.log(path)
-useEffect(() =>{
-axios.get('http://localhost:3001/stocked').then(response =>
-{
-  let filesReached = []
-
-filesReached.push(response.data)
-    setAllTx(filesReached);
-
-
-    }
-    )
-
-
-// )
-},[] )
+    // )
+  }, []);
 
   return (
     <div className="mainviz">
@@ -129,13 +91,13 @@ filesReached.push(response.data)
           <Environment preset="city" background blur={2} />
 
           <ambientLight intensity={1} />
-          <Modelos  status={status} allTx={allTx}/>
+          <Modelos status={status} allTx={allTx} />
           {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}
           /> */}
         </Canvas>
-        <MyDropzone onDrop={onDrop}/>
+        <MyDropzone status={status} />
         {/* <Picker /> */}
         {/* <Leva
     onClick={(e) => (
@@ -148,7 +110,6 @@ filesReached.push(response.data)
         hideTitleBar 
        
       /> */}
-
       </div>
       <button
         style={{ position: "absolute" }}
@@ -166,11 +127,12 @@ filesReached.push(response.data)
             handleSelectGuitar(e)
           }
         >
-          {guitarsList &&(guitarsList.map((guitar, key) => (
-            <option value={guitar.id} key={key}>
-              {guitar.id}
-            </option>
-          )))}
+          {guitarsList &&
+            guitarsList.map((guitar, key) => (
+              <option value={guitar.id} key={key}>
+                {guitar.id}
+              </option>
+            ))}
         </select>
       </div>
     </div>

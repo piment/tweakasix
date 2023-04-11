@@ -44,7 +44,9 @@ console.log(express.static((__dirname, 'public')))
 // route for file upload
 app.post("/upload",upload.single('file'),(req, res, next) => {
    
-      res.send(req.file);
+      res.send(req.file.path);
+      // res.render(JSON.stringify(req.file.url))
+      // (req.file.path)
    
 });
 

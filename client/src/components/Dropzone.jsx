@@ -4,10 +4,29 @@ import { useState } from 'react'
 import {useDropzone} from 'react-dropzone'
 
 
-function MyDropzone({onDrop}) {
+function MyDropzone({status}) {
 
 const path = 'http://localhost:3001'
 
+const imgs = [];
+
+const onDrop = useCallback((acceptedFiles) => {
+  imgs.push(acceptedFiles[0]);
+ 
+  //   console.log(imgs)
+  const formData = new FormData();
+  formData.append("file", imgs[imgs.length - 1]);  
+  
+  axios.post("http://localhost:3001/upload/", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+  .then((response) => status.colorList.texture_path = response.data)
+  // .then((response) => console.log('caca', response.data))
+  // status.colorList.texture_path = acceptedFiles[0]
+
+}, []);
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
