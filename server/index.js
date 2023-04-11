@@ -3,9 +3,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3001;
-const mysql = require("mysql2");
+const path = require('path')
 const cors = require("cors");
 const multer  = require('multer')
+const fs = require('fs')
 
 // setup multer for file upload
 var storage = multer.diskStorage(
@@ -14,7 +15,8 @@ var storage = multer.diskStorage(
         cb(null, './stocked')
       },
         filename: function (req, file, cb ) {
-            cb( null, file.originalname);
+          console.log(file)
+            cb( null, Date.now() + path.extname(file.originalname));
         }
     }
 );
@@ -22,26 +24,8 @@ var storage = multer.diskStorage(
 const upload = multer({ storage: storage } )
 
 
-// const fs = require('fs')
-// const path = require('path')
 
-// const fullPath = path.join(__dirname, '/stocked')
-// const files = fs.readdirSync(fullPath)
-
-// try { files.forEach( file => console.log(file) ) }
-// catch (error) { console.log(error) }
-
-
-const testFolder = './stocked/';
-const fs = require('fs');
-
-fs.readdir(testFolder, (err, files) => {
-  files.forEach(file => {
-    console.log(file);
-  });
-});
-
-
+app.set('view engine', "ejs")
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 // app.use(cors());
@@ -54,9 +38,9 @@ app.use(
 );
 app.use(express.json());
 
-app.use('/stocked', express.static(__dirname + "./stocked"));
+app.use('/stocked', express.static(path.join(__dirname + "/stocked")));
 // app.use(express.static((__dirname, "public")));
-
+console.log(express.static((__dirname, 'public')))
 // route for file upload
 app.post("/upload",upload.single('file'),(req, res, next) => {
     // console.log(req.body + " file successfully uploaded !!");
@@ -67,52 +51,42 @@ app.post("/upload",upload.single('file'),(req, res, next) => {
    
 });
 
-app.get('/stocked', (req, res) => {
-  // console.log(files)
-  // req('./stocked')
-  // res.send(files)
-  // res.sendFiles((__dirname, "./stocked"))
-  // res.send(res)
+// app.get('/stocked/', (req, res) => {
+//   let file = fs.readFileSync((__dirname, "./stocked"))
+//   console.log(file)
+//   // req('./stocked')
+//   res.send(file)
+//   // res.sendFiles((__dirname, "./stocked"))
+//   // res.send(res)
+// })
+
+const folder = './'
+app.get('/stocked/',(req, res) => {
+  const directoryPath = "./stocked/";
+
+  fs.readdir(directoryPath, function (err, files) {
+    if (err) {
+      res.status(500).send({
+        message: "Unable to scan files!",
+      });
+    }
+
+    let fileInfos = [];
+
+    files.forEach((file) => {
+      const absolutePath = path.resolve( folder, file );
+      console.log(file)
+      fileInfos.push({
+        name: file,
+        url: "/stocked/" + file,
+        // url: absolutePath,
+        file : file
+      });
+    });
+
+    res.status(200).send(fileInfos);
+  });
 })
-// app.post("/create", (req, res) => {
-//   const name = req.body.name;
-//   const age = req.body.age;
-//   const country = req.body.country;
-//   const position = req.body.position;
-//   const wage = req.body.wage;
-
-//   db.query(
-//     "INSERT INTO employees (name, age, country, position, wage) VALUES (?,?,?,?,?)",
-//     [name, age, country, position, wage],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send("Values inserted");
-//       }
-//     }
-//   );
-// });
-
-// app.get("/items", (req, res) => {
-//   const selectedId = 2
-  
-//  const sItems =  "SELECT * FROM item;"
-
-
-//     db.query( sItems,
-//       // "SELECT name FROM tasix.guitar AS g INNER JOIN tasix.body AS b ON g.id_body = b.id where b.id = ?", selectedId,
-      
-//       (err, result) => {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.send(result);
-//         }
-//       }
-//     );
-//   });
-
 
 
 const router = require("./router");

@@ -5,8 +5,8 @@ import {useDropzone} from 'react-dropzone'
 
 
 function MyDropzone() {
-//   const [pic, setPic] = useState([])
-const path = '../../../server/stocked'
+
+const path = 'http://localhost:3001'
 const imgs = []
   const onDrop = useCallback(acceptedFiles => {
       imgs.push(acceptedFiles[0])
@@ -18,35 +18,30 @@ const imgs = []
           'Content-Type': 'multipart/form-data'
         }
     })
-    // console.log(pic);
-    // axios.post("http://localhost:3001/upload", formData, {
-    //   headers: {
-    //     "content-type": "multipart/form-data",
-    //   },
-    // }); //I need to change this line
+   
   }, [])
 
-const [getPic, setGetPic] = useState([])
-
+const [allTx, setAllTx] = useState([])
+console.log(path)
 useEffect(() =>{
 axios.get('http://localhost:3001/stocked').then(response =>
 {
   let filesReached = []
 
-  filesReached.push(response.data)
-  console.log(filesReached)
-      setGetPic(filesReached)
-//       // tablo.push(response.data)
-//       // return tablo
+filesReached.push(response.data)
+    setAllTx(filesReached);
+
+
     }
     )
 
-// .then(console.log(getPic)
+
 // )
 },[] )
 
+allTx.map((f) =>{
+  f.map((m, key) =>console.log(path + m.url))});
 
-// console.log(getPic)
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
@@ -63,18 +58,21 @@ axios.get('http://localhost:3001/stocked').then(response =>
 
     </div>
         </form>
-        {/* <div>
-    {getPic &&(
-        <div style={{height : '10vh'}}>
-            {getPic.map((m, key) =>{
-        //    <div >{m}</div>
-        <img src={path + m[4]} key={key}/>
-            console.log(path + m[4])
-            })}
+        <div style={{maxWidth:  '500px', maxHeight: '500px'}}>
+    {allTx && (
+        
+            allTx.map((f) =>(
+              f.map((m, key) =>(
+                console.log("URL", `${path}${m.url}`),
+           <div   key={key}>{m.name}
+        <img style={{maxWidth:  '500px', maxHeight: 500}} src={path + m.url} key={key}></img>
         </div>
-    )}
-
-</div> */}
+        // console.log(m.name)
+              )  )   ))
+     
+    ) }
+{/* <img src={path + allTx[0][2].url}></img> */}
+</div>
 </>
   )
 }
