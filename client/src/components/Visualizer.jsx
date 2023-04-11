@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo , useCallback} from "react";
+import React, { useRef, useState, useEffect, useCallback} from "react";
 import "./Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
@@ -11,7 +11,6 @@ import { addColor } from "../features/Colors";
 import {Leva, useControls} from 'leva'
 import {Perf} from 'r3f-perf'
 import MyDropzone from "./Dropzone";
-import {useDropzone} from 'react-dropzone'
 
 
 function Visualizer({ guitarsList }) {
@@ -56,24 +55,51 @@ function Visualizer({ guitarsList }) {
     dispatch(addColor(status.colorList));
   }, [status]);
 
+
+    const [files, setFiles] = useState([]);
+
+  // function Picker() {
+  //   const snap = useSnapshot(status);
+
+  //   return (
+  //     <div style={{ display: snap.current ? "block" : "none" }}>
+  //       <HexColorPicker
+  //         className="picker"
+  //         color={snap.colorList[snap.current]}
+  //         onChange={(color) => {
+  //           status.colorList[snap.current] = color;
+  //         }}
+  //         onPointerUp={() =>
+  //           dispatch(
+  //             addColor({
+  //               ...status.colorList,
+  //               ...snap.current,
+  //               [snap.current]: status.colorList[snap.current],
+  //             })
+  //           )
+  //         }
+  //       />
+  //       <h1 className="picker-h1">{snap.current}</h1>
+  //     </div>
+  //   );
+  // }
+  const path = 'http://localhost:3001'
   const imgs = []
   const onDrop = useCallback(acceptedFiles => {
-    imgs.push(acceptedFiles[0])
-  //   console.log(imgs)
-  const formData = new FormData();
-  formData.append('file', imgs[imgs.length -1]);
-  axios.post("http://localhost:3001/upload/", formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-  })
- 
-}, [])
+      imgs.push(acceptedFiles[0])
+    //   console.log(imgs)
+    const formData = new FormData();
+    formData.append('file', imgs[imgs.length -1]);
+    axios.post("http://localhost:3001/upload/", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    })
+   
+  }, [])
 
-  const path = 'http://localhost:3001'
-    // const [files, setFiles] = useState([]);
-    const [allTx, setAllTx] = useState([])
-
+const [allTx, setAllTx] = useState([])
+// console.log(path)
 useEffect(() =>{
 axios.get('http://localhost:3001/stocked').then(response =>
 {
@@ -88,9 +114,7 @@ filesReached.push(response.data)
 
 
 // )
-},[imgs] )
-
-
+},[] )
 
   return (
     <div className="mainviz">
@@ -105,14 +129,26 @@ filesReached.push(response.data)
           <Environment preset="city" background blur={2} />
 
           <ambientLight intensity={1} />
-          <Modelos  status={status} files={allTx} onDrop={onDrop}/>
+          <Modelos  status={status} allTx={allTx}/>
           {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}
           /> */}
         </Canvas>
         <MyDropzone onDrop={onDrop}/>
-      
+        {/* <Picker /> */}
+        {/* <Leva
+    onClick={(e) => (
+      e.preventDefault(), 
+      // (state.current = e.object.material.name)
+    console.log(e)
+      )}
+        flat 
+        oneLineLabels
+        hideTitleBar 
+       
+      /> */}
+
       </div>
       <button
         style={{ position: "absolute" }}

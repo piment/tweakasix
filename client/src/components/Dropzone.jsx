@@ -7,8 +7,6 @@ import {useDropzone} from 'react-dropzone'
 function MyDropzone({onDrop}) {
 
 const path = 'http://localhost:3001'
-const imgs = []
- 
 
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
