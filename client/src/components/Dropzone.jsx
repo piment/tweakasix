@@ -4,43 +4,12 @@ import { useState } from 'react'
 import {useDropzone} from 'react-dropzone'
 
 
-function MyDropzone() {
+function MyDropzone({onDrop}) {
 
 const path = 'http://localhost:3001'
 const imgs = []
-  const onDrop = useCallback(acceptedFiles => {
-      imgs.push(acceptedFiles[0])
-    //   console.log(imgs)
-    const formData = new FormData();
-    formData.append('file', imgs[imgs.length -1]);
-    axios.post("http://localhost:3001/upload/", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-    })
-   
-  }, [])
+ 
 
-const [allTx, setAllTx] = useState([])
-console.log(path)
-useEffect(() =>{
-axios.get('http://localhost:3001/stocked').then(response =>
-{
-  let filesReached = []
-
-filesReached.push(response.data)
-    setAllTx(filesReached);
-
-
-    }
-    )
-
-
-// )
-},[] )
-
-allTx.map((f) =>{
-  f.map((m, key) =>console.log(path + m.url))});
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
@@ -58,7 +27,7 @@ allTx.map((f) =>{
 
     </div>
         </form>
-        <div style={{maxWidth:  '500px', maxHeight: '500px'}}>
+        {/* <div style={{maxWidth:  '500px', maxHeight: '500px'}}>
     {allTx && (
         
             allTx.map((f) =>(
@@ -67,12 +36,12 @@ allTx.map((f) =>{
            <div   key={key}>{m.name}
         <img style={{maxWidth:  '500px', maxHeight: 500}} src={path + m.url} key={key}></img>
         </div>
-        // console.log(m.name)
+   
               )  )   ))
      
     ) }
-{/* <img src={path + allTx[0][2].url}></img> */}
-</div>
+
+</div> */}
 </>
   )
 }

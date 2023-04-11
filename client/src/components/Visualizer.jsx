@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useEffect, useMemo , useCallback} from "react";
 import "./Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
@@ -11,6 +11,7 @@ import { addColor } from "../features/Colors";
 import {Leva, useControls} from 'leva'
 import {Perf} from 'r3f-perf'
 import MyDropzone from "./Dropzone";
+import {useDropzone} from 'react-dropzone'
 
 
 function Visualizer({ guitarsList }) {
@@ -55,34 +56,41 @@ function Visualizer({ guitarsList }) {
     dispatch(addColor(status.colorList));
   }, [status]);
 
+  const imgs = []
+  const onDrop = useCallback(acceptedFiles => {
+    imgs.push(acceptedFiles[0])
+  //   console.log(imgs)
+  const formData = new FormData();
+  formData.append('file', imgs[imgs.length -1]);
+  axios.post("http://localhost:3001/upload/", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+  })
+ 
+}, [])
 
-    const [files, setFiles] = useState([]);
+  const path = 'http://localhost:3001'
+    // const [files, setFiles] = useState([]);
+    const [allTx, setAllTx] = useState([])
 
-  // function Picker() {
-  //   const snap = useSnapshot(status);
+useEffect(() =>{
+axios.get('http://localhost:3001/stocked').then(response =>
+{
+  let filesReached = []
 
-  //   return (
-  //     <div style={{ display: snap.current ? "block" : "none" }}>
-  //       <HexColorPicker
-  //         className="picker"
-  //         color={snap.colorList[snap.current]}
-  //         onChange={(color) => {
-  //           status.colorList[snap.current] = color;
-  //         }}
-  //         onPointerUp={() =>
-  //           dispatch(
-  //             addColor({
-  //               ...status.colorList,
-  //               ...snap.current,
-  //               [snap.current]: status.colorList[snap.current],
-  //             })
-  //           )
-  //         }
-  //       />
-  //       <h1 className="picker-h1">{snap.current}</h1>
-  //     </div>
-  //   );
-  // }
+filesReached.push(response.data)
+    setAllTx(filesReached);
+
+
+    }
+    )
+
+
+// )
+},[imgs] )
+
+
 
   return (
     <div className="mainviz">
@@ -97,26 +105,14 @@ function Visualizer({ guitarsList }) {
           <Environment preset="city" background blur={2} />
 
           <ambientLight intensity={1} />
-          <Modelos  status={status} files={files}/>
+          <Modelos  status={status} files={allTx} onDrop={onDrop}/>
           {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}
           /> */}
         </Canvas>
-        <MyDropzone setFiles={setFiles} files={files}/>
-        {/* <Picker /> */}
-        {/* <Leva
-    onClick={(e) => (
-      e.preventDefault(), 
-      // (state.current = e.object.material.name)
-    console.log(e)
-      )}
-        flat 
-        oneLineLabels
-        hideTitleBar 
-       
-      /> */}
-
+        <MyDropzone onDrop={onDrop}/>
+      
       </div>
       <button
         style={{ position: "absolute" }}

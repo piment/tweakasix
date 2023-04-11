@@ -9,16 +9,15 @@ import { useSnapshot } from "valtio";
 import { HexColorPicker } from "react-colorful";
 import { useControls } from "leva";
 
-function Modelos({ status, files}) {
+function Modelos({ status, files, onDrop}) {
   const state = status;
   const ref = useRef();
   const snap = useSnapshot(state);
   const [hovered, set] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/335whole OPT.glb");
 
-
-  // const debouncedApply = debounce((color) => { applyColor(color) }, 1000)
-
+const alltextures = files[0]
+const path = 'http://localhost:3001'
   
 const controls = useControls({
   gloss:{
@@ -159,11 +158,15 @@ materials.pickup_cover.roughness = 0
 
 // console.log(files)
 
-const reactMap = useTexture( 
-  // files ? files :
-  "/wood.jpg"
-  // files
-  )
+    useEffect(() => {
+      console.log('pipi')
+  },[onDrop])
+
+  const reactMap = useTexture( 
+    alltextures ? path + alltextures[alltextures.length -1].url :
+    "/wood.jpg"
+    // files
+    )
 
 
 
