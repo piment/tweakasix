@@ -9,12 +9,12 @@ import { useSnapshot } from "valtio";
 import { HexColorPicker } from "react-colorful";
 import { useControls } from "leva";
 
-function Modelos({ status}) {
+function Modelos({ status, files}) {
   const state = status;
   const ref = useRef();
   const snap = useSnapshot(state);
   const [hovered, set] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/335full.glb");
+  const { nodes, materials } = useGLTF("/guitar/335whole OPT.glb");
 
 
   // const debouncedApply = debounce((color) => { applyColor(color) }, 1000)
@@ -147,16 +147,23 @@ const controls = useControls({
   }, [hovered, state]);
 
 
+materials.un_black = new THREE.MeshBasicMaterial({color : "black"})
 
-
-materials.varnish = new THREE.MeshPhysicalMaterial({ transparent:true, opacity:0.2, roughness: 0.01, metalness: controls.gloss})
+materials.varnish = new THREE.MeshStandardMaterial({ transparent:true, opacity:0.2, roughness: 0.01, metalness: controls.gloss})
 materials.metalpieces.metalness = 1,
 materials.metalpieces.roughness = 0,
 materials.pickup_cover.metalness = 1,
 materials.pickup_cover.roughness = 0
 
+    // const [files, setFiles] = useState([]);
 
-const reactMap = useTexture("/wood.jpg")
+// console.log(files)
+
+const reactMap = useTexture( 
+  // files ? files :
+  "/wood.jpg"
+  // files
+  )
 
 
 
@@ -208,17 +215,19 @@ const reactMap = useTexture("/wood.jpg")
         geometry={nodes.tablefront.geometry}
         material={materials.tablefront}
         material-color={snap.colorList.tablefront}
+        side={THREE.FrontSide}
         
       >
         <Decal mesh={ref} >
-           <meshPhysicalMaterial
+           <meshBasicMaterial
              roughness={0.2}
              transparent
-             depthTest={false}
+            //  depthTest={false}
              map={reactMap}
-             alphaTest={0}
+            //  alphaTest={0} 
              polygonOffset={true}
              polygonOffsetFactor={-10}
+             side={THREE.FrontSide}
            />
            </Decal>
         </mesh>
@@ -348,5 +357,5 @@ const reactMap = useTexture("/wood.jpg")
     </>
   );
 }
-
+useGLTF.preload("/335whole OPT.glb");
 export default Modelos;
