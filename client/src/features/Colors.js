@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from 'axios'
 
 export const colorSlice = createSlice({
   name: "colors",
@@ -18,7 +19,7 @@ export const colorSlice = createSlice({
       pickup_ring: "#ffffff",
       neckwood: "#ffffff",
       metalpieces: "#ffffff",
-      texture_path : "pipipipi"
+      texture_path : "stocked/1681244850051.png"
     },
   },
 
@@ -38,11 +39,16 @@ export const colorSlice = createSlice({
       state.value.pickup_ring = action.payload.pickup_ring;
       state.value.neckwood = action.payload.neckwood;
       state.value.metalpieces = action.payload.metalpieces;
-      state.value.texture_path = action.payload.texture_path
-      console.log(state.value.texture_path)
+      // state.value.texture_path = action.payload.texture_path
+
     },
+    dropTrigger: (state, action) => {
+      console.log('prems' + state.value)
+     state.value.texture_path = action.payload
+     console.log('deuz', state.value)
+    }
   },
 });
 
-export const { addColor } = colorSlice.actions;
+export const { addColor, dropTrigger } = colorSlice.actions;
 export default colorSlice.reducer;

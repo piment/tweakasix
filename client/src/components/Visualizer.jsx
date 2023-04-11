@@ -5,7 +5,7 @@ import { OrbitControls, useGLTF, Environment } from "@react-three/drei";
 import axios from "axios";
 import { HexColorPicker } from "react-colorful";
 import { proxy, snapshot, useSnapshot } from "valtio";
-import Modelos from "./Visualizer copy";
+import Modelos from "./Modelos";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../features/Colors";
 import { Leva, useControls } from "leva";
@@ -18,16 +18,19 @@ function Visualizer({ guitarsList }) {
   const colus = useSelector((state) => state.colors.value);
   const [colorList, setColorList] = useState(colus);
 
+
+  const [dropped, setDropped] = useState(0)
+
   const handleSelectGuitar = (e) => {
     const chosen = guitarsList.filter((item) => item.id == e.target.value);
     setColorList(chosen[0]);
-    console.log(chosen);
+
   };
 
   const dispatch = useDispatch();
 
   const status = proxy({
-    colorList,
+    colorList
   });
   const addGuitar = () => {
     axios.post("http://localhost:3001/items/saveguitar", {
@@ -45,7 +48,7 @@ function Visualizer({ guitarsList }) {
       pickup_cover: status.colorList.pickup_cover,
       pickup_ring: status.colorList.pickup_ring,
       knobs: status.colorList.knobs,
-      texture_path : status.colorList.texture_path
+      // texture_path : status.colorList.texture_path
     });
   };
   
@@ -58,25 +61,26 @@ function Visualizer({ guitarsList }) {
   }, [status]);
 
   // console.log(status.colorList.texture_path)
-  const [files, setFiles] = useState([]);
 
-console.log(colus)
+
+
 
   const [allTx, setAllTx] = useState([]);
   // console.log(path)
-  useEffect(() => {
-    axios.get("http://localhost:3001/stocked").then((response) => {
-      let filesReached = [];
+  // useEffect(() => {
+  //   console.log('gettxtr')
+  // axios.get("http://localhost:3001/stocked").then((response) => {
+  //     let filesReached = [];
 
-      filesReached.push(response.data);
-      setAllTx(filesReached[0]);
+  //     filesReached.push(response.data);
+  //     setAllTx(filesReached);
  
    
       
-    });
+  //   });
 
-    // )
-  }, []);
+  //   // )
+  // }, [dropped]);
 
   return (
     <div className="mainviz">
@@ -97,7 +101,7 @@ console.log(colus)
     position={'top-left'}
           /> */}
         </Canvas>
-        <MyDropzone status={status} />
+        <MyDropzone status={status} setDropped={setDropped} dropped={dropped}/>
         {/* <Picker /> */}
         {/* <Leva
     onClick={(e) => (

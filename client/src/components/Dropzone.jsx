@@ -2,15 +2,20 @@ import axios from 'axios'
 import React, {useCallback, useEffect} from 'react'
 import { useState } from 'react'
 import {useDropzone} from 'react-dropzone'
+import { dropTrigger } from '../features/Colors'
+import {useDispatch} from 'react-redux'
 
 
-function MyDropzone({status}) {
+function MyDropzone({status, setDropped, dropped}) {
 
 const path = 'http://localhost:3001'
+
+const dispatch = useDispatch()
 
 const imgs = [];
 
 const onDrop = useCallback((acceptedFiles) => {
+  
   imgs.push(acceptedFiles[0]);
  
   //   console.log(imgs)
@@ -22,7 +27,9 @@ const onDrop = useCallback((acceptedFiles) => {
       "Content-Type": "multipart/form-data",
     },
   })
-  .then((response) => status.colorList.texture_path = response.data)
+  // .then((response) => status.colorList.texture_path = response.data)
+  // .then(setDropped(dropped +=1))
+  .then((response) => dispatch(dropTrigger(response.data)))
   // .then((response) => console.log('caca', response.data))
   // status.colorList.texture_path = acceptedFiles[0]
 
