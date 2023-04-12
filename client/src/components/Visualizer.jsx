@@ -11,6 +11,9 @@ import { addColor} from "../features/Colors";
 import { Leva, useControls } from "leva";
 import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
+  import { subscribe } from 'valtio'
+
+
 
 function Visualizer({ guitarsList }) {
   const [selectGuitar, setSelectGuitar] = useState("");
@@ -18,18 +21,28 @@ function Visualizer({ guitarsList }) {
   const colus = useSelector((state) => state.colors.value);
   const [colorList, setColorList] = useState(colus);
 
-
+let  cacaProut =2
   const [dropped, setDropped] = useState(0)
 
   const handleSelectGuitar = (e) => {
     const chosen = guitarsList.filter((item) => item.id == e.target.value);
     setColorList(chosen[0]);
-    console.log('CHOOOOZ', status.colorList)
+  //  addColor(chosen[0])
+ dispatch(addColor(status.colorList))
+    console.log('copipipipipipipi')
 
+ cacaProut += 4 
 
   };
 
+
   const dispatch = useDispatch();
+  //   useEffect(() => {
+  //  console.log(cacaProut)
+  //     dispatch(fetchUser(cacaProut));
+  //   }, [dispatch, cacaProut]);
+
+
 
   const status = proxy({
     colorList,
@@ -53,37 +66,40 @@ function Visualizer({ guitarsList }) {
       // texture_path : status.colorList.texture_path
     });
   };
-  
+  //  const snap = useSnapshot(status);
   // console.log('STATUUUUUUUS', status.colorList)
   useEffect(() => {
     // colorList
-    setColorList(colus);
-    dispatch(addColor(status.colorList));
+// async function showChosen(){
 
-
-  }, []);
+//  await dispatch(addColor(colorList));
+//   console.log(status.colorList)
+// }
+//     // console.log('LIST',colorList)
+// //  unsubscribe()
+// showChosen()
+  }, [handleSelectGuitar]);
 
   // console.log(status.colorList.texture_path)
 
 
 
-
   const [allTx, setAllTx] = useState([]);
   // console.log(path)
-  // useEffect(() => {
-  //   console.log('gettxtr')
-  // axios.get("http://localhost:3001/stocked").then((response) => {
-  //     let filesReached = [];
+  useEffect(() => {
+    console.log('gettxtr')
+  axios.get("http://localhost:3001/stocked").then((response) => {
+      let filesReached = [];
 
-  //     filesReached.push(response.data);
-  //     setAllTx(filesReached);
+      filesReached.push(response.data);
+      setAllTx(filesReached);
  
    
       
-  //   });
+    });
 
-  //   // )
-  // }, [dropped]);
+    // )
+  }, []);
 
 
   return (
@@ -100,8 +116,10 @@ function Visualizer({ guitarsList }) {
 
           <ambientLight intensity={1} />
           <Modelos 
-          status={status.colorList} 
-          allTx={allTx} />
+          status={status} 
+          colus = {colus}
+          allTx={allTx}
+          handleSelectGuitar={handleSelectGuitar} />
           {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}
@@ -109,7 +127,7 @@ function Visualizer({ guitarsList }) {
         </Canvas>
         <MyDropzone status={status} setDropped={setDropped} dropped={dropped}/>
         {/* <Picker /> */}
-        {/* <Leva
+        <Leva
     onClick={(e) => (
       e.preventDefault(), 
       // (state.current = e.object.material.name)
@@ -119,7 +137,7 @@ function Visualizer({ guitarsList }) {
         oneLineLabels
         hideTitleBar 
        
-      /> */}
+      />
       </div>
       <button
         style={{ position: "absolute" }}

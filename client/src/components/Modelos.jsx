@@ -19,117 +19,36 @@ import { useControls, buttonGroup } from "leva";
 import { useDispatch, useSelector } from "react-redux";
 import { dropTrigger, addColor } from "../features/Colors";
 
-function Modelos({ status }) {
-  const [state, setState] = useState(status);
+function Modelos({ status, handleSelectGuitar }) {
+
   const ref = useRef();
-let snap = useSnapshot(state, {sync: true})
+  let snap = useSnapshot(status);
   const [hovered, setHovered] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/335whole OPT2.glb");
 
-  useEffect(() => {
-setState(status)
-  }, [state])
-  // const lastTexture = allTx[0];
+
   const path = "http://localhost:3001/";
-  // const colorList = useSelector((state) => state.colors.value);
-console.log('Modelos')
+
+// console.log(status.colorList)
 const dispatch = useDispatch()
-  const controls = useControls({
-    gloss: {
-      value: 0,
-      min: 0,
-      max: 1,
-      step: 0.01,
-    },
-    side: {
-      value: state.side,
-      onChange: (c) => {
-    
-        state.side = c;
-        // dispatch(addColor(state.colorList))
-      },
-    },
-    binding: {
-      value: state.binding,
-      onChange: (c) => {
-        state.binding = c;
-      },
-    },
-    tablefront: {
-      value: state.tablefront,
-      onChange: (c) => {
-        state.tablefront = c;
-      },
-    },
-    tableback: {
-      value: state.tableback,
-      onChange: (c) => {
-        state.tableback = c;
-      },
-    },
-    neckwood: {
-      value: state.neckwood,
-      onChange: (c) => {
-        state.neckwood = c;
-      },
-    },
-    fretboard: {
-      value: state.fretboard,
-      onChange: (c) => {
-        state.fretboard = c;
-      },
-    },
-    fretbinding: {
-      value: state.fretbinding,
-      onChange: (c) => {
-        state.fretbinding = c;
-      },
-    },
-    frets: {
-      value: state.frets,
-      onChange: (c) => {
-        state.frets = c;
-      },
-    },
-    inlay: {
-      value: state.inlay,
-      onChange: (c) => {
-        state.inlay = c;
-      },
-    },
-    nut: {
-      value: state.nut,
-      onChange: (c) => {
-        state.nut = c;
-      },
-    },
-    metalpieces: {
-      value: state.metalpieces,
-      onChange: (c) => {
-        state.metalpieces = c;
-      },
-    },
-    pickup_cover: {
-      value: state.pickup_cover,
-      onChange: (c) => {
-        state.pickup_cover = c;
-      },
-    },
-    pickup_ring: {
-      value: state.pickup_ring,
-      onChange: (c) => {
-        state.pickup_ring = c;
-      },
-    },
-    knobs: {
-      value: state.knobs,
-      onChange: (c) => {
-        state.knobs = c;
-      },
-    },
- 
-   
-  });
+
+
+// const [colorList, setColorList] = useState({
+//   side: "red",
+//   binding: "black",
+//   tablefront: "brown",
+//   tableback: "brown",
+//   neckwood: "brown",
+//   fretboard: "brown",
+//   fretbinding: "white",
+//   frets: "silver",
+//   inlay: "white",
+//   nut: "white",
+//   metalpieces: "silver",
+//   pickup_cover: "silver",
+//   pickup_ring: "silver",
+//   knobs: "silver",
+// });
 
 
 
@@ -139,7 +58,7 @@ const dispatch = useDispatch()
 
 
   useEffect(() => {
-    const cursor = `<svg width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path fill="rgba(255, 255, 255, 0.5)" d="M29.5 54C43.031 54 54 43.031 54 29.5S43.031 5 29.5 5 5 15.969 5 29.5 15.969 54 29.5 54z" stroke="#000"/><g filter="url(#filter0_d)"><path d="M29.5 47C39.165 47 47 39.165 47 29.5S39.165 12 29.5 12 12 19.835 12 29.5 19.835 47 29.5 47z" fill="${snap[hovered]}"/></g><path d="M2 2l11 2.947L4.947 13 2 2z" fill="#000"/><text fill="#000" style="white-space:pre" font-family="Inter var, sans-serif" font-size="10" letter-spacing="-.01em"><tspan x="10" y="63">${hovered}</tspan></text></g><defs><clipPath id="clip0"><path fill="#fff" d="M0 0h64v64H0z"/></clipPath><filter id="filter0_d" x="6" y="8" width="47" height="47" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset dy="2"/><feGaussianBlur stdDeviation="3"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/></filter></defs></svg>`;
+    const cursor = `<svg width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path fill="rgba(255, 255, 255, 0.5)" d="M29.5 54C43.031 54 54 43.031 54 29.5S43.031 5 29.5 5 5 15.969 5 29.5 15.969 54 29.5 54z" stroke="#000"/><g filter="url(#filter0_d)"><path d="M29.5 47C39.165 47 47 39.165 47 29.5S39.165 12 29.5 12 12 19.835 12 29.5 19.835 47 29.5 47z" fill="${snap.colorList[hovered]}"/></g><path d="M2 2l11 2.947L4.947 13 2 2z" fill="#000"/><text fill="#000" style="white-space:pre" font-family="Inter var, sans-serif" font-size="10" letter-spacing="-.01em"><tspan x="10" y="63">${hovered}</tspan></text></g><defs><clipPath id="clip0"><path fill="#fff" d="M0 0h64v64H0z"/></clipPath><filter id="filter0_d" x="6" y="8" width="47" height="47" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset dy="2"/><feGaussianBlur stdDeviation="3"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/></filter></defs></svg>`;
 
     const auto = `<svg width="96" height="64" fill="none" ><path fill="rgba(255, 255, 255, 0.5)" d="M29.5 54C43.031 54 54 43.031 54 29.5S43.031 5 29.5 5 5 15.969 5 29.5 15.969 54 29.5 54z" stroke="#000"/><path d="M2 2l11 2.947L4.947 13 2 2z" fill="#000"/></svg>`;
     if (hovered) {
@@ -151,7 +70,7 @@ const dispatch = useDispatch()
           auto
         )}'), default`);
     }
-  }, [hovered, state]);
+  }, [hovered, status]);
 
   materials.un_black = new THREE.MeshBasicMaterial({ color: "black" });
 
@@ -159,7 +78,7 @@ const dispatch = useDispatch()
     transparent: true,
     opacity: 0.2,
     roughness: 0.01,
-    metalness: controls.gloss,
+    //metalness: controls.gloss,
   });
   (materials.metalpieces.metalness = 1),
     (materials.metalpieces.roughness = 0),
@@ -180,6 +99,112 @@ const dispatch = useDispatch()
 //     // files
 //   );
 
+const [controls, set] = useControls(
+  () =>({
+  gloss: {
+    value: 0,
+    min: 0,
+    max: 1,
+    step: 0.01,
+  },
+  side: {
+    value: status.colorList.side,
+    onChange: (c) => {
+      status.colorList.side = c;
+    },
+  },
+  binding: {
+    value: status.colorList.binding,
+    onChange: (c) => {
+      status.colorList.binding = c;
+    },
+  },
+  tablefront: {
+    value: status.colorList.tablefront,
+    onChange: (c) => {
+      status.colorList.tablefront = c;
+    },
+  },
+  tableback: {
+    value: status.colorList.tableback,
+    onChange: (c) => {
+      status.colorList.tableback = c;
+    },
+  },
+  neckwood: {
+    value: status.colorList.neckwood,
+    onChange: (c) => {
+      status.colorList.neckwood = c;
+    },
+  },
+  fretboard: {
+    value: status.colorList.fretboard,
+    onChange: (c) => {
+      status.colorList.fretboard = c;
+    },
+  },
+  fretbinding: {
+    value: status.colorList.fretbinding,
+    onChange: (c) => {
+      status.colorList.fretbinding = c;
+    },
+  },
+  frets: {
+    value: status.colorList.frets,
+    onChange: (c) => {
+      status.colorList.frets = c;
+    },
+  },
+  inlay: {
+    value: status.colorList.inlay,
+    onChange: (c) => {
+      status.colorList.inlay = c;
+    },
+  },
+  nut: {
+    value: status.colorList.nut,
+    onChange: (c) => {
+      status.colorList.nut = c;
+    },
+  },
+  metalpieces: {
+    value: status.colorList.metalpieces,
+    onChange: (c) => {
+      status.colorList.metalpieces = c;
+    },
+  },
+  pickup_cover: {
+    value: status.colorList.pickup_cover,
+    onChange: (c) => {
+      status.colorList.pickup_cover = c;
+    },
+  },
+  pickup_ring: {
+    value: status.colorList.pickup_ring,
+    onChange: (c) => {
+      status.colorList.pickup_ring = c;
+    },
+  },
+  knobs: {
+    value: status.colorList.knobs,
+    onChange: (c) => {
+      set({side : c});
+    },
+    
+  },
+
+  
+})
+
+);
+
+useEffect(() =>{
+dispatch(addColor(status.colorList))
+}, [handleSelectGuitar])
+
+console.log(set)
+
+
   return (
     <>
       <group
@@ -191,9 +216,13 @@ const dispatch = useDispatch()
           e.stopPropagation(), setHovered(e.object.material.name)
         )}
         onPointerOut={(e) => e.intersections.length === 0 && setHovered(null)}
-        onPointerMissed={() => (state.current = null)}
-        // onPointerUp={dispatch(addColor(state.colorList))}
-        // onClick={(e) =>
+        onPointerMissed={() => (status.current = null)}
+        onPointerUp={dispatch(addColor(status.colorList))}
+        // onUpdate={(self) => 
+        //   // dispatch(addColor(self.colorList))
+        //   // console.log(self)
+        // }
+        // // onClick={(e) =>
         //   // e.stopPropagation(), (state.current = e.object.material.name)
         //   console.log(e)
         // }
@@ -204,7 +233,7 @@ const dispatch = useDispatch()
           receiveShadow
           geometry={nodes.side.geometry}
           material={materials.side}
-          material-color={snap.side}
+          material-color={snap.colorList.side}
         />
 
         <mesh
@@ -212,21 +241,21 @@ const dispatch = useDispatch()
           receiveShadow
           geometry={nodes.binding.geometry}
           material={materials.binding}
-          material-color={snap.binding}
+          material-color={snap.colorList.binding}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.tableback.geometry}
           material={materials.tableback}
-          material-color={snap.tableback}
+          material-color={snap.colorList.tableback}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.tablefront.geometry}
           material={materials.tablefront}
-          material-color={snap.tablefront}
+          material-color={snap.colorList.tablefront}
           side={THREE.FrontSide}
         >
           {/* <Decal mesh={ref}>
@@ -247,84 +276,84 @@ const dispatch = useDispatch()
           receiveShadow
           geometry={nodes.inlay.geometry}
           material={materials.inlay}
-          material-color={snap.inlay}
+          material-color={snap.colorList.inlay}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.jackinput.geometry}
           material={materials.metalpieces}
-          material-color={snap.metalpieces}
+          material-color={snap.colorList.metalpieces}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.fretbinding.geometry}
           material={materials.fretbinding}
-          material-color={snap.fretbinding}
+          material-color={snap.colorList.fretbinding}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.fretboard.geometry}
           material={materials.fretboard}
-          material-color={snap.fretboard}
+          material-color={snap.colorList.fretboard}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.frets.geometry}
           material={materials.frets}
-          material-color={snap.frets}
+          material-color={snap.colorList.frets}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.knobs.geometry}
           material={materials.knobs}
-          material-color={snap.knobs}
+          material-color={snap.colorList.knobs}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.nut.geometry}
           material={materials.nut}
-          material-color={snap.nut}
+          material-color={snap.colorList.nut}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.neckwood.geometry}
           material={materials.neckwood}
-          material-color={snap.neckwood}
+          material-color={snap.colorList.neckwood}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.pickup_cover.geometry}
           material={materials.pickup_cover}
-          material-color={snap.pickup_cover}
+          material-color={snap.colorList.pickup_cover}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.pickup_ring.geometry}
           material={materials.pickup_ring}
-          material-color={snap.pickup_ring}
+          material-color={snap.colorList.pickup_ring}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.mechs.geometry}
           material={materials.metalpieces}
-          material-color={snap.metalpieces}
+          material-color={snap.colorList.metalpieces}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.selector.geometry}
           material={materials.metalpieces}
-          material-color={snap.metalpieces}
+          material-color={snap.colorList.metalpieces}
         />
         <mesh
           castShadow

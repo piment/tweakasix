@@ -25,6 +25,7 @@ export const colorSlice = createSlice({
 
   reducers: {
     addColor: (state, action) => {
+      console.log(action.payload.side)
       state.value.side = action.payload.side;
       state.value.binding = action.payload.binding;
       state.value.tableback = action.payload.tableback;
@@ -52,7 +53,9 @@ export const colorSlice = createSlice({
     //   // state[action.payload.part] =  action.payload.color
     // }
   },
+  
 });
+
 
 export const { addColor, dropTrigger, setColor} = colorSlice.actions;
 export default colorSlice.reducer;
