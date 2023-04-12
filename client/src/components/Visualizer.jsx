@@ -24,7 +24,9 @@ function Visualizer({ guitarsList }) {
   const handleSelectGuitar = (e) => {
     const chosen = guitarsList.filter((item) => item.id == e.target.value);
     setColorList(chosen[0]);
-    // dispatch(addColor(chosen[0]));
+    console.log('CHOOOOZ', status.colorList)
+
+
   };
 
   const dispatch = useDispatch();
@@ -52,14 +54,14 @@ function Visualizer({ guitarsList }) {
     });
   };
   
-  console.log('STATUUUUUUUS', status.colorList)
+  // console.log('STATUUUUUUUS', status.colorList)
   useEffect(() => {
     // colorList
     setColorList(colus);
     dispatch(addColor(status.colorList));
 
 
-  }, [status]);
+  }, []);
 
   // console.log(status.colorList.texture_path)
 
@@ -82,7 +84,7 @@ function Visualizer({ guitarsList }) {
 
   //   // )
   // }, [dropped]);
-  console.log(status)
+
 
   return (
     <div className="mainviz">
@@ -97,7 +99,9 @@ function Visualizer({ guitarsList }) {
           <Environment preset="city" background blur={2} />
 
           <ambientLight intensity={1} />
-          <Modelos status={status} allTx={allTx} />
+          <Modelos 
+          status={status.colorList} 
+          allTx={allTx} />
           {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}

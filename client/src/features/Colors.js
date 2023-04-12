@@ -19,7 +19,7 @@ export const colorSlice = createSlice({
       pickup_ring: "#ffffff",
       neckwood: "#ffffff",
       metalpieces: "#ffffff",
-      texture_path : "stocked/1681244850051.png"
+      // texture_path : "stocked/1681244850051.png"
     }
   },
 
@@ -42,15 +42,15 @@ export const colorSlice = createSlice({
       // state.value.texture_path = action.payload.texture_path
 
     },
-    dropTrigger: (state, action) => {
-    //   // console.log('prems' + state.value)
-     state.value.texture_path = action.payload
-    //  console.log('deuz', state.value)
-    },
-    setColor : (state, action) => {
-      console.log(action.payload)
-      // state[action.payload.part] =  action.payload.color
-    }
+    // dropTrigger: (state, action) => {
+    // //   // console.log('prems' + state.value)
+    //  state.value.texture_path = action.payload
+    // //  console.log('deuz', state.value)
+    // },
+    // setColor : (state, action) => {
+    //   console.log(action.payload)
+    //   // state[action.payload.part] =  action.payload.color
+    // }
   },
 });
 
