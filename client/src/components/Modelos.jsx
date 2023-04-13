@@ -108,9 +108,14 @@ const [controls, set] = useControls(
     step: 0.01,
   },
   side: {
-    value: status.colorList.side,
+    // value: status.colorList.side,
+    // onChange: (c) => {
+    //   status.colorList.side = c;
+    // },
+    value: materials.side.color,
     onChange: (c) => {
-      status.colorList.side = c;
+      // materials.side.color = c;
+      console.log(materials.side.color, c)
     },
   },
   binding: {
