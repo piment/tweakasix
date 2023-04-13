@@ -19,7 +19,7 @@ import { useControls, buttonGroup } from "leva";
 import { useDispatch, useSelector } from "react-redux";
 import { dropTrigger, addColor } from "../features/Colors";
 
-function Modelos({ status, handleSelectGuitar }) {
+function Modelos({ status, handleSelectGuitar, setColorList }) {
 
   const ref = useRef();
   let snap = useSnapshot(status);
@@ -99,7 +99,10 @@ const dispatch = useDispatch()
 //     // files
 //   );
 
-const [controls, set] = useControls(
+
+
+// console.log('#'+materials.side.color.getHex())
+const controls = useControls(
   () =>({
   gloss: {
     value: 0,
@@ -108,95 +111,93 @@ const [controls, set] = useControls(
     step: 0.01,
   },
   side: {
-    // value: status.colorList.side,
-    // onChange: (c) => {
-    //   status.colorList.side = c;
-    // },
-    value: materials.side.color,
+    value: status.colorList.side,
     onChange: (c) => {
-      // materials.side.color = c;
-      console.log(materials.side.color, c)
+      setColorList({...status.colorList.side, side :c});
+      
     },
+
   },
   binding: {
     value: status.colorList.binding,
     onChange: (c) => {
-      status.colorList.binding = c;
+      console.log('BINDING')
+      setColorList({...status.colorList.binding, binding :c});
     },
   },
   tablefront: {
     value: status.colorList.tablefront,
     onChange: (c) => {
-      status.colorList.tablefront = c;
+      setColorList({...status.colorList.tablefront, tablefront :c});
     },
   },
   tableback: {
     value: status.colorList.tableback,
     onChange: (c) => {
-      status.colorList.tableback = c;
+      setColorList({...status.colorList.tableback, side :c});
     },
   },
   neckwood: {
     value: status.colorList.neckwood,
     onChange: (c) => {
-      status.colorList.neckwood = c;
+            setColorList({...status.colorList.neckwood, neckwood :c});
     },
   },
   fretboard: {
     value: status.colorList.fretboard,
     onChange: (c) => {
-      status.colorList.fretboard = c;
+            setColorList({...status.colorList.fretboard, fretboard :c});
     },
   },
   fretbinding: {
     value: status.colorList.fretbinding,
     onChange: (c) => {
-      status.colorList.fretbinding = c;
+            setColorList({...status.colorList.fretbinding, fretbinding :c});
     },
   },
   frets: {
     value: status.colorList.frets,
     onChange: (c) => {
-      status.colorList.frets = c;
+            setColorList({...status.colorList.frets, frets :c});
     },
   },
   inlay: {
     value: status.colorList.inlay,
     onChange: (c) => {
-      status.colorList.inlay = c;
+            setColorList({...status.colorList.inlay, inlay :c});
     },
   },
   nut: {
     value: status.colorList.nut,
     onChange: (c) => {
-      status.colorList.nut = c;
+            setColorList({...status.colorList.nut, nut :c});
     },
   },
   metalpieces: {
     value: status.colorList.metalpieces,
     onChange: (c) => {
-      status.colorList.metalpieces = c;
+            setColorList({...status.colorList.metalpieces, metalpieces :c});
     },
   },
   pickup_cover: {
     value: status.colorList.pickup_cover,
     onChange: (c) => {
-      status.colorList.pickup_cover = c;
+            setColorList({...status.colorList.pickup_cover, pickup_cover :c});
     },
   },
   pickup_ring: {
     value: status.colorList.pickup_ring,
     onChange: (c) => {
-      status.colorList.pickup_ring = c;
+            setColorList({...status.colorList.pickup_ring, pickup_ring :c});
     },
   },
-  knobs: {
-    value: status.colorList.knobs,
-    onChange: (c) => {
-      set({side : c});
-    },
+  // knobs: {
+  //   value: status.colorList.knobs,
+  //   onChange: (c) => {
+  //          setColorList({...status.colorList.knobs, knobs :c});
+  //   },
     
-  },
+  // },
 
   
 })
@@ -205,11 +206,11 @@ const [controls, set] = useControls(
 
 useEffect(() =>{
 dispatch(addColor(status.colorList))
-}, [handleSelectGuitar])
+}, [setColorList])
 
-console.log(set)
+// console.log(set)
 
-
+// console.log(controls);
   return (
     <>
       <group

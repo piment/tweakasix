@@ -5,6 +5,7 @@ export const colorSlice = createSlice({
   name: "colors",
   initialState: {
  value :{
+  id:0,
       side: "#ffffff",
       binding: "#ffffff",
       tablefront: "#ffffff",
@@ -19,13 +20,14 @@ export const colorSlice = createSlice({
       pickup_ring: "#ffffff",
       neckwood: "#ffffff",
       metalpieces: "#ffffff",
-      // texture_path : "stocked/1681244850051.png"
+      texture_path : "stocked/1681244850051.png"
     }
   },
 
   reducers: {
     addColor: (state, action) => {
-      console.log(action.payload.side)
+      // console.log(state.value.binding)
+      state.value.id = action.payload.id
       state.value.side = action.payload.side;
       state.value.binding = action.payload.binding;
       state.value.tableback = action.payload.tableback;
@@ -40,7 +42,7 @@ export const colorSlice = createSlice({
       state.value.pickup_ring = action.payload.pickup_ring;
       state.value.neckwood = action.payload.neckwood;
       state.value.metalpieces = action.payload.metalpieces;
-      // state.value.texture_path = action.payload.texture_path
+      state.value.texture_path = action.payload.texture_path
 
     },
     // dropTrigger: (state, action) => {

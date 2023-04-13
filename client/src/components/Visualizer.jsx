@@ -23,12 +23,13 @@ function Visualizer({ guitarsList }) {
 
 let  cacaProut =2
   const [dropped, setDropped] = useState(0)
-
+ const dispatch = useDispatch();
   const handleSelectGuitar = (e) => {
     const chosen = guitarsList.filter((item) => item.id == e.target.value);
     setColorList(chosen[0]);
   //  addColor(chosen[0])
- dispatch(addColor(status.colorList))
+  dispatch(addColor(status.colorList))
+  console.log(status.colorList.id)
     console.log('copipipipipipipi')
 
  cacaProut += 4 
@@ -36,7 +37,7 @@ let  cacaProut =2
   };
 
 
-  const dispatch = useDispatch();
+ 
   //   useEffect(() => {
   //  console.log(cacaProut)
   //     dispatch(fetchUser(cacaProut));
@@ -63,7 +64,7 @@ let  cacaProut =2
       pickup_cover: status.colorList.pickup_cover,
       pickup_ring: status.colorList.pickup_ring,
       knobs: status.colorList.knobs,
-      // texture_path : status.colorList.texture_path
+      texture_path : status.colorList.texture_path
     });
   };
   //  const snap = useSnapshot(status);
@@ -117,6 +118,7 @@ let  cacaProut =2
           <ambientLight intensity={1} />
           <Modelos 
           status={status} 
+          setColorList={setColorList}
           colus = {colus}
           allTx={allTx}
           handleSelectGuitar={handleSelectGuitar} />
@@ -128,14 +130,14 @@ let  cacaProut =2
         <MyDropzone status={status} setDropped={setDropped} dropped={dropped}/>
         {/* <Picker /> */}
         <Leva
-    onClick={(e) => (
-      e.preventDefault(), 
+    onChange={(e) => (
+      // e.preventDefault(), 
       // (state.current = e.object.material.name)
     console.log(e)
       )}
         flat 
         oneLineLabels
-        hideTitleBar 
+        // hideTitleBar 
        
       />
       </div>
