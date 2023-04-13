@@ -26,7 +26,6 @@ export const colorSlice = createSlice({
 
   reducers: {
     addColor: (state, action) => {
-      // console.log(state.value.binding)
       state.value.id = action.payload.id
       state.value.side = action.payload.side;
       state.value.binding = action.payload.binding;
@@ -43,7 +42,7 @@ export const colorSlice = createSlice({
       state.value.neckwood = action.payload.neckwood;
       state.value.metalpieces = action.payload.metalpieces;
       state.value.texture_path = action.payload.texture_path
-
+return
     },
     // dropTrigger: (state, action) => {
     // //   // console.log('prems' + state.value)
