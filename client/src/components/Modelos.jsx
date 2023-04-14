@@ -18,7 +18,6 @@ import { HexColorPicker } from "react-colorful";
 import { useControls, buttonGroup } from "leva";
 import { useDispatch, useSelector } from "react-redux";
 import { dropTrigger, addColor } from "../features/Colors";
-import Controls from "./Controls";
 
 function Modelos({ trig, setColorList, colorList }) {
 
@@ -79,7 +78,7 @@ const dispatch = useDispatch()
     transparent: true,
     opacity: 0.2,
     roughness: 0.01,
-    // metalness: controls.gloss,
+    //metalness: controls.gloss,
   });
   (materials.metalpieces.metalness = 1),
     (materials.metalpieces.roughness = 0),
@@ -101,13 +100,16 @@ const texture_path = useSelector((state) => state.colors.value.texture_path)
 //   );
 
 
+useLayoutEffect(() =>{
   // async function getCols(){
 
   //   await setColorList(addColor(colorList))
   // }
   //  getCols()
   // .then(setColorList(colorList))
-
+  console.log('EFFFEEEECT')
+  }, [colorList])
+  
 
 // useEffect(() => {
 //   const fetchData = async () => {
@@ -124,8 +126,119 @@ const texture_path = useSelector((state) => state.colors.value.texture_path)
 //   return <div>Loading...</div>;
 // }
 
+const controls = useControls(
+  () =>({
+  gloss: {
+    value: 0,
+    min: 0,
+    max: 1,
+    step: 0.01,
+  },
+  id:{
+    value : colorList.id,
+    onChange:(c)=> {
+      setColorList({...colorList.side, side :c});
+    }
+  },
+  side: {
+    value: colorList.side,
+    onChange: (c) => {
 
-// console.log(Controls.side)
+      setColorList((prev) => ( {...prev, side :c}));
+     
+    },
+  },
+  binding: {
+    value: colorList.binding,
+    onChange: (c) => {
+      console.log('BINDING')
+      setColorList({...colorList.binding, binding :c});
+    },
+  },
+  tablefront: {
+    value: colorList.tablefront,
+    onChange: (c) => {
+      setColorList({...colorList.tablefront, tablefront :c});
+    },
+  },
+  tableback: {
+    value: colorList.tableback,
+    onChange: (c) => {
+      setColorList({...colorList.tableback, side :c});
+    },
+  },
+  neckwood: {
+    value: colorList.neckwood,
+    onChange: (c) => {
+            setColorList({...colorList.neckwood, neckwood :c});
+    },
+  },
+  fretboard: {
+    value: colorList.fretboard,
+    onChange: (c) => {
+            setColorList({...colorList.fretboard, fretboard :c});
+    },
+  },
+  fretbinding: {
+    value: colorList.fretbinding,
+    onChange: (c) => {
+            setColorList({...colorList.fretbinding, fretbinding :c});
+    },
+  },
+  frets: {
+    value: colorList.frets,
+    onChange: (c) => {
+            setColorList({...colorList.frets, frets :c});
+    },
+  },
+  inlay: {
+    value: colorList.inlay,
+    onChange: (c) => {
+            setColorList({...colorList.inlay, inlay :c});
+    },
+  },
+  nut: {
+    value: colorList.nut,
+    onChange: (c) => {
+            setColorList({...colorList.nut, nut :c});
+    },
+  },
+  metalpieces: {
+    value: colorList.metalpieces,
+    onChange: (c) => {
+            setColorList({...colorList.metalpieces, metalpieces :c});
+    },
+  },
+  pickup_cover: {
+    value: colorList.pickup_cover,
+    onChange: (c) => {
+            setColorList({...colorList.pickup_cover, pickup_cover :c});
+    },
+  },
+  pickup_ring: {
+    value: colorList.pickup_ring,
+    onChange: (c) => {
+            setColorList({...colorList.pickup_ring, pickup_ring :c});
+    },
+   
+  },
+  // knobs: {
+  //   value: status.colorList.knobs,
+  //   onChange: (c) => {
+  //          setColorList({...status.colorList.knobs, knobs :c});
+  //   },
+    
+  // },
+
+  
+}
+),
+// [trig === true],
+
+);
+
+
+
 // console.log(set)
 
 // console.log(controls);

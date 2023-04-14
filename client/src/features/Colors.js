@@ -5,7 +5,7 @@ export const colorSlice = createSlice({
   name: "colors",
   initialState: {
  value :{
-  id:"40",
+  id:0,
       side: "#ffffff",
       binding: "#ffffff",
       tablefront: "#ffffff",
