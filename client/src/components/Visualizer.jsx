@@ -24,8 +24,8 @@ function Visualizer({ guitarsList }) {
 
 
   const [colorList, setColorList] = useState(colus); 
+  const [clickedPart, setClickedPart] = useState('')
 
-  const [trig, setTrig] = useState(false)
 
   const [dropped, setDropped] = useState(0)
  const dispatch = useDispatch();
@@ -111,6 +111,7 @@ function Visualizer({ guitarsList }) {
           fallback={null}
           camera={{ position: [0, 0, 2], fov: 40 }}
           shadows
+          onPointerOut={() => setTimeout(() => setClickedPart(''), 2000)}
         >
           <OrbitControls />
           <Environment preset="city" background blur={2} />
@@ -122,7 +123,9 @@ function Visualizer({ guitarsList }) {
           colorList={colorList}
           colus = {colus}
           allTx={allTx}
-          trig={trig} />
+          clickedPart={clickedPart}
+          setClickedPart={setClickedPart}
+          />
           {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}
@@ -130,16 +133,16 @@ function Visualizer({ guitarsList }) {
         </Canvas>
         <MyDropzone status={status} setDropped={setDropped} dropped={dropped}/>
         {/* <Picker /> */}
-<Tweaker colorList={colorList} setColorList={setColorList}/>
+<Tweaker colorList={colorList} setColorList={setColorList}  clickedPart={clickedPart}/>
       </div>
       <button
-        style={{ position: "absolute" }}
+        // style={{ position: "absolute" }}
         onClick={(e) => (e.stopPropagation(), addGuitar())}
       >
         Save this guitar
       </button>
       <div>
-        {" "}
+     
         <select
           name=""
           id=""

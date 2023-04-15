@@ -33,3 +33,13 @@ margin-bottom: 10vh;
     height: 90px !important;
   }
   
+#clickedPart .p-inputtext {
+  padding: 1.5rem 1.5rem !important;
+}
+
+
+.pickers-main {
+  /* border : red solid 2px; */
+  display: flex;
+  justify-content: space-evenly;
+}
