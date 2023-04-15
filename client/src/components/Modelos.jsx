@@ -100,8 +100,7 @@ useEffect(() => {
         // }
         onPointerUp={(e) =>{
      e.stopPropagation(), setClickedPart(hovered)
-          console.log(clickedPart)}
-        }
+         } }
         
       >
         <mesh

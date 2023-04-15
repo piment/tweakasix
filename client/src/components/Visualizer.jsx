@@ -87,7 +87,7 @@ function Visualizer({ guitarsList }) {
   const [allTx, setAllTx] = useState([]);
   // console.log(path)
   useEffect(() => {
-    console.log('gettxtr')
+
   axios.get("http://localhost:3001/stocked").then((response) => {
       let filesReached = [];
 
@@ -134,14 +134,15 @@ function Visualizer({ guitarsList }) {
         <MyDropzone status={status} setDropped={setDropped} dropped={dropped}/>
         {/* <Picker /> */}
 <Tweaker colorList={colorList} setColorList={setColorList}  clickedPart={clickedPart}/>
-      </div>
+      </div> 
+       <div id="select-guitarset">
       <button
         // style={{ position: "absolute" }}
         onClick={(e) => (e.stopPropagation(), addGuitar())}
       >
         Save this guitar
       </button>
-      <div>
+    
      
         <select
           name=""

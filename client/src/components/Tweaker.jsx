@@ -19,6 +19,7 @@ import { useControls, buttonGroup } from "leva";
 import { useDispatch, useSelector } from "react-redux";
 import { dropTrigger, addColor } from "../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
+import { Slider } from 'primereact/slider';
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
@@ -26,12 +27,14 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
 
   // const actual = useRef(null)
   const dispatch = useDispatch();
-  console.log(clickedPart)
+
+  const [gloss, setGloss] = useState(0)
 
   return (
     <>
  <div className="pickers-main">
-      <ColorPicker  
+    <div className="pickers-colors"> 
+    <ColorPicker  
        id={clickedPart === 'side' ? 'clickedPart' : ''}
     name='side'
         value={colorList.side}
@@ -134,7 +137,13 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
           setColorList({ ...colorList, metalpieces: `#${e.value}` })
         }
       />
+</div> 
+      <div className="pickers-sliders">
+      <Slider value={gloss} onChange={(e) => setGloss(e.value)} min={0} max={100} />
       </div>
+      </div>
+
+
     </>
   );
 }
