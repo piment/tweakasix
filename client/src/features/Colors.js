@@ -8,7 +8,7 @@ export const guitarSlice = createSlice({
   id:0,
       side: "#ffffff",
       binding: "#ffffff",
-      tablefront: "#00ff00",
+      tablefront: "#ffffff",
       tableback: "#ffffff",
       fretbinding: "#ffffff",
       fretboard: "#ffffff",
@@ -20,12 +20,14 @@ export const guitarSlice = createSlice({
       pickup_ring: "#ffffff",
       neckwood: "#ffffff",
       metalpieces: "#ffffff",
-      texture_path : "stocked/1681244850051.png"
-    }
+      gloss : 50,
+      texture_path : "stocked/1681217837265.png",
+    },
   },
 
   reducers: {
     addColor: (state, action) => {
+      console.log(action.payload)
       state.colorSet.id = action.payload.id
       state.colorSet.side = action.payload.side;
       state.colorSet.binding = action.payload.binding;
@@ -42,6 +44,7 @@ export const guitarSlice = createSlice({
       state.colorSet.neckwood = action.payload.neckwood;
       state.colorSet.metalpieces = action.payload.metalpieces;
       state.colorSet.texture_path = action.payload.texture_path
+      state.gloss = action.payload.gloss
 return
     },
   },

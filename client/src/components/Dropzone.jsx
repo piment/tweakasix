@@ -2,11 +2,11 @@ import axios from 'axios'
 import React, {useCallback, useEffect} from 'react'
 import { useState } from 'react'
 import {useDropzone} from 'react-dropzone'
-import { dropTrigger } from '../features/Colors'
+import { addColor } from '../features/Colors'
 import {useDispatch} from 'react-redux'
 
 
-function MyDropzone({status, setDropped, dropped}) {
+function MyDropzone({colorList, setColorList, setDropped}) {
 
 const path = 'http://localhost:3001'
 
@@ -29,8 +29,9 @@ const onDrop = useCallback((acceptedFiles) => {
   })
   // .then((response) => status.colorList.texture_path = response.data)
   // .then(setDropped(dropped +=1))
-  .then((response) => dispatch(dropTrigger(response.data)))
-  // .then((response) => console.log('caca', response.data))
+  // .then((response) => dispatch(addColor({texture_path : response.data})))
+  .then((response) => setColorList({...colorList, texture_path : response.data}))
+  .then(dispatch(addColor(colorList)))
   // status.colorList.texture_path = acceptedFiles[0]
 
 }, []);

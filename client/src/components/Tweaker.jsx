@@ -28,7 +28,7 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
-  const [gloss, setGloss] = useState(0)
+ 
 
   return (
     <>
@@ -139,7 +139,10 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
       />
 </div> 
       <div className="pickers-sliders">
-      <Slider value={gloss} onChange={(e) => setGloss(e.value)} min={0} max={100} />
+      <Slider value={colorList.gloss} defaultValue={50}
+      onChange={(e) => setColorList({...colorList, gloss : e.value})} 
+      onPointerUp={() => dispatch(addColor(colorList))}
+      min={0} max={100} />
       </div>
       </div>
 
