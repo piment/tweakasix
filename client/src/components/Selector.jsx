@@ -40,6 +40,7 @@ body, neck, pickup1, pickup2
   const getGuitars = () =>{
     axios.get("http://localhost:3001/items/getguitars",{}).then((res) => {
 setGuitarsList(res.data)
+
     })
   }
 
@@ -87,7 +88,7 @@ setGuitarsList(res.data)
       <span> {pickup2.name} </span> <span>{pickup2.price}$</span>
       </div > 
        <h3>{total}$</h3>
-      <button onClick={addGuitar}>Save this guitar</button>
+      <button onClick={()=> {addGuitar, getGuitars()}}>Save this guitar</button>
       <button
       //  style={{position : 'absolute', left: '400px'}}
       // onClick={addGuitar}

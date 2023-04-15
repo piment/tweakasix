@@ -11,11 +11,7 @@ import { addColor } from '../features/Colors';
 function Home() {
   const dispatch = useDispatch()
 
-const colorList = useSelector((state) => state.colors.value)
-useEffect(()=> {
 
-  console.log('home' ,colorList)
-},)
 
   return (
     <div className='home'>  
