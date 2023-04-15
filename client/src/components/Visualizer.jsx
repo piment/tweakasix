@@ -19,29 +19,11 @@ import Tweaker from "./Tweaker";
 function Visualizer({ guitarsList }) {
   const [selectGuitar, setSelectGuitar] = useState("");
 
-  const colus = useSelector((state) => state.colors.value);
-
-const  colus2 ={
-  id:0,
-      side: "#ffffff",
-      binding: "#ffffff",
-      tablefront: "#ffffff",
-      tableback: "#ffffff",
-      fretbinding: "#ffffff",
-      fretboard: "#ffffff",
-      inlay: "#ffffff",
-      nut: "#ffffff",
-      frets: "#ffffff",
-      knobs: "#ffffff",
-      pickup_cover: "#ffffff",
-      pickup_ring: "#ffffff",
-      neckwood: "#ffffff",
-      metalpieces: "#ffffff",
-      texture_path : "stocked/1681244850051.png"
-    }
+  const colus = useSelector((state) => state.guitar_set.colorSet);
 
 
-  const [colorList, setColorList] = useState(colus2); 
+
+  const [colorList, setColorList] = useState(colus); 
 
   const [trig, setTrig] = useState(false)
 
@@ -51,9 +33,7 @@ const  colus2 ={
 
     const chosen = guitarsList.filter((item) => item.id == e.target.value);
   await  setColorList( chosen[0]);
-  //  addColor(chosen[0])
-  // setColorList((colorList))
-// dispatch(addColor(colorList))
+
 
 
   };
@@ -135,7 +115,7 @@ const  colus2 ={
           <OrbitControls />
           <Environment preset="city" background blur={2} />
 
-          <ambientLight intensity={1} />
+          <ambientLight intensity={0.5} />
           <Modelos 
           status={status} 
           setColorList={setColorList}

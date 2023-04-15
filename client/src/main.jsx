@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import {configureStore} from '@reduxjs/toolkit'
 import {Provider} from 'react-redux'
-import colorReducer from './features/Colors'
+import guitarReducer from './features/Colors'
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 const store = configureStore({
   reducer:{
-colors : colorReducer
+guitar_set : guitarReducer
   }
 },
 // applyMiddleware(thunk)

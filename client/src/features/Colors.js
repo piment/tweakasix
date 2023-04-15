@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios'
 
-export const colorSlice = createSlice({
-  name: "colors",
+export const guitarSlice = createSlice({
+  name: "guitar_set",
   initialState: {
- value :{
+ colorSet :{
   id:0,
       side: "#ffffff",
       binding: "#ffffff",
-      tablefront: "#ffffff",
+      tablefront: "#00ff00",
       tableback: "#ffffff",
       fretbinding: "#ffffff",
       fretboard: "#ffffff",
@@ -26,37 +26,28 @@ export const colorSlice = createSlice({
 
   reducers: {
     addColor: (state, action) => {
-      state.value.id = action.payload.id
-      state.value.side = action.payload.side;
-      state.value.binding = action.payload.binding;
-      state.value.tableback = action.payload.tableback;
-      state.value.tablefront = action.payload.tablefront;
-      state.value.fretbinding = action.payload.fretbinding;
-      state.value.fretboard = action.payload.fretboard;
-      state.value.inlay = action.payload.inlay;
-      state.value.nut = action.payload.nut;
-      state.value.frets = action.payload.frets;
-      state.value.knobs = action.payload.knobs;
-      state.value.pickup_cover = action.payload.pickup_cover;
-      state.value.pickup_ring = action.payload.pickup_ring;
-      state.value.neckwood = action.payload.neckwood;
-      state.value.metalpieces = action.payload.metalpieces;
-      state.value.texture_path = action.payload.texture_path
+      state.colorSet.id = action.payload.id
+      state.colorSet.side = action.payload.side;
+      state.colorSet.binding = action.payload.binding;
+      state.colorSet.tableback = action.payload.tableback;
+      state.colorSet.tablefront = action.payload.tablefront;
+      state.colorSet.fretbinding = action.payload.fretbinding;
+      state.colorSet.fretboard = action.payload.fretboard;
+      state.colorSet.inlay = action.payload.inlay;
+      state.colorSet.nut = action.payload.nut;
+      state.colorSet.frets = action.payload.frets;
+      state.colorSet.knobs = action.payload.knobs;
+      state.colorSet.pickup_cover = action.payload.pickup_cover;
+      state.colorSet.pickup_ring = action.payload.pickup_ring;
+      state.colorSet.neckwood = action.payload.neckwood;
+      state.colorSet.metalpieces = action.payload.metalpieces;
+      state.colorSet.texture_path = action.payload.texture_path
 return
     },
-    // dropTrigger: (state, action) => {
-    // //   // console.log('prems' + state.value)
-    //  state.value.texture_path = action.payload
-    // //  console.log('deuz', state.value)
-    // },
-    // setColor : (state, action) => {
-    //   console.log(action.payload)
-    //   // state[action.payload.part] =  action.payload.color
-    // }
   },
   
 });
 
 
-export const { addColor, dropTrigger, setColor} = colorSlice.actions;
-export default colorSlice.reducer;
+export const { addColor, dropTrigger, setColor} = guitarSlice.actions;
+export default guitarSlice.reducer;
