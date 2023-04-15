@@ -12,6 +12,7 @@ import { Leva, useControls } from "leva";
 import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
   import { subscribe } from 'valtio'
+import Tweaker from "./Tweaker";
 
 
 
@@ -19,33 +20,48 @@ function Visualizer({ guitarsList }) {
   const [selectGuitar, setSelectGuitar] = useState("");
 
   const colus = useSelector((state) => state.colors.value);
-  const [colorList, setColorList] = useState(colus);
+
+const  colus2 ={
+  id:0,
+      side: "#ffffff",
+      binding: "#ffffff",
+      tablefront: "#ffffff",
+      tableback: "#ffffff",
+      fretbinding: "#ffffff",
+      fretboard: "#ffffff",
+      inlay: "#ffffff",
+      nut: "#ffffff",
+      frets: "#ffffff",
+      knobs: "#ffffff",
+      pickup_cover: "#ffffff",
+      pickup_ring: "#ffffff",
+      neckwood: "#ffffff",
+      metalpieces: "#ffffff",
+      texture_path : "stocked/1681244850051.png"
+    }
+
+
+  const [colorList, setColorList] = useState(colus2); 
+
   const [trig, setTrig] = useState(false)
 
   const [dropped, setDropped] = useState(0)
  const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
-    setTrig(!trig)
+
     const chosen = guitarsList.filter((item) => item.id == e.target.value);
   await  setColorList( chosen[0]);
   //  addColor(chosen[0])
   // setColorList((colorList))
-addColor(colorList)
-console.log(colorList)
-setTimeout(() => {
-  setTrig(!trig)
-}, 1000);
+// dispatch(addColor(colorList))
+
+
   };
 
 
 
 
  
-  //   useEffect(() => {
-  //  console.log(cacaProut)
-  //     dispatch(fetchUser(cacaProut));
-  //   }, [dispatch, cacaProut]);
-
 
 
   // const status = proxy({
@@ -110,6 +126,7 @@ setTimeout(() => {
     <div className="mainviz">
       <div className="visualizer">
         <Canvas
+        
           className="canvas"
           fallback={null}
           camera={{ position: [0, 0, 2], fov: 40 }}
@@ -133,17 +150,7 @@ setTimeout(() => {
         </Canvas>
         <MyDropzone status={status} setDropped={setDropped} dropped={dropped}/>
         {/* <Picker /> */}
-        <Leva
-    onChange={(e) => (
-      // e.preventDefault(), 
-      // (state.current = e.object.material.name)
-    console.log(e)
-      )}
-        flat 
-        oneLineLabels
-        // hideTitleBar 
-       
-      />
+<Tweaker colorList={colorList} setColorList={setColorList}/>
       </div>
       <button
         style={{ position: "absolute" }}
