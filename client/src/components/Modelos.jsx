@@ -56,7 +56,7 @@ useEffect(() => {
 
 
   materials.un_black = new THREE.MeshBasicMaterial({ color: "black" });
-
+   materials.strings = new THREE.MeshLambertMaterial({color :"#595959"})
   materials.varnish = new THREE.MeshStandardMaterial({
     transparent: true,
     opacity: 0.2,
@@ -68,7 +68,7 @@ useEffect(() => {
     (materials.pickup_cover.metalness = 1),
     (materials.pickup_cover.roughness = 0);
 
-
+console.log(materials.strings)
 
 
 const texture_path = useSelector((state) => state.guitar_set.colorSet.texture_path)
