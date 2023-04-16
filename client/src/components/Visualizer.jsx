@@ -28,6 +28,7 @@ function Visualizer({ guitarsList }) {
   const [selectGuitar, setSelectGuitar] = useState("");
 
   const colus = useSelector((state) => state.guitar_set.colorSet);
+  const triggs = useSelector((state) => state.guitar_set.dropped)
 
   const [colorList, setColorList] = useState(colus);
   const [clickedPart, setClickedPart] = useState("");
@@ -88,7 +89,7 @@ function Visualizer({ guitarsList }) {
     });
 
     // )
-  }, []);
+  }, [triggs]);
 
   function Backdrop() {
     const shadows = useRef()

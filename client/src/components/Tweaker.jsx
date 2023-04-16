@@ -154,7 +154,6 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
         <div className="pickers-sliders">
           <Slider
             value={colorList.gloss}
-            defaultValue={50}
             onChange={(e) => setColorList({ ...colorList, gloss: e.value })}
             onPointerUp={() => dispatch(addColor(colorList))}
             min={0}

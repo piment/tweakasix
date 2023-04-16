@@ -34,9 +34,10 @@ const addGuitar = (req, res) => {
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
   const texture_path = req.body.texture_path
-  // const movieReview = req.body.movieReview;
+  const gloss = req.body.gloss
+
   const sqlInsert =
-    "INSERT INTO body_color (tablefront, tableback, binding, side, neckwood, fretboard, fretbinding, frets, inlay, nut, metalpieces,pickup_cover,pickup_ring,knobs, texture_path) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    "INSERT INTO body_color (tablefront, tableback, binding, side, neckwood, fretboard, fretbinding, frets, inlay, nut, metalpieces,pickup_cover,pickup_ring,knobs, texture_path, gloss) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
   db.query(
     sqlInsert,
     [
@@ -54,7 +55,8 @@ const addGuitar = (req, res) => {
       pickup_cover,
       pickup_ring,
       knobs,
-       texture_path
+       texture_path,
+       gloss
     ],
     (err, result) => {}
   );

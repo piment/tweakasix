@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
 import axios from 'axios'
+
 
 export const guitarSlice = createSlice({
   name: "guitar_set",
@@ -23,6 +24,7 @@ export const guitarSlice = createSlice({
       gloss : 50,
       texture_path : "stocked/1681217837265.png",
     },
+    dropped : 0,
   },
 
   reducers: {
@@ -45,12 +47,18 @@ export const guitarSlice = createSlice({
       state.colorSet.metalpieces = action.payload.metalpieces;
       state.colorSet.texture_path = action.payload.texture_path
       state.gloss = action.payload.gloss
-return
     },
+    triggerDrop: (state, action) => {
+
+        state.dropped += 1
+        
+      
+      },
+
   },
   
 });
 
 
-export const { addColor, dropTrigger, setColor} = guitarSlice.actions;
+export const { addColor, dropTrigger, setColor, triggerDrop} = guitarSlice.actions;
 export default guitarSlice.reducer;
