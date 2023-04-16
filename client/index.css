@@ -3,7 +3,7 @@
   line-height: 0.8;
   font-weight: 400;
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
   color: rgba(0, 0, 0, 0.87);
   background-color: #232323;
 
@@ -55,11 +55,11 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #fcfcfc !important;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto #ffffff !important;
 }
 
 @media (prefers-color-scheme: light) {
@@ -72,5 +72,6 @@ button:focus-visible {
   }
   button {
     background-color: #4b4b4b;
+    border: white solid 1px;
   }
 }

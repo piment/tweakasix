@@ -13,12 +13,11 @@ import {
   ContactShadows,
 } from "@react-three/drei";
 import axios from "axios";
-import { HexColorPicker } from "react-colorful";
-import { proxy, snapshot, useSnapshot } from "valtio";
+
 import Modelos from "./Modelos";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../features/Colors";
-import { Leva, useControls } from "leva";
+
 import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
 import { subscribe } from "valtio";
@@ -163,12 +162,12 @@ function Visualizer({ guitarsList }) {
     position={'top-left'}
           /> */}
         </Canvas>
-        <MyDropzone
+        {/* <MyDropzone
           colorList={colorList}
           setColorList={setColorList}
           setDropped={setDropped}
           dropped={dropped}
-        />
+        /> */}
         {/* <Picker /> */}
         <Tweaker
           colorList={colorList}

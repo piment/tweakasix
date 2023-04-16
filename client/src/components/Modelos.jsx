@@ -22,7 +22,7 @@ function Modelos({ trig, setColorList, colorList , clickedPart, setClickedPart})
 
   const ref = useRef();
   const [hovered, setHovered] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/335whole OPT2.glb");
+  const { nodes, materials } = useGLTF("/guitar/335whole OPT3.glb");
 
 
   const path = "http://localhost:3001/";
@@ -49,15 +49,33 @@ useEffect(() => {
 
 }, [hovered]);
 
-console.log(triggs)
+
+
+const [scratches, scratchesrough] = useTexture(['guitar/imgs/DefaultMaterial_Roughness2.jpg', 'guitar/imgs/DefaultMaterial_Roughness2-INV.jpg'])
+
+scratches.flipY = false
+scratches.wrapS = THREE.RepeatWrapping;
+scratches.wrapT = THREE.RepeatWrapping;
+scratches.repeat.set(2,2)
+
+
+scratchesrough.flipY = false
+scratchesrough.wrapS = THREE.RepeatWrapping;
+scratchesrough.wrapT = THREE.RepeatWrapping; 
+scratchesrough.repeat.set(10,2)
 
   materials.un_black = new THREE.MeshBasicMaterial({ color: "black" });
    materials.strings = new THREE.MeshLambertMaterial({color :"#595959"})
   materials.varnish = new THREE.MeshStandardMaterial({
     transparent: true,
     opacity: 0.2,
-    roughness: 0.01,
+    roughnessMap : scratchesrough,
+    roughness: 0.1* (colorList.scratch),
     metalness: colorList.gloss/100,
+    bumpMap : scratches,
+    bumpScale: 0.001* (colorList.scratch/5),
+    
+  
   });
   (materials.metalpieces.metalness = 1),
     (materials.metalpieces.roughness = 0),

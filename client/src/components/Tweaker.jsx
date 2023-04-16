@@ -15,13 +15,15 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { useSnapshot } from "valtio";
 import { HexColorPicker } from "react-colorful";
-import { useControls, buttonGroup } from "leva";
+
 import { useDispatch, useSelector } from "react-redux";
 import { dropTrigger, addColor } from "../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
+import {Tooltip} from 'primereact/tooltip'
+import { Button } from 'primereact/button';
 import { Slider } from "primereact/slider";
-import "primereact/resources/primereact.min.css";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "./CustomPrimereact.css"
+// import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 function Tweaker({ colorList, setColorList, clickedPart }) {
   // const actual = useRef(null)
@@ -32,7 +34,31 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
       <div className="pickers-main">
         <div className="pickers-colors">
           <div className="body-colors">
-            <ColorPicker
+          <ColorPicker
+            tooltip="Front table"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
+              id={clickedPart === "tablefront" ? "clickedPart" : ""}
+              name="tablefront"
+              value={colorList.tablefront}
+              onChange={(e) =>
+                setColorList({ ...colorList, tablefront: `#${e.value}` })
+              }
+            />
+              <ColorPicker
+            tooltip="Back table"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
+              id={clickedPart === "tableback" ? "clickedPart" : ""}
+              name="tableback"
+              value={colorList.tableback}
+              onChange={(e) =>
+                setColorList({ ...colorList, tableback: `#${e.value}` })
+              }
+            />
+              <ColorPicker
+         
+            tooltip="Side"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
+
               id={clickedPart === "side" ? "clickedPart" : ""}
               name="side"
               value={colorList.side}
@@ -41,7 +67,10 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
               }
               onMouseUp={() => dispatch(addColor(colorList))}
             />
-            <ColorPicker
+        
+              <ColorPicker
+            tooltip="Binding"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "binding" ? "clickedPart" : ""}
               name="binding"
               value={colorList.binding}
@@ -49,25 +78,12 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, binding: `#${e.value}` })
               }
             />
-            <ColorPicker
-              id={clickedPart === "tablefront" ? "clickedPart" : ""}
-              name="tablefront"
-              value={colorList.tablefront}
-              onChange={(e) =>
-                setColorList({ ...colorList, tablefront: `#${e.value}` })
-              }
-            />
-            <ColorPicker
-              id={clickedPart === "tableback" ? "clickedPart" : ""}
-              name="tableback"
-              value={colorList.tableback}
-              onChange={(e) =>
-                setColorList({ ...colorList, tableback: `#${e.value}` })
-              }
-            />
+   
           </div>
           <div className="neck-colors">
-            <ColorPicker
+              <ColorPicker
+            tooltip="Neck"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "neckwood" ? "clickedPart" : ""}
               name="neckwood"
               value={colorList.neckwood}
@@ -75,7 +91,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, neckwood: `#${e.value}` })
               }
             />
-            <ColorPicker
+              <ColorPicker
+            tooltip="Frets binding"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "fretbinding" ? "clickedPart" : ""}
               name="fretbinding"
               value={colorList.fretbinding}
@@ -83,7 +101,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, fretbinding: `#${e.value}` })
               }
             />
-            <ColorPicker
+              <ColorPicker
+            tooltip="Fretboard"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "fretboard" ? "clickedPart" : ""}
               name="fretboard"
               value={colorList.fretboard}
@@ -91,7 +111,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, fretboard: `#${e.value}` })
               }
             />
-            <ColorPicker
+              <ColorPicker
+            tooltip="Inlay"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "inlay" ? "clickedPart" : ""}
               name="inlay"
               value={colorList.inlay}
@@ -99,7 +121,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, inlay: `#${e.value}` })
               }
             />
-            <ColorPicker
+              <ColorPicker
+            tooltip="Nut"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "nut" ? "clickedPart" : ""}
               name="nut"
               value={colorList.nut}
@@ -107,7 +131,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, nut: `#${e.value}` })
               }
             />
-            <ColorPicker
+              <ColorPicker
+            tooltip="Frets"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "frets" ? "clickedPart" : ""}
               name="frets"
               value={colorList.frets}
@@ -117,7 +143,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
             />
           </div>
           <div className="metal-knobs">
-            <ColorPicker
+              <ColorPicker
+            tooltip="Knobs"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "knobs" ? "clickedPart" : ""}
               name="knobs"
               value={colorList.knobs}
@@ -125,7 +153,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, knobs: `#${e.value}` })
               }
             />
-            <ColorPicker
+              <ColorPicker
+            tooltip="Pickup covers"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "pickup_cover" ? "clickedPart" : ""}
               name="pickup_cover"
               value={colorList.pickup_cover}
@@ -133,7 +163,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, pickup_cover: `#${e.value}` })
               }
             />
-            <ColorPicker
+              <ColorPicker
+            tooltip="Pickup rings"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "pickup_ring" ? "clickedPart" : ""}
               name="pickup_ring"
               value={colorList.pickup_ring}
@@ -141,7 +173,9 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, pickup_ring: `#${e.value}` })
               }
             />{" "}
-            <ColorPicker
+              <ColorPicker
+            tooltip="Metallic pieces"
+            tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
               id={clickedPart === "metalpieces" ? "clickedPart" : ""}
               name="metalpieces"
               value={colorList.metalpieces}
@@ -152,13 +186,35 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
           </div>
         </div>
         <div className="pickers-sliders">
+          <div className="gloss">
+          Gloss finish
+          <Tooltip target=".slider-gloss>.p-slider-handle" content={`${colorList.gloss}%`} position="top" event="focus" />
           <Slider
+className="slider-gloss"
+              tooltip="gloss finish"
+              tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
             value={colorList.gloss}
             onChange={(e) => setColorList({ ...colorList, gloss: e.value })}
             onPointerUp={() => dispatch(addColor(colorList))}
             min={0}
             max={100}
-          />
+          /></div>
+          <div className="scratch">
+
+            Scratched varnish
+                    <Tooltip target=".slider-scratch>.p-slider-handle" content={`${colorList.gloss}%`} position="top" event="focus" />
+
+                    <Slider
+className="slider-scratch"
+              tooltip="scratch"
+              tooltipoptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
+            value={colorList.scratch}
+            onChange={(e) => setColorList({ ...colorList, scratch: e.value })}
+            onPointerUp={() => dispatch(addColor(colorList))}
+            min={0}
+            max={20}
+            step={0.2}
+          /></div>
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@
   /* height: 84%; */
   height: 60vh;
   width: 70vw;
-
+  z-index: 10000 !important;
   margin-bottom: 10vh;
   box-shadow: 0 0 20px 10px #0000008e;
 }
@@ -10,6 +10,8 @@
   height: 60vh;
   /* background-color: rgb(230, 230, 230); */
   background: rgb(196, 196, 196);
+  z-index: 100 !important;
+
 }
 
 #select-guitarset {
@@ -22,11 +24,11 @@
   /* position: relative; */
 }
 .pickers-main {
-  background-color: antiquewhite;
-  height: 10vh;
+  background-color: rgb(108, 108, 108);
+  height: 25%;
   /* border : rgb(0, 255, 8) solid 2px; */
   display: flex;
-  
+z-index: 0 !important;
   flex-direction: column;
   justify-content: space-evenly;
   
@@ -55,12 +57,51 @@ flex-direction: row;
  /* border: red solid 2px; */
  justify-content: space-evenly;
   display: flex;
-  flex-grow: 100;
+  flex-grow: 0.25;
+  background-color: black;
+  border-radius: 10px;
+  height: auto;
+padding: 1rem;
               
  }
   
-.pickers-sliders {
-  background-color: aqua;
+
+
+
+
+
+
+ .pickers-sliders {
+  display: flex;
+
+ }
+.pickers-sliders > div {
+  /* background-color: aqua; */
+  color: black;
+  height: 4vh;
   width: 15vw;
   margin: 1vh 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
+/* 
+.slider-gloss > *,
+.slider-scratch > *{
+
+background:rgb(28, 28, 28) !important ;
+}
+
+.slider-gloss,
+.slider-scratch{
+
+background:rgb(28, 28, 28) !important ;
+}
+
+.p-slider-handle {
+border-color: rgb(186, 186, 186) !important;
+}
+.p-slider .p-slider-handle:focus{
+  box-shadow: 0 0 0 0.2rem #f0f0f0;
+outline-color: #f0f0f0;
+} */
