@@ -360,20 +360,28 @@
   color: #495057;
   background: #ffffff;
   padding: 0.75rem 0.75rem;
-  border: 1px solid #ced4da;
+  border: 1px solid #434343;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s,
     box-shadow 0.2s;
   appearance: none;
   border-radius: 6px;
 }
 .p-inputtext:enabled:hover {
-  border-color: #3b82f6;
+  border-color: #ececec;
+  border-width: 0.2rem;
 }
+#clickedPart .p-inputtext {
+    outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #bfdbfe;
+  border-color: #afafaf;
+  }
 .p-inputtext:enabled:focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #bfdbfe;
-  border-color: #3b82f6;
+  border-color: #afafaf;
+
 }
 .p-inputtext.p-invalid.p-component {
   border-color: #e24c4c;
@@ -568,18 +576,18 @@
 
 
   .p-overlaypanel .p-overlaypanel-close {
-    background: #3B82F6;
+    background: #cccccc;
     color: #ffffff;
     width: 2rem;
     height: 2rem;
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    transition: background-color 0.5s, color 0.2s, box-shadow 0.2s;
     border-radius: 50%;
     position: absolute;
     top: -1rem;
     right: -1rem;
   }
   .p-overlaypanel .p-overlaypanel-close:enabled:hover {
-    background: #3B82F6;
+    background: #d7d7d7;
     color: #ffffff;
   }
 
