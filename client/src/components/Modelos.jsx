@@ -94,7 +94,7 @@ const texture_path = useSelector((state) => state.guitar_set.colorSet.texture_pa
 //  materials.tablefront.needsUpdate = true
 
 
-
+console.log(colorList.metalpieces)
 useLayoutEffect(() => {
 console.log('pipi')
 console.log(texture_path)
@@ -243,6 +243,7 @@ setTxUse(path + texture_path)
           receiveShadow
           geometry={nodes.tail_saddle.geometry}
           material={materials.metalpieces}
+          material-color={colorList.metalpieces}
         />
         <mesh
           castShadow

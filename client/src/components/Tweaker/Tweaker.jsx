@@ -10,26 +10,12 @@ import "./Choice-CustomPrimereact.css";
 import silverIcon from "../../assets/img/Silver.jpg";
 import goldIcon from "../../assets/img/Gold.jpg";
 import copperIcon from "../../assets/img/Copper.jpg";
+import MetalColors from "./MetalColors";
 
 function Tweaker({ colorList, setColorList, clickedPart }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
-  const metals = [
-    { name: "Silver", value: "#ff00ff", icon: silverIcon },
-    { name: "Gold", value: "#ff0f2f", icon: goldIcon },
-    { name: "Copper", value: "#0f00ff", icon: copperIcon },
-  ];
-  const [pickupCover, setPickupCover] = useState(metals[0]);
-
-  console.log(metals);
-
-  const handleMetalSelect = (e) => {
-    const selectedMetal = metals.find(metals => metals.name === e.target.name)
-    setPickupCover(selectedMetal)
-  };
-
-  const op = useRef(null);
   return (
     <>
       <div className="pickers-main">
@@ -181,86 +167,11 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
             />
           </div>
           <div className="metal-knobs">
-            <ColorPicker
-              tooltip="Knobs"
-              tooltipoptions={{
-                position: "bottom",
-                mouseTrack: true,
-                mouseTrackTop: 15,
-              }}
-              id={clickedPart === "knobs" ? "clickedPart" : ""}
-              name="knobs"
-              value={colorList.knobs}
-              onChange={(e) =>
-                setColorList({ ...colorList, knobs: `#${e.value}` })
-              }
-            />
+       
             {/* <Toast ref={toast} /> */}
-            <Button
-              type="button"
-              className="p-colorpicker-preview main-metal-button"
-              onClick={(e) => op.current.toggle(e)}
-            >
-              {" "}
-              <img
-                className="metalIcons"
-                src={pickupCover.icon}
-                sizes="30px 30px"
-              ></img>
-            </Button>
-            <OverlayPanel ref={op} showCloseIcon id="metalIcons-parent">
-              <Button
-                tooltip="Silver"
-                tooltipoptions={{
-                  position: "bottom",
-                  mouseTrack: true,
-                  mouseTrackTop: 15,
-                  event: "hover",
-                }}
-                onClick={(e) => handleMetalSelect(e)}
-              >
-                <img
-                  name="Silver"
-                  className="metalIcons"
-                  src={silverIcon}
-                  sizes="32px 32px"
-                ></img>
-              </Button>
-              <Button
-                tooltip="Gold"
-                tooltipoptions={{
-                  position: "bottom",
-                  mouseTrack: true,
-                  mouseTrackTop: 15,
-                  event: "hover",
-                }}
-                onClick={(e) => handleMetalSelect(e)}
-              >
-                <img
-                  name="Gold"
-                  className="metalIcons"
-                  src={goldIcon}
-                  sizes="32px 32px"
-                ></img>
-              </Button>
-              <Button
-                tooltip="Copper"
-                tooltipoptions={{
-                  position: "bottom",
-                  mouseTrack: true,
-                  mouseTrackTop: 15,
-                  event: "hover",
-                }}
-                onClick={(e) => handleMetalSelect(e)}
-              >
-                <img
-                  name="Copper"
-                  className="metalIcons"
-                  src={copperIcon}
-                  sizes="32px 32px"
-                ></img>
-              </Button>
-            </OverlayPanel>
+            <MetalColors        setColorList={setColorList}
+            colorList={colorList}
+            clickedPart={clickedPart}/>
             <ColorPicker
               tooltip="Pickup rings"
               tooltipoptions={{
@@ -274,21 +185,22 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
               onChange={(e) =>
                 setColorList({ ...colorList, pickup_ring: `#${e.value}` })
               }
-            />{" "}
-            <ColorPicker
-              tooltip="Metallic pieces"
+            />   
+             <ColorPicker
+              tooltip="Knobs"
               tooltipoptions={{
                 position: "bottom",
                 mouseTrack: true,
                 mouseTrackTop: 15,
               }}
-              id={clickedPart === "metalpieces" ? "clickedPart" : ""}
-              name="metalpieces"
-              value={colorList.metalpieces}
+              id={clickedPart === "knobs" ? "clickedPart" : ""}
+              name="knobs"
+              value={colorList.knobs}
               onChange={(e) =>
-                setColorList({ ...colorList, metalpieces: `#${e.value}` })
+                setColorList({ ...colorList, knobs: `#${e.value}` })
               }
             />
+           
           </div>
         </div>
         <div className="pickers-sliders">
