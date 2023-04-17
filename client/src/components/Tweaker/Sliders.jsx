@@ -2,14 +2,8 @@ import React from 'react'
 import { Tooltip } from "primereact/tooltip";
 import { SelectButton } from "primereact/selectbutton";
 import { Slider } from "primereact/slider";
-import { OverlayPanel } from "primereact/overlaypanel";
-import { Button } from "primereact/button";
-import { Toast } from "primereact/toast";
-import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
-// import "./CustomPrimereact.css";
-import "./Choice-CustomPrimereact.css";
 
+import "./CustomPrimereact.css";
 
 function Sliders({ colorList, setColorList, clickedPart }) {
   return (

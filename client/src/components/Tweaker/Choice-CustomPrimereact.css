@@ -4,7 +4,7 @@
 
 .p-togglebutton.p-button {
     background: #ffffff;
-    border: 1px solid #ced4da;
+    /* border: 1px solid #ced4da; */
     color: #495057;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   }
@@ -43,8 +43,8 @@
   
 .p-button {
     color: #ffffff;
-     border: 1px solid #f9f9f9;
-    font-size: 1rem;
+     /* border: 1px solid #f9f9f9; */
+    /* font-size: 1rem; */
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     border-radius: 6px;
  
@@ -320,25 +320,5 @@
     text-decoration: none;
     overflow: hidden;
     position: relative
-}
-
-
-#metalIcons-parent .p-button.p-component{
- 
-    background: black;
-    max-height: 2.2rem;
-border: none;
-}
-
-
-#metalIcons-parent{
-  background-color: black;
-}
-
-
-.metalIcons {
-width: 32px;
-height: 32px;
-border-radius: 4px;
 }
 

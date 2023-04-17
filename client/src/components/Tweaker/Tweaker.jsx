@@ -6,27 +6,30 @@ import { ColorPicker } from "primereact/colorpicker";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import Sliders from "./Sliders";
-import "./CustomPrimereact.css";
 import "./Choice-CustomPrimereact.css";
-import silverIcon from '../../assets/img/Silver.jpg'
-import goldIcon from '../../assets/img/Gold.jpg'
-import copperIcon from '../../assets/img/Copper.jpg'
+import silverIcon from "../../assets/img/Silver.jpg";
+import goldIcon from "../../assets/img/Gold.jpg";
+import copperIcon from "../../assets/img/Copper.jpg";
 
 function Tweaker({ colorList, setColorList, clickedPart }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
-  const [pickupCover, setPickupCover] = useState(null);
   const metals = [
-    { name: "Silver", value: "#ff00ff" , icon : silverIcon},
-    { name: "Gold", value: "#ff0f2f" , icon :goldIcon},
-    { name: "Copper", value: "#0f00ff" , icon :copperIcon},
+    { name: "Silver", value: "#ff00ff", icon: silverIcon },
+    { name: "Gold", value: "#ff0f2f", icon: goldIcon },
+    { name: "Copper", value: "#0f00ff", icon: copperIcon },
   ];
+  const [pickupCover, setPickupCover] = useState(metals[0]);
 
+  console.log(metals);
+
+  const handleMetalSelect = (e) => {
+    const selectedMetal = metals.find(metals => metals.name === e.target.name)
+    setPickupCover(selectedMetal)
+  };
 
   const op = useRef(null);
-
-
   return (
     <>
       <div className="pickers-main">
@@ -195,13 +198,18 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
             {/* <Toast ref={toast} /> */}
             <Button
               type="button"
-              className="p-colorpicker-preview p-inputtext closed-choice"
+              className="p-colorpicker-preview main-metal-button"
               onClick={(e) => op.current.toggle(e)}
-            />
+            >
+              {" "}
+              <img
+                className="metalIcons"
+                src={pickupCover.icon}
+                sizes="30px 30px"
+              ></img>
+            </Button>
             <OverlayPanel ref={op} showCloseIcon id="metalIcons-parent">
               <Button
-          
-          
                 tooltip="Silver"
                 tooltipoptions={{
                   position: "bottom",
@@ -209,8 +217,15 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                   mouseTrackTop: 15,
                   event: "hover",
                 }}
-            
-              ><img className="metalIcons" src={silverIcon} sizes="32px 32px" ></img></Button>
+                onClick={(e) => handleMetalSelect(e)}
+              >
+                <img
+                  name="Silver"
+                  className="metalIcons"
+                  src={silverIcon}
+                  sizes="32px 32px"
+                ></img>
+              </Button>
               <Button
                 tooltip="Gold"
                 tooltipoptions={{
@@ -219,8 +234,15 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                   mouseTrackTop: 15,
                   event: "hover",
                 }}
-             
-                ><img className="metalIcons" src={goldIcon} sizes="32px 32px" ></img></Button>
+                onClick={(e) => handleMetalSelect(e)}
+              >
+                <img
+                  name="Gold"
+                  className="metalIcons"
+                  src={goldIcon}
+                  sizes="32px 32px"
+                ></img>
+              </Button>
               <Button
                 tooltip="Copper"
                 tooltipoptions={{
@@ -229,7 +251,15 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
                   mouseTrackTop: 15,
                   event: "hover",
                 }}
-                ><img className="metalIcons" src={copperIcon} sizes="32px 32px" ></img></Button>
+                onClick={(e) => handleMetalSelect(e)}
+              >
+                <img
+                  name="Copper"
+                  className="metalIcons"
+                  src={copperIcon}
+                  sizes="32px 32px"
+                ></img>
+              </Button>
             </OverlayPanel>
             <ColorPicker
               tooltip="Pickup rings"
