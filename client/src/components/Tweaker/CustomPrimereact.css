@@ -325,13 +325,13 @@
 
 .p-colorpicker-panel .p-colorpicker-color {
   background: transparent
-    url("../../../client/node_modules/primereact/resources/images/color.png")
+    url("../../assets/img/css-imgs/color.png")
     no-repeat left top;
 }
 
 .p-colorpicker-panel .p-colorpicker-hue {
   background: transparent
-    url("../../../client/node_modules/primereact/resources/images/hue.png")
+    url("../../assets/img/css-imgs/hue.png")
     no-repeat left top;
 }
 
@@ -617,3 +617,10 @@
     transform: scaleY(0.8);
     transition: transform .12s cubic-bezier(0, 0, 0.2, 1), opacity .12s cubic-bezier(0, 0, 0.2, 1);
 }
+
+
+ /* .p-button .closed-choice{
+    padding: 0!important;
+ } */
+
+ 

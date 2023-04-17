@@ -21,7 +21,7 @@ import { addColor } from "../features/Colors";
 import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
 import { subscribe } from "valtio";
-import Tweaker from "./Tweaker";
+import Tweaker from "./Tweaker/Tweaker";
 
 function Visualizer({ guitarsList }) {
   const [selectGuitar, setSelectGuitar] = useState("");
@@ -150,10 +150,10 @@ function Visualizer({ guitarsList }) {
           <Modelos
             setColorList={setColorList}
             colorList={colorList}
-            colus={colus}
-            allTx={allTx}
             clickedPart={clickedPart}
             setClickedPart={setClickedPart}
+            // colus={colus}
+            // allTx={allTx}
           />
             <ContactShadows position={[0, -0.8, 0]} opacity={0.85} scale={10} blur={1.5} far={0.8} />
           {/* <BakeShadows/> */}
