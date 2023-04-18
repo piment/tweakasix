@@ -18,7 +18,7 @@ import { dropTrigger, addColor } from "../features/Colors";
 
 
 
-function Modelos({ trig, setColorList, colorList , clickedPart, setClickedPart}) {
+function Modelos({ trig, setColorList, colorList , clickedPart, setClickedPart, tilt}) {
 
   const ref = useRef();
   const [hovered, setHovered] = useState(null);
@@ -94,7 +94,7 @@ const texture_path = useSelector((state) => state.guitar_set.colorSet.texture_pa
 //  materials.tablefront.needsUpdate = true
 
 
-console.log(colorList.metalpieces)
+
 useLayoutEffect(() => {
 console.log('pipi')
 console.log(texture_path)
@@ -104,7 +104,8 @@ setTxUse(path + texture_path)
 
 
   return (
-    <>
+    <> 
+    <group rotation={tilt}>
       <group
         // {...props}
         dispose={null}
@@ -274,7 +275,7 @@ setTxUse(path + texture_path)
           material={materials.varnish}
           // visible={false}
         />
-      </group>
+      </group></group>
     </>
   );
 }

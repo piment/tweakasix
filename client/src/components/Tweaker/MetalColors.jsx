@@ -20,7 +20,7 @@ function MetalColors({ colorList, setColorList, clickedPart }) {
     const dispatch = useDispatch();
 
     const metals = [
-        { name: "Silver", value: "#b3b4ba", icon: silverIcon },
+        { name: "Silver", value: "#d0cbc4", icon: silverIcon },
         { name: "Gold", value: "#caa449", icon: goldIcon },
         { name: "Copper", value: "#c07a50", icon: copperIcon },
       ];

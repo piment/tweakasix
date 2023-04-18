@@ -1,5 +1,13 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { sRGBEncoding, ACESFilmicToneMapping, PointLightHelper, DirectionalLightHelper, PCFShadowMap, BasicShadowMap, PCFSoftShadowMap } from "three";
+import {
+  sRGBEncoding,
+  ACESFilmicToneMapping,
+  PointLightHelper,
+  DirectionalLightHelper,
+  PCFShadowMap,
+  BasicShadowMap,
+  PCFSoftShadowMap,
+} from "three";
 import "./Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
@@ -27,7 +35,7 @@ function Visualizer({ guitarsList }) {
   const [selectGuitar, setSelectGuitar] = useState("");
 
   const colus = useSelector((state) => state.guitar_set.colorSet);
-  const triggs = useSelector((state) => state.guitar_set.dropped)
+  const triggs = useSelector((state) => state.guitar_set.dropped);
 
   const [colorList, setColorList] = useState(colus);
   const [clickedPart, setClickedPart] = useState("");
@@ -59,7 +67,7 @@ function Visualizer({ guitarsList }) {
       pickup_ring: colorList.pickup_ring,
       knobs: colorList.knobs,
       texture_path: colorList.texture_path,
-      gloss : colorList.gloss
+      gloss: colorList.gloss,
     });
   };
   //  const snap = useSnapshot(status);
@@ -91,14 +99,27 @@ function Visualizer({ guitarsList }) {
   }, [triggs]);
 
   function Backdrop() {
-    const shadows = useRef()
+    const shadows = useRef();
     // useFrame((state, delta) => easing.dampC(shadows.current.getMesh().material.color, state.color, 0.25, delta))
     return (
-      <AccumulativeShadows ref={shadows} frames={60} alphaTest={0.85} scale={10} rotation={[Math.PI / 2, 0, 0]} position={[0, 0, -1.14]}>
-        <RandomizedLight amount={4} radius={9} intensity={0.55} ambient={0.25} position={[5, 5, -10]} />
+      <AccumulativeShadows
+        ref={shadows}
+        frames={60}
+        alphaTest={0.85}
+        scale={10}
+        rotation={[Math.PI / 2, 0, 0]}
+        position={[0, 0, -1.14]}
+      >
+        <RandomizedLight
+          amount={4}
+          radius={9}
+          intensity={0.55}
+          ambient={0.25}
+          position={[5, 5, -10]}
+        />
         {/* <RandomizedLight amount={4} radius={5} intensity={0.25} ambient={0.55} position={[-5, 5, -9]} /> */}
       </AccumulativeShadows>
-    )
+    );
   }
 
   function PointLightHelp() {
@@ -107,16 +128,15 @@ function Visualizer({ guitarsList }) {
 
     return (
       <directionalLight
-      // color={'#f0fbb3'}
+        // color={'#f0fbb3'}
         ref={pointlight}
         position={[-0.8, 1.8, 1.4]}
         intensity={3}
-   
         distance={100}
         scale={0.5}
         castShadow
-        shadow-mapSize-height={2048/2}
-  shadow-mapSize-width={2048/2}
+        shadow-mapSize-height={2048 / 2}
+        shadow-mapSize-width={2048 / 2}
       />
     );
   }
@@ -125,37 +145,48 @@ function Visualizer({ guitarsList }) {
     <div className="mainviz">
       <div className="visualizer">
         <Canvas
-        
           className="canvas"
           fallback={null}
           camera={{ position: [0, 2, 3], fov: 50 }}
-          shadows ={{type : PCFSoftShadowMap}}
+          // shadows ={{type : PCFSoftShadowMap}}
+          shadows
           dpr={[1, 2]}
           linear
-          
           gl={{
-            preserveDrawingBuffer : true,
+            preserveDrawingBuffer: true,
             antialias: true,
             alpha: true,
           }}
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
-          <OrbitControls target={[0,1,0]}/>
-          <Environment preset="city"  blur={2} />
+          <OrbitControls target={[0, 1, 0]} />
+          <Environment preset="city" blur={2} />
 
           <ambientLight intensity={0.4} />
-          <directionalLight castShadow intensity={2} position={[0,5,0.5]} lookAt={[0,0,0]}/>
-          {/* <PointLightHelp /> */}
-          {/* <Backdrop/> */}
+          <directionalLight
+            castShadow
+            intensity={2}
+            position={[0, 5, 0.5]}
+            lookAt={[0, 0, 0]}
+            shadow-mapSize-height={2048 / 2}
+            shadow-mapSize-width={2048 / 2}
+          />
           <Modelos
             setColorList={setColorList}
             colorList={colorList}
             clickedPart={clickedPart}
             setClickedPart={setClickedPart}
-            // colus={colus}
-            // allTx={allTx}
+            tilt={[-Math.PI/15,0,0]}
           />
-            <ContactShadows position={[0, -0.8, 0]} opacity={0.85} scale={10} blur={1.5} far={0.8} />
+          <ContactShadows
+            position={[0, -0.8, 0]}
+            opacity={0.85}
+            scale={10}
+            blur={.5}
+            far={5}
+            frames={1}
+            resolution={512}
+          />
           {/* <BakeShadows/> */}
           {/* <Perf
           deepAnalyze = {true}
