@@ -40,7 +40,6 @@ app.use(express.json());
 
 app.use('/stocked', express.static(path.join(__dirname + "/stocked")));
 // app.use(express.static((__dirname, "public")));
-console.log(express.static((__dirname, 'public')))
 // route for file upload
 app.post("/upload",upload.single('file'),(req, res, next) => {
    
