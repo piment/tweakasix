@@ -1,0 +1,52 @@
+.navbar-main{
+
+   /* position: relative; */
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+  
+    margin-left: auto;
+    height: 5vh;
+
+    width: 25vw;
+    font-size: 2rem;
+    z-index: 100;
+
+}
+
+.navbar-cont{
+    display: flex;
+    margin-top: 8vh;
+    margin-right: 0;
+    padding-right: 8vw;
+    width: 40vw;
+    height: 4rem;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.878);
+}
+
+.navbar-cont > *{
+/* border: green solid 2px */
+}
+
+ul {
+    list-style: none;
+    
+    
+  }
+  
+  li{
+    display: inline;
+  }
+
+
+  #triangle-code{
+    display : inline-block;
+    height : 0;
+    width : 0;
+    left: 56.01%;
+    border-top : 4rem solid rgb(0, 0, 0, 0.878);
+    border-left : 4rem solid transparent;
+    position:absolute;
+   }

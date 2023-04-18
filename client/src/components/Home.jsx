@@ -6,6 +6,7 @@ import './Home.css'
 import Selector from './Selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { addColor } from '../features/Colors';
+import Navbar from './Navbar';
 
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
 
   return (
     <>  
+    <Navbar/>
     <Selector/>
     <div className='title-overlay'>
     <div className='home'>  

@@ -1,19 +1,21 @@
 .title-overlay {
-  /* margin: 4rem 0px 0px 6rem;  */
+  margin: 2rem 0px 0px 4rem; 
   position: absolute;  
   z-index: 100;
+ 
 }
 
 .home{
-  margin: 4rem 0px 0px 6rem;
+  /* margin: 4rem 0px 0px 6rem; */
   position: absolute;
   font-weight: 800;
   color: rgba(0, 0, 0, 0.886) ;
-
+  width: 50vw;
+ /* border: red solid 2px */
 }
 
 .home > h1 {
-  font-size: 16rem;
+  font-size: 12rem;
   letter-spacing: -8px;
 text-shadow: -0.1em 0.05em 0.1em rgba(90, 90, 90, 0.598);
 line-height: 2ch;
@@ -27,9 +29,9 @@ text-align: left !important;
 
 
 .logo {
-  height: 24em;
-margin-left: 12rem;
-  margin-top: 14rem;
+  height: 16vw;
+margin-left: 1rem;
+  margin-top: 8rem;
   transform: rotate(-10deg);
 
   /* padding: 1.5em; */
