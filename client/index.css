@@ -1,5 +1,21 @@
+@font-face {
+  font-family: Vanguard;
+  src: url('/src/assets/Fontspring-DEMO-vanguardcf-demibold.otf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* @font-face {
+  font-family: Vanguard;
+  src: url('/src/assets/Fontspring-DEMO-vanguardcf-heavy.otf');
+  font-weight: 800;
+} */
+
+
 :root {
- 
+
+  font-family: Vanguard;
   line-height: 0.8;
   font-weight: 400;
 
@@ -65,7 +81,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #f0f0f0;
-    background-color: #292929;
+    background-color: #c4c3c3;
   }
   a:hover {
     color: #747bff;

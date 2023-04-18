@@ -14,17 +14,16 @@ function Home() {
 
 
   return (
-    <div className='home'>  
-          <h1>Welcome <br/>to</h1>
-    <img src={logo} alt="logo" className='logo'/>
-  
+    <>  
     <Selector/>
-  {/* <div>
-    {Object.keys(colorList).map((color, key) => {return <h4 key={key}>{colorList[color]} </h4>})}
-  </div> */}
+    <div className='title-overlay'>
+    <div className='home'>  
+          <h1>Welcome <br/> <span className='to'>to</span></h1>
+  
         </div>
-
-
+    <img src={logo} alt="logo" className='logo'/>
+</div>
+</>
   
   )
 }

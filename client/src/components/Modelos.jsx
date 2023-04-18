@@ -18,7 +18,7 @@ import { dropTrigger, addColor } from "../features/Colors";
 
 
 
-function Modelos({ trig, setColorList, colorList , clickedPart, setClickedPart, tilt}) {
+function Modelos({ trig, setColorList, colorList , clickedPart, setClickedPart, tilt, pos}) {
 
   const ref = useRef();
   const [hovered, setHovered] = useState(null);
@@ -105,7 +105,7 @@ setTxUse(path + texture_path)
 
   return (
     <> 
-    <group rotation={tilt}>
+    <group rotation={tilt} position={pos}>
       <group
         // {...props}
         dispose={null}

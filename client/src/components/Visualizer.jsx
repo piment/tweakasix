@@ -1,23 +1,12 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import {
-  sRGBEncoding,
-  ACESFilmicToneMapping,
-  PointLightHelper,
-  DirectionalLightHelper,
-  PCFShadowMap,
-  BasicShadowMap,
-  PCFSoftShadowMap,
-} from "three";
+
 import "./Visualizer.css";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import {
   OrbitControls,
-  useGLTF,
+
   Environment,
-  useHelper,
-  BakeShadows,
-  AccumulativeShadows,
-  RandomizedLight,
+
   ContactShadows,
 } from "@react-three/drei";
 import axios from "axios";
@@ -98,48 +87,9 @@ function Visualizer({ guitarsList }) {
     // )
   }, [triggs]);
 
-  function Backdrop() {
-    const shadows = useRef();
-    // useFrame((state, delta) => easing.dampC(shadows.current.getMesh().material.color, state.color, 0.25, delta))
-    return (
-      <AccumulativeShadows
-        ref={shadows}
-        frames={60}
-        alphaTest={0.85}
-        scale={10}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, -1.14]}
-      >
-        <RandomizedLight
-          amount={4}
-          radius={9}
-          intensity={0.55}
-          ambient={0.25}
-          position={[5, 5, -10]}
-        />
-        {/* <RandomizedLight amount={4} radius={5} intensity={0.25} ambient={0.55} position={[-5, 5, -9]} /> */}
-      </AccumulativeShadows>
-    );
-  }
 
-  function PointLightHelp() {
-    const pointlight = useRef();
-    useHelper(pointlight, DirectionalLightHelper, 1, "blue");
 
-    return (
-      <directionalLight
-        // color={'#f0fbb3'}
-        ref={pointlight}
-        position={[-0.8, 1.8, 1.4]}
-        intensity={3}
-        distance={100}
-        scale={0.5}
-        castShadow
-        shadow-mapSize-height={2048 / 2}
-        shadow-mapSize-width={2048 / 2}
-      />
-    );
-  }
+
 
   return (
     <div className="mainviz">
@@ -147,8 +97,9 @@ function Visualizer({ guitarsList }) {
         <Canvas
           className="canvas"
           fallback={null}
-          camera={{ position: [0, 2, 3], fov: 50 }}
+          camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
+          
           shadows
           dpr={[1, 2]}
           linear
@@ -159,7 +110,7 @@ function Visualizer({ guitarsList }) {
           }}
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
-          <OrbitControls target={[0, 1, 0]} />
+          <OrbitControls target={[0, 1, 0]} enableZoom={false}/>
           <Environment preset="city" blur={2} />
 
           <ambientLight intensity={0.4} />
@@ -176,7 +127,8 @@ function Visualizer({ guitarsList }) {
             colorList={colorList}
             clickedPart={clickedPart}
             setClickedPart={setClickedPart}
-            tilt={[-Math.PI/15,0,0]}
+            tilt={[-Math.PI/7,-0.2,-Math.PI*0.3]}
+            pos={[-1,-0.2,-0.3]}
           />
           <ContactShadows
             position={[0, -0.8, 0]}
