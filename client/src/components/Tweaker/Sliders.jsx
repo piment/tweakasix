@@ -2,10 +2,14 @@ import React from 'react'
 import { Tooltip } from "primereact/tooltip";
 import { SelectButton } from "primereact/selectbutton";
 import { Slider } from "primereact/slider";
+import { addColor } from '../../features/Colors';
 
 import "./CustomPrimereact.css";
+import { useDispatch } from 'react-redux';
 
 function Sliders({ colorList, setColorList, clickedPart }) {
+
+  const dispatch = useDispatch()
   return (
    <><div className="gloss">
     Gloss finish
@@ -52,7 +56,31 @@ function Sliders({ colorList, setColorList, clickedPart }) {
       min={0}
       max={20}
       step={0.2}
-    /></div></>
+    /></div>
+     <div className="wood">
+    Wood
+    <Tooltip
+      target=".slider-wood>.p-slider-handle"
+      content={`${colorList.gloss}%`}
+      position="top"
+      event="focus"
+    />
+    <Slider
+      className="slider-wood"
+      tooltip="wood"
+      tooltipoptions={{
+        position: "bottom",
+        mouseTrack: true,
+        mouseTrackTop: 15,
+      }}
+      value={colorList.wood}
+      onChange={(e) => setColorList({ ...colorList, wood: e.value })}
+      onPointerUp={() => dispatch(addColor(colorList))}
+      min={0}
+      max={20}
+      step={0.2}
+    /></div>
+    </>
   )
 }
 

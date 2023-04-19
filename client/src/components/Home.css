@@ -22,16 +22,27 @@ line-height: 2ch;
 text-transform: uppercase;
 }
 
-.home > h1 .to {
+.to {
 text-align: left !important;
-  
+font-size: 8rem;
+position: absolute;
+margin-top: -3vh;  
 }
 
-
+/* .plank{
+  top: 5vh;
+  left: -2vw;
+  height: 50vh;
+  width: 50vw;
+  z-index: -10;
+  position: absolute;
+  transform: rotate(-12deg);
+  filter :drop-shadow( -0.1em 0.5em 0.5em rgba(46, 46, 46, 0.598))
+} */
 .logo {
   height: 16vw;
 margin-left: 1rem;
-  margin-top: 8rem;
+  margin-top: 10rem;
   transform: rotate(-10deg);
 
   /* padding: 1.5em; */

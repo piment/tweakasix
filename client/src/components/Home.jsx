@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../assets/img/tweakasix.png'
+import plank from '../assets/img/plankHorNoShadow-min.png'
 // import './App.css'
 import axios from "axios";
 import './Home.css'
@@ -23,6 +24,7 @@ function Home() {
           <h1>Welcome <br/> <span className='to'>to</span></h1>
   
         </div>
+        {/* <img className='plank' src={plank}></img> */}
     <img src={logo} alt="logo" className='logo'/>
 </div>
 </>

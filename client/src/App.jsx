@@ -4,6 +4,9 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./components/Home";
+import Parts from "./components/Parts";
+import Account from "./components/Account";
+import Cart from "./components/Cart";
 
 function App() {
 
@@ -16,12 +19,12 @@ function App() {
                 path="/"
                 element={<Home/>}
               />
-              {/* <Route
-                path="/favoris"
-                element={<Favoris eventArrayFromAPI={eventArrayFromAPI} />}
-              /> */}
-              {/* <Route path="/aboutus" element={<Aboutus/>} /> */}
-              {/* <Route path="/event/:id" element={<Detailspretext />} /> */}
+              <Route
+                path="/parts"
+                element={<Parts />}
+              />
+              <Route path="/account" element={<Account/>} />
+              <Route path="/cart" element={<Cart />} />
             </Routes>
           </Router>
         </div>

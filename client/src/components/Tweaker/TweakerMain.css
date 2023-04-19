@@ -1,9 +1,10 @@
 .pickers-main {
   background-color: rgba(108, 108, 108, 0.287);
   height: 60vh;
-  
+  top: 75%;
+ left: 75%;
   display: flex;
-  position: relative;
+  position: absolute;
   width: 20vw;
   flex-direction: column;
   justify-content: space-evenly;

@@ -7,9 +7,9 @@ function Navbar() {
       <div >
         <ul className="navbar-cont">
             <div id="triangle-code"></div>
-          <li className="indiv-parts">Spare parts</li>
-          <li className="account">My Account</li>
-          <li className="cart">My Cart</li>
+          <li className="indiv-parts"  ><a href="/parts" >Spare parts</a></li>
+          <li className="account"> <a href="/account"> My Account</a></li>
+          <li className="cart"><a href="/cart">My Cart</a></li>
         </ul>
         <div></div>
       </div>

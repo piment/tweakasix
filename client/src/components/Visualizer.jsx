@@ -2,13 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 
 import "./Visualizer.css";
 import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-
-  Environment,
-
-  ContactShadows,
-} from "@react-three/drei";
+import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import axios from "axios";
 
 import Modelos from "./Modelos";
@@ -17,7 +11,7 @@ import { addColor } from "../features/Colors";
 
 import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
-import { subscribe } from "valtio";
+
 import Tweaker from "./Tweaker/Tweaker";
 
 function Visualizer({ guitarsList }) {
@@ -87,10 +81,6 @@ function Visualizer({ guitarsList }) {
     // )
   }, [triggs]);
 
-
-
-
-
   return (
     <div className="mainviz">
       <div className="visualizer">
@@ -99,7 +89,7 @@ function Visualizer({ guitarsList }) {
           fallback={null}
           camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
-          
+
           shadows
           dpr={[1, 2]}
           linear
@@ -110,13 +100,13 @@ function Visualizer({ guitarsList }) {
           }}
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
-          <OrbitControls target={[0, 1, 0]} enableZoom={false}/>
+          <OrbitControls target={[0, 1, 0]} enableZoom={false} />
           <Environment preset="city" blur={2} />
 
           <ambientLight intensity={0.4} />
           <directionalLight
             castShadow
-            intensity={2}
+            intensity={3}
             position={[0, 5, 0.5]}
             lookAt={[0, 0, 0]}
             shadow-mapSize-height={2048 / 2}
@@ -127,14 +117,14 @@ function Visualizer({ guitarsList }) {
             colorList={colorList}
             clickedPart={clickedPart}
             setClickedPart={setClickedPart}
-            tilt={[-Math.PI/7,-0.2,-Math.PI*0.3]}
-            pos={[-1,-0.2,-0.3]}
+            tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+            pos={[-1, -0.2, -0.3]}
           />
           <ContactShadows
             position={[0, -0.8, 0]}
             opacity={0.85}
             scale={10}
-            blur={.5}
+            blur={0.5}
             far={5}
             frames={1}
             resolution={512}

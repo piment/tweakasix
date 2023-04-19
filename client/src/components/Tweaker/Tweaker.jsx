@@ -19,20 +19,24 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
+  const tweakDrag = useRef()
+
+
   return (
     <>
     <Draggable 
     handle="strong"
     bounds={`parent`}
     allowAnyClick={false}
-    defaultPosition={{x : 100, y:50}}
+    ref={tweakDrag}
+    // defaultPosition={{x : 100, y:-150}}
     onStart={(e) => e.preventDefault()}
     >
             <div className="pickers-main"> 
             <div className="box no-cursor">
             <strong className="cursor"><img className="drag-icon" src={dragIcon} alt="Click to drag" /></strong>
  
-        <div className="pickers-colors">
+        <div className="pickers-colors" ref={tweakDrag}>
           <div className="body-colors">
             <ColorPicker
               tooltip="Front table"
