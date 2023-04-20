@@ -1,5 +1,5 @@
 .navbar-main{
-
+position: absolute;
    /* position: relative; */
    width: 100%;
    display: flex;
@@ -7,14 +7,15 @@
   
     margin-left: auto;
     height: 5vh;
-
-    width: 25vw;
+left: 74vw;
+    width: 25.2vw;
     font-size: 2rem;
     z-index: 100;
 
 }
 
 .navbar-cont{
+
     display: flex;
     margin-top: 8vh;
     margin-right: 0;
@@ -26,9 +27,7 @@
     background-color: rgba(0, 0, 0, 0.878);
 }
 
-.navbar-cont > *{
-/* border: green solid 2px */
-}
+
 
 ul {
     list-style: none;
@@ -45,7 +44,9 @@ ul {
     display : inline-block;
     height : 0;
     width : 0;
-    left: 56.01%;
+    margin-left: -3.43vw;
+    margin-top:8vh;
+    /* left: 5.01%; */
     border-top : 4rem solid rgb(0, 0, 0, 0.878);
     border-left : 4rem solid transparent;
     position:absolute;
