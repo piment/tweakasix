@@ -12,7 +12,7 @@ const db = mysql.createPool({
 });
 
 const getItems = (req, res) => {
-  const sqlSelect = "SELECT * FROM item ;SELECT * FROM variation;";
+  const sqlSelect = "SELECT * FROM model_parts;";
   db.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -37,8 +37,29 @@ const addGuitar = (req, res) => {
   const gloss = req.body.gloss
 
   const sqlInsert =
-    "INSERT INTO body_color (tablefront, tableback, binding, side, neckwood, fretboard, fretbinding, frets, inlay, nut, metalpieces,pickup_cover,pickup_ring,knobs, texture_path, gloss) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-  db.query(
+    // "INSERT INTO model_parts (tablefront, tableback, binding, side, neckwood, fretboard, fretbinding, frets, inlay, nut, metalpieces,pickup_cover,pickup_ring,knobs, texture_path, gloss) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+  
+   ` INSERT INTO model_parts (part_id, color) 
+    VALUES ((SELECT id FROM parts WHERE name = 'tablefront'), '?'),
+    ((SELECT id FROM parts WHERE name = 'tablefront'), '?'),
+    ((SELECT id FROM parts WHERE name = 'tableback'), '?'),
+    ((SELECT id FROM parts WHERE name = 'binding'), '?'),
+    ((SELECT id FROM parts WHERE name = 'side'), '?'),
+    ((SELECT id FROM parts WHERE name = 'neckwood'), '?'),
+    ((SELECT id FROM parts WHERE name = 'fretboard'), '?'),
+    ((SELECT id FROM parts WHERE name = 'fretbinding'), '?'),
+    ((SELECT id FROM parts WHERE name = 'frets'), '?'),
+    ((SELECT id FROM parts WHERE name = 'inlay'), '?'),
+    ((SELECT id FROM parts WHERE name = 'nut'), '?'),
+    ((SELECT id FROM parts WHERE name = 'metalpieces'), '?'),
+    ((SELECT id FROM parts WHERE name = 'pickup_cover'), '?'),
+    ((SELECT id FROM parts WHERE name = 'pickup_ring'), '?'),
+    ((SELECT id FROM parts WHERE name = 'knobs'), '?'),
+    ((SELECT id FROM parts WHERE name = 'gloss'), '?'),
+    ((SELECT id FROM parts WHERE name = 'scratch'), '?'),
+    ((SELECT id FROM parts WHERE name = 'texture_path'), '?'); `
+  
+    db.query(
     sqlInsert,
     [
       tablefront,
@@ -63,7 +84,7 @@ const addGuitar = (req, res) => {
 };
 
 const getGuitars = (req, res) => {
-  const sqlSelect = "SELECT * FROM body_color";
+  const sqlSelect = "SELECT * FROM model_parts where color_set_id = 1";
   db.query(sqlSelect, (err, result) => {
     res.send(result);
   });

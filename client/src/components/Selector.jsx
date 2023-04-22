@@ -26,7 +26,8 @@ function Selector() {
 
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
-      setItemsList(res.data[0]);
+      console.log(res.data.map((item) => console.log(item.part_name)))
+      // setItemsList(res.data[0]);
       // setVariationList(res.data[1])
     });
   };
@@ -39,7 +40,8 @@ body, neck, pickup1, pickup2
 
   const getGuitars = () =>{
     axios.get("http://localhost:3001/items/getguitars",{}).then((res) => {
-setGuitarsList(res.data)
+      // console.log(res.data)
+      // setGuitarsList(res.data)
 
     })
   }

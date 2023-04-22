@@ -20,6 +20,7 @@ height: 150vh;
 #select-guitarset {
   position: absolute;
   margin-left: 70vw;
+  z-index: 500;
 }
 
 #clickedPart .p-inputtext {
