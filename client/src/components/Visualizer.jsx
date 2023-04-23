@@ -27,7 +27,6 @@ function Visualizer({ guitarsList }) {
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
     const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
-    console.log(chosen)
     await setColorList(chosen[0].parts);
   };
 
@@ -85,7 +84,7 @@ function Visualizer({ guitarsList }) {
   }, [triggs]);
 
 
-console.log(guitarsList)
+
 
 
   return (
@@ -176,7 +175,6 @@ console.log(guitarsList)
               <option value={guitar.parts.id} key={key}>
                 {guitar.parts.id}
               </option>
-              // ,console.log(guitar.parts.id)
             ))} 
         </select>
       </div>

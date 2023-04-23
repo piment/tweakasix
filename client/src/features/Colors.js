@@ -23,7 +23,7 @@ export const guitarSlice = createSlice({
       metalpieces: "#ffffff",
       gloss : 50,
       scratch : 0,
-      wood : 20,
+      wood : 0,
       texture_path : "stocked/1681217837265.png",
     },
     dropped : 0,

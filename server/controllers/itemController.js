@@ -132,7 +132,6 @@ WHERE
 GROUP BY 
   mp.color_set_id;`
   db.query(sqlSelect, (err, result) => {
-console.log(result)
     // const results = result.reduce((acc, cur) => {
     //   const {name, color} = cur;
     //   if(!acc[name]) {

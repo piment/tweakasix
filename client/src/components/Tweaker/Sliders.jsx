@@ -73,6 +73,7 @@ function Sliders({ colorList, setColorList, clickedPart }) {
         mouseTrack: true,
         mouseTrackTop: 15,
       }}
+      defaultValue={0}
       value={colorList.wood}
       onChange={(e) => setColorList({ ...colorList, wood: e.value })}
       onPointerUp={() => dispatch(addColor(colorList))}

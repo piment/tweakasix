@@ -99,13 +99,13 @@ function Modelos({
     opacity: colorList.wood / 20,
   });
 
-  materials.tablefront.transparent =true
+  // materials.tablefront.transparent =true
   materials.tablefront.opacity = 1 - (colorList.wood/1000) 
-  materials.tableback.transparent =true
+  // materials.tableback.transparent =true
   materials.tableback.opacity = 1 - (colorList.wood/1000) 
-  materials.side.transparent =true
+  // materials.side.transparent =true
   materials.side.opacity = 1 - (colorList.wood/1000) 
-  materials.neckwood.transparent = true
+  // materials.neckwood.transparent = true
   materials.neckwood.opacity = 1 - (colorList.wood/1000) 
 
 
