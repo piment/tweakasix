@@ -30,9 +30,6 @@ function Visualizer({ guitarsList }) {
     await setColorList(chosen[0].parts);
   };
 
-  // const status = proxy({
-  //   colorList,
-  // });
   const addGuitar = () => {
     axios.post("http://localhost:3001/items/saveguitar", {
       gtrname: gtrName,
@@ -55,23 +52,14 @@ function Visualizer({ guitarsList }) {
       scratch : colorList.scratch
     });
   };
-  //  const snap = useSnapshot(status);
-  // console.log('STATUUUUUUUS', status.colorList)
+
   useEffect(() => {
-    // colorList
-    // async function showChosen(){
-    //  await dispatch(addColor(colorList));
-    //   console.log(status.colorList)
-    // }
-    //     // console.log('LIST',colorList)
-    // //  unsubscribe()
-    // showChosen()
+
   }, [handleSelectGuitar]);
 
-  // console.log(status.colorList.texture_path)
 
   const [allTx, setAllTx] = useState([]);
-  // console.log(path)
+
   useEffect(() => {
     axios.get("http://localhost:3001/stocked").then((response) => {
       let filesReached = [];
@@ -135,7 +123,6 @@ function Visualizer({ guitarsList }) {
             frames={1}
             resolution={512}
           />
-          {/* <BakeShadows/> */}
           {/* <Perf
           deepAnalyze = {true}
     position={'top-left'}
@@ -147,7 +134,6 @@ function Visualizer({ guitarsList }) {
           setDropped={setDropped}
           dropped={dropped}
         /> */}
-        {/* <Picker /> */}
         <Tweaker
           colorList={colorList}
           setColorList={setColorList}
