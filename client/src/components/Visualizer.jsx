@@ -22,12 +22,13 @@ function Visualizer({ guitarsList }) {
 
   const [colorList, setColorList] = useState(colus);
   const [clickedPart, setClickedPart] = useState("");
-
+  const [gtrName, setGtrName] = useState('')
   const [dropped, setDropped] = useState(0);
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
-    const chosen = guitarsList.filter((item) => item.id == e.target.value);
-    await setColorList(chosen[0]);
+    const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
+    console.log(chosen)
+    await setColorList(chosen[0].parts);
   };
 
   // const status = proxy({
@@ -35,6 +36,7 @@ function Visualizer({ guitarsList }) {
   // });
   const addGuitar = () => {
     axios.post("http://localhost:3001/items/saveguitar", {
+      gtrname: gtrName,
       side: colorList.side,
       binding: colorList.binding,
       tablefront: colorList.tablefront,
@@ -51,6 +53,7 @@ function Visualizer({ guitarsList }) {
       knobs: colorList.knobs,
       texture_path: colorList.texture_path,
       gloss: colorList.gloss,
+      scratch : colorList.scratch
     });
   };
   //  const snap = useSnapshot(status);
@@ -80,6 +83,10 @@ function Visualizer({ guitarsList }) {
 
     // )
   }, [triggs]);
+
+
+console.log(guitarsList)
+
 
   return (
     <div className="mainviz">
@@ -149,7 +156,7 @@ function Visualizer({ guitarsList }) {
         />
       </div>
       <div id="select-guitarset">
-        <button
+        <input type='text' onChange={(e) => setGtrName(e.target.value)}></input>        <button
           // style={{ position: "absolute" }}
           onClick={(e) => (e.stopPropagation(), addGuitar())}
         >
@@ -159,17 +166,18 @@ function Visualizer({ guitarsList }) {
         <select
           name=""
           id=""
-          onChange={(e) =>
+          onClick={(e) =>
             // setSelectGuitar(e.target.value)
             handleSelectGuitar(e)
           }
         >
           {guitarsList &&
             guitarsList.map((guitar, key) => (
-              <option value={guitar.id} key={key}>
-                {guitar.id}
+              <option value={guitar.parts.id} key={key}>
+                {guitar.parts.id}
               </option>
-            ))}
+              // ,console.log(guitar.parts.id)
+            ))} 
         </select>
       </div>
     </div>
