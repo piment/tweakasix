@@ -44,7 +44,7 @@ function MetalColors({ colorList, setColorList, clickedPart }) {
         dispatch(addColor(colorList))
       };
 
-      console.log('PICKUPS' , pickupCover.name ,'METAL', metalType.name)
+      // console.log('PICKUPS' , pickupCover.name ,'METAL', metalType.name)
 
       const op1 = useRef(null);
       const op2 = useRef(null)

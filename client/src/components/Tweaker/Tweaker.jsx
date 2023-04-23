@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import "../Visualizer.css";
+import './TweakerMain.css'
 import { useDispatch, useSelector } from "react-redux";
 import { dropTrigger, addColor } from "../../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
@@ -11,15 +11,32 @@ import silverIcon from "../../assets/img/Silver.jpg";
 import goldIcon from "../../assets/img/Gold.jpg";
 import copperIcon from "../../assets/img/Copper.jpg";
 import MetalColors from "./MetalColors";
+import Draggable from "react-draggable"
+import dragIcon from '../../assets/drag.svg'
+
 
 function Tweaker({ colorList, setColorList, clickedPart }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
+  const tweakDrag = useRef()
+
+
   return (
     <>
-      <div className="pickers-main">
-        <div className="pickers-colors">
+    <Draggable 
+    handle="strong"
+    bounds={`parent`}
+    allowAnyClick={false}
+    ref={tweakDrag}
+    // defaultPosition={{x : 100, y:-150}}
+    onStart={(e) => e.preventDefault()}
+    >
+            <div className="pickers-main"> 
+            <div className="box no-cursor">
+            <strong className="cursor"><img className="drag-icon" src={dragIcon} alt="Click to drag" /></strong>
+ 
+        <div className="pickers-colors" ref={tweakDrag}>
           <div className="body-colors">
             <ColorPicker
               tooltip="Front table"
@@ -210,7 +227,7 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
             clickedPart={clickedPart}
           />
         </div>
-      </div>
+      </div>  </div></Draggable>
     </>
   );
 }

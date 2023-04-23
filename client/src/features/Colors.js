@@ -23,6 +23,7 @@ export const guitarSlice = createSlice({
       metalpieces: "#ffffff",
       gloss : 50,
       scratch : 0,
+      wood : 0,
       texture_path : "stocked/1681217837265.png",
     },
     dropped : 0,
@@ -49,6 +50,7 @@ export const guitarSlice = createSlice({
       state.colorSet.texture_path = action.payload.texture_path
       state.gloss = action.payload.gloss
       state.scratch = action.payload.scratch
+      state.wood = action.payload.wood
     },
     triggerDrop: (state, action) => {
 

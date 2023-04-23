@@ -1,25 +1,8 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import {
-  sRGBEncoding,
-  ACESFilmicToneMapping,
-  PointLightHelper,
-  DirectionalLightHelper,
-  PCFShadowMap,
-  BasicShadowMap,
-  PCFSoftShadowMap,
-} from "three";
+
 import "./Visualizer.css";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import {
-  OrbitControls,
-  useGLTF,
-  Environment,
-  useHelper,
-  BakeShadows,
-  AccumulativeShadows,
-  RandomizedLight,
-  ContactShadows,
-} from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import axios from "axios";
 
 import Modelos from "./Modelos";
@@ -28,7 +11,7 @@ import { addColor } from "../features/Colors";
 
 import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
-import { subscribe } from "valtio";
+
 import Tweaker from "./Tweaker/Tweaker";
 
 function Visualizer({ guitarsList }) {
@@ -39,12 +22,12 @@ function Visualizer({ guitarsList }) {
 
   const [colorList, setColorList] = useState(colus);
   const [clickedPart, setClickedPart] = useState("");
-
+  const [gtrName, setGtrName] = useState('')
   const [dropped, setDropped] = useState(0);
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
-    const chosen = guitarsList.filter((item) => item.id == e.target.value);
-    await setColorList(chosen[0]);
+    const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
+    await setColorList(chosen[0].parts);
   };
 
   // const status = proxy({
@@ -52,6 +35,7 @@ function Visualizer({ guitarsList }) {
   // });
   const addGuitar = () => {
     axios.post("http://localhost:3001/items/saveguitar", {
+      gtrname: gtrName,
       side: colorList.side,
       binding: colorList.binding,
       tablefront: colorList.tablefront,
@@ -68,6 +52,7 @@ function Visualizer({ guitarsList }) {
       knobs: colorList.knobs,
       texture_path: colorList.texture_path,
       gloss: colorList.gloss,
+      scratch : colorList.scratch
     });
   };
   //  const snap = useSnapshot(status);
@@ -98,48 +83,9 @@ function Visualizer({ guitarsList }) {
     // )
   }, [triggs]);
 
-  function Backdrop() {
-    const shadows = useRef();
-    // useFrame((state, delta) => easing.dampC(shadows.current.getMesh().material.color, state.color, 0.25, delta))
-    return (
-      <AccumulativeShadows
-        ref={shadows}
-        frames={60}
-        alphaTest={0.85}
-        scale={10}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, -1.14]}
-      >
-        <RandomizedLight
-          amount={4}
-          radius={9}
-          intensity={0.55}
-          ambient={0.25}
-          position={[5, 5, -10]}
-        />
-        {/* <RandomizedLight amount={4} radius={5} intensity={0.25} ambient={0.55} position={[-5, 5, -9]} /> */}
-      </AccumulativeShadows>
-    );
-  }
 
-  function PointLightHelp() {
-    const pointlight = useRef();
-    useHelper(pointlight, DirectionalLightHelper, 1, "blue");
 
-    return (
-      <directionalLight
-        // color={'#f0fbb3'}
-        ref={pointlight}
-        position={[-0.8, 1.8, 1.4]}
-        intensity={3}
-        distance={100}
-        scale={0.5}
-        castShadow
-        shadow-mapSize-height={2048 / 2}
-        shadow-mapSize-width={2048 / 2}
-      />
-    );
-  }
+
 
   return (
     <div className="mainviz">
@@ -147,8 +93,9 @@ function Visualizer({ guitarsList }) {
         <Canvas
           className="canvas"
           fallback={null}
-          camera={{ position: [0, 2, 3], fov: 50 }}
+          camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
+
           shadows
           dpr={[1, 2]}
           linear
@@ -159,13 +106,13 @@ function Visualizer({ guitarsList }) {
           }}
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
-          <OrbitControls target={[0, 1, 0]} />
+          <OrbitControls target={[0, 1, 0]} enableZoom={false} />
           <Environment preset="city" blur={2} />
 
           <ambientLight intensity={0.4} />
           <directionalLight
             castShadow
-            intensity={2}
+            intensity={3}
             position={[0, 5, 0.5]}
             lookAt={[0, 0, 0]}
             shadow-mapSize-height={2048 / 2}
@@ -176,13 +123,14 @@ function Visualizer({ guitarsList }) {
             colorList={colorList}
             clickedPart={clickedPart}
             setClickedPart={setClickedPart}
-            tilt={[-Math.PI/15,0,0]}
+            tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+            pos={[-1, -0.2, -0.3]}
           />
           <ContactShadows
             position={[0, -0.8, 0]}
             opacity={0.85}
             scale={10}
-            blur={.5}
+            blur={0.5}
             far={5}
             frames={1}
             resolution={512}
@@ -207,7 +155,7 @@ function Visualizer({ guitarsList }) {
         />
       </div>
       <div id="select-guitarset">
-        <button
+        <input type='text' onChange={(e) => setGtrName(e.target.value)}></input>        <button
           // style={{ position: "absolute" }}
           onClick={(e) => (e.stopPropagation(), addGuitar())}
         >
@@ -217,17 +165,17 @@ function Visualizer({ guitarsList }) {
         <select
           name=""
           id=""
-          onChange={(e) =>
+          onClick={(e) =>
             // setSelectGuitar(e.target.value)
             handleSelectGuitar(e)
           }
         >
           {guitarsList &&
             guitarsList.map((guitar, key) => (
-              <option value={guitar.id} key={key}>
-                {guitar.id}
+              <option value={guitar.parts.id} key={key}>
+                {guitar.parts.id}
               </option>
-            ))}
+            ))} 
         </select>
       </div>
     </div>

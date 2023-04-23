@@ -26,7 +26,8 @@ function Selector() {
 
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
-      setItemsList(res.data[0]);
+      // console.log(res.data)
+      // setItemsList(res.data[0]);
       // setVariationList(res.data[1])
     });
   };
@@ -39,7 +40,7 @@ body, neck, pickup1, pickup2
 
   const getGuitars = () =>{
     axios.get("http://localhost:3001/items/getguitars",{}).then((res) => {
-setGuitarsList(res.data)
+      setGuitarsList(res.data)
 
     })
   }
@@ -53,7 +54,7 @@ setGuitarsList(res.data)
 
   return (
     <div className="main-select">
-      <div className="selector-section">
+      {/* <div className="selector-section">
 
         <Body itemsList={itemsList} setBody={setBody}/>
         <Neck itemsList={itemsList} setNeck={setNeck}/>
@@ -70,10 +71,10 @@ setGuitarsList(res.data)
             ))}
         </select>
       </div>
-   </div>
+   </div> */}
    <div className="visu-sum">
    <Visualizer guitarsList={guitarsList}/>
-   <div className="list-sum">
+   {/* <div className="list-sum">
 
       <div className="item-price">
        <span> {body.name}</span> <span>{body.price}$</span>
@@ -95,7 +96,8 @@ setGuitarsList(res.data)
       onClick={ (e) => (
         e.stopPropagation(),getGuitars())}
       >Get guitars</button>
-   </div></div>
+   </div> */}
+   </div>
     </div>
   );
 }
