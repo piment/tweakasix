@@ -5,7 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import axios from "axios";
 
-import Modelos from "./Modelos";
+import Modelos from "./ESguitar";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../features/Colors";
 
@@ -13,20 +13,22 @@ import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
 
 import Tweaker from "./Tweaker/Tweaker";
+import ESguitar from "./ESguitar";
+import Teleguitar from "./Teleguitar";
 
-function Visualizer({ guitarsList }) {
-  const [selectGuitar, setSelectGuitar] = useState("");
-
+function Visualizer({ guitarsList, model }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
   const [colorList, setColorList] = useState(colus);
   const [clickedPart, setClickedPart] = useState("");
-  const [gtrName, setGtrName] = useState('')
+  const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(0);
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
-    const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
+    const chosen = guitarsList.filter(
+      (item) => item.parts.id == e.target.value
+    );
     await setColorList(chosen[0].parts);
   };
 
@@ -49,14 +51,11 @@ function Visualizer({ guitarsList }) {
       knobs: colorList.knobs,
       texture_path: colorList.texture_path,
       gloss: colorList.gloss,
-      scratch : colorList.scratch
+      scratch: colorList.scratch,
     });
   };
 
-  useEffect(() => {
-
-  }, [handleSelectGuitar]);
-
+  useEffect(() => {}, [handleSelectGuitar]);
 
   const [allTx, setAllTx] = useState([]);
 
@@ -105,16 +104,8 @@ function Visualizer({ guitarsList }) {
             lookAt={[0, 0, 0]}
             shadow-mapSize-height={2048 / 2}
             shadow-mapSize-width={2048 / 2}
-          />
-          <Modelos
-            setColorList={setColorList}
-            colorList={colorList}
-            clickedPart={clickedPart}
-            setClickedPart={setClickedPart}
-            tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-            pos={[-1, -0.2, -0.3]}
-          />
-          <ContactShadows
+          />         
+           <ContactShadows
             position={[0, -0.8, 0]}
             opacity={0.85}
             scale={10}
@@ -123,10 +114,31 @@ function Visualizer({ guitarsList }) {
             frames={1}
             resolution={512}
           />
-          {/* <Perf
+          {model == 1 && (
+   
+        <ESguitar
+            setColorList={setColorList}
+            colorList={colorList}
+            clickedPart={clickedPart}
+            setClickedPart={setClickedPart}
+            tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+            pos={[-1, -0.2, -0.3]}
+          /> 
+           )}
+             {model == 2 && (
+                <Teleguitar
+               setColorList={setColorList}
+               colorList={colorList}
+               clickedPart={clickedPart}
+               setClickedPart={setClickedPart}
+               tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+               pos={[-1, -0.2, -0.3]}/>
+               )}
+
+          <Perf
           deepAnalyze = {true}
     position={'top-left'}
-          /> */}
+          />
         </Canvas>
         {/* <MyDropzone
           colorList={colorList}
@@ -141,18 +153,17 @@ function Visualizer({ guitarsList }) {
         />
       </div>
       <div id="select-guitarset">
-        <input type='text' onChange={(e) => setGtrName(e.target.value)}></input>        <button
+        <input type="text" onChange={(e) => setGtrName(e.target.value)}></input>{" "}
+        <button
           // style={{ position: "absolute" }}
           onClick={(e) => (e.stopPropagation(), addGuitar())}
         >
           Save this guitar
         </button>
-
         <select
           name=""
           id=""
           onClick={(e) =>
-            // setSelectGuitar(e.target.value)
             handleSelectGuitar(e)
           }
         >
@@ -161,7 +172,7 @@ function Visualizer({ guitarsList }) {
               <option value={guitar.parts.id} key={key}>
                 {guitar.parts.id}
               </option>
-            ))} 
+            ))}
         </select>
       </div>
     </div>

@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { dropTrigger, addColor } from "../features/Colors";
 import { LinearEncoding, sRGBEncoding } from "three";
 
-function Modelos({
+function ESguitar({
   trig,
   setColorList,
   colorList,
@@ -52,7 +52,23 @@ function Modelos({
     "guitar/imgs/DefaultMaterial_Roughness2.jpg",
     "guitar/imgs/DefaultMaterial_Roughness2-INV.jpg",
   ]);
+  const texture_path = useSelector(
+    (state) => state.guitar_set.colorSet.texture_path
+  );
+  const [txUse, setTxUse] = useState(path + texture_path);
 
+  const reactMap = useTexture(txUse);
+
+  const woodFull = useTexture("woodFullminH.png");
+  woodFull.flipY = false;
+
+
+
+  const woodMat = new THREE.MeshLambertMaterial({
+    map: woodFull,
+    transparent: true,
+    opacity: colorList.wood / 20,
+  });
   scratches.flipY = false;
   scratches.wrapS = THREE.RepeatWrapping;
   scratches.wrapT = THREE.RepeatWrapping;
@@ -79,33 +95,15 @@ function Modelos({
     (materials.pickup_cover.metalness = 1),
     (materials.pickup_cover.roughness = 0);
 
-  const texture_path = useSelector(
-    (state) => state.guitar_set.colorSet.texture_path
-  );
-  const [txUse, setTxUse] = useState(path + texture_path);
-
-  const reactMap = useTexture(txUse);
-
-  //  materials.tablefront.map = reactMap
-  //  materials.tablefront.needsUpdate = true
-  const woodFull = useTexture("woodFullminH.png");
-  woodFull.flipY = false;
 
   woodFull.encoding = sRGBEncoding
-
-  const woodMat = new THREE.MeshLambertMaterial({
-    map: woodFull,
-    transparent: true,
-    opacity: colorList.wood / 20,
-  });
-
-  // materials.tablefront.transparent =true
+  
   materials.tablefront.opacity = 1 - (colorList.wood/1000) 
-  // materials.tableback.transparent =true
+
   materials.tableback.opacity = 1 - (colorList.wood/1000) 
-  // materials.side.transparent =true
+
   materials.side.opacity = 1 - (colorList.wood/1000) 
-  // materials.neckwood.transparent = true
+
   materials.neckwood.opacity = 1 - (colorList.wood/1000) 
 
 
@@ -134,7 +132,7 @@ materials.fretboard.map = rosewood
     <>
       <group rotation={tilt} position={pos}>
         <group
-          // {...props}
+
           dispose={null}
           ref={ref}
           position={[0, -0.5, 0]}
@@ -164,47 +162,46 @@ materials.fretboard.map = rosewood
             material-color={colorList.binding}
           />
           <mesh
-            // castShadow
+
             receiveShadow
             geometry={nodes.tableback.geometry}
             material={materials.tableback}
             material-color={colorList.tableback}
           />
           <mesh
-            // castShadow
+
             receiveShadow
             geometry={nodes.tablefront.geometry}
             material={materials.tablefront}
             material-color={colorList.tablefront}
-            // side={THREE.FrontSide}
+
           ></mesh>
           {/* WOOOOOOOOOOOOOOOOD */}
           <mesh
             receiveShadow
             geometry={nodes.tablefront.geometry}
             material={woodMat}
-            // material-color={colorList.tablefront}
+
           ></mesh>
                     <mesh
             castShadow
             receiveShadow
             geometry={nodes.side.geometry}
             material={woodMat}
-            // material-color={colorList.side}
+
           />
 
      
      
           <mesh
-            // castShadow
-            receiveShadow
+            // castShadow            receiveShadow
             geometry={nodes.tableback.geometry}
             material={woodMat}
             // material-color={colorList.tableback}
           />
               {/* WOOOOOOOOOOOOOOOOD */}
           <mesh
-            // castShadow
+
             receiveShadow
             geometry={nodes.inlay.geometry}
             material={materials.inlay}
@@ -218,14 +215,14 @@ materials.fretboard.map = rosewood
             material-color={colorList.metalpieces}
           />
           <mesh
-            // castShadow
+
             receiveShadow
             geometry={nodes.fretbinding.geometry}
             material={materials.fretbinding}
             material-color={colorList.fretbinding}
           />
           <mesh
-            // castShadow
+
             receiveShadow
             geometry={nodes.fretboard.geometry}
             material={materials.fretboard}
@@ -254,7 +251,7 @@ materials.fretboard.map = rosewood
           />
           <mesh
             castShadow
-            // receiveShadow
+
             geometry={nodes.neckwood.geometry}
             material={materials.neckwood}
             material-color={colorList.neckwood}
@@ -264,7 +261,7 @@ materials.fretboard.map = rosewood
             receiveShadow
             geometry={nodes.neckwood.geometry}
             material={woodMat}
-            // material-color={colorList.neckwood}
+
           />
           <mesh
             castShadow
@@ -310,30 +307,28 @@ materials.fretboard.map = rosewood
         </group>
         <group position={[0, -0.5, 0]} dispose={null} scale={2}>
           <mesh
-            // castShadow
-            // receiveShadow
+
             geometry={nodes.UN_inside.geometry}
             material={materials.un_black}
-            // material-color={colorList.}
+
           />
           <mesh
             castShadow
-            // receiveShadow
+
             geometry={nodes.strings.geometry}
             material={materials.strings}
           />
 
           <mesh
-            // castShadow
-            // receiveShadow
+
             geometry={nodes.varnish.geometry}
             material={materials.varnish}
-            // visible={false}
+
           />
         </group>
       </group>
     </>
   );
 }
-useGLTF.preload("/335whole OPT.glb");
-export default Modelos;
+useGLTF.preload("/335whole OPT4.glb");
+export default ESguitar;
