@@ -38,7 +38,7 @@ const addGuitar = (req, res) => {
   const texture_path = req.body.texture_path
   const gloss = req.body.gloss
   const scratch = req.body.scratch
-const addedId= 2
+const addedId = req.body.id
   
   const sqlInsert =
    ` 
@@ -60,7 +60,13 @@ const addedId= 2
    ((SELECT id FROM parts WHERE name = 'knobs'), ?,${addedId},'knobs' , LAST_INSERT_ID()),
    ((SELECT id FROM parts WHERE name = 'texture_path'), ?,${addedId}, 'texture_path', LAST_INSERT_ID()),
    ((SELECT id FROM parts WHERE name = 'gloss'), ?,${addedId}, 'gloss', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'scratch'), ?,${addedId}, 'scratch', LAST_INSERT_ID())`;
+   ((SELECT id FROM parts WHERE name = 'scratch'), ?,${addedId}, 'scratch', LAST_INSERT_ID()),
+   ((SELECT id FROM parts WHERE name = 'body'), ?,${addedId}, 'body', LAST_INSERT_ID()),
+   ((SELECT id FROM parts WHERE name = 'pickuguard'), ?,${addedId}, 'pickuguard', LAST_INSERT_ID()),
+   ((SELECT id FROM parts WHERE name = 'single_plastic'), ?,${addedId}, 'single_plastic', LAST_INSERT_ID()),
+   ((SELECT id FROM parts WHERE name = 'single_metal'), ?,${addedId}, 'single_metal', LAST_INSERT_ID()),
+   ((SELECT id FROM parts WHERE name = 'backplate'), ?,${addedId}, 'backplate', LAST_INSERT_ID()),
+   `;
   
    try {
     db.query(
@@ -83,7 +89,12 @@ const addedId= 2
         knobs,
         texture_path,
         gloss,
-        scratch
+        scratch,
+        body,
+        pickguard,
+        single_plastic,
+        single_metal,
+        backplate
       ],
       (err, result) => {
         
@@ -102,10 +113,11 @@ const addedId= 2
 
 const getGuitars = (req, res) => {
   const sqlSelect = 
-  // "SELECT * FROM model_parts where color_set_id = 1";
+  // "SELECT guitar_id FROM model_parts GROUP BY color_set;"
   ` SELECT 
   JSON_OBJECT(
     'id', mp.color_set_id,
+    'guitar_id', mp.guitar_id,
     'binding', MAX(CASE WHEN p.name = 'binding' THEN mp.color END),
     'fretbinding', MAX(CASE WHEN p.name = 'fretbinding' THEN mp.color END),
     'fretboard', MAX(CASE WHEN p.name = 'fretboard' THEN mp.color END),
@@ -127,21 +139,12 @@ const getGuitars = (req, res) => {
 FROM 
   model_parts mp 
   JOIN parts p ON mp.parts_id = p.id 
-WHERE 
+WHERE
   mp.color_set_id < 100
 GROUP BY 
+mp.guitar_id,
   mp.color_set_id;`
   db.query(sqlSelect, (err, result) => {
-    // const results = result.reduce((acc, cur) => {
-    //   const {name, color} = cur;
-    //   if(!acc[name]) {
-    //     acc[name] = { color_set_id: cur.color_set_id };
-    //     acc[name][name] = color;
-    //   } else {
-    //     acc[name][name] = color;
-    //   }
-    //   return acc;
-    // }, {});
     res.send(result);
   });
 };

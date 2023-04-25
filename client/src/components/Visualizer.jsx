@@ -16,11 +16,13 @@ import Tweaker from "./Tweaker/Tweaker";
 import ESguitar from "./ESguitar";
 import Teleguitar from "./Teleguitar";
 
-function Visualizer({ guitarsList, model }) {
+function Visualizer({ guitarsList, model, setModel }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
   const [colorList, setColorList] = useState(colus);
+  // const [col335, setCol335] = useState(colorList.es335)
+  // const [colTele, setColTele] = useState(colorList.telecaster)
   const [clickedPart, setClickedPart] = useState("");
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(0);
@@ -30,10 +32,13 @@ function Visualizer({ guitarsList, model }) {
       (item) => item.parts.id == e.target.value
     );
     await setColorList(chosen[0].parts);
+    setModel(chosen[0].parts.guitar_id);
+    // console.log(colorList)
   };
 
   const addGuitar = () => {
     axios.post("http://localhost:3001/items/saveguitar", {
+      id: model,
       gtrname: gtrName,
       side: colorList.side,
       binding: colorList.binding,
@@ -52,6 +57,11 @@ function Visualizer({ guitarsList, model }) {
       texture_path: colorList.texture_path,
       gloss: colorList.gloss,
       scratch: colorList.scratch,
+      body: colorList.body,
+      pickguard: colorList.pickguard,
+      single_plastic: colorList.single_plastic,
+      single_metal: colorList.single_metal,
+      backplat: colorList.backplate,
     });
   };
 
@@ -70,18 +80,15 @@ function Visualizer({ guitarsList, model }) {
     // )
   }, [triggs]);
 
-
-
-
-
   return (
     <div className="mainviz">
       <div className="visualizer">
         <Canvas
           className="canvas"
           fallback={null}
-          camera={{ position: [0, 2, 3], fov: 60}}
+          camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
+
           shadows
           dpr={[1, 2]}
           linear
@@ -92,9 +99,7 @@ function Visualizer({ guitarsList, model }) {
           }}
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
-          <OrbitControls target={[0, 1, 0]} 
-          enableZoom={false}
-           />
+          <OrbitControls target={[0, 1, 0]} enableZoom={false} />
           <Environment preset="city" blur={2} />
 
           <ambientLight intensity={0.4} />
@@ -103,11 +108,11 @@ function Visualizer({ guitarsList, model }) {
             intensity={3}
             position={[0, 5, 0.5]}
             lookAt={[0, 0, 0]}
-            shadow-mapSize-height={2048 / 2}
-            shadow-mapSize-width={2048 / 2}
-          />         
-           <ContactShadows
-          //  matrixAutoUpdate
+            shadow-mapSize-height={512}
+            shadow-mapSize-width={512}
+          />
+          <ContactShadows
+            //  matrixAutoUpdate
             position={[0, -0.8, 0]}
             opacity={0.85}
             scale={10}
@@ -117,30 +122,27 @@ function Visualizer({ guitarsList, model }) {
             resolution={512}
           />
           {model == 1 && (
-   
-        <ESguitar
-            setColorList={setColorList}
-            colorList={colorList}
-            clickedPart={clickedPart}
-            setClickedPart={setClickedPart}
-            tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-            pos={[-1, -0.2, -0.3]}
-          /> 
-           )}
-             {model == 2 && (
-                <Teleguitar
-               setColorList={setColorList}
-               colorList={colorList}
-               clickedPart={clickedPart}
-               setClickedPart={setClickedPart}
-               tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-               pos={[-1, -0.2, -0.3]}/>
-               )}
+            <ESguitar
+              setColorList={setColorList}
+              colorList={colorList}
+              clickedPart={clickedPart}
+              setClickedPart={setClickedPart}
+              tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+              pos={[-1, -0.2, -0.3]}
+            />
+          )}
+          {model == 2 && (
+            <Teleguitar
+              setColorList={setColorList}
+              colorList={colorList}
+              clickedPart={clickedPart}
+              setClickedPart={setClickedPart}
+              tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+              pos={[-1, -0.2, -0.3]}
+            />
+          )}
 
-          <Perf
-          deepAnalyze = {true}
-    position={'top-left'}
-          />
+          <Perf deepAnalyze={true} position={"top-left"} />
         </Canvas>
         {/* <MyDropzone
           colorList={colorList}
@@ -162,13 +164,7 @@ function Visualizer({ guitarsList, model }) {
         >
           Save this guitar
         </button>
-        <select
-          name=""
-          id=""
-          onClick={(e) =>
-            handleSelectGuitar(e)
-          }
-        >
+        <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
           {guitarsList &&
             guitarsList.map((guitar, key) => (
               <option value={guitar.parts.id} key={key}>

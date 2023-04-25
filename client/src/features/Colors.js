@@ -25,7 +25,33 @@ export const guitarSlice = createSlice({
       scratch : 0,
       wood : 0,
       texture_path : "stocked/1681217837265.png",
+      body: "#ffffff",
+      pickguard: "#ffffff",
+      single_plastic: "#ffffff",
+      single_metal: "#ffffff",
+      backplate: "#ffffff"
     },
+    // telecaster :{
+    //   id:0,
+    //       side: "#ffffff",
+    //       binding: "#ffffff",
+    //       tablefront: "#ffffff",
+    //       tableback: "#ffffff",
+    //       fretbinding: "#ffffff",
+    //       fretboard: "#ffffff",
+    //       inlay: "#ffffff",
+    //       nut: "#ffffff",
+    //       frets: "#ffffff",
+    //       knobs: "#ffffff",
+    //       pickup_cover: "#ffffff",
+    //       pickup_ring: "#ffffff",
+    //       neckwood: "#ffffff",
+    //       metalpieces: "#ffffff",
+    //       gloss : 50,
+    //       scratch : 0,
+    //       wood : 0,
+    //       texture_path : "stocked/1681217837265.png",
+    //     },
     dropped : 0,
   },
 
@@ -48,9 +74,14 @@ export const guitarSlice = createSlice({
       state.colorSet.neckwood = action.payload.neckwood;
       state.colorSet.metalpieces = action.payload.metalpieces;
       state.colorSet.texture_path = action.payload.texture_path
-      state.gloss = action.payload.gloss
-      state.scratch = action.payload.scratch
-      state.wood = action.payload.wood
+      state.colorSet.gloss = action.payload.gloss
+      state.colorSet.scratch = action.payload.scratch
+      state.colorSet.wood = action.payload.wood
+      state.colorSet.body = action.payload.body
+      state.colorSet.pickguard = action.payload.pickguard
+      state.colorSet.single_plastic = action.payload.single_plastic
+      state.colorSet.single_metal = action.payload.single_metal
+      state.colorSet.backplate = action.payload.backplate
     },
     triggerDrop: (state, action) => {
 
