@@ -142,7 +142,7 @@ materials.fretboard.map = rosewood
       <group rotation={tilt} position={pos}>
         <group
   //  dispose={[nodes, materials]}
-          dispose={null}
+          // dispose={null}
           ref={ref}
           position={[0, -0.5, 0]}
           scale={2}

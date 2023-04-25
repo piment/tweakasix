@@ -80,7 +80,7 @@ function Visualizer({ guitarsList, model }) {
         <Canvas
           className="canvas"
           fallback={null}
-          camera={{ position: [0, 2, 3], fov: 60, frustumCulled: true }}
+          camera={{ position: [0, 2, 3], fov: 60}}
           // shadows ={{type : PCFSoftShadowMap}}
           shadows
           dpr={[1, 2]}
@@ -93,7 +93,7 @@ function Visualizer({ guitarsList, model }) {
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
           <OrbitControls target={[0, 1, 0]} 
-          // enableZoom={false}
+          enableZoom={false}
            />
           <Environment preset="city" blur={2} />
 

@@ -140,7 +140,7 @@ materials.fretboard.map = rosewood
     <>
       <group rotation={tilt} position={pos}
     //    dispose={[nodes, materials]}
-    dispose={null}
+    // dispose={null}
        >
         <group
          
@@ -201,13 +201,7 @@ materials.fretboard.map = rosewood
         geometry={nodes.pickup_bridge.geometry}
         material={materials.pickupplastic}
       />
-      <mesh
-       ref={(mesh) => (meshRefs.current[0] = mesh)}
-        castShadow
-        // receiveShadow
-        geometry={nodes.knobs.geometry}
-        material={materials.metalpieces}
-      />
+
       <mesh
        ref={(mesh) => (meshRefs.current[6] = mesh)}
         // castShadow
@@ -298,6 +292,13 @@ materials.fretboard.map = rosewood
         castShadow
         receiveShadow
         geometry={nodes.screws.geometry}
+        material={materials.metalpieces}
+      />   
+         <mesh
+       ref={(mesh) => (meshRefs.current[19] = mesh)}
+        castShadow
+        // receiveShadow
+        geometry={nodes.knobs.geometry}
         material={materials.metalpieces}
       />
     </group>
