@@ -80,9 +80,8 @@ function Visualizer({ guitarsList, model }) {
         <Canvas
           className="canvas"
           fallback={null}
-          camera={{ position: [0, 2, 3], fov: 60 }}
+          camera={{ position: [0, 2, 3], fov: 60, frustumCulled: true }}
           // shadows ={{type : PCFSoftShadowMap}}
-
           shadows
           dpr={[1, 2]}
           linear
@@ -93,7 +92,9 @@ function Visualizer({ guitarsList, model }) {
           }}
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
-          <OrbitControls target={[0, 1, 0]} enableZoom={false} />
+          <OrbitControls target={[0, 1, 0]} 
+          // enableZoom={false}
+           />
           <Environment preset="city" blur={2} />
 
           <ambientLight intensity={0.4} />
@@ -106,6 +107,7 @@ function Visualizer({ guitarsList, model }) {
             shadow-mapSize-width={2048 / 2}
           />         
            <ContactShadows
+          //  matrixAutoUpdate
             position={[0, -0.8, 0]}
             opacity={0.85}
             scale={10}

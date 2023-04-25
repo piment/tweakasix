@@ -26,6 +26,7 @@ function ESguitar({
   pos,
 }) {
   const ref = useRef();
+  const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/335whole OPT4.glb");
 
@@ -122,17 +123,25 @@ materials.fretboard.map = rosewood
 
 
 
-  useLayoutEffect(() => {
-    console.log("pipi");
-    console.log(texture_path);
-    setTxUse(path + texture_path);
-  }, [triggs]);
+  // useLayoutEffect(() => {
+  //   console.log("pipi");
+  //   console.log(texture_path);
+  //   setTxUse(path + texture_path);
+  // }, [triggs]);
+
+  useFrame(() => {
+    meshRefs.current.forEach((mesh) => {
+      mesh.material = mesh.material.clone();
+
+    });
+  });
+
 
   return (
     <>
       <group rotation={tilt} position={pos}>
         <group
-
+  //  dispose={[nodes, materials]}
           dispose={null}
           ref={ref}
           position={[0, -0.5, 0]}
@@ -147,6 +156,7 @@ materials.fretboard.map = rosewood
           }}
         >
           <mesh
+          ref={(mesh) => (meshRefs.current[0] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.side.geometry}
@@ -155,6 +165,7 @@ materials.fretboard.map = rosewood
           />
 
           <mesh
+          ref={(mesh) => (meshRefs.current[1] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.binding.geometry}
@@ -162,14 +173,14 @@ materials.fretboard.map = rosewood
             material-color={colorList.binding}
           />
           <mesh
-
+ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.tableback.geometry}
             material={materials.tableback}
             material-color={colorList.tableback}
           />
           <mesh
-
+         ref={(mesh) => (meshRefs.current[3] = mesh)}
             receiveShadow
             geometry={nodes.tablefront.geometry}
             material={materials.tablefront}
@@ -178,12 +189,14 @@ materials.fretboard.map = rosewood
           ></mesh>
           {/* WOOOOOOOOOOOOOOOOD */}
           <mesh
+                   ref={(mesh) => (meshRefs.current[4] = mesh)}
             receiveShadow
             geometry={nodes.tablefront.geometry}
             material={woodMat}
 
           ></mesh>
                     <mesh
+                             ref={(mesh) => (meshRefs.current[5] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.side.geometry}
@@ -194,6 +207,7 @@ materials.fretboard.map = rosewood
      
      
           <mesh
+                   ref={(mesh) => (meshRefs.current[6] = mesh)}
             // castShadow            receiveShadow
             geometry={nodes.tableback.geometry}
             material={woodMat}
@@ -201,13 +215,14 @@ materials.fretboard.map = rosewood
           />
               {/* WOOOOOOOOOOOOOOOOD */}
           <mesh
-
+         ref={(mesh) => (meshRefs.current[7] = mesh)}
             receiveShadow
             geometry={nodes.inlay.geometry}
             material={materials.inlay}
             material-color={colorList.inlay}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[8] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.jackinput.geometry}
@@ -215,20 +230,21 @@ materials.fretboard.map = rosewood
             material-color={colorList.metalpieces}
           />
           <mesh
-
+         ref={(mesh) => (meshRefs.current[9] = mesh)}
             receiveShadow
             geometry={nodes.fretbinding.geometry}
             material={materials.fretbinding}
             material-color={colorList.fretbinding}
           />
           <mesh
-
+         ref={(mesh) => (meshRefs.current[10] = mesh)}
             receiveShadow
             geometry={nodes.fretboard.geometry}
             material={materials.fretboard}
             material-color={colorList.fretboard}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[11] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.frets.geometry}
@@ -236,6 +252,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.frets}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[12] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.knobs.geometry}
@@ -243,6 +260,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.knobs}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[13] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.nut.geometry}
@@ -250,6 +268,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.nut}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[14] = mesh)}
             castShadow
 
             geometry={nodes.neckwood.geometry}
@@ -257,6 +276,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.neckwood}
           />
                <mesh
+                        ref={(mesh) => (meshRefs.current[15] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.neckwood.geometry}
@@ -264,6 +284,7 @@ materials.fretboard.map = rosewood
 
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[16] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.pickup_cover.geometry}
@@ -271,6 +292,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.pickup_cover}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[17] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.pickup_ring.geometry}
@@ -278,6 +300,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.pickup_ring}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[18] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.mechs.geometry}
@@ -285,6 +308,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.metalpieces}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[19] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.selector.geometry}
@@ -292,6 +316,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.metalpieces}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[20] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.tail_saddle.geometry}
@@ -299,6 +324,7 @@ materials.fretboard.map = rosewood
             material-color={colorList.metalpieces}
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[21] = mesh)}
             castShadow
             receiveShadow
             geometry={nodes.pickup_screws.geometry}
@@ -307,12 +333,13 @@ materials.fretboard.map = rosewood
         </group>
         <group position={[0, -0.5, 0]} dispose={null} scale={2}>
           <mesh
-
+         ref={(mesh) => (meshRefs.current[22] = mesh)}
             geometry={nodes.UN_inside.geometry}
             material={materials.un_black}
 
           />
           <mesh
+                   ref={(mesh) => (meshRefs.current[23] = mesh)}
             castShadow
 
             geometry={nodes.strings.geometry}
@@ -320,7 +347,7 @@ materials.fretboard.map = rosewood
           />
 
           <mesh
-
+         ref={(mesh) => (meshRefs.current[24] = mesh)}
             geometry={nodes.varnish.geometry}
             material={materials.varnish}
 
