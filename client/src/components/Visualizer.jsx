@@ -62,7 +62,7 @@ function Visualizer({ guitarsList, model, setModel }) {
       pickguard: colorList.pickguard,
       single_plastic: colorList.single_plastic,
       single_metal: colorList.single_metal,
-      backplat: colorList.backplate,
+      backplate: colorList.backplate
     });
   };
 
@@ -112,8 +112,8 @@ function Visualizer({ guitarsList, model, setModel }) {
             intensity={3}
             position={[0, 5, 0.5]}
             lookAt={[0, 0, 0]}
-            shadow-mapSize-height={512}
-            shadow-mapSize-width={512}
+            shadow-mapSize-height={1024}
+            shadow-mapSize-width={1024}
           />
           <ContactShadows
             //  matrixAutoUpdate

@@ -12,8 +12,7 @@ const db = mysql.createPool({
 });
 
 const getItems = (req, res) => {
-  const sqlSelect =
-   "SELECT * FROM model_parts where color_set_id < 100;";
+  const sqlSelect = "SELECT * FROM model_parts where color_set_id < 100;";
   db.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -35,13 +34,17 @@ const addGuitar = (req, res) => {
   const pickup_cover = req.body.pickup_cover;
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
-  const texture_path = req.body.texture_path
-  const gloss = req.body.gloss
-  const scratch = req.body.scratch
-const addedId = req.body.id
-  
-  const sqlInsert =
-   ` 
+  const texture_path = req.body.texture_path;
+  const gloss = req.body.gloss;
+  const scratch = req.body.scratch;
+  const addedId = req.body.id;
+  const body = req.body.body;
+  const pickguard = req.body.pickguard;
+  const single_plastic = req.body.single_plastic;
+  const single_metal = req.body.single_metal;
+  const backplate = req.body.backplate;
+
+  const sqlInsert = ` 
    INSERT INTO color_set (gtrname) VALUE (?);
    INSERT INTO model_parts (parts_id, color, guitar_id, part_name, color_set_id) VALUES 
    ((SELECT id FROM parts WHERE name = 'tablefront'), ?,${addedId}, 'tablefront', LAST_INSERT_ID()),
@@ -62,13 +65,13 @@ const addedId = req.body.id
    ((SELECT id FROM parts WHERE name = 'gloss'), ?,${addedId}, 'gloss', LAST_INSERT_ID()),
    ((SELECT id FROM parts WHERE name = 'scratch'), ?,${addedId}, 'scratch', LAST_INSERT_ID()),
    ((SELECT id FROM parts WHERE name = 'body'), ?,${addedId}, 'body', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'pickuguard'), ?,${addedId}, 'pickuguard', LAST_INSERT_ID()),
+   ((SELECT id FROM parts WHERE name = 'pickguard'), ?,${addedId}, 'pickguard', LAST_INSERT_ID()),
    ((SELECT id FROM parts WHERE name = 'single_plastic'), ?,${addedId}, 'single_plastic', LAST_INSERT_ID()),
    ((SELECT id FROM parts WHERE name = 'single_metal'), ?,${addedId}, 'single_metal', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'backplate'), ?,${addedId}, 'backplate', LAST_INSERT_ID()),
+   ((SELECT id FROM parts WHERE name = 'backplate'), ?,${addedId}, 'backplate', LAST_INSERT_ID())
    `;
-  
-   try {
+
+  try {
     db.query(
       sqlInsert,
       [
@@ -94,10 +97,9 @@ const addedId = req.body.id
         pickguard,
         single_plastic,
         single_metal,
-        backplate
+        backplate,
       ],
       (err, result) => {
-        
         if (err) {
           throw err;
         }
@@ -112,9 +114,9 @@ const addedId = req.body.id
 };
 
 const getGuitars = (req, res) => {
-  const sqlSelect = 
-  // "SELECT guitar_id FROM model_parts GROUP BY color_set;"
-  ` SELECT 
+  const sqlSelect =
+    // "SELECT guitar_id FROM model_parts GROUP BY color_set;"
+    ` SELECT 
   JSON_OBJECT(
     'id', mp.color_set_id,
     'guitar_id', mp.guitar_id,
@@ -134,7 +136,12 @@ const getGuitars = (req, res) => {
     'side', MAX(CASE WHEN p.name = 'side' THEN mp.color END),
     'tableback', MAX(CASE WHEN p.name = 'tableback' THEN mp.color END),
     'tablefront', MAX(CASE WHEN p.name = 'tablefront' THEN mp.color END),
-    'texture_path', MAX(CASE WHEN p.name = 'texture_path' THEN mp.color END)
+    'texture_path', MAX(CASE WHEN p.name = 'texture_path' THEN mp.color END),
+    'body', MAX(CASE WHEN p.name = 'body' THEN mp.color END),
+    'pickguard', MAX(CASE WHEN p.name = 'pickguard' THEN mp.color END),
+    'single_plastic', MAX(CASE WHEN p.name = 'single_plastic' THEN mp.color END),
+    'single_metal', MAX(CASE WHEN p.name = 'single_metal' THEN mp.color END),
+    'backplate', MAX(CASE WHEN p.name = 'backplate' THEN mp.color END)
   ) AS parts
 FROM 
   model_parts mp 
@@ -143,7 +150,7 @@ WHERE
   mp.color_set_id < 100
 GROUP BY 
 mp.guitar_id,
-  mp.color_set_id;`
+  mp.color_set_id;`;
   db.query(sqlSelect, (err, result) => {
     res.send(result);
   });

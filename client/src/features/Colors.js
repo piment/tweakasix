@@ -31,27 +31,7 @@ export const guitarSlice = createSlice({
       single_metal: "#ffffff",
       backplate: "#ffffff"
     },
-    // telecaster :{
-    //   id:0,
-    //       side: "#ffffff",
-    //       binding: "#ffffff",
-    //       tablefront: "#ffffff",
-    //       tableback: "#ffffff",
-    //       fretbinding: "#ffffff",
-    //       fretboard: "#ffffff",
-    //       inlay: "#ffffff",
-    //       nut: "#ffffff",
-    //       frets: "#ffffff",
-    //       knobs: "#ffffff",
-    //       pickup_cover: "#ffffff",
-    //       pickup_ring: "#ffffff",
-    //       neckwood: "#ffffff",
-    //       metalpieces: "#ffffff",
-    //       gloss : 50,
-    //       scratch : 0,
-    //       wood : 0,
-    //       texture_path : "stocked/1681217837265.png",
-    //     },
+
     dropped : 0,
   },
 

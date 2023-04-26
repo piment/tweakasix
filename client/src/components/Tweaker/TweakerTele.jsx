@@ -66,7 +66,7 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, pickguard: `#${e.value}` })
               }
             />
-            <ColorPicker
+            {/* <ColorPicker
               tooltip="Side"
               tooltipoptions={{
                 position: "bottom",
@@ -95,7 +95,7 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
               onChange={(e) =>
                 setColorList({ ...colorList, binding: `#${e.value}` })
               }
-            />
+            /> */}
           </div>
           <div className="neck-colors">
             <ColorPicker
@@ -112,7 +112,7 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, neckwood: `#${e.value}` })
               }
             />
-            <ColorPicker
+            {/* <ColorPicker
               tooltip="Frets binding"
               tooltipoptions={{
                 position: "bottom",
@@ -125,7 +125,7 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
               onChange={(e) =>
                 setColorList({ ...colorList, fretbinding: `#${e.value}` })
               }
-            />
+            /> */}
             <ColorPicker
               tooltip="Fretboard"
               tooltipoptions={{
@@ -168,7 +168,7 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
                 setColorList({ ...colorList, nut: `#${e.value}` })
               }
             />
-            <ColorPicker
+            {/* <ColorPicker
               tooltip="Frets"
               tooltipoptions={{
                 position: "bottom",
@@ -181,7 +181,7 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
               onChange={(e) =>
                 setColorList({ ...colorList, frets: `#${e.value}` })
               }
-            />
+            /> */}
           </div>
           <div className="metal-knobs">
        
@@ -190,17 +190,17 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
             colorList={colorList}
             clickedPart={clickedPart}/>
             <ColorPicker
-              tooltip="Pickup rings"
+              tooltip="Pickup cap"
               tooltipoptions={{
                 position: "bottom",
                 mouseTrack: true,
                 mouseTrackTop: 15,
               }}
               id={clickedPart === "pickup_ring" ? "clickedPart" : ""}
-              name="pickup_ring"
-              value={colorList.pickup_ring}
+              name="single_plastic"
+              value={colorList.single_plastic}
               onChange={(e) =>
-                setColorList({ ...colorList, pickup_ring: `#${e.value}` })
+                setColorList({ ...colorList, single_plastic: `#${e.value}` })
               }
             />   
              <ColorPicker

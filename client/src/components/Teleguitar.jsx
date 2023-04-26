@@ -85,13 +85,7 @@ const texture_path = colorList.texture_path
 
   woodFull.encoding = sRGBEncoding
   
-//   materials.tablefront.opacity = 1 - (colorList.wood/1000) 
 
-//   materials.tableback.opacity = 1 - (colorList.wood/1000) 
-
-//   materials.side.opacity = 1 - (colorList.wood/1000) 
-
-//   materials.neckwood.opacity = 1 - (colorList.wood/1000) 
 
 // materials.body.roughness = 0
 materials.body = new THREE.MeshStandardMaterial({color : colorList.body})
@@ -104,9 +98,11 @@ const rosewood = useTexture('rosewood.png')
 rosewood.flipY = false
 rosewood.encoding = sRGBEncoding
 
-
-
 materials.fretboard.map = rosewood
+materials.fretboard.roughness = 1
+
+materials.plastic.roughness = 0.4
+materials.plastic.metalness = 0.5
 
 materials.varnish = new THREE.MeshStandardMaterial({
     transparent: true,
@@ -131,6 +127,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
     });
   });
 
+  console.log(materials.fretboard)
 
   return (
     <>
@@ -142,7 +139,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
          
           ref={tele}
           position={[0, -0.5, 0]}
-          scale={2}
+          scale={2.5}
 
         >
       <mesh
@@ -174,6 +171,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.pickup.geometry}
         material={materials.pickup_cover}
+        material-color={colorList.pickup_cover}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[4] = mesh)}
@@ -186,7 +184,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
       <mesh
        ref={(mesh) => (meshRefs.current[5] = mesh)}
         castShadow
-        receiveShadow
+        // receiveShadow
         geometry={nodes.pickup_bridge.geometry}
         material={materials.pickupplastic}
         material-color={colorList.single_plastic}
@@ -202,7 +200,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
       />
       <mesh
        ref={(mesh) => (meshRefs.current[7] = mesh)}
-        castShadow
+        // castShadow
         receiveShadow
         geometry={nodes.neck.geometry}
         material={materials.neckwood}
@@ -214,6 +212,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.frets.geometry}
         material={materials.frets}
+        material-color={colorList.metalpieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[9] = mesh)}
@@ -249,6 +248,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.Inlay.geometry}
         material={materials.inlay}
+        material-color={colorList.inlay}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[14] = mesh)}
@@ -256,13 +256,15 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.tailpiece.geometry}
         material={materials.metalpieces}
+        material-color={colorList.metalpieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[15] = mesh)}
-        castShadow
+        // castShadow
         receiveShadow
         geometry={nodes.fretboard.geometry}
         material={materials.fretboard}
+        material-color={colorList.fretboard}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[16] = mesh)}
@@ -270,6 +272,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.cylindersback.geometry}
         material={materials.metalpieces}
+        material-color={colorList.metalpieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[17] = mesh)}
@@ -277,6 +280,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.mechs.geometry}
         material={materials.metalpieces}
+        material-color={colorList.metalpieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[18] = mesh)}
@@ -284,6 +288,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.screws.geometry}
         material={materials.metalpieces}
+        material-color={colorList.metalpieces}
       />   
          <mesh
        ref={(mesh) => (meshRefs.current[19] = mesh)}
@@ -291,6 +296,8 @@ materials.varnish = new THREE.MeshStandardMaterial({
         // receiveShadow
         geometry={nodes.knobs.geometry}
         material={materials.metalpieces}
+        material-color={colorList.knobs}
+
       />
           <mesh
           ref={(mesh) => (meshRefs.current[20] = mesh)}
@@ -298,6 +305,12 @@ materials.varnish = new THREE.MeshStandardMaterial({
         receiveShadow
         geometry={nodes.varnish.geometry}
         material={materials.varnish}
+      />
+           <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.polepieces.geometry}
+        material={materials.pickupplastic}
       />
     </group>
     </group>
