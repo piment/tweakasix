@@ -13,6 +13,7 @@ import { Perf } from "r3f-perf";
 import MyDropzone from "./Dropzone";
 
 import Tweaker from "./Tweaker/Tweaker";
+import TweakerTele from "./Tweaker/TweakerTele";
 import ESguitar from "./ESguitar";
 import Teleguitar from "./Teleguitar";
 
@@ -88,10 +89,10 @@ function Visualizer({ guitarsList, model, setModel }) {
           fallback={null}
           camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
-
+    linear
           shadows
           dpr={[1, 2]}
-          linear
+          // linear
           gl={{
             preserveDrawingBuffer: true,
             antialias: true,
@@ -100,7 +101,10 @@ function Visualizer({ guitarsList, model, setModel }) {
           onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
         >
           <OrbitControls target={[0, 1, 0]} enableZoom={false} />
-          <Environment preset="city" blur={2} />
+          <Environment 
+          // preset="city"
+                    files='/decor_shop_2k.hdr'
+           blur={2} />
 
           <ambientLight intensity={0.4} />
           <directionalLight
@@ -150,11 +154,16 @@ function Visualizer({ guitarsList, model, setModel }) {
           setDropped={setDropped}
           dropped={dropped}
         /> */}
-        <Tweaker
+     {model == 1 && (   <Tweaker
           colorList={colorList}
           setColorList={setColorList}
           clickedPart={clickedPart}
-        />
+        />)}
+             {model == 2 && (   <TweakerTele
+          colorList={colorList}
+          setColorList={setColorList}
+          clickedPart={clickedPart}
+        />)}
       </div>
       <div id="select-guitarset">
         <input type="text" onChange={(e) => setGtrName(e.target.value)}></input>{" "}

@@ -94,6 +94,11 @@ function ESguitar({
   materials.side.opacity = 1 - (colorList.wood/1000) 
 
   materials.neckwood.opacity = 1 - (colorList.wood/1000) 
+// materials.tablefront.metalness = .5
+materials.tablefront.roughness = 1
+materials.tableback.roughness = 1
+materials.side.roughness = 1
+materials.neckwood.roughness = 1
 
 
 

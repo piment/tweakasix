@@ -29,7 +29,7 @@ function Teleguitar({
   const tele = useRef();
   const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/TeleOPT.glb");
+  const { nodes, materials } = useGLTF("/guitar/TeleOPT2.glb");
 
   const path = "http://localhost:3001/";
 
@@ -93,6 +93,9 @@ const texture_path = colorList.texture_path
 
 //   materials.neckwood.opacity = 1 - (colorList.wood/1000) 
 
+// materials.body.roughness = 0
+materials.body = new THREE.MeshStandardMaterial({color : colorList.body})
+// materials.body.metalness = 0.2
 
 
 const maple = useTexture('maple.png')
@@ -105,10 +108,16 @@ rosewood.encoding = sRGBEncoding
 
 materials.fretboard.map = rosewood
 
-
-
-
-
+materials.varnish = new THREE.MeshStandardMaterial({
+    transparent: true,
+    opacity: 0.2,
+    // color : colorList.body,
+    roughnessMap: scratchesrough,
+    roughness: 0.1 * colorList.scratch,
+    metalness: colorList.gloss / 100,
+    bumpMap: scratches,
+    bumpScale: 0.001 * (colorList.scratch / 5),
+})
   // useLayoutEffect(() => {
   //   console.log("pipi");
   //   console.log(texture_path);
@@ -142,7 +151,7 @@ materials.fretboard.map = rosewood
         receiveShadow
         geometry={nodes.pickguard.geometry}
         material={materials.plastic}
-        material-color={colorList.binding}
+        material-color={colorList.pickguard}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[1] = mesh)}
@@ -180,6 +189,7 @@ materials.fretboard.map = rosewood
         receiveShadow
         geometry={nodes.pickup_bridge.geometry}
         material={materials.pickupplastic}
+        material-color={colorList.single_plastic}
       />
 
       <mesh
@@ -188,6 +198,7 @@ materials.fretboard.map = rosewood
         receiveShadow
         geometry={nodes.body.geometry}
         material={materials.body}
+        material-color={colorList.body}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[7] = mesh)}
@@ -281,6 +292,13 @@ materials.fretboard.map = rosewood
         geometry={nodes.knobs.geometry}
         material={materials.metalpieces}
       />
+          <mesh
+          ref={(mesh) => (meshRefs.current[20] = mesh)}
+        castShadow
+        receiveShadow
+        geometry={nodes.varnish.geometry}
+        material={materials.varnish}
+      />
     </group>
     </group>
     </>
@@ -288,5 +306,5 @@ materials.fretboard.map = rosewood
 }
 
 
-useGLTF.preload("/TeleOPT.glb");
+useGLTF.preload("/TeleOPT2.glb");
 export default Teleguitar;
