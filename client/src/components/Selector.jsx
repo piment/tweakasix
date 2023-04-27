@@ -40,6 +40,7 @@ body, neck, pickup1, pickup2
 
   const getGuitars = () =>{
     axios.get("http://localhost:3001/items/getguitars",{}).then((res) => {
+
       setGuitarsList(res.data)
 
     })

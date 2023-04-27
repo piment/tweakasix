@@ -30,10 +30,10 @@ function Visualizer({ guitarsList, model, setModel }) {
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
     const chosen = guitarsList.filter(
-      (item) => item.parts.id == e.target.value
+      (item) => item.id == e.target.value
     );
-    await setColorList(chosen[0].parts);
-    setModel(chosen[0].parts.guitar_id);
+    await setColorList(chosen[0]);
+    setModel(chosen[0].guitar_id);
     // console.log(colorList)
   };
 
@@ -66,6 +66,7 @@ function Visualizer({ guitarsList, model, setModel }) {
     });
   };
 
+  console.log(guitarsList)
   useEffect(() => {}, [handleSelectGuitar]);
 
   const [allTx, setAllTx] = useState([]);
@@ -176,8 +177,8 @@ function Visualizer({ guitarsList, model, setModel }) {
         <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
           {guitarsList &&
             guitarsList.map((guitar, key) => (
-              <option value={guitar.parts.id} key={key}>
-                {guitar.parts.id}
+              <option value={guitar.id} key={key}>
+                {guitar.id}
               </option>
             ))}
         </select>
