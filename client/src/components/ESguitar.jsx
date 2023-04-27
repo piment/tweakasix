@@ -24,6 +24,8 @@ function ESguitar({
   setClickedPart,
   tilt,
   pos,
+  changed,
+  setChanged
 }) {
   const ref = useRef();
   const meshRefs = useRef([]);
@@ -121,22 +123,33 @@ materials.fretboard.map = rosewood
   //   console.log(texture_path);
   //   setTxUse(path + texture_path);
   // }, [triggs]);
-
+const pioupiou = {x : pos[0], y: pos[1], z: pos[2]}
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
       mesh.material = mesh.material.clone();
-
     });
+if(changed){
+  // if(pioupiou.x < 10)
+  // {
+    // pioupiou.x +=1
+    ref.current.position.x += 0.2
+console.log('TAMEREELLLLAAAACHOVVVVV', ref.current.position.x += 0.02)
+    // ref.current.position
+  // } 
+}
+{
+
+}
   });
 
 
   return (
     <>
-      <group rotation={tilt} position={pos}>
+      <group rotation={tilt}    ref={ref} position={pos}>
         <group
   //  dispose={[nodes, materials]}
           dispose={null}
-          ref={ref}
+       
           position={[0, -0.5, 0]}
           scale={2}
   

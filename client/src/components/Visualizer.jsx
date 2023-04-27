@@ -17,7 +17,7 @@ import TweakerTele from "./Tweaker/TweakerTele";
 import ESguitar from "./ESguitar";
 import Teleguitar from "./Teleguitar";
 
-function Visualizer({ guitarsList, model, setModel }) {
+function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
@@ -66,7 +66,7 @@ function Visualizer({ guitarsList, model, setModel }) {
     });
   };
 
-  console.log(guitarsList)
+
   useEffect(() => {}, [handleSelectGuitar]);
 
   const [allTx, setAllTx] = useState([]);
@@ -128,6 +128,7 @@ function Visualizer({ guitarsList, model, setModel }) {
           />
           {model == 1 && (
             <ESguitar
+            changed={changed} setChanged={setChanged}
               setColorList={setColorList}
               colorList={colorList}
               clickedPart={clickedPart}

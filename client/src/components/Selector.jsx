@@ -24,6 +24,7 @@ function Selector() {
   const [pickup1, setPickup1] = useState(initialValues);
   const [pickup2, setPickup2] = useState(initialValues);
  const [model, setModel] = useState(1)
+ const [changed, setChanged] = useState(false)
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
       // console.log(res.data)
@@ -58,9 +59,9 @@ body, neck, pickup1, pickup2
 
 
 const handleModelSelect = (e) => {
+setChanged(!changed)
   setModel(e.target.value)
 }
-console.log(model)
 
 
   return (
@@ -88,7 +89,7 @@ console.log(model)
       </div>
    </div> */}
    <div className="visu-sum">
-   <Visualizer guitarsList={guitarsList} model={model} setModel={setModel}/>
+   <Visualizer guitarsList={guitarsList} model={model} setModel={setModel} changed={changed} setChanged={setChanged}/>
    {/* <div className="list-sum">
 
       <div className="item-price">
