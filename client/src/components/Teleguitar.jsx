@@ -46,14 +46,14 @@ const texture_path = colorList.texture_path
 
   const reactMap = useTexture(txUse);
 
-  const woodFull = useTexture("woodFullminH.png");
-  woodFull.flipY = false;
+  const woodFullTele = useTexture("woodTele-min.png");
+  woodFullTele.flipY = false;
 
 
 
-  const woodMat = new THREE.MeshLambertMaterial({
-    map: woodFull,
-    transparent: true,
+  const woodMatTele = new THREE.MeshLambertMaterial({
+    map: woodFullTele,
+    // transparent: true,
     opacity: colorList.wood / 20,
   });
   scratches.flipY = false;
@@ -68,6 +68,7 @@ const texture_path = colorList.texture_path
 
   materials.un_black = new THREE.MeshBasicMaterial({ color: "black" });
   materials.strings = new THREE.MeshLambertMaterial({ color: "#595959" });
+  materials.polepieces = new THREE.MeshPhongMaterial({ color: "#595959", reflectivity:1, shininess:30, specular:  '#828282' });
   materials.varnish = new THREE.MeshStandardMaterial({
     transparent: true,
     opacity: 0.2,
@@ -83,14 +84,17 @@ const texture_path = colorList.texture_path
     (materials.pickup_cover.roughness = 0);
 
 
-  woodFull.encoding = sRGBEncoding
+  woodFullTele.encoding = sRGBEncoding
   
 
 
 // materials.body.roughness = 0
-materials.body = new THREE.MeshStandardMaterial({color : colorList.body})
-// materials.body.metalness = 0.2
+materials.body = new THREE.MeshStandardMaterial({transparent: true, color : colorList.body, opacity : (1 - (colorList.wood/10))})
+materials.neckwood = new THREE.MeshStandardMaterial({transparent: true, color : colorList.neckwood, opacity : (1 - (colorList.wood/10))})
 
+// materials.body.metalness = 0.2
+//   materials.body.opacity = 1 - (colorList.wood/10) 
+ 
 
 const maple = useTexture('maple.png')
 maple.flipY = false
@@ -127,7 +131,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
     });
   });
 
-  console.log(materials.fretboard)
+console.log(woodMatTele)
 
   return (
     <>
@@ -205,6 +209,26 @@ materials.varnish = new THREE.MeshStandardMaterial({
         geometry={nodes.neck.geometry}
         material={materials.neckwood}
         material-color={colorList.neckwood}
+      />
+      {/* WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOD */}
+
+<mesh
+       ref={(mesh) => (meshRefs.current[21] = mesh)}
+        // castShadow
+        receiveShadow
+        geometry={nodes.body.geometry}
+        material={woodMatTele}
+        // material={materials.body}
+        // material-color={colorList.body}
+      />
+      <mesh
+       ref={(mesh) => (meshRefs.current[22] = mesh)}
+        // castShadow
+        receiveShadow
+        geometry={nodes.neck.geometry}
+        material={woodMatTele}
+        // material={materials.neckwood}
+        // material-color={colorList.neckwood}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[8] = mesh)}
@@ -310,8 +334,11 @@ materials.varnish = new THREE.MeshStandardMaterial({
         castShadow
         receiveShadow
         geometry={nodes.polepieces.geometry}
-        material={materials.pickupplastic}
+        material={materials.polepieces}
+
       />
+
+
     </group>
     </group>
     </>
