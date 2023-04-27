@@ -61,7 +61,7 @@ function Sliders({ colorList, setColorList, clickedPart }) {
     Wood
     <Tooltip
       target=".slider-wood>.p-slider-handle"
-      content={`${colorList.gloss}%`}
+      content={`${colorList.wood}%`}
       position="top"
       event="focus"
     />

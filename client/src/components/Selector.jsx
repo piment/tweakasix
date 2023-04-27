@@ -23,7 +23,7 @@ function Selector() {
   const [neck, setNeck] = useState(initialValues);
   const [pickup1, setPickup1] = useState(initialValues);
   const [pickup2, setPickup2] = useState(initialValues);
-
+ const [model, setModel] = useState(1)
   const getItems = () => {
     axios.get("http://localhost:3001/items", {}).then((res) => {
       // console.log(res.data)
@@ -52,8 +52,22 @@ body, neck, pickup1, pickup2
   }, []);
 
 
+ 
+
+
+
+const handleModelSelect = (e) => {
+  setModel(e.target.value)
+}
+console.log(model)
+
+
   return (
-    <div className="main-select">
+    <div className="main-select"> 
+     <div className="buttonselect">
+   <button value="1" onClick={(e) => handleModelSelect(e)}>ES-335</button>
+   <button value="2" onClick={(e) => handleModelSelect(e)}>Telecaster</button>
+   </div>
       {/* <div className="selector-section">
 
         <Body itemsList={itemsList} setBody={setBody}/>
@@ -73,7 +87,7 @@ body, neck, pickup1, pickup2
       </div>
    </div> */}
    <div className="visu-sum">
-   <Visualizer guitarsList={guitarsList}/>
+   <Visualizer guitarsList={guitarsList} model={model} setModel={setModel}/>
    {/* <div className="list-sum">
 
       <div className="item-price">
@@ -98,6 +112,7 @@ body, neck, pickup1, pickup2
       >Get guitars</button>
    </div> */}
    </div>
+ 
     </div>
   );
 }
