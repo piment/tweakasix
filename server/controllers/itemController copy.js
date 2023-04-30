@@ -1,56 +1,49 @@
-const sqlite3 = require("sqlite3").verbose();
+require("dotenv").config();
+const mysql = require("mysql2");
 
-const db = new sqlite3.Database(
-  "tweakasix.db",
-  sqlite3.OPEN_READWRITE,
-  (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Connected to database");
-    }
-  }
-);
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
+
+const db = mysql.createPool({
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
+  multipleStatements: true,
+});
 
 const getItems = (req, res) => {
-  db.serialize(() => {
-    db.get(
-      "SELECT * FROM model_parts where color_set_id < 100",
-      (err, result) => {
-    
-        res.send(result);
-      }
-    );
+  const sqlSelect = "SELECT * FROM model_parts where color_set_id < 100;";
+  db.query(sqlSelect, (err, result) => {
+    res.send(result);
   });
 };
 
 const addGuitar = (req, res) => {
-  const {
-    gtrname,
-    tablefront,
-    tableback,
-    binding,
-    side,
-    neckwood,
-    fretboard,
-    fretbinding,
-    frets,
-    inlay,
-    nut,
-    metalpieces,
-    pickup_cover,
-    pickup_ring,
-    knobs,
-    texture_path,
-    gloss,
-    scratch,
-    addedId,
-    body,
-    pickguard,
-    single_plastic,
-    single_metal,
-    backplate,
-  } = req.body;
+  const gtrname = req.body.gtrname;
+  const tablefront = req.body.tablefront;
+  const tableback = req.body.tableback;
+  const binding = req.body.binding;
+  const side = req.body.side;
+  const neckwood = req.body.neckwood;
+  const fretboard = req.body.fretboard;
+  const fretbinding = req.body.fretbinding;
+  const frets = req.body.frets;
+  const inlay = req.body.inlay;
+  const nut = req.body.nut;
+  const metalpieces = req.body.metalpieces;
+  const pickup_cover = req.body.pickup_cover;
+  const pickup_ring = req.body.pickup_ring;
+  const knobs = req.body.knobs;
+  const texture_path = req.body.texture_path;
+  const gloss = req.body.gloss;
+  const scratch = req.body.scratch;
+  const addedId = req.body.id;
+  const body = req.body.body;
+  const pickguard = req.body.pickguard;
+  const single_plastic = req.body.single_plastic;
+  const single_metal = req.body.single_metal;
+  const backplate = req.body.backplate;
+
   const sqlInsert = ` 
    INSERT INTO color_set (gtrname) VALUE (?);
    INSERT INTO model_parts (parts_id, color, guitar_id, part_name, color_set_id) VALUES 
@@ -79,7 +72,7 @@ const addGuitar = (req, res) => {
    `;
 
   try {
-    db.run(
+    db.query(
       sqlInsert,
       [
         gtrname,
@@ -127,29 +120,29 @@ const getGuitars = (req, res) => {
   JSON_OBJECT(
     'id', mp.color_set_id,
     'guitar_id', mp.guitar_id,
-   "binding", MAX(CASE WHEN p.name = "binding" THEN mp.color END),
-    "fretbinding", MAX(CASE WHEN p.name = "fretbinding" THEN mp.color END),
-    "fretboard", MAX(CASE WHEN p.name = "fretboard" THEN mp.color END),
-    "frets", MAX(CASE WHEN p.name = "frets" THEN mp.color END),
-    "gloss", MAX(CASE WHEN p.name = "gloss" THEN mp.color END),
-    "inlay", MAX(CASE WHEN p.name = "inlay" THEN mp.color END),
-    "knobs", MAX(CASE WHEN p.name = "knobs" THEN mp.color END),
-    "metalpieces", MAX(CASE WHEN p.name = "metalpieces" THEN mp.color END),
-    "neckwood", MAX(CASE WHEN p.name = "neckwood" THEN mp.color END),
-    "nut", MAX(CASE WHEN p.name = "nut" THEN mp.color END),
-    "pickup_cover", MAX(CASE WHEN p.name = "pickup_cover" THEN mp.color END),
-    "pickup_ring", MAX(CASE WHEN p.name = "pickup_ring" THEN mp.color END),
-    "scratch", MAX(CASE WHEN p.name = "scratch" THEN mp.color END),
-    "side", MAX(CASE WHEN p.name = "side" THEN mp.color END),
-    "tableback", MAX(CASE WHEN p.name = "tableback" THEN mp.color END),
-    "tablefront", MAX(CASE WHEN p.name = "tablefront" THEN mp.color END),
-    "texture_path", MAX(CASE WHEN p.name = "texture_path" THEN mp.color END),
-    "body", MAX(CASE WHEN p.name = "body" THEN mp.color END),
-    "pickguard", MAX(CASE WHEN p.name = "pickguard" THEN mp.color END),
-    "single_plastic", MAX(CASE WHEN p.name = "single_plastic" THEN mp.color END),
-    "single_metal", MAX(CASE WHEN p.name = "single_metal" THEN mp.color END),
-    "backplate", MAX(CASE WHEN p.name = "backplate" THEN mp.color END)
-) AS parts
+    'binding', MAX(CASE WHEN p.name = 'binding' THEN mp.color END),
+    'fretbinding', MAX(CASE WHEN p.name = 'fretbinding' THEN mp.color END),
+    'fretboard', MAX(CASE WHEN p.name = 'fretboard' THEN mp.color END),
+    'frets', MAX(CASE WHEN p.name = 'frets' THEN mp.color END),
+    'gloss', MAX(CASE WHEN p.name = 'gloss' THEN mp.color END),
+    'inlay', MAX(CASE WHEN p.name = 'inlay' THEN mp.color END),
+    'knobs', MAX(CASE WHEN p.name = 'knobs' THEN mp.color END),
+    'metalpieces', MAX(CASE WHEN p.name = 'metalpieces' THEN mp.color END),
+    'neckwood', MAX(CASE WHEN p.name = 'neckwood' THEN mp.color END),
+    'nut', MAX(CASE WHEN p.name = 'nut' THEN mp.color END),
+    'pickup_cover', MAX(CASE WHEN p.name = 'pickup_cover' THEN mp.color END),
+    'pickup_ring', MAX(CASE WHEN p.name = 'pickup_ring' THEN mp.color END),
+    'scratch', MAX(CASE WHEN p.name = 'scratch' THEN mp.color END),
+    'side', MAX(CASE WHEN p.name = 'side' THEN mp.color END),
+    'tableback', MAX(CASE WHEN p.name = 'tableback' THEN mp.color END),
+    'tablefront', MAX(CASE WHEN p.name = 'tablefront' THEN mp.color END),
+    'texture_path', MAX(CASE WHEN p.name = 'texture_path' THEN mp.color END),
+    'body', MAX(CASE WHEN p.name = 'body' THEN mp.color END),
+    'pickguard', MAX(CASE WHEN p.name = 'pickguard' THEN mp.color END),
+    'single_plastic', MAX(CASE WHEN p.name = 'single_plastic' THEN mp.color END),
+    'single_metal', MAX(CASE WHEN p.name = 'single_metal' THEN mp.color END),
+    'backplate', MAX(CASE WHEN p.name = 'backplate' THEN mp.color END)
+  ) AS parts
 FROM 
   model_parts mp 
   JOIN parts p ON mp.parts_id = p.id 
@@ -158,14 +151,11 @@ WHERE
 GROUP BY 
 mp.guitar_id,
   mp.color_set_id;`;
-  const guitarlist = []
-  db.all(sqlSelect, (err, result) => {
-   
-    // guitarlist.push(JSON.parse(result.parts))
-     res.send(result.map(({parts}) => JSON.parse(parts)));
-    // console.log(guitarlist)
-  }); 
-
+  db.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
 };
+
+
 
 module.exports = { getItems, addGuitar, getGuitars };

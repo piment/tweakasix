@@ -1,12 +1,13 @@
 const express = require("express");
-// const router = express.Router();
-const Router = require('express-promise-router')
+const fs = require('fs')
+const router = express.Router();
+
 // const movieController = require("../controllers/movieController");
 const { getItems, addGuitar, getGuitars} = require("./controllers/itemController");
 const FilePond = require('react-filepond')
 const multer  = require('multer')
 
-const router = Router()
+
 // setup multer for file upload
 var storage = multer.diskStorage(
     {
@@ -18,16 +19,13 @@ var storage = multer.diskStorage(
 );
 
 const upload = multer({ storage: storage } )
-// const pond = FilePond.create( inputElement );
-// pond.setOptions({
-//   server: "/upload"
-// })
+
 router.get("/items", getItems);
 
 router.post("/items/saveguitar", addGuitar);
 
 router.get("/items/getguitars",getGuitars)
-// router.delete("/api/delete/:movieName",deleteMovie);
+
 
 
 

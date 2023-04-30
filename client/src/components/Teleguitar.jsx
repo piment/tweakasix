@@ -131,7 +131,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
     });
   });
 
-console.log(woodMatTele)
+// console.log(woodMatTele)
 
   return (
     <>
@@ -331,6 +331,7 @@ console.log(woodMatTele)
         material={materials.varnish}
       />
            <mesh
+             ref={(mesh) => (meshRefs.current[23] = mesh)}
         castShadow
         receiveShadow
         geometry={nodes.polepieces.geometry}
