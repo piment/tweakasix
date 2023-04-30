@@ -123,23 +123,23 @@ materials.fretboard.map = rosewood
   //   console.log(texture_path);
   //   setTxUse(path + texture_path);
   // }, [triggs]);
-const pioupiou = {x : pos[0], y: pos[1], z: pos[2]}
+// const pioupiou = {x : pos[0], y: pos[1], z: pos[2]}
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
       mesh.material = mesh.material.clone();
     });
-if(changed){
-  // if(pioupiou.x < 10)
-  // {
-    // pioupiou.x +=1
-    ref.current.position.x += 0.2
-console.log('TAMEREELLLLAAAACHOVVVVV', ref.current.position.x += 0.02)
-    // ref.current.position
-  // } 
-}
-{
+// if(changed){
+//   // if(pioupiou.x < 10)
+//   // {
+//     // pioupiou.x +=1
+//     ref.current.position.x += 0.2
+// console.log('TAMEREELLLLAAAACHOVVVVV', ref.current.position.x += 0.02)
+//     // ref.current.position
+//   // } 
+// }
+// {
 
-}
+// }
   });
 
 

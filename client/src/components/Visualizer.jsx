@@ -4,7 +4,8 @@ import "./Visualizer.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import axios from "axios";
-
+import { useMotionValue, MotionConfig } from "framer-motion";
+import { motion} from "framer-motion-3d"
 import Modelos from "./ESguitar";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../features/Colors";
@@ -66,7 +67,19 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
     });
   };
 
-
+  const x = useMotionValue(0)
+  const variants = {
+    bouge : {
+    scale: [1, 2, 2, 1, 1],
+    rotate: [0, 0, 180, 180, 0],
+   x : ['0px', '-1000px'],
+    borderRadius: ["0%", "0%", "50%", "50%", "0%"],
+  }}
+  
+  const [bip, setBip] = useState(false)
+  const resetAnimation = () => {
+    setBip(false);
+  };
   useEffect(() => {}, [handleSelectGuitar]);
 
   const [allTx, setAllTx] = useState([]);
@@ -103,7 +116,6 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
         >
           <OrbitControls target={[0, 1, 0]} enableZoom={false} />
           <Environment 
-          // preset="city"
                     files='/decor_shop_2k.hdr'
            blur={2} />
 
@@ -126,18 +138,54 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
             frames={1}
             resolution={512}
           />
-          {model == 1 && (
+      
+
+          <MotionConfig transition={{
+  type: 'spring',
+    duration: 2,
+    ease: "easeInOut",
+    // times: [0,  1],
+    repeat: 0,
+    repeatDelay:1
+
+}} >
+             <motion.group
+      
+              animate={model == 1 ? "es335" : "tele"}
+            
+         
+             >
+             < motion.group 
+   variants={{
+    es335: { opacity: 0,
+    x: 0 },
+   tele : {
+ 
+      x:10,
+      scale : 0
+
+  },
+  }}>
+
+
             <ESguitar
-            changed={changed} setChanged={setChanged}
               setColorList={setColorList}
               colorList={colorList}
               clickedPart={clickedPart}
               setClickedPart={setClickedPart}
               tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
               pos={[-1, -0.2, -0.3]}
-            />
-          )}
-          {model == 2 && (
+            /></motion.group>
+
+          <motion.group 
+   variants={{
+    es335: {    x:-10,
+    scale: 0,
+     visibility: 0 },
+    tele : {
+   
+  },
+  }}>
             <Teleguitar
               setColorList={setColorList}
               colorList={colorList}
@@ -145,9 +193,9 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
               setClickedPart={setClickedPart}
               tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
               pos={[-1, -0.2, -0.3]}
-            />
-          )}
+            /></motion.group>
 
+</motion.group></MotionConfig>
           <Perf deepAnalyze={true} position={"top-left"} />
         </Canvas>
         {/* <MyDropzone
@@ -168,9 +216,10 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
         />)}
       </div>
       <div id="select-guitarset">
-        <input type="text" onChange={(e) => setGtrName(e.target.value)}></input>{" "}
+        <input type="text"  onChange={(e) => setGtrName(e.target.value)}></input>{" "}
         <button
           // style={{ position: "absolute" }}
+          // onClick={() => setBip(!bip)}
           onClick={(e) => (e.stopPropagation(), addGuitar())}
         >
           Save this guitar
