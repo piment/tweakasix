@@ -158,7 +158,7 @@ WHERE
 GROUP BY 
 mp.guitar_id,
   mp.color_set_id;`;
-  const guitarlist = []
+
   db.all(sqlSelect, (err, result) => {
    
     // guitarlist.push(JSON.parse(result.parts))

@@ -64,7 +64,7 @@ export const guitarSlice = createSlice({
       state.colorSet.backplate = action.payload.backplate
     },
     triggerDrop: (state, action) => {
-
+console.log('STATE', action.payload)
         state.dropped += 1
 
       

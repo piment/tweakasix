@@ -27,7 +27,7 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
   // const [colTele, setColTele] = useState(colorList.telecaster)
   const [clickedPart, setClickedPart] = useState("");
   const [gtrName, setGtrName] = useState("");
-  const [dropped, setDropped] = useState(0);
+  const [dropped, setDropped] = useState(triggs);
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
     const chosen = guitarsList.filter(
@@ -173,6 +173,8 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
               colorList={colorList}
               clickedPart={clickedPart}
               setClickedPart={setClickedPart}
+              dropped={dropped}
+              setDropped={setDropped}
               tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
               pos={[-1, -0.2, -0.3]}
             /></motion.group>
@@ -198,12 +200,12 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
 </motion.group></MotionConfig>
           <Perf deepAnalyze={true} position={"top-left"} />
         </Canvas>
-        {/* <MyDropzone
+        <MyDropzone
           colorList={colorList}
           setColorList={setColorList}
           setDropped={setDropped}
           dropped={dropped}
-        /> */}
+        />
      {model == 1 && (   <Tweaker
           colorList={colorList}
           setColorList={setColorList}
