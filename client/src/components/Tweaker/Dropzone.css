@@ -1,0 +1,22 @@
+.dropzone-div{
+    /* position: absolute; */
+    height : 5vh;
+    z-index: 500;  
+    margin-bottom: 1vh;
+  }
+  
+  .dropzone-div > input{
+  
+    height : auto;
+    width: 100%;
+    z-index: 500;
+
+  }
+  .dropzone-div >  p{
+    padding-top: 1vh;
+    text-align: center;
+    font-family: Oswald;
+  
+    color: black;
+  }
+

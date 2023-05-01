@@ -21,17 +21,20 @@ function Teleguitar({
   trig,
   setColorList,
   colorList,
-  clickedPart,
-  setClickedPart,
+dropped,
+setDropped,
   tilt,
   pos,
 }) {
   const tele = useRef();
   const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/TeleOPT2.glb");
+  const { nodes, materials } = useGLTF("/guitar/TeleOPT3.glb");
 
   const path = "http://localhost:3001/";
+
+
+  const triggs = useSelector((state) => state.guitar_set.dropped);
 
 
   const [scratches, scratchesrough] = useTexture([
@@ -44,7 +47,7 @@ function Teleguitar({
 const texture_path = colorList.texture_path
   const [txUse, setTxUse] = useState(path + texture_path);
 
-  const reactMap = useTexture(txUse);
+
 
   const woodFullTele = useTexture("woodTele-min.png");
   woodFullTele.flipY = false;
@@ -118,12 +121,17 @@ materials.varnish = new THREE.MeshStandardMaterial({
     bumpMap: scratches,
     bumpScale: 0.001 * (colorList.scratch / 5),
 })
-  // useLayoutEffect(() => {
-  //   console.log("pipi");
-  //   console.log(texture_path);
-  //   setTxUse(path + texture_path);
-  // }, [triggs]);
 
+const reactMap = useTexture(txUse);
+reactMap.encoding = sRGBEncoding
+useEffect(() => {
+
+  // console.log(reactMap.source.data.currentSrc);
+  setTxUse(path + colorList.texture_path);
+  // console.log(txUse)
+reactMap.needsUpdate
+
+}, [ setDropped, dropped, colorList]);
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
       mesh.material = mesh.material.clone();
@@ -201,6 +209,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
         geometry={nodes.body.geometry}
         material={materials.body}
         material-color={colorList.body}
+        material-map={triggs > 0 ? reactMap : ''}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[7] = mesh)}
@@ -338,6 +347,13 @@ materials.varnish = new THREE.MeshStandardMaterial({
         material={materials.polepieces}
 
       />
+          <mesh
+              ref={(mesh) => (meshRefs.current[24] = mesh)}
+        castShadow
+        receiveShadow
+        geometry={nodes.input.geometry}
+        material={materials.metalpieces}
+      />
 
 
     </group>
@@ -347,5 +363,5 @@ materials.varnish = new THREE.MeshStandardMaterial({
 }
 
 
-useGLTF.preload("/TeleOPT2.glb");
+useGLTF.preload("/TeleOPT3.glb");
 export default Teleguitar;

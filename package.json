@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Xaboule/basetweak#readme",
   "dependencies": {
+    "@react-spring/three": "^9.7.2",
     "react-filepond": "^7.1.2"
   }
 }
