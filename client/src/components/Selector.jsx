@@ -58,61 +58,22 @@ body, neck, pickup1, pickup2
 
 
 
-const handleModelSelect = (e) => {
-setChanged(!changed)
+  const handleModelSelect = (e) => {
   setModel(e.target.value)
+  setChanged(!changed)
 }
 
-
+console.log(model)
   return (
     <div className="main-select"> 
      <div className="buttonselect">
-   <button value="1" onClick={(e) => handleModelSelect(e)}>ES-335</button>
-   <button value="2" onClick={(e) => handleModelSelect(e)}>Telecaster</button>
+   <button className={model === '1'? "es-icon-selected" : "es-icon"} value="1" onClick={(e) => {{e.preventDefault(),handleModelSelect(e)}}} alt='ES-335'></button>
+   <button className={model === '2' ? "tele-icon-selected" : "tele-icon"} value="2" onClick={(e) => {e.preventDefault(),handleModelSelect(e)}} alt='Telecaster'></button>
    </div>
-      {/* <div className="selector-section">
 
-        <Body itemsList={itemsList} setBody={setBody}/>
-        <Neck itemsList={itemsList} setNeck={setNeck}/>
-        <Pickups itemsList={itemsList} setPickup1={setPickup1} setPickup2={setPickup2}/>
- <div>
-        Wiring :
-        <select name="" id="">
-          {itemsList
-            .filter((item) => item.id_category === 4)
-            .map((filteredItem, key) => (
-              <option value={filteredItem} key={key}>
-                {filteredItem.name} {filteredItem.price}$
-              </option>
-            ))}
-        </select>
-      </div>
-   </div> */}
    <div className="visu-sum">
    <Visualizer guitarsList={guitarsList} model={model} setModel={setModel} changed={changed} setChanged={setChanged}/>
-   {/* <div className="list-sum">
 
-      <div className="item-price">
-       <span> {body.name}</span> <span>{body.price}$</span>
-      </div >
-      <div className="item-price">
-      <span> {neck.name}</span>  <span>{neck.price}$</span>
-      </div >
-      <div className="item-price">
-      <span>{pickup1.name}</span>  <span>{pickup1.price}$</span>
-      </div >  
-      <div className="item-price">
-      <span> {pickup2.name} </span> <span>{pickup2.price}$</span>
-      </div > 
-       <h3>{total}$</h3>
-      <button onClick={()=> {addGuitar, getGuitars()}}>Save this guitar</button>
-      <button
-      //  style={{position : 'absolute', left: '400px'}}
-      // onClick={addGuitar}
-      onClick={ (e) => (
-        e.stopPropagation(),getGuitars())}
-      >Get guitars</button>
-   </div> */}
    </div>
  
     </div>

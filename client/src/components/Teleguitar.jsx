@@ -29,7 +29,7 @@ setDropped,
   const tele = useRef();
   const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/TeleOPT2.glb");
+  const { nodes, materials } = useGLTF("/guitar/TeleOPT3.glb");
 
   const path = "http://localhost:3001/";
 
@@ -347,6 +347,13 @@ reactMap.needsUpdate
         material={materials.polepieces}
 
       />
+          <mesh
+              ref={(mesh) => (meshRefs.current[24] = mesh)}
+        castShadow
+        receiveShadow
+        geometry={nodes.input.geometry}
+        material={materials.metalpieces}
+      />
 
 
     </group>
@@ -356,5 +363,5 @@ reactMap.needsUpdate
 }
 
 
-useGLTF.preload("/TeleOPT2.glb");
+useGLTF.preload("/TeleOPT3.glb");
 export default Teleguitar;
