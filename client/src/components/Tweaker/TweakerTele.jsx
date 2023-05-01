@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import './TweakerMain.css'
 import { useDispatch, useSelector } from "react-redux";
-import { addColor } from "../../features/Colors";
+import { addColor, resetDrop } from "../../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
@@ -13,9 +13,9 @@ import copperIcon from "../../assets/img/Copper.jpg";
 import MetalColors from "./MetalColors";
 import Draggable from "react-draggable"
 import dragIcon from '../../assets/drag.svg'
+import MyDropzone from "../Dropzone";
 
-
-function TweakerTele({ colorList, setColorList, clickedPart }) {
+function TweakerTele({ colorList, setColorList, clickedPart,  resetCam, dropped, setDropped  }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
             <div className="pickers-main"> 
             <div className="box no-cursor">
             <strong className="cursor"><img className="drag-icon" src={dragIcon} alt="Click to drag" /></strong>
- 
+            <Button onClick={resetCam}>Reset Camera</Button>
         <div className="pickers-colors" ref={tweakDrag}>
           <div className="body-colors">
             <ColorPicker
@@ -227,6 +227,14 @@ function TweakerTele({ colorList, setColorList, clickedPart }) {
             clickedPart={clickedPart}
           />
         </div>
+        <MyDropzone
+          colorList={colorList}
+          setColorList={setColorList}
+          setDropped={setDropped}
+          dropped={dropped}
+        />
+              <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button> 
+
       </div>  </div></Draggable>
     </>
   );

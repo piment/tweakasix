@@ -10,6 +10,7 @@
   justify-content: space-evenly;
   z-index: 200;
   border-radius: 15px;
+  padding: 1vh;
 }
 
 .box{
@@ -73,4 +74,15 @@ cursor:grab;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+
+.pickers-main > .box >button {
+  
+  border-radius: 10px;
+  width: 50%;
+  height: 10%;
+
+  margin:auto ;
+  color: black;
 }

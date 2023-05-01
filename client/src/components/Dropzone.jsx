@@ -4,6 +4,7 @@ import { useState } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { addColor, triggerDrop } from '../features/Colors'
 import {useDispatch} from 'react-redux'
+import './Tweaker/Dropzone.css'
 
 
 

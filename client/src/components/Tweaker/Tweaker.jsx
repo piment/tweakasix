@@ -7,15 +7,13 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import Sliders from "./Sliders";
 import "./Choice-CustomPrimereact.css";
-import silverIcon from "../../assets/img/Silver.jpg";
-import goldIcon from "../../assets/img/Gold.jpg";
-import copperIcon from "../../assets/img/Copper.jpg";
 import MetalColors from "./MetalColors";
 import Draggable from "react-draggable"
 import dragIcon from '../../assets/drag.svg'
+import MyDropzone from "../Dropzone";
 
 
-function Tweaker({ colorList, setColorList, clickedPart }) {
+function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setDropped }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
@@ -36,6 +34,7 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
             <div className="box no-cursor">
             <strong className="cursor"><img className="drag-icon" src={dragIcon} alt="Click to drag" /></strong>
  
+ <Button onClick={resetCam}>Reset Camera</Button>
         <div className="pickers-colors" ref={tweakDrag}>
           <div className="body-colors">
             <ColorPicker
@@ -220,7 +219,6 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
            
           </div>
         </div>
-              <button onClick={() => dispatch(resetDrop(0))}>Remove image</button>
 
         <div className="pickers-sliders">
           <Sliders
@@ -229,7 +227,14 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
             clickedPart={clickedPart}
           />
         </div>
-      </div>  </div></Draggable>
+           <MyDropzone
+          colorList={colorList}
+          setColorList={setColorList}
+          setDropped={setDropped}
+          dropped={dropped}
+        />
+              <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button>   </div>  
+</div></Draggable>
     </>
   );
 }

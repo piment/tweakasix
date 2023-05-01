@@ -48,13 +48,13 @@ function ESguitar({
   const texture_path = colorList.texture_path
   const [txUse, setTxUse] = useState(path + texture_path);
 
-  console.log(colorList)
+
  
 
   const woodFull = useTexture("woodFullminH.png");
   woodFull.flipY = false;
 
-console.log('PATHHHHHHHH', texture_path)
+
 
   const woodMat = new THREE.MeshLambertMaterial({
     map: woodFull,
