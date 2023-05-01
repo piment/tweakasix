@@ -29,7 +29,7 @@ const onDrop = useCallback((acceptedFiles) => {
   })
   .then((response) => {console.log(response.data);
  setColorList({...colorList, texture_path : response.data})})
-  .then(setDropped(dropped+1))
+  .then(setDropped(dropped+ 1))
   .then(dispatch(addColor(colorList)))
   .then(dispatch(triggerDrop(dropped)))
 //  colorList.texture_path = acceptedFiles[0]

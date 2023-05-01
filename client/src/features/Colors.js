@@ -64,16 +64,19 @@ export const guitarSlice = createSlice({
       state.colorSet.backplate = action.payload.backplate
     },
     triggerDrop: (state, action) => {
-console.log('STATE', action.payload)
-        state.dropped += 1
 
+        state.dropped += 1
       
       },
+    resetDrop : (state, action) => {
+
+      state.dropped = action.payload
+    }
 
   },
   
 });
 
 
-export const { addColor, dropTrigger, setColor, triggerDrop} = guitarSlice.actions;
+export const { addColor,  setColor, triggerDrop, resetDrop} = guitarSlice.actions;
 export default guitarSlice.reducer;

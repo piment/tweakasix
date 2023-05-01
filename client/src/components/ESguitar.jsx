@@ -13,7 +13,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
-import { dropTrigger, addColor } from "../features/Colors";
+import {  addColor } from "../features/Colors";
 import { LinearEncoding, sRGBEncoding } from "three";
 
 function ESguitar({
@@ -34,7 +34,7 @@ function ESguitar({
 
   const path = "http://localhost:3001/";
 
-  // const triggs = useSelector((state) => state.guitar_set.dropped);
+  const triggs = useSelector((state) => state.guitar_set.dropped);
 
 
 
@@ -117,15 +117,16 @@ materials.fretboard.map = rosewood
 
 
  const reactMap = useTexture(txUse);
+//  materials.tablefront.map = reactMap
 
   useEffect(() => {
 
-    console.log(reactMap.source.data.currentSrc);
+    // console.log(reactMap.source.data.currentSrc);
     setTxUse(path + colorList.texture_path);
     // console.log(txUse)
 reactMap.needsUpdate
 
-  }, [ setDropped, dropped]);
+  }, [ setDropped, dropped, colorList]);
 
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
@@ -133,6 +134,7 @@ reactMap.needsUpdate
     });
 
   });
+  console.log('TRIGGGGGGS', triggs)
 
 
   return (
@@ -176,6 +178,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tablefront.geometry}
             material={materials.tablefront}
             material-color={colorList.tablefront}
+            material-map={triggs > 0 ? reactMap : ''}
 
           >
             {/* <Decal mesh={ref} >

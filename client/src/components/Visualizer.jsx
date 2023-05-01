@@ -67,19 +67,7 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
     });
   };
 
-  const x = useMotionValue(0)
-  const variants = {
-    bouge : {
-    scale: [1, 2, 2, 1, 1],
-    rotate: [0, 0, 180, 180, 0],
-   x : ['0px', '-1000px'],
-    borderRadius: ["0%", "0%", "50%", "50%", "0%"],
-  }}
-  
-  const [bip, setBip] = useState(false)
-  const resetAnimation = () => {
-    setBip(false);
-  };
+
   useEffect(() => {}, [handleSelectGuitar]);
 
   const [allTx, setAllTx] = useState([]);
@@ -150,7 +138,7 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
 
 }} >
              <motion.group
-      
+
               animate={model == 1 ? "es335" : "tele"}
             
          
@@ -173,8 +161,7 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
               colorList={colorList}
               clickedPart={clickedPart}
               setClickedPart={setClickedPart}
-              dropped={dropped}
-              setDropped={setDropped}
+
               tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
               pos={[-1, -0.2, -0.3]}
             /></motion.group>
@@ -220,8 +207,6 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
       <div id="select-guitarset">
         <input type="text"  onChange={(e) => setGtrName(e.target.value)}></input>{" "}
         <button
-          // style={{ position: "absolute" }}
-          // onClick={() => setBip(!bip)}
           onClick={(e) => (e.stopPropagation(), addGuitar())}
         >
           Save this guitar
