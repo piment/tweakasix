@@ -120,18 +120,8 @@ const resetCam =() => {
             lookAt={[0, 0, 0]}
             shadow-mapSize-height={1024}
             shadow-mapSize-width={1024}
-          />
-          <ContactShadows
-            //  matrixAutoUpdate
-            position={[0, -0.8, 0]}
-            opacity={0.85}
-            scale={10}
-            blur={0.5}
-            far={5}
-            frames={1}
-            resolution={512}
-          />
-
+          />         
+      
           <MotionConfig
             transition={{
               type: "spring",
@@ -142,7 +132,20 @@ const resetCam =() => {
               repeatDelay: 1,
             }}
           >
-            <motion.group animate={model == 1 ? "es335" : "tele"}>
+  <ContactShadows
+                depthWrite={false}
+            //  matrixAutoUpdate={true}
+            position={[0, -0.8, 0]}
+            opacity={0.85}
+            scale={10}
+            blur={0.7}
+            far={5}
+            frames={100}
+            resolution={512}
+          />
+
+
+            <motion.group animate={model === '1' ? "es335" : "tele"}>
               <motion.group
                 variants={{
                   es335: { opacity: 0, x: 0 },
@@ -151,7 +154,8 @@ const resetCam =() => {
                     scale: 0,
                   },
                 }}
-              >
+              >           
+     
                 <ESguitar
                   setColorList={setColorList}
                   colorList={colorList}
@@ -160,6 +164,8 @@ const resetCam =() => {
                   tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
                   pos={[-1, -0.2, -0.3]}
                 />
+       
+
               </motion.group>
 
               <motion.group
