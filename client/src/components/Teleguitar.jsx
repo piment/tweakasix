@@ -13,7 +13,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
-import { dropTrigger, addColor } from "../features/Colors";
+import {addColor } from "../features/Colors";
 import { LinearEncoding, sRGBEncoding } from "three";
 import materials from './materials'
 

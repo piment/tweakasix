@@ -66,14 +66,17 @@ export const guitarSlice = createSlice({
     triggerDrop: (state, action) => {
 
         state.dropped += 1
-
       
       },
+    resetDrop : (state, action) => {
+
+      state.dropped = action.payload
+    }
 
   },
   
 });
 
 
-export const { addColor, dropTrigger, setColor, triggerDrop} = guitarSlice.actions;
+export const { addColor,  setColor, triggerDrop, resetDrop} = guitarSlice.actions;
 export default guitarSlice.reducer;

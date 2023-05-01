@@ -28,3 +28,18 @@ height: 150vh;
   /* position: absolute; */
   /* box-shadow: 0 0 10px 5px rgba(129, 129, 129, 0.467); */
 }
+
+.dropzone-div{
+  position: absolute;
+  height : 10vh;
+  z-index: 500;
+  background-color: aliceblue;
+}
+
+.dropzone-div > input, p{
+  height : 10vh;
+  width: 100%;
+  z-index: 500;
+  background-color: aliceblue;
+  color: black;
+}

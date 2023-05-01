@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux'
 
 
 
-function MyDropzone({colorList, setColorList, setDropped}) {
+function MyDropzone({colorList, setColorList, setDropped, dropped}) {
 
 const path = 'http://localhost:3001'
 
@@ -16,10 +16,9 @@ const dispatch = useDispatch()
 const imgs = [];
 
 const onDrop = useCallback((acceptedFiles) => {
-  
   imgs.push(acceptedFiles[0]);
  console.log(acceptedFiles[0].path.replace(/[\s.]+/g, ''))
-  //   console.log(imgs)
+
   const formData = new FormData();
   formData.append("file", imgs[imgs.length - 1]);  
   
@@ -28,22 +27,40 @@ const onDrop = useCallback((acceptedFiles) => {
       "Content-Type": "multipart/form-data",
     },
   })
-  // .then((response) => console.log(response))
-  .then((response) => setColorList({...colorList, texture_path : response}))
+  .then((response) => {console.log(response.data);
+ setColorList({...colorList, texture_path : response.data})})
+  .then(setDropped(dropped+ 1))
   .then(dispatch(addColor(colorList)))
-  .then(dispatch(triggerDrop(1)))
-  // status.colorList.texture_path = acceptedFiles[0]
+  .then(dispatch(triggerDrop(dropped)))
+//  colorList.texture_path = acceptedFiles[0]
 
 }, []);
 
 
+const [getPic, setGetPic] = useState([])
 
+useEffect(() =>{
+axios.get('http://localhost:3001/stocked').then(response =>
+{
+  let filesReached = []
+
+  filesReached.push(response.data)
+  console.log(filesReached)
+      setGetPic(filesReached)
+//       // tablo.push(response.data)
+//       // return tablo
+    }
+    )
+
+// .then(console.log(getPic)
+// )
+},[] )
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
     <>
         <form encType="multipart/form-data">
-    <div {...getRootProps()}>
+    <div {...getRootProps()} className='dropzone-div'>
 
       <input {...getInputProps()} type='file' />
       {

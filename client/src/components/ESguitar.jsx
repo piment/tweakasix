@@ -13,19 +13,19 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
-import { dropTrigger, addColor } from "../features/Colors";
+import {  addColor } from "../features/Colors";
 import { LinearEncoding, sRGBEncoding } from "three";
 
 function ESguitar({
   trig,
   setColorList,
   colorList,
-  clickedPart,
-  setClickedPart,
   tilt,
   pos,
   changed,
-  setChanged
+  setChanged,
+  dropped,
+  setDropped
 }) {
   const ref = useRef();
   const meshRefs = useRef([]);
@@ -48,12 +48,13 @@ function ESguitar({
   const texture_path = colorList.texture_path
   const [txUse, setTxUse] = useState(path + texture_path);
 
-  const reactMap = useTexture(txUse);
+  console.log(colorList)
+ 
 
   const woodFull = useTexture("woodFullminH.png");
   woodFull.flipY = false;
 
-
+console.log('PATHHHHHHHH', texture_path)
 
   const woodMat = new THREE.MeshLambertMaterial({
     map: woodFull,
@@ -115,32 +116,25 @@ rosewood.encoding = sRGBEncoding
 materials.fretboard.map = rosewood
 
 
+ const reactMap = useTexture(txUse);
+//  materials.tablefront.map = reactMap
 
+  useEffect(() => {
 
+    // console.log(reactMap.source.data.currentSrc);
+    setTxUse(path + colorList.texture_path);
+    // console.log(txUse)
+reactMap.needsUpdate
 
-  // useLayoutEffect(() => {
-  //   console.log("pipi");
-  //   console.log(texture_path);
-  //   setTxUse(path + texture_path);
-  // }, [triggs]);
-// const pioupiou = {x : pos[0], y: pos[1], z: pos[2]}
+  }, [ setDropped, dropped, colorList]);
+
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
       mesh.material = mesh.material.clone();
     });
-// if(changed){
-//   // if(pioupiou.x < 10)
-//   // {
-//     // pioupiou.x +=1
-//     ref.current.position.x += 0.2
-// console.log('TAMEREELLLLAAAACHOVVVVV', ref.current.position.x += 0.02)
-//     // ref.current.position
-//   // } 
-// }
-// {
 
-// }
   });
+  console.log('TRIGGGGGGS', triggs)
 
 
   return (
@@ -184,8 +178,24 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tablefront.geometry}
             material={materials.tablefront}
             material-color={colorList.tablefront}
+            material-map={triggs > 0 ? reactMap : ''}
 
-          ></mesh>
+          >
+            {/* <Decal mesh={ref} >
+           <meshBasicMaterial
+             roughness={0.2}
+             transparent
+            //  depthTest={false}
+             map={reactMap}
+            //  alphaTest={0} 
+             polygonOffset={true}
+             polygonOffsetFactor={-10}
+        
+             side={THREE.FrontSide}
+           />
+           </Decal> */}
+      
+          </mesh>
           {/* WOOOOOOOOOOOOOOOOD */}
           <mesh
                    ref={(mesh) => (meshRefs.current[4] = mesh)}

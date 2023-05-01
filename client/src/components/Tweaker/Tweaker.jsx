@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import './TweakerMain.css'
 import { useDispatch, useSelector } from "react-redux";
-import { dropTrigger, addColor } from "../../features/Colors";
+import {  addColor, triggerDrop, resetDrop } from "../../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
@@ -220,6 +220,8 @@ function Tweaker({ colorList, setColorList, clickedPart }) {
            
           </div>
         </div>
+              <button onClick={() => dispatch(resetDrop(0))}>Remove image</button>
+
         <div className="pickers-sliders">
           <Sliders
             setColorList={setColorList}

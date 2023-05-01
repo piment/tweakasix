@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import "../Visualizer.css";
 import { useDispatch, useSelector } from "react-redux";
-import { dropTrigger, addColor } from "../../features/Colors";
+import { addColor } from "../../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
