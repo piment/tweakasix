@@ -1,8 +1,11 @@
 import React from 'react'
+import Construction from './Construction/MainConstruction'
 
 function Account() {
   return (
-    <div>Account</div>
+    <div>
+      <Construction/>
+    </div>
   )
 }
 

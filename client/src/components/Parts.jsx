@@ -1,8 +1,11 @@
 import React from 'react'
+import Construction from './Construction/MainConstruction'
 
 function Parts() {
   return (
-    <div>Parts</div>
+    <div>
+      <Construction/>
+    </div>
   )
 }
 
