@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../features/Colors";
 import Navbar from "./Navbar";
 
+
+
+
 function Home() {
+
   const dispatch = useDispatch();
 
   return (
@@ -18,6 +22,7 @@ function Home() {
       <div className="title-overlay">
         <div className="home">
           <h1>
+            
             Welcome <br /> <span className="to">to</span>
           </h1>
         </div>
