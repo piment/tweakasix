@@ -32,7 +32,7 @@ function ESguitar({
   const [hovered, setHovered] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/335whole OPT4.glb");
 
-  const path = "http://localhost:3001/";
+  const path = `${import.meta.env.VITE_BACKEND_URL}/`;
 
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
