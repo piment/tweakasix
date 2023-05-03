@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation} from "react-router-dom";
 import Home from "./components/Home";
 import Parts from "./components/Parts";
 import Account from "./components/Account";
@@ -12,8 +12,8 @@ function App() {
 
   return (
     <div className="App">
-              <Navbar/>
     <Router>
+      <Navbar/>
             <Routes>
               <Route
                 path="/"

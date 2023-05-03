@@ -185,7 +185,7 @@ const resetCam =() => {
               </motion.group>
             </motion.group>
           </MotionConfig>
-          <Perf deepAnalyze={true} position={"top-left"} />
+          {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
         </Canvas>
       
         {model == 1 && (
