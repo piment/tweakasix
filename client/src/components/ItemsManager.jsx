@@ -12,7 +12,7 @@ function ItemsManager() {
 
   const addItem = () => {
     axios
-      .post("http://localhost:3001/create", {
+      .post(`${import.meta.env.VITE_BACKEND_URL}/create`, {
         name: name,
         age: age,
         country: country,
@@ -24,7 +24,7 @@ function ItemsManager() {
       });
   };
   const getItems = () => {
-    axios.get("http://localhost:3001/employees", {}).then((res) => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/employees`, {}).then((res) => {
       setItemsList(res.data);
     });
   };

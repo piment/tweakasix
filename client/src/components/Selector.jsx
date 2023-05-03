@@ -26,7 +26,7 @@ function Selector() {
  const [model, setModel] = useState(1)
  const [changed, setChanged] = useState(false)
   const getItems = () => {
-    axios.get("http://localhost:3001/items", {}).then((res) => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/items`, {}).then((res) => {
       // console.log(res.data)
       // setItemsList(res.data[0]);
       // setVariationList(res.data[1])
@@ -34,13 +34,13 @@ function Selector() {
   };
 
   const addGuitar = () => {
-    axios.post("http://localhost:3001/items/saveguitar", {
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
 body, neck, pickup1, pickup2
     })
   };
 
   const getGuitars = () =>{
-    axios.get("http://localhost:3001/items/getguitars",{}).then((res) => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`,{}).then((res) => {
 
       setGuitarsList(res.data)
 

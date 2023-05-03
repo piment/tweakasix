@@ -46,7 +46,7 @@ const resetCam =() => {
 
 
   const addGuitar = () => {
-    axios.post("http://localhost:3001/items/saveguitar", {
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
       id: model,
       gtrname: gtrName,
       side: colorList.side,
@@ -79,7 +79,7 @@ const resetCam =() => {
   const [allTx, setAllTx] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/stocked").then((response) => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/stocked`).then((response) => {
       let filesReached = [];
 
       filesReached.push(response.data);

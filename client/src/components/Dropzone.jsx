@@ -10,7 +10,7 @@ import './Tweaker/Dropzone.css'
 
 function MyDropzone({colorList, setColorList, setDropped, dropped}) {
 
-const path = 'http://localhost:3001'
+const path = `${import.meta.env.VITE_BACKEND_URL}`
 
 const dispatch = useDispatch()
 
@@ -23,7 +23,7 @@ const onDrop = useCallback((acceptedFiles) => {
   const formData = new FormData();
   formData.append("file", imgs[imgs.length - 1]);  
   
-  axios.post("http://localhost:3001/upload/", formData, {
+  axios.post(`${import.meta.env.VITE_BACKEND_URL}/upload/`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -41,7 +41,7 @@ const onDrop = useCallback((acceptedFiles) => {
 const [getPic, setGetPic] = useState([])
 
 useEffect(() =>{
-axios.get('http://localhost:3001/stocked').then(response =>
+axios.get(`${import.meta.env.VITE_BACKEND_URL}/stocked`).then(response =>
 {
   let filesReached = []
 
