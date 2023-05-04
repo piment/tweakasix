@@ -211,8 +211,8 @@ const resetCam =() => {
       <div id="select-guitarset">
         <input type="text" onChange={(e) => setGtrName(e.target.value)}></input>{" "}
         <Button
-        //  onClick={(e) => (e.stopPropagation(), addGuitar())}
-        onClick={() => orbCam.current.reset()}
+         onClick={(e) => (e.stopPropagation(), addGuitar())}
+        // onClick={() => orbCam.current.reset()}
          >
           Save this guitar
         </Button>
