@@ -63,7 +63,7 @@ body, neck, pickup1, pickup2
   setChanged(!changed)
 }
 
-console.log(model)
+
   return (
     <div className="main-select"> 
      <div className="buttonselect">

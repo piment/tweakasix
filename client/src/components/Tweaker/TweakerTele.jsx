@@ -28,7 +28,7 @@ function TweakerTele({ colorList, setColorList, clickedPart,  resetCam, dropped,
     handle="strong"
     bounds={`parent`}
     allowAnyClick={false}
-    ref={tweakDrag}
+    nodeRef={tweakDrag}
     // defaultPosition={{x : 100, y:-150}}
     onStart={(e) => e.preventDefault()}
     >

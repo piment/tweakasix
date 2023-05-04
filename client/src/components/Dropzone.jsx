@@ -46,7 +46,7 @@ axios.get(`${import.meta.env.VITE_BACKEND_URL}/stocked`).then(response =>
   let filesReached = []
 
   filesReached.push(response.data)
-  console.log(filesReached)
+
       setGetPic(filesReached)
 //       // tablo.push(response.data)
 //       // return tablo

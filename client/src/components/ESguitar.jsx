@@ -135,7 +135,7 @@ reactMap.needsUpdate
     });
 
   });
-  console.log('TRIGGGGGGS', triggs)
+
 
 
   return (
