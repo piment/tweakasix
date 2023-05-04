@@ -23,7 +23,7 @@ function Selector() {
   const [neck, setNeck] = useState(initialValues);
   const [pickup1, setPickup1] = useState(initialValues);
   const [pickup2, setPickup2] = useState(initialValues);
- const [model, setModel] = useState(1)
+ const [model, setModel] = useState('1')
  const [changed, setChanged] = useState(false)
   const getItems = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items`, {}).then((res) => {
