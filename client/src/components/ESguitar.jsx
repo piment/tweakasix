@@ -117,6 +117,7 @@ materials.fretboard.map = rosewood
 
 
  const reactMap = useTexture(txUse);
+ reactMap.flipY = false
 //  materials.tablefront.map = reactMap
 
   useEffect(() => {
