@@ -19,6 +19,7 @@ function Home() {
   return (
     <>
       <Selector />
+      <>
       <div className="title-overlay">
         <div className="home">
           <h1>
@@ -26,7 +27,6 @@ function Home() {
             Welcome <br /> <span className="to">to</span>
           </h1>
         </div>
-        {/* <img className='plank' src={plank}></img> */}
         <img src={logo} alt="logo" className="logo" />
       </div>
       <div className="concept">
@@ -38,7 +38,7 @@ function Home() {
             <span id="step-1">1</span>
 
             <div>
-              {" "}
+          
               Select a model, select the colors, the metal types*, the
               varnish... and you can even download the blueprint, make a design,
               and upload it! 
@@ -51,7 +51,7 @@ function Home() {
             <span id="step-2">2</span>
 
             <div>
-              {" "}
+          
               Pick a partner guitar maker, calculate shipping costs, launch the
               production!
             </div>
@@ -60,7 +60,7 @@ function Home() {
             <span id="step-3">3</span>
 
             <div>
-              {" "}
+          
               Do your best to be patient while we work hard on it and look
               closely every detail.<br/>
                We'll send you a status update between every
@@ -74,6 +74,7 @@ function Home() {
           </div>
         </div>
       </div>
+      </>
     </>
   );
 }

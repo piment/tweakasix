@@ -3,10 +3,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3001;
-const path = require('path')
+const path = require("path")
 const cors = require("cors");
-const multer  = require('multer')
-const fs = require('fs')
+const multer  = require("multer")
+const fs = require("fs")
 
 // setup multer for file upload
 var storage = multer.diskStorage(

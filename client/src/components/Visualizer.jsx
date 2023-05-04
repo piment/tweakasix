@@ -93,8 +93,9 @@ const resetCam =() => {
   return (
     <div className="mainviz">
       <div className="visualizer">
+        <div    className="canvas">
         <Canvas
-          className="canvas"
+       
           fallback={null}
           camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
@@ -187,7 +188,7 @@ const resetCam =() => {
           </MotionConfig>
           {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
         </Canvas>
-      
+      </div>
         {model == 1 && (
           <Tweaker
        
