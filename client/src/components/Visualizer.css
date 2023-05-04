@@ -1,3 +1,8 @@
+/* Desktops and laptops ----------- */
+@media only screen and (min-width : 1224px) {
+  /* Styles */
+
+
 .visualizer {
 
   height: 140vh;
@@ -29,3 +34,45 @@ height: 150vh;
   /* box-shadow: 0 0 10px 5px rgba(129, 129, 129, 0.467); */
 }
 
+  }
+
+
+
+
+  
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  /* Styles */
+
+  .visualizer {
+
+    /* height: 100%;
+   width: 100%; */
+    z-index: 10000 !important;
+    margin-bottom: 10%;
+    /* box-shadow: 0 0 20px 10px #0000008e; */
+  }
+  .mainviz{
+    /* height: 100%; */
+  }
+  .canvas {
+  max-width: 100%;
+  /* height: 95%; */
+    /* max-width: 100em; */
+    /* background-color: rgb(230, 230, 230); */
+    background: rgb(196, 196, 196);
+    z-index: 50 !important;
+  }
+  
+  #select-guitarset {
+    position: absolute;
+    /* margin-left: 70em; */
+    z-index: 500;
+  }
+  
+  #clickedPart .p-inputtext {
+    /* padding: 1.5rem 1.5rem ; */
+    /* position: absolute; */
+    /* box-shadow: 0 0 10px 5px rgba(129, 129, 129, 0.467); */
+  }
+  }

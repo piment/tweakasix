@@ -1,3 +1,8 @@
+/* Desktops and laptops ----------- */
+@media only screen and (min-width : 1224px) {
+  /* Styles */
+
+
 .pickers-main {
   background-color: rgba(108, 108, 108, 0.287);
   height: 60vh;
@@ -85,4 +90,102 @@ cursor:grab;
 
   margin:auto ;
   color: black;
+}  
+
 }
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  /* Styles */
+
+  .pickers-main {
+
+    background-color: rgba(108, 108, 108, 0.287);
+    height: 60vh;
+    top: 75%;
+   left: 75%;
+    display: flex;
+    position: absolute;
+    width: 20vw;
+    flex-direction: column;
+    justify-content: space-evenly;
+    z-index: 200;
+    border-radius: 15px;
+    padding: 1vh;  
+      display: none;
+  }
+  
+  .box{
+      display: flex;
+      flex-direction: column;
+      /* border: rgb(0, 255, 8) solid 2px; */
+      justify-content: space-evenly;
+      height: inherit;
+  }
+  
+  .cursor{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  
+  }
+  .drag-icon {
+  scale: 2;
+  transform: rotate(90deg);
+  fill: white;
+  cursor:grab;
+  }
+  
+  
+  .pickers-colors {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 70%;
+    /* max-height: 4vh; */
+  
+    margin: 2vh;
+  /* border: rgb(0, 255, 8) solid 2px; */
+  
+  }
+  
+  .body-colors,
+  .neck-colors,
+  .metal-knobs {
+      display: flex;
+    justify-content: space-evenly;
+    /* flex-grow: 0.5; */
+    width: 18vw;
+    margin: .5rem 0  .5rem  0;
+    background-color: black;
+    border-radius: 10px;
+    height: auto;
+    padding: 1rem;
+  }
+  
+  .pickers-sliders {
+    display: flex;
+  }
+  .pickers-sliders > div {
+    color: black;
+    height: 4vh;
+    width: 15vw;
+    margin: 1vh 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  
+  .pickers-main > .box >button {
+    
+    border-radius: 10px;
+    width: 50%;
+    height: 10%;
+  
+    margin:auto ;
+    color: black;
+  }  
+  }

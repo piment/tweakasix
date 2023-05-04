@@ -93,8 +93,9 @@ const resetCam =() => {
   return (
     <div className="mainviz">
       <div className="visualizer">
+        <div    className="canvas">
         <Canvas
-          className="canvas"
+       
           fallback={null}
           camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
@@ -187,7 +188,7 @@ const resetCam =() => {
           </MotionConfig>
           {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
         </Canvas>
-      
+      </div>
         {model == 1 && (
           <Tweaker
        
@@ -211,8 +212,8 @@ const resetCam =() => {
       <div id="select-guitarset">
         <input type="text" onChange={(e) => setGtrName(e.target.value)}></input>{" "}
         <Button
-        //  onClick={(e) => (e.stopPropagation(), addGuitar())}
-        onClick={() => orbCam.current.reset()}
+         onClick={(e) => (e.stopPropagation(), addGuitar())}
+        // onClick={() => orbCam.current.reset()}
          >
           Save this guitar
         </Button>
