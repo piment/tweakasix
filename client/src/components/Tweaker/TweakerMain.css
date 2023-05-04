@@ -95,8 +95,8 @@ cursor:grab;
 }
 
 /* Smartphones (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-  /* Styles */
+/* @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
 
   .pickers-main {
 
@@ -118,7 +118,7 @@ cursor:grab;
   .box{
       display: flex;
       flex-direction: column;
-      /* border: rgb(0, 255, 8) solid 2px; */
+
       justify-content: space-evenly;
       height: inherit;
   }
@@ -144,10 +144,10 @@ cursor:grab;
     justify-content: space-evenly;
     align-items: center;
     height: 70%;
-    /* max-height: 4vh; */
+
   
     margin: 2vh;
-  /* border: rgb(0, 255, 8) solid 2px; */
+
   
   }
   
@@ -156,7 +156,7 @@ cursor:grab;
   .metal-knobs {
       display: flex;
     justify-content: space-evenly;
-    /* flex-grow: 0.5; */
+
     width: 18vw;
     margin: .5rem 0  .5rem  0;
     background-color: black;
@@ -188,4 +188,4 @@ cursor:grab;
     margin:auto ;
     color: black;
   }  
-  }
+  } */
