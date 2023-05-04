@@ -51,7 +51,7 @@ body {
 
   margin: 0;
   display: flex;
-  position: absolute;
+  /* position: absolute; */
   /* place-items: center; */
   min-width: 100%;
   min-height: 100%;
