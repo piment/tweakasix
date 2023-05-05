@@ -34,10 +34,10 @@ const orbCam = useRef()
   const [dropped, setDropped] = useState(triggs);
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
-    const chosen = guitarsList.filter((item) => item.id == e.target.value);
-    await setColorList(chosen[0]);
-    setModel(chosen[0].guitar_id);
-    // console.log(colorList)
+    const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
+    await setColorList(chosen[0].parts);
+    console.log(chosen[0].parts.guitar_id)
+    setModel(chosen[0].parts.guitar_id);
   };
 
 const resetCam =() => {
@@ -76,7 +76,7 @@ const resetCam =() => {
     });
   };
 
-  useEffect(() => {}, [handleSelectGuitar]);
+  useEffect(() => {}, [handleSelectGuitar, model]);
 
   const [allTx, setAllTx] = useState([]);
 
@@ -91,24 +91,24 @@ const resetCam =() => {
     // )
   }, [triggs]);
 
-  useEffect(() => {
-    const controls = orbCam.current;
+  // useEffect(() => {
+  //   const controls = orbCam.current;
   
     
-    const handleWheel = (event) => {
-      event.preventDefault();
-      controls.dispatchEvent({ type: 'wheel', deltaY: event.deltaY });
-    };
+  //   const handleWheel = (event) => {
+  //     event.preventDefault();
+  //     controls.dispatchEvent({ type: 'wheel', deltaY: event.deltaY });
+  //   };
     
-    if (controls && controls.domElement) {
-      controls.domElement.addEventListener('wheel', handleWheel, { passive: true });
-    }
-    return () => {
-      if (controls && controls.domElement) {
-        controls.domElement.removeEventListener('wheel', handleWheel);
-      }
-    };
-  }, [orbCam]);
+  //   if (controls && controls.domElement) {
+  //     controls.domElement.addEventListener('wheel', handleWheel, { passive: true });
+  //   }
+  //   return () => {
+  //     if (controls && controls.domElement) {
+  //       controls.domElement.removeEventListener('wheel', handleWheel);
+  //     }
+  //   };
+  // }, [orbCam]);
 
 
   return (
@@ -243,8 +243,8 @@ const resetCam =() => {
         <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
           {guitarsList &&
             guitarsList.map((guitar, key) => (
-              <option value={guitar.id} key={key}>
-                {guitar.id}
+              <option value={guitar.parts.id} key={key}>
+                {guitar.parts.id}
               </option>
             ))}
         </select>
