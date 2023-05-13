@@ -7,6 +7,7 @@ const path = require("path")
 const cors = require("cors");
 const multer  = require("multer")
 const fs = require("fs")
+const jwt = require('jsonwebtoken')
 
 // setup multer for file upload
 var storage = multer.diskStorage(
@@ -22,7 +23,6 @@ var storage = multer.diskStorage(
 );
 
 const upload = multer({ storage: storage } )
-
 
 
 // app.set('view engine', "ejs")
