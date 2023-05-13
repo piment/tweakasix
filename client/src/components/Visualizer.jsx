@@ -69,6 +69,7 @@ const resetCam =() => {
       gloss: colorList.gloss,
       scratch: colorList.scratch,
       body: colorList.body,
+      wood: colorList.wood,
       pickguard: colorList.pickguard,
       single_plastic: colorList.single_plastic,
       single_metal: colorList.single_metal,

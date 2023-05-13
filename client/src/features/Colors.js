@@ -37,7 +37,7 @@ export const guitarSlice = createSlice({
 
   reducers: {
     addColor: (state, action) => {
-      console.log(action.payload)
+      // console.log(action.payload)
       state.colorSet.id = action.payload.id
       state.colorSet.side = action.payload.side;
       state.colorSet.binding = action.payload.binding;

@@ -24,7 +24,7 @@ const addGuitar = (req, res) => {
   const tableback = req.body.tableback;
   const binding = req.body.binding;
   const side = req.body.side;
-  const neckwood = req.body.neckwood;
+  const neck = req.body.neckwood;
   const fretboard = req.body.fretboard;
   const fretbinding = req.body.fretbinding;
   const frets = req.body.frets;
@@ -37,74 +37,89 @@ const addGuitar = (req, res) => {
   const texture_path = req.body.texture_path;
   const gloss = req.body.gloss;
   const scratch = req.body.scratch;
-  const addedId = req.body.id;
+  const wood = req.body.wood;
+  const modelId = req.body.id;
   const body = req.body.body;
   const pickguard = req.body.pickguard;
   const single_plastic = req.body.single_plastic;
   const single_metal = req.body.single_metal;
   const backplate = req.body.backplate;
 
-  const sqlInsert = ` 
-   INSERT INTO color_set (gtrname) VALUE (?);
-   INSERT INTO model_parts (parts_id, color, guitar_id, part_name, color_set_id) VALUES 
-   ((SELECT id FROM parts WHERE name = 'tablefront'), ?,${addedId}, 'tablefront', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'tableback'), ?,${addedId}, 'tableback', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'binding'), ?,${addedId},'binding' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'side'), ?,${addedId}, 'side', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'neckwood'), ?,${addedId}, 'neckwood', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'fretboard'), ?,${addedId},'fretboard' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'fretbinding'), ?,${addedId}, 'fretbinding' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'frets'), ?,${addedId},'frets' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'inlay'), ?,${addedId},'inlay' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'nut'), ?,${addedId},'nut' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'metalpieces'), ?,${addedId},'metalpieces' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'pickup_cover'), ?,${addedId}, 'pickup_cover', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'pickup_ring'), ?,${addedId}, 'pickup_ring', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'knobs'), ?,${addedId},'knobs' , LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'texture_path'), ?,${addedId}, 'texture_path', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'gloss'), ?,${addedId}, 'gloss', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'scratch'), ?,${addedId}, 'scratch', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'body'), ?,${addedId}, 'body', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'pickguard'), ?,${addedId}, 'pickguard', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'single_plastic'), ?,${addedId}, 'single_plastic', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'single_metal'), ?,${addedId}, 'single_metal', LAST_INSERT_ID()),
-   ((SELECT id FROM parts WHERE name = 'backplate'), ?,${addedId}, 'backplate', LAST_INSERT_ID())
+ 
+ const sqlInsertGtr =  ` INSERT INTO guitar (name, model) VALUES (?)`;
+ const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`
+   const sqlInsertComp = 
+   `INSERT INTO composition (id_part, color, id_texture, gloss, scratch, wood, id_guitar)
+    VALUES 
+   ((SELECT id FROM parts WHERE name = 'tablefront'), ?),
+   ((SELECT id FROM parts WHERE name = 'tableback'), ?),
+   ((SELECT id FROM parts WHERE name = 'binding'), ?),
+   ((SELECT id FROM parts WHERE name = 'side'), ?),
+   ((SELECT id FROM parts WHERE name = 'neck'), ?),
+   ((SELECT id FROM parts WHERE name = 'fretboard'),?),
+   ((SELECT id FROM parts WHERE name = 'fretbinding'), ? ),
+   ((SELECT id FROM parts WHERE name = 'frets'), ? ),
+   ((SELECT id FROM parts WHERE name = 'inlay'), ? ),
+   ((SELECT id FROM parts WHERE name = 'nut'), ?),
+   ((SELECT id FROM parts WHERE name = 'metalpieces'), ? ),
+   ((SELECT id FROM parts WHERE name = 'pickup_cover'), ?),
+   ((SELECT id FROM parts WHERE name = 'pickup_ring'), ?),
+   ((SELECT id FROM parts WHERE name = 'knobs'), ? ),
+   ((SELECT id FROM parts WHERE name = 'pickguard'), ?),
+   ((SELECT id FROM parts WHERE name = 'single_plastic'), ?),
+   ((SELECT id FROM parts WHERE name = 'single_metal'), ?),
+   ((SELECT id FROM parts WHERE name = 'backplate'), ?)
    `;
 
   try {
     db.query(
-      sqlInsert,
-      [
-        gtrname,
-        tablefront,
-        tableback,
-        binding,
-        side,
-        neckwood,
-        fretboard,
-        fretbinding,
-        frets,
-        inlay,
-        nut,
-        metalpieces,
-        pickup_cover,
-        pickup_ring,
-        knobs,
-        texture_path,
-        gloss,
-        scratch,
-        body,
-        pickguard,
-        single_plastic,
-        single_metal,
-        backplate,
-      ],
+      sqlInsertGtr,
+      [[gtrname, modelId]],
       (err, result) => {
         if (err) {
           throw err;
         }
-        console.log(result);
-        res.sendStatus(200);
+        const addedId = result.insertId;
+
+        db.query( sqlInsertTex, [['user', texture_path, 'original'] ],
+        (err, result) => {
+          if (err) {
+            throw err;
+          }
+          const texID = result.insertId;
+        db.query(
+          sqlInsertComp,
+          [
+            [tablefront, texID, gloss, scratch, wood, addedId],
+           [tableback, texID, gloss, scratch, wood, addedId],
+           [binding, texID, gloss, scratch, wood, addedId],
+           [side, texID, gloss, scratch, wood, addedId],
+           [neck, texID, gloss, scratch, wood, addedId],
+           [fretboard, texID, gloss, scratch, wood, addedId],
+           [fretbinding, texID, gloss, scratch, wood, addedId],
+           [frets, texID, gloss, scratch, wood, addedId],
+           [inlay, texID, gloss, scratch, wood, addedId],
+           [nut, texID, gloss, scratch, wood, addedId],
+           [metalpieces, texID, gloss, scratch, wood, addedId],
+           [pickup_cover, texID, gloss, scratch, wood, addedId],
+           [pickup_ring, texID, gloss, scratch, wood, addedId],
+           [knobs, texID, gloss, scratch, wood, addedId],
+           [body, texID, gloss, scratch, wood, addedId],
+           [pickguard, texID, gloss, scratch, wood, addedId],
+           [single_plastic, texID, gloss, scratch, wood, addedId],
+           [single_metal, texID, gloss, scratch, wood, addedId],
+           [backplate, texID, gloss, scratch, wood, addedId],
+          ],
+          (err, result) => {
+            if (err) {
+              throw err;
+            }
+            console.log(result);
+            res.sendStatus(200);
+          }
+        );
+      }
+        )
       }
     );
   } catch (err) {
@@ -116,43 +131,15 @@ const addGuitar = (req, res) => {
 const getGuitars = (req, res) => {
   const sqlSelect =
     // "SELECT guitar_id FROM model_parts GROUP BY color_set;"
-    ` SELECT 
-  JSON_OBJECT(
-    'id', mp.color_set_id,
-    'guitar_id', mp.guitar_id,
-    'binding', MAX(CASE WHEN p.name = 'binding' THEN mp.color END),
-    'fretbinding', MAX(CASE WHEN p.name = 'fretbinding' THEN mp.color END),
-    'fretboard', MAX(CASE WHEN p.name = 'fretboard' THEN mp.color END),
-    'frets', MAX(CASE WHEN p.name = 'frets' THEN mp.color END),
-    'gloss', MAX(CASE WHEN p.name = 'gloss' THEN mp.color END),
-    'inlay', MAX(CASE WHEN p.name = 'inlay' THEN mp.color END),
-    'knobs', MAX(CASE WHEN p.name = 'knobs' THEN mp.color END),
-    'metalpieces', MAX(CASE WHEN p.name = 'metalpieces' THEN mp.color END),
-    'neckwood', MAX(CASE WHEN p.name = 'neckwood' THEN mp.color END),
-    'nut', MAX(CASE WHEN p.name = 'nut' THEN mp.color END),
-    'pickup_cover', MAX(CASE WHEN p.name = 'pickup_cover' THEN mp.color END),
-    'pickup_ring', MAX(CASE WHEN p.name = 'pickup_ring' THEN mp.color END),
-    'scratch', MAX(CASE WHEN p.name = 'scratch' THEN mp.color END),
-    'side', MAX(CASE WHEN p.name = 'side' THEN mp.color END),
-    'tableback', MAX(CASE WHEN p.name = 'tableback' THEN mp.color END),
-    'tablefront', MAX(CASE WHEN p.name = 'tablefront' THEN mp.color END),
-    'texture_path', MAX(CASE WHEN p.name = 'texture_path' THEN mp.color END),
-    'body', MAX(CASE WHEN p.name = 'body' THEN mp.color END),
-    'pickguard', MAX(CASE WHEN p.name = 'pickguard' THEN mp.color END),
-    'single_plastic', MAX(CASE WHEN p.name = 'single_plastic' THEN mp.color END),
-    'single_metal', MAX(CASE WHEN p.name = 'single_metal' THEN mp.color END),
-    'backplate', MAX(CASE WHEN p.name = 'backplate' THEN mp.color END)
-  ) AS parts
-FROM 
-  model_parts mp 
-  JOIN parts p ON mp.parts_id = p.id 
-WHERE
-  mp.color_set_id < 100
-GROUP BY 
-mp.guitar_id,
-  mp.color_set_id;`;
+`SELECT *, g.name
+FROM guitar g
+INNER JOIN composition c ON g.id = c.id_guitar
+INNER JOIN parts p ON c.id_part = p.id
+GROUP BY c.id, g.name
+ORDER BY g.id, p.model`
   db.query(sqlSelect, (err, result) => {
     res.send(result);
+    // console.log(result)
   });
 };
 

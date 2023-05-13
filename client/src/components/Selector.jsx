@@ -41,8 +41,8 @@ body, neck, pickup1, pickup2
 
   const getGuitars = () =>{
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`,{}).then((res) => {
-
-      setGuitarsList(res.data)
+console.log(res.data)
+      // setGuitarsList(res.data)
 
     })
   }
