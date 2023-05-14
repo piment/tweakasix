@@ -1,0 +1,27 @@
+.account{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* left: 40%; */
+    top: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.registration{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    
+}
+
+.account > * {
+    font-family: 'Courier New', Courier, monospace
+}
+
+.account input{
+    z-index: 2000;
+}
+.account h1 {
+    z-index: 10;
+}

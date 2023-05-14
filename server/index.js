@@ -7,8 +7,8 @@ const path = require("path")
 const cors = require("cors");
 const multer  = require("multer")
 const fs = require("fs")
-const jwt = require('jsonwebtoken')
 
+const session = require("express-session");
 // setup multer for file upload
 var storage = multer.diskStorage(
     {
@@ -79,6 +79,18 @@ app.get('/stocked/',(req, res) => {
 })
 
 
+
+app.use(
+  session({
+    key: "userId",
+    secret: "subscribe",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60 * 60 * 24,
+    },
+  })
+);
 const router = require("./router");
 
 app.use(router);

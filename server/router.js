@@ -3,9 +3,12 @@ const fs = require('fs')
 const router = express.Router();
 
 // const movieController = require("../controllers/movieController");
-const { getItems, addGuitar, getGuitars} = require("./controllers/itemController");
+const {  addGuitar, getGuitars} = require("./controllers/itemController");
+const {register, loginGet, loginPost, isUserAuth, userInfo} = require ("./controllers/userController")
+const {getItems} = require('./controllers/shopController')
 const FilePond = require('react-filepond')
-const multer  = require('multer')
+const multer  = require('multer');
+
 
 
 // setup multer for file upload
@@ -26,7 +29,12 @@ router.post("/items/saveguitar", addGuitar);
 
 router.get("/items/getguitars",getGuitars)
 
+    router.post("/register", register)
+router.get("/login", loginGet)
+router.post("/login", loginPost)
 
+router.get('/isUserAuth', isUserAuth)
 
+router.get('/getUserInfo', userInfo)
 
 module.exports = router
