@@ -41,8 +41,8 @@ body, neck, pickup1, pickup2
 
   const getGuitars = () =>{
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`,{}).then((res) => {
-
-      setGuitarsList(res.data)
+console.log(res.data)
+      // setGuitarsList(res.data)
 
     })
   }
@@ -63,12 +63,12 @@ body, neck, pickup1, pickup2
   setChanged(!changed)
 }
 
-console.log(model)
+
   return (
     <div className="main-select"> 
      <div className="buttonselect">
-   <button className={model === '1'? "es-icon-selected" : "es-icon"} value="1" onClick={(e) => {{e.preventDefault(),handleModelSelect(e)}}} alt='ES-335'></button>
-   <button className={model === '2' ? "tele-icon-selected" : "tele-icon"} value="2" onClick={(e) => {e.preventDefault(),handleModelSelect(e)}} alt='Telecaster'></button>
+   <button className={model == 1? "es-icon-selected" : "es-icon"} value="1" onClick={(e) => {{e.preventDefault(),handleModelSelect(e)}}} alt='ES-335'></button>
+   <button className={model == 2 ? "tele-icon-selected" : "tele-icon"} value="2" onClick={(e) => {e.preventDefault(),handleModelSelect(e)}} alt='Telecaster'></button>
    </div>
 
    <div className="visu-sum">

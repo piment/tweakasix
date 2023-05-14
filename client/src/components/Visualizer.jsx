@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 
 import "./Visualizer.css";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
+import { OrbitControls, Environment, ContactShadows, PerspectiveCamera } from "@react-three/drei";
 import axios from "axios";
 import { useMotionValue, MotionConfig } from "framer-motion";
 import { motion } from "framer-motion-3d";
@@ -34,14 +34,16 @@ const orbCam = useRef()
   const [dropped, setDropped] = useState(triggs);
   const dispatch = useDispatch();
   const handleSelectGuitar = async (e) => {
-    const chosen = guitarsList.filter((item) => item.id == e.target.value);
-    await setColorList(chosen[0]);
-    setModel(chosen[0].guitar_id);
-    // console.log(colorList)
+    const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
+    await setColorList(chosen[0].parts);
+    console.log(chosen[0].parts.guitar_id)
+    setModel(chosen[0].parts.guitar_id);
   };
 
 const resetCam =() => {
+  console.log(orbCam.current)
   orbCam.current.reset()
+  // orbCam.current.lookAt = [0,1,0]
 }
 
 
@@ -67,6 +69,7 @@ const resetCam =() => {
       gloss: colorList.gloss,
       scratch: colorList.scratch,
       body: colorList.body,
+      wood: colorList.wood,
       pickguard: colorList.pickguard,
       single_plastic: colorList.single_plastic,
       single_metal: colorList.single_metal,
@@ -74,7 +77,7 @@ const resetCam =() => {
     });
   };
 
-  useEffect(() => {}, [handleSelectGuitar]);
+  useEffect(() => {}, [handleSelectGuitar, model]);
 
   const [allTx, setAllTx] = useState([]);
 
@@ -89,6 +92,25 @@ const resetCam =() => {
     // )
   }, [triggs]);
 
+  // useEffect(() => {
+  //   const controls = orbCam.current;
+  
+    
+  //   const handleWheel = (event) => {
+  //     event.preventDefault();
+  //     controls.dispatchEvent({ type: 'wheel', deltaY: event.deltaY });
+  //   };
+    
+  //   if (controls && controls.domElement) {
+  //     controls.domElement.addEventListener('wheel', handleWheel, { passive: true });
+  //   }
+  //   return () => {
+  //     if (controls && controls.domElement) {
+  //       controls.domElement.removeEventListener('wheel', handleWheel);
+  //     }
+  //   };
+  // }, [orbCam]);
+
 
   return (
     <div className="mainviz">
@@ -99,6 +121,7 @@ const resetCam =() => {
           fallback={null}
           camera={{ position: [0, 2, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
+          
           linear
           shadows
           dpr={[1, 2]}
@@ -108,9 +131,10 @@ const resetCam =() => {
             antialias: true,
             alpha: true,
           }}
-          onPointerOut={() => setTimeout(() => setClickedPart(""), 2000)}
+
         >
-          <OrbitControls ref={orbCam} target={[0, 1, 0]} enableZoom={false} />
+          {/* <PerspectiveCamera ref={orbCam}   position={[0, 2, 3]} fov={60}/> */}
+          <OrbitControls  ref={orbCam} target={[0, 1, 0]}  enableZoom={false} />
           <Environment files="/decor_shop_2k.hdr" blur={2} />
 
           <ambientLight intensity={0.4} />
@@ -220,8 +244,8 @@ const resetCam =() => {
         <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
           {guitarsList &&
             guitarsList.map((guitar, key) => (
-              <option value={guitar.id} key={key}>
-                {guitar.id}
+              <option value={guitar.parts.id} key={key}>
+                {guitar.parts.id}
               </option>
             ))}
         </select>
