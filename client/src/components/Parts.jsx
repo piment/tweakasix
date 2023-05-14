@@ -1,9 +1,17 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import axios from 'axios';
+import * as THREE from 'three'
 import Construction from './Construction/MainConstruction'
 import './eshop.css'
-
+import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import { Canvas, useLoader, useThree } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from '../../public/DRACOLoader';
+import { ShopContext } from '../context/shop-context';
 function Parts() {
+const {addToCart, cartItems, getCartAmount} = useContext(ShopContext)
+// const {} = useContext(ShopContext)
+const totalAmount = getCartAmount()
 
   const [itemsList, setItemsList] = useState([]);
   const getItems = () => {
@@ -13,21 +21,28 @@ function Parts() {
       // setVariationList(res.data[1])
     });
   };
-
+  
   useEffect(() => {
     getItems()
   },[])
+  const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
 
   return (
     <div className='e-shop'>
 
     <div className='parts-products'>
-      {/* <Construction/> */}
-      {itemsList.map((item) => <div key={item.id} className='product'>
-        <h3>{item.name}</h3>
-        <p>{item.price}</p>
+
+      {itemsList.map((item) => 
+      <div key={item.id} className='product'>
+        <h3>{toPascalCase(item.name)}</h3> 
+       
+        <p>{item.price}€</p>
+
+        <button onClick={() => addToCart(item)}>Add to cart</button>
       </div>)}
     </div>
+
+    <h3>{totalAmount}€</h3>
     </div>
   )
 }

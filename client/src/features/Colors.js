@@ -20,7 +20,7 @@ export const guitarSlice = createSlice({
       pickup_cover: "#ffffff",
       pickup_ring: "#ffffff",
       neckwood: "#ffffff",
-      metalpieces: "#ffffff",
+      metal_pieces: "#ffffff",
       gloss : 50,
       scratch : 0,
       wood : 0,
@@ -52,7 +52,7 @@ export const guitarSlice = createSlice({
       state.colorSet.pickup_cover = action.payload.pickup_cover;
       state.colorSet.pickup_ring = action.payload.pickup_ring;
       state.colorSet.neckwood = action.payload.neckwood;
-      state.colorSet.metalpieces = action.payload.metalpieces;
+      state.colorSet.metal_pieces = action.payload.metal_pieces;
       state.colorSet.texture_path = action.payload.texture_path
       state.colorSet.gloss = action.payload.gloss
       state.colorSet.scratch = action.payload.scratch

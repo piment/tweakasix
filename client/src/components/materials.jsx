@@ -82,7 +82,7 @@ const materials = {
     map: rosewood,
   },
 
-  metalpieces: {
+  metal_pieces: {
     metalness: 1,
     roughness: 0,
   },

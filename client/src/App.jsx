@@ -7,26 +7,30 @@ import Parts from "./components/Parts";
 import Account from "./components/Account";
 import Cart from "./components/Cart";
 import Navbar from "./components/Navbar";
+import { ShopContextProvider } from "./context/shop-context";
 
 function App() {
 
   return (
     <div className="App">
+      <ShopContextProvider>
+
     <Router>
       <Navbar/>
             <Routes>
               <Route
                 path="/"
                 element={<Home/>}
-              />
+                />
               <Route
                 path="/parts"
                 element={<Parts />}
-              />
+                />
               <Route path="/account" element={<Account/>} />
               <Route path="cart" element={<Cart />} />
             </Routes>
           </Router>
+                </ShopContextProvider>
         </div>
   );
 }

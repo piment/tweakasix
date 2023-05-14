@@ -61,7 +61,7 @@ const resetCam =() => {
       frets: colorList.frets,
       inlay: colorList.inlay,
       nut: colorList.nut,
-      metalpieces: colorList.metalpieces,
+      metal_pieces: colorList.metal_pieces,
       pickup_cover: colorList.pickup_cover,
       pickup_ring: colorList.pickup_ring,
       knobs: colorList.knobs,

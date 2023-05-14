@@ -168,7 +168,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.selector_arm.geometry}
         material={materials.metalpieces}
-        material-color={colorList.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[2] = mesh)}
@@ -191,7 +191,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.selector_plate.geometry}
         material={materials.metalpieces}
-        material-color={colorList.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[5] = mesh)}
@@ -245,7 +245,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.frets.geometry}
         material={materials.frets}
-        material-color={colorList.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[9] = mesh)}
@@ -267,13 +267,14 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.straplocks.geometry}
         material={materials.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[12] = mesh)}
         castShadow
         receiveShadow
         geometry={nodes.neckplate.geometry}
-        material={materials.metalpieces}
+        material={materials.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[13] = mesh)}
@@ -289,7 +290,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.tailpiece.geometry}
         material={materials.metalpieces}
-        material-color={colorList.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[15] = mesh)}
@@ -305,7 +306,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.cylindersback.geometry}
         material={materials.metalpieces}
-        material-color={colorList.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[17] = mesh)}
@@ -313,7 +314,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.mechs.geometry}
         material={materials.metalpieces}
-        material-color={colorList.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[18] = mesh)}
@@ -321,7 +322,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.screws.geometry}
         material={materials.metalpieces}
-        material-color={colorList.metalpieces}
+        material-color={colorList.metal_pieces}
       />   
          <mesh
        ref={(mesh) => (meshRefs.current[19] = mesh)}
@@ -353,6 +354,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.input.geometry}
         material={materials.metalpieces}
+        material-color={colorList.metal_pieces}
       />
 
 

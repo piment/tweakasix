@@ -30,7 +30,7 @@ const addGuitar = (req, res) => {
   const frets = req.body.frets;
   const inlay = req.body.inlay;
   const nut = req.body.nut;
-  const metalpieces = req.body.metalpieces;
+  const metal_pieces = req.body.metal_pieces;
   const pickup_cover = req.body.pickup_cover;
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
@@ -61,7 +61,7 @@ const addGuitar = (req, res) => {
    ((SELECT id FROM parts WHERE name = 'frets'), ? ),
    ((SELECT id FROM parts WHERE name = 'inlay'), ? ),
    ((SELECT id FROM parts WHERE name = 'nut'), ?),
-   ((SELECT id FROM parts WHERE name = 'metalpieces'), ? ),
+   ((SELECT id FROM parts WHERE name = 'metal_pieces'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickup_cover'), ?),
    ((SELECT id FROM parts WHERE name = 'pickup_ring'), ?),
    ((SELECT id FROM parts WHERE name = 'knobs'), ? ),
@@ -100,7 +100,7 @@ const addGuitar = (req, res) => {
            [frets, texID, gloss, scratch, wood, addedId],
            [inlay, texID, gloss, scratch, wood, addedId],
            [nut, texID, gloss, scratch, wood, addedId],
-           [metalpieces, texID, gloss, scratch, wood, addedId],
+           [metal_pieces, texID, gloss, scratch, wood, addedId],
            [pickup_cover, texID, gloss, scratch, wood, addedId],
            [pickup_ring, texID, gloss, scratch, wood, addedId],
            [knobs, texID, gloss, scratch, wood, addedId],
