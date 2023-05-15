@@ -1,5 +1,5 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
-import axios from 'axios'
+
 
 
 export const guitarSlice = createSlice({

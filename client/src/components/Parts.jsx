@@ -9,7 +9,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from '../../public/DRACOLoader';
 import { ShopContext } from '../context/shop-context';
 function Parts() {
-const {addToCart, cartItems, getCartAmount} = useContext(ShopContext)
+const {addToCart, removeFromCart, getCartAmount} = useContext(ShopContext)
 // const {} = useContext(ShopContext)
 const totalAmount = getCartAmount()
 
@@ -27,6 +27,7 @@ const totalAmount = getCartAmount()
   },[])
   const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
 
+
   return (
     <div className='e-shop'>
 
@@ -39,10 +40,13 @@ const totalAmount = getCartAmount()
         <p>{item.price}€</p>
 
         <button onClick={() => addToCart(item)}>Add to cart</button>
+        <button onClick={() => removeFromCart(item)}>Remove</button>
       </div>)}
     </div>
 
     <h3>{totalAmount}€</h3>
+
+    <button onClick={() => localStorage.clear()}>Clear cart</button>
     </div>
   )
 }
