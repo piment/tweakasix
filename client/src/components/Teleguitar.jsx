@@ -28,7 +28,6 @@ setDropped,
 }) {
   const tele = useRef();
   const meshRefs = useRef([]);
-  const [hovered, setHovered] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/TeleOPT3.glb");
 
   const path = `${import.meta.env.VITE_BACKEND_URL}/`;
@@ -93,7 +92,7 @@ const texture_path = colorList.texture_path
 
 // materials.body.roughness = 0
 materials.body = new THREE.MeshStandardMaterial({transparent: true, color : colorList.body, opacity : (1 - (colorList.wood/10))})
-materials.neckwood = new THREE.MeshStandardMaterial({transparent: true, color : colorList.neckwood, opacity : (1 - (colorList.wood/10))})
+materials.neckwood = new THREE.MeshStandardMaterial({transparent: true, color : colorList.neck, opacity : (1 - (colorList.wood/10))})
 
 // materials.body.metalness = 0.2
 //   materials.body.opacity = 1 - (colorList.wood/10) 

@@ -239,7 +239,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.jackinput.geometry}
             material={materials.metalpieces}
-            material-color={colorList.metalpieces}
+            material-color={colorList.metal_pieces}
           />
           <mesh
          ref={(mesh) => (meshRefs.current[9] = mesh)}
@@ -285,7 +285,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
 
             geometry={nodes.neckwood.geometry}
             material={materials.neckwood}
-            material-color={colorList.neckwood}
+            material-color={colorList.neck}
           />
                <mesh
                         ref={(mesh) => (meshRefs.current[15] = mesh)}
@@ -317,7 +317,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.mechs.geometry}
             material={materials.metalpieces}
-            material-color={colorList.metalpieces}
+            material-color={colorList.metal_pieces}
           />
           <mesh
                    ref={(mesh) => (meshRefs.current[19] = mesh)}
@@ -325,7 +325,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.selector.geometry}
             material={materials.metalpieces}
-            material-color={colorList.metalpieces}
+            material-color={colorList.metal_pieces}
           />
           <mesh
                    ref={(mesh) => (meshRefs.current[20] = mesh)}
@@ -333,7 +333,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.tail_saddle.geometry}
             material={materials.metalpieces}
-            material-color={colorList.metalpieces}
+            material-color={colorList.metal_pieces}
           />
           <mesh
                    ref={(mesh) => (meshRefs.current[21] = mesh)}
