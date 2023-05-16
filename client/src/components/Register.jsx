@@ -61,15 +61,36 @@ const userAuthenticated = () => {
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
       if (response.data.loggedIn == true) {
+        console.log(response.data)
         setLoginStatus(response.data.user[0].username);
         setUserInfo(response.data.user[0])
+      } else if(response.data.loggedIn == false){
+        setLoginStatus(false)
+        setUserInfo(null)
       }
     });
-  }, []);
+  }, [loginStatus]);
 
   return (
-    <div className="account">
-      
+    <div className="login-register">
+      <div className="login">
+        <h1>Login</h1>
+        <input
+          type="text"
+          placeholder="Username..."
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          placeholder="Password..."
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <button onClick={login}> Login </button>
+      </div>
       <div className="registration">
         <h1>Registration</h1>
         <label>Firstname</label>
@@ -110,26 +131,7 @@ const userAuthenticated = () => {
         <button onClick={register}> Register </button>
       </div>
 
-      <div className="login">
-        <h1>Login</h1>
-        <input
-          type="text"
-          placeholder="Username..."
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
-        <input
-          type="password"
-          placeholder="Password..."
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <button onClick={login}> Login </button>
-      </div>
-
-     {loginStatus &&  (<h3> Piloulilou </h3>)}
+      
     </div>
   );
 }

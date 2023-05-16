@@ -8,6 +8,7 @@ import { Canvas, useLoader, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from '../../public/DRACOLoader';
 import { ShopContext } from '../context/shop-context';
+import { ArrowCounterClockwise } from '@phosphor-icons/react';
 function Parts() {
 const {addToCart, removeFromCart, getCartAmount} = useContext(ShopContext)
 // const {} = useContext(ShopContext)
@@ -38,15 +39,18 @@ const totalAmount = getCartAmount()
         <h3>{toPascalCase(item.name)}</h3> 
        
         <p>{item.price}€</p>
+<div className='cart-actions'>
 
-        <button onClick={() => addToCart(item)}>Add to cart</button>
         <button onClick={() => removeFromCart(item)}>Remove</button>
+        <button onClick={() => addToCart(item)}>Add to cart</button>
+</div>
       </div>)}
     </div>
-
+<div className='sub-cart'>
     <h3>{totalAmount}€</h3>
 
-    <button onClick={() => localStorage.clear()}>Clear cart</button>
+    <button onClick={() => localStorage.clear()}>Clear cart <ArrowCounterClockwise size={26} /></button>
+    </div>
     </div>
   )
 }

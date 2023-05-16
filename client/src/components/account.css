@@ -1,9 +1,10 @@
-.account{
+.login-register{
     display: flex;
     flex-direction: column;
-    position: relative;
+    /* position: relative; */
     /* left: 40%; */
-    top: 100%;
+    margin-top: 20vh;
+    /* top: 100%; */
     justify-content: space-around;
     align-items: center;
 }
@@ -12,16 +13,60 @@
     display: flex;
     flex-direction: column;
     width: 40%;
-    
+    align-items: center;
+    margin-top: 5vh;
 }
 
-.account > * {
+.login{
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-register > * {
     font-family: 'Courier New', Courier, monospace
 }
 
-.account input{
+.login-register input{
     z-index: 2000;
+    width: 100%;
+    margin:  1vh 0;
 }
-.account h1 {
-    z-index: 10;
+.login-register h1 {
+    z-index: 0;
 }
+
+.logout{
+    position: relative;
+    left: 50%;
+    z-index: 250;
+}
+
+
+
+
+
+
+
+
+
+.account-main{
+    display: flex;
+    height: 100%;
+    margin-top: 20vh;
+    justify-content: space-around;
+    
+}
+.user-auth-true{
+height: 100%;
+
+}
+.user-welcome{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center; 
+    height: 100%;
+    width: 100%;
+}
+

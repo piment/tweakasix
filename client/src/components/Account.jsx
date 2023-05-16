@@ -12,21 +12,45 @@ function Account() {
 //     username : userInfo.username
 //   }).then((response) => console.log(response))
 // }
+const logout = () => {
+  // console.log('pioupiou')
+  // console.log(localStorage.length)
+  localStorage.removeItem("token");
+  setLoginStatus(false)
+};
 
 useEffect(() => {
 
   console.log(userInfo)
-},[userInfo])
+},[userInfo, localStorage])
 
 
   return (
-    <div>
+    <div className="account-main">
       {/* <Construction/> */}
-      {loginStatus !== true &&(
+      {/* {loginStatus !== true &&( */}
+     {!localStorage.getItem("token")&& (
             <>
       <Registration loginStatus={loginStatus} setLoginStatus={setLoginStatus} userInfo={userInfo} setUserInfo={setUserInfo}/>
       </>
      )}
+       {localStorage.getItem("token")&& (
+        <div className="user-auth-true">
+
+<div className="user-welcome">
+ <h1> Welcome {userInfo.username}</h1>
+</div>
+
+<div className="user-info"></div>
+
+<div className="logout-wrap">
+
+        <button className="logout" onClick={logout}>Log out</button>
+</div>
+        
+        
+        </div>
+       )}
     </div>
   )
 }
