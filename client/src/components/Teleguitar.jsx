@@ -217,7 +217,7 @@ reactMap.needsUpdate
         receiveShadow
         geometry={nodes.neck.geometry}
         material={materials.neckwood}
-        material-color={colorList.neckwood}
+        material-color={colorList.neck}
       />
       {/* WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOD */}
 

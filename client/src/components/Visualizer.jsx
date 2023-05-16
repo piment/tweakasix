@@ -18,6 +18,7 @@ import TweakerTele from "./Tweaker/TweakerTele";
 import ESguitar from "./ESguitar";
 import Teleguitar from "./Teleguitar";
 import { Button } from "primereact/button";
+import { FloppyDisk } from "@phosphor-icons/react";
 
 function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
@@ -33,12 +34,35 @@ const orbCam = useRef()
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
   const dispatch = useDispatch();
+  // const handleSelectGuitar = async (e) => {
+  //   const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
+  //   await setColorList(chosen[0].parts);
+  //   console.log(chosen[0].parts.guitar_id)
+  //   setModel(chosen[0].parts.guitar_id);
+  // };
   const handleSelectGuitar = async (e) => {
-    const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
-    await setColorList(chosen[0].parts);
-    console.log(chosen[0].parts.guitar_id)
-    setModel(chosen[0].parts.guitar_id);
+const gtr = e.target.value
+console.log(gtr)
+   axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitar`,{params :{gtr : gtr}}).then((res) => {
+     console.log(res.data)
+     const fetched = res.data
+    const object = Object.values(fetched).reduce((acc, item) => {
+      acc[item.name] = item.color
+     acc.id = item.id_guitar
+     acc.gloss = item.gloss
+     acc.wood = item.wood
+     acc.scratch = item.scratch
+    item.id_texture  ? acc.texture_path = "stocked/1681217837265.png" : item.texture_path
+      return acc;
+    }, {});
+
+        setModel(fetched[0].model)
+      setColorList(object)
+    })
   };
+
+
+
 
 const resetCam =() => {
   console.log(orbCam.current)
@@ -91,25 +115,6 @@ const resetCam =() => {
 
     // )
   }, [triggs]);
-
-  // useEffect(() => {
-  //   const controls = orbCam.current;
-  
-    
-  //   const handleWheel = (event) => {
-  //     event.preventDefault();
-  //     controls.dispatchEvent({ type: 'wheel', deltaY: event.deltaY });
-  //   };
-    
-  //   if (controls && controls.domElement) {
-  //     controls.domElement.addEventListener('wheel', handleWheel, { passive: true });
-  //   }
-  //   return () => {
-  //     if (controls && controls.domElement) {
-  //       controls.domElement.removeEventListener('wheel', handleWheel);
-  //     }
-  //   };
-  // }, [orbCam]);
 
 
   return (
@@ -234,6 +239,7 @@ const resetCam =() => {
         )}
       </div>
       <div id="select-guitarset">
+      <FloppyDisk size={56} />
         <input type="text" onChange={(e) => setGtrName(e.target.value)}></input>{" "}
         <Button
          onClick={(e) => (e.stopPropagation(), addGuitar())}
@@ -244,8 +250,8 @@ const resetCam =() => {
         <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
           {guitarsList &&
             guitarsList.map((guitar, key) => (
-              <option value={guitar.parts.id} key={key}>
-                {guitar.parts.id}
+              <option value={guitar.name} key={key}>
+                {guitar.name}
               </option>
             ))}
         </select>

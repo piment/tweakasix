@@ -105,10 +105,10 @@ function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setD
                 mouseTrackTop: 15,
               }}
               id={clickedPart === "neckwood" ? "clickedPart" : ""}
-              name="neckwood"
-              value={colorList.neckwood}
+              name="neck"
+              value={colorList.neck}
               onChange={(e) =>
-                setColorList({ ...colorList, neckwood: `#${e.value}` })
+                setColorList({ ...colorList, neck: `#${e.value}` })
               }
             />
             <ColorPicker

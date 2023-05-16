@@ -128,16 +128,32 @@ const addGuitar = (req, res) => {
   }
 };
 
+
 const getGuitars = (req, res) => {
   const sqlSelect =
     // "SELECT guitar_id FROM model_parts GROUP BY color_set;"
-`SELECT *, g.name
+`SELECT  g.name, g.model
+FROM guitar g
+
+ORDER BY g.name`
+  db.query(sqlSelect, (err, result) => {
+    res.send(result);
+    // console.log(result)
+  });
+};
+
+const fetchGuitar = (req, res) => {
+  const gtr = req.query.gtr
+  console.log(gtr)
+  const sqlSelect =
+`SELECT *
 FROM guitar g
 INNER JOIN composition c ON g.id = c.id_guitar
 INNER JOIN parts p ON c.id_part = p.id
-GROUP BY c.id, g.name
-ORDER BY g.id, p.model`
-  db.query(sqlSelect, (err, result) => {
+WHERE g.name = ?`;
+
+  db.query(sqlSelect, gtr,(err, result) => {
+    
     res.send(result);
     // console.log(result)
   });
@@ -145,4 +161,5 @@ ORDER BY g.id, p.model`
 
 
 
-module.exports = { getItems, addGuitar, getGuitars };
+
+module.exports = { getItems, addGuitar, getGuitars, fetchGuitar };

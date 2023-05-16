@@ -107,9 +107,9 @@ function TweakerTele({ colorList, setColorList, clickedPart,  resetCam, dropped,
               }}
               id={clickedPart === "neckwood" ? "clickedPart" : ""}
               name="neckwood"
-              value={colorList.neckwood}
+              value={colorList.neck}
               onChange={(e) =>
-                setColorList({ ...colorList, neckwood: `#${e.value}` })
+                setColorList({ ...colorList, neck: `#${e.value}` })
               }
             />
             {/* <ColorPicker

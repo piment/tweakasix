@@ -42,10 +42,11 @@ body, neck, pickup1, pickup2
   const getGuitars = () =>{
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`,{}).then((res) => {
 console.log(res.data)
-      // setGuitarsList(res.data)
+      setGuitarsList(res.data)
 
     })
   }
+
 
   const total = parseInt(body.price) + parseInt(neck.price) + parseInt(pickup1.price)+ parseInt(pickup2.price)
   useEffect(() => {
