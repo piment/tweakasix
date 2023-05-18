@@ -1,39 +1,39 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
 
-
+const initialState = {
+  colorSet :{
+    id:0,
+        side: "#ffffff",
+        binding: "#ffffff",
+        tablefront: "#ffffff",
+        tableback: "#ffffff",
+        fretbinding: "#ffffff",
+        fretboard: "#ffffff",
+        inlay: "#ffffff",
+        nut: "#ffffff",
+        frets: "#ffffff",
+        knobs: "#ffffff",
+        pickup_cover: "#ffffff",
+        pickup_ring: "#ffffff",
+        neck: "#ffffff",
+        metal_pieces: "#ffffff",
+        gloss : 50,
+        scratch : 0,
+        wood : 0,
+        texture_path : "stocked/1681217837265.png",
+        body: "#ffffff",
+        pickguard: "#ffffff",
+        single_plastic: "#ffffff",
+        single_metal: "#ffffff",
+        backplate: "#ffffff"
+      },
+  
+      dropped : 0,
+}
 
 export const guitarSlice = createSlice({
   name: "guitar_set",
-  initialState: {
- colorSet :{
-  id:0,
-      side: "#ffffff",
-      binding: "#ffffff",
-      tablefront: "#ffffff",
-      tableback: "#ffffff",
-      fretbinding: "#ffffff",
-      fretboard: "#ffffff",
-      inlay: "#ffffff",
-      nut: "#ffffff",
-      frets: "#ffffff",
-      knobs: "#ffffff",
-      pickup_cover: "#ffffff",
-      pickup_ring: "#ffffff",
-      neck: "#ffffff",
-      metal_pieces: "#ffffff",
-      gloss : 50,
-      scratch : 0,
-      wood : 0,
-      texture_path : "stocked/1681217837265.png",
-      body: "#ffffff",
-      pickguard: "#ffffff",
-      single_plastic: "#ffffff",
-      single_metal: "#ffffff",
-      backplate: "#ffffff"
-    },
-
-    dropped : 0,
-  },
+  initialState,
 
   reducers: {
     addColor: (state, action) => {

@@ -86,8 +86,12 @@ function ESguitar({
     (materials.metalpieces.roughness = 0),
     (materials.pickup_cover.metalness = 1),
     (materials.pickup_cover.roughness = 0);
+materials.pickup_ring.roughness = 0.5
+materials.pickup_ring.metalness = 0.5
 
 
+
+console.log(materials.pickup_ring)
   woodFull.encoding = sRGBEncoding
   
   materials.tablefront.opacity = 1 - (colorList.wood/1000) 
@@ -116,9 +120,12 @@ rosewood.encoding = sRGBEncoding
 materials.fretboard.map = rosewood
 
 
- const reactMap = useTexture(txUse);
+ const reactMap = useTexture(path + colorList.texture_path);
  reactMap.flipY = false
 
+//  reactMap.wrapS = THREE.RepeatWrapping;
+//  reactMap.wrapT = THREE.RepeatWrapping;
+//  reactMap.repeat.set(2, 2);
 
 //  materials.tablefront.map = reactMap
 
@@ -158,6 +165,7 @@ reactMap.needsUpdate
             geometry={nodes.side.geometry}
             material={materials.side}
             material-color={colorList.side}
+            material-map={triggs > 0 ? reactMap : ''}
           />
 
           <mesh
@@ -174,6 +182,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tableback.geometry}
             material={materials.tableback}
             material-color={colorList.tableback}
+            material-map={triggs > 0 ? reactMap : ''}
           />
           <mesh
          ref={(mesh) => (meshRefs.current[3] = mesh)}
@@ -306,7 +315,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
           <mesh
                    ref={(mesh) => (meshRefs.current[17] = mesh)}
             castShadow
-            receiveShadow
+            // receiveShadow
             geometry={nodes.pickup_ring.geometry}
             material={materials.pickup_ring}
             material-color={colorList.pickup_ring}
@@ -341,6 +350,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.pickup_screws.geometry}
             material={materials.pickup_cover}
+            material-color={colorList.metal_pieces}
           />
         </group>
         <group position={[0, -0.5, 0]} dispose={null} scale={2}>

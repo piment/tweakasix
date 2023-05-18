@@ -38,6 +38,8 @@ const gtrnameref =useRef()
   const dispatch = useDispatch();
 
 
+
+
 const fontPath = '/NothingYouCouldDo-regular.ttf'
 console.log(fontPath)
 
@@ -120,11 +122,10 @@ const resetCam =() => {
     // )
   }, [triggs]);
 
-// useEffect(() => {
+useEffect(() => {
 
-//   const loggedIn = localStorage.getItem('token')
-//   console.log(loggedIn);
-// },[])
+setColorList(colus)
+},[])
 
 
 const handleGtrNameSet =  () => {
