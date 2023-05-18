@@ -5,7 +5,7 @@ import './account.css'
 
 function Account() {
   const [loginStatus, setLoginStatus] = useState(false);
-  const [userInfo, setUserInfo] = useState({})
+  const [userInfo, setUserInfo] = useState()
 
 // const getUserInfo = () => {
 //   Axios.get('http://localhost:3001/getUserInfo',{
@@ -18,11 +18,15 @@ const logout = () => {
   localStorage.removeItem("token");
   setLoginStatus(false)
 };
+const storedUserString = localStorage.getItem('userInfo')
+const storeUser = JSON.parse(storedUserString)
 
+console.log(userInfo)
 useEffect(() => {
 
-  console.log(userInfo)
-},[userInfo, localStorage])
+setUserInfo(storeUser)
+  // console.log(localStorage)
+},[setUserInfo])
 
 
   return (

@@ -8,6 +8,7 @@ import Account from "./components/Account";
 import Cart from "./components/Cart";
 import Navbar from "./components/Navbar";
 import { ShopContextProvider } from "./context/shop-context";
+import Footer from "./components/Footer";
 
 function App() {
 
@@ -29,8 +30,10 @@ function App() {
               <Route path="/account" element={<Account/>} />
               <Route path="cart" element={<Cart />} />
             </Routes>
+              <Footer/>
           </Router>
-                </ShopContextProvider>
+                </ShopContextProvider>   
+           
         </div>
   );
 }

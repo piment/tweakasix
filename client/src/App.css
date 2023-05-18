@@ -23,3 +23,22 @@ button {
   background-color: none;
 
 }
+
+
+
+.footer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10vh;
+  position: relative;
+  width: 100%;
+  /* justify-self: flex-end; */
+  /* margin: 2vh 0 0 0; */
+  margin-top: auto;
+  background-color: black;
+  box-shadow: black 0px 0px 10px 10px;
+  /* position: sticky; */
+  /* padding-top: 10vh; */
+  bottom: 0;
+}

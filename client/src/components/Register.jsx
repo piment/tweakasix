@@ -48,6 +48,9 @@ const userAuthenticated = () => {
       if (response.data.auth == false) {
         setLoginStatus(false);
       } else {
+        const user = response.data.result[0]
+        // console.log(response.data.result[0])
+        setUserInfo(user)
         localStorage.setItem("token", response.data.token)
         setLoginStatus(true);
       }
@@ -55,7 +58,13 @@ const userAuthenticated = () => {
   };
 
 
-
+  useEffect(() => {
+    if (userInfo) {
+      const sessionUserInfo = JSON.stringify(userInfo);
+      localStorage.setItem("userInfo", sessionUserInfo);
+      // Perform any other actions or logic here
+    }
+  }, [userInfo]);
 
 
   useEffect(() => {
@@ -63,7 +72,7 @@ const userAuthenticated = () => {
       if (response.data.loggedIn == true) {
         console.log(response.data)
         setLoginStatus(response.data.user[0].username);
-        setUserInfo(response.data.user[0])
+        // setUserInfo(response.data.user[0])
       } else if(response.data.loggedIn == false){
         setLoginStatus(false)
         setUserInfo(null)
@@ -72,9 +81,10 @@ const userAuthenticated = () => {
   }, [loginStatus]);
 
   return (
+  <div className="login-register-wrap">
     <div className="login-register">
       <div className="login">
-        <h1>Login</h1>
+        <h2>Login</h2>
         <input
           type="text"
           placeholder="Username..."
@@ -92,7 +102,7 @@ const userAuthenticated = () => {
         <button onClick={login}> Login </button>
       </div>
       <div className="registration">
-        <h1>Registration</h1>
+        <h2>Sign up</h2>
         <label>Firstname</label>
         <input
           type="text"
@@ -131,7 +141,11 @@ const userAuthenticated = () => {
         <button onClick={register}> Register </button>
       </div>
 
-      
+
+
+</div>
+<div className="otherlog">
+  Signing up allows you to save your custom guitar(s) and will keep you updated on all new features!</div>      
     </div>
   );
 }

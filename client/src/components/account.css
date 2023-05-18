@@ -1,18 +1,27 @@
+.login-register-wrap{
+    /* width: 100%; */
+    margin: auto;
+    width: 80%;
+}
+
+
 .login-register{
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     /* position: relative; */
     /* left: 40%; */
-    margin-top: 20vh;
+    margin:10vh 0 10vh 0;
     /* top: 100%; */
     justify-content: space-around;
     align-items: center;
+
+    
 }
 
 .registration{
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 30%;
     align-items: center;
     margin-top: 5vh;
 }
@@ -21,6 +30,7 @@
     z-index: 20;
     display: flex;
     flex-direction: column;
+    width: 30%;
 }
 
 .login-register > * {
@@ -32,8 +42,9 @@
     width: 100%;
     margin:  1vh 0;
 }
-.login-register h1 {
+.login-register h2 {
     z-index: 0;
+
 }
 
 .logout{
@@ -43,21 +54,38 @@
 }
 
 
+.otherlog{
+    display: flex;
+    height: 20vh;
+    justify-content: center;
+}
 
 
-
+.registration > h2{
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    font-size: 4em;
+}
+.login > h2{
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    font-size: 4em;
+}
 
 
 
 
 .account-main{
     display: flex;
-    height: 100%;
-    margin-top: 20vh;
+    height: 100vh;
+    margin-top: 10vh;
     justify-content: space-around;
-    
+  /* width: 80%; */
 }
 .user-auth-true{
+/* height: 100vh; */
 height: 100%;
 
 }
@@ -66,7 +94,7 @@ height: 100%;
     flex-direction: column;
     justify-content: space-around;
     align-items: center; 
-    height: 100%;
+    height: 25%;
     width: 100%;
 }
 

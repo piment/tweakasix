@@ -27,7 +27,7 @@ function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setD
     bounds={`parent`}
     allowAnyClick={false}
     // nodeRef={tweakDrag}
-    // defaultPosition={{x : 100, y:-150}}
+    defaultPosition={{x : 0, y:-150}}
     onStart={(e) => e.preventDefault()}
     >
             <div className="pickers-main"> 

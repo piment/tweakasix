@@ -32,6 +32,7 @@ const gtrnameref =useRef()
 
   const [colorList, setColorList] = useState(colus);
   const [clickedPart, setClickedPart] = useState("");
+  const [gtrNameInput, setGtrNameInput] = useState("");
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
   const dispatch = useDispatch();
@@ -119,7 +120,10 @@ const resetCam =() => {
     // )
   }, [triggs]);
 
-
+const handleGtrNameSet =  () => {
+  setGtrName(gtrNameInput)
+  setGtrNameInput('')
+}
 
 function GuitarName(){
   useFrame(({ camera }) => {
@@ -129,8 +133,10 @@ function GuitarName(){
 })
 
 
+
+
 return(
-  <group          ref={gtrnameref} position={[0.2,-0.5,0.9]} scale={0.2} onClick={() => gtrnameref.current.visible = false}>
+  <group          ref={gtrnameref} position={[0.2,-0.5,0.9]} scale={0.2}>
   <Suspense fallback={null}>
   
             <Text
@@ -347,7 +353,10 @@ return(
             </motion.group>
           </MotionConfig>
           {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
-       <GuitarName/>
+          {gtrName &&(
+
+            <GuitarName/>
+          )}
      </Canvas> 
         {model == 1 && (
           <Tweaker
@@ -374,7 +383,7 @@ return(
       <div id="select-guitarset">
       <FloppyDisk size={56} />
       <div className="guitar-name">
-        <input  type="text" onChange={(e) => setGtrName(e.target.value)} placeholder="Give it a name..."></input></div>
+        <input  type="text" value={gtrNameInput} onChange={(e) => setGtrNameInput(e.target.value)} placeholder="Give it a name..."></input><button onClick={handleGtrNameSet}>ok</button></div>
         <Button
          onClick={(e) => (e.stopPropagation(), addGuitar())}
         // onClick={() => orbCam.current.reset()}
