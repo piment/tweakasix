@@ -19,7 +19,7 @@ export const guitarSlice = createSlice({
       knobs: "#ffffff",
       pickup_cover: "#ffffff",
       pickup_ring: "#ffffff",
-      neckwood: "#ffffff",
+      neck: "#ffffff",
       metal_pieces: "#ffffff",
       gloss : 50,
       scratch : 0,

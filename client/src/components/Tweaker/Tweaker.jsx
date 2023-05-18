@@ -14,7 +14,7 @@ import MyDropzone from "../Dropzone";
 
 
 function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setDropped }) {
-  // const actual = useRef(null)
+  const actual = useRef(null)
   const dispatch = useDispatch();
 
   const tweakDrag = useRef()
@@ -26,7 +26,7 @@ function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setD
     handle="strong"
     bounds={`parent`}
     allowAnyClick={false}
-    nodeRef={tweakDrag}
+    // nodeRef={tweakDrag}
     // defaultPosition={{x : 100, y:-150}}
     onStart={(e) => e.preventDefault()}
     >

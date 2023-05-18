@@ -17,16 +17,25 @@ export const ShopContextProvider = (props) => {
   
     const removeFromCart = (item) => {
       dispatch(cartRemove(item));
+  
     };
 
 
     const getCartAmount =() => {
-      
+      console.log(cartItems)
         let totalAmount = 0
-        for (const itemId in cartItems) {
-            const item = cartItems[itemId].item; // Access the item object
-      
-            totalAmount += cartItems[itemId].qty * item.price;
+        if (cartItems.length >=1) {
+          for (const itemId in cartItems) {
+            const cartItem = cartItems[itemId];
+            
+            if (cartItem && cartItem.item) {
+              // If the cartItem exists and has the 'item' property, access the item object
+              const item = cartItem.item;
+              totalAmount += cartItem.qty * item.price;
+            }
+          }
+        } else if (cartItems.length <= 0) {
+          totalAmount = 0;
         }
         return totalAmount
     }

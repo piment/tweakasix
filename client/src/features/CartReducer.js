@@ -25,12 +25,14 @@ initialState,
       },
       cartRemove: (state, action) => {
         const itemId = action.payload;
-        const itemExists = state.cartItems[itemId.id];
-        if (itemExists && state.cartItems[itemId.id].qty > 0) {
-          // If the item already exists in the cart, increment the quantity
-          state.cartItems[itemId.id].qty -= 1;
-        } 
-       
+        const item = state.cartItems[itemId.id];
+      
+        if (item && item.qty >= 1) {
+          item.qty -= 1;
+          if (item.qty === 0) {
+            delete state.cartItems[itemId.id];
+          }
+        }
       },
       
   }

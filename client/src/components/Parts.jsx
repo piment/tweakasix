@@ -3,26 +3,30 @@ import axios from 'axios';
 import * as THREE from 'three'
 import Construction from './Construction/MainConstruction'
 import './eshop.css'
-import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import { Environment, OrbitControls, useGLTF, useSelect } from '@react-three/drei';
 import { Canvas, useLoader, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from '../../public/DRACOLoader';
 import { ShopContext } from '../context/shop-context';
 import { ArrowCounterClockwise } from '@phosphor-icons/react';
+import { useSelector } from 'react-redux';
 function Parts() {
 const {addToCart, removeFromCart, getCartAmount} = useContext(ShopContext)
-// const {} = useContext(ShopContext)
+
 const totalAmount = getCartAmount()
 
   const [itemsList, setItemsList] = useState([]);
+  const cartItemsObj = useSelector((state) => state.cart_items.cartItems)
+  console.log(cartItemsObj)
+  const cartItems = Object.values(cartItemsObj).filter(item => item && item !== null);
   const getItems = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items`, {}).then((res) => {
-      console.log(res.data)
       setItemsList(res.data);
       // setVariationList(res.data[1])
     });
   };
   
+  console.log(cartItems.qty)
   useEffect(() => {
     getItems()
   },[])
@@ -42,6 +46,7 @@ const totalAmount = getCartAmount()
 <div className='cart-actions'>
 
         <button onClick={() => removeFromCart(item)}>Remove</button>
+        <p> {cartItems.find(element => console.log(element.item.id, item.id) )}</p>
         <button onClick={() => addToCart(item)}>Add to cart</button>
 </div>
       </div>)}

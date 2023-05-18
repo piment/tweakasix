@@ -1,3 +1,4 @@
+
 /* Desktops and laptops ----------- */
 @media only screen and (min-width : 1224px) {
   /* Styles */
@@ -76,3 +77,44 @@ height: 150vh;
     /* box-shadow: 0 0 10px 5px rgba(129, 129, 129, 0.467); */
   }
   }
+
+
+.guitar-name > input{
+  width: 300px;
+  padding: 10px 20px;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  font-size: 2em;
+   position: relative;
+  top:-30vh;
+  left: -14vw;
+}
+ 
+.guitar-name > input:focus{
+  outline: none;
+}
+ 
+.guitar-name > input::-webkit-input-placeholder {
+    padding-left: 5px;
+ font-size: 1em;
+    color: #3c3c3c;
+}
+ 
+.guitar-name > input:-moz-placeholder { /* Firefox 18- */
+    padding-left: 5px;
+    font-size: 1em;
+    color: #3c3c3c;
+}
+ 
+.guitar-name > input::-moz-placeholder {  /* Firefox 19+ */
+    padding-left: 5px;
+    font-size: 1em;
+    color: #3c3c3c;
+}
+ 
+.guitar-name > input:-ms-input-placeholder {
+    padding-left: 5px;
+    font-size: 1em;
+    color: #3c3c3c;
+}

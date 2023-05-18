@@ -1,9 +1,9 @@
-.e-shop, .cart{
+.e-shop{
     margin-top: 20vh;
     font-family: Oswald;
 }
 
-.parts-products{
+.e-shop > .parts-products{
 
     display: grid;
     grid-auto-columns: max-content;
@@ -17,7 +17,7 @@
       max-width: 80%;
 }
 
-.product{
+.e-shop > .parts-products > .product{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,15 +26,111 @@
 }
 
 
-.cart-actions{
+.e-shop > .parts-products > .product > .cart-actions{
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
 
-.sub-cart{
+.e-shop  > .sub-cart{
     display: flex;
     justify-content: space-around;
     width: 50%;
     margin: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*--------- CART-CART-CART-------------*/
+ .cart{
+    
+    margin: 20vh 10vw;
+    font-family: Oswald;
+}
+
+.cart-items{
+    min-height: 20em;
+    width: 70%;
+
+}
+
+.cart-items > *{
+    display: flex;
+    flex-direction: column;
+   border: red solid 2px;
+}
+.cart-items > .cart-list-item{
+    display: flex;
+flex-direction: row; 
+justify-content: space-between;
+padding: 0 1em ;
+}
+
+.item-unit{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+.item-unit > #unit{
+ display: flex;
+    position: relative;
+ padding-top: 2%;
+ /* height: 100%; */
+ /* border: purple solid 2px; */
+ min-width: 5vw;
+ /* margin: auto  ; */
+ justify-content: flex-start;
+ /* align-items: center; */
+}
+
+.cart-list-item > .cart-actions{
+    display: flex;
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cart-list-item > .cart-actions > button{
+    height: 50%;
+    display: flex;
+    align-items: center;
+    border: green solid 2px;
+    justify-content: center;
+    width: 20%;
+    /* margin: auto 1em; */
+}
+
+.cart-items > .cart-total > p{
+    /* margin: 1em 0; */
+    /* height: 4em; */
+    display: flex;
+justify-content: flex-end;
+    font-size: 2em;
+    margin: 1em 1em;
+}
+
+.empty-cart{
+    display: flex;
+    /* flex-direction: row; */
+    border: blue solid 2px;
+    padding: 1em;
+    min-height: 20em;
+}
+
+#title{
+    font-size: 3em;
+}
+.empty-redirect{
+    display: flex;
+    flex-direction: row;
 }

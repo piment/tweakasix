@@ -1,16 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Construction from "./Construction/MainConstruction";
 import { ShopContext } from "../context/shop-context";
 import { useSelector } from "react-redux";
 import './eshop.css'
 function Cart() {
-  const { getCartAmount } = useContext(ShopContext);
+  const { addToCart, removeFromCart, getCartAmount } = useContext(ShopContext);
   const totalAmount = getCartAmount();
   const cartItemsObj = useSelector((state) => state.cart_items.cartItems)
-  const cartItems = Object.values(cartItemsObj).filter(item => item !== null);
+  console.log(cartItemsObj)
+  const cartItems = Object.values(cartItemsObj).filter(item => item && item !== null);
   const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
 
-  console.log(cartItems);
+
   return (
     <div>
       {/* <Construction/> */}
@@ -18,12 +19,36 @@ function Cart() {
         <h1>Cart</h1>
 
         <div className="cart-items">
-          {cartItems.length != 0 && (cartItems.map((itemInfo) => {
-            console.log(itemInfo.item.name);
-         return   <div key={itemInfo.id}> <h2>{toPascalCase(itemInfo.item.name)}  x {itemInfo.qty}</h2></div>;
-          }))}
+          {cartItems && cartItems.length != 0 && (cartItems.map((itemInfo) => {
 
-          <h3>{totalAmount}</h3>
+if (itemInfo.item) { // Add this check
+  return (
+    <div key={itemInfo.id} className="cart-list-item">
+      <div className="item-unit">
+        <h2>{toPascalCase(itemInfo.item.name)}</h2>
+        <p id="unit"> unit: {itemInfo.item.price}€</p>
+      </div>
+      <div className='cart-actions'>
+        <button onClick={() => removeFromCart(itemInfo.item)}>-</button>
+        <p>{itemInfo.qty}</p>
+        <button onClick={() => addToCart(itemInfo.item)}>+</button>
+      </div>
+    </div>
+  );
+}
+return null; // Return null for items without 'item' property
+})
+)}
+
+          {cartItems.length === 0 &&(
+        <div className="empty-cart"><p id="title">Your cart is empty</p>
+
+       <div className="empty-redirect"> 
+        <a href="/">Create your guitar</a> or <a href="/parts">find spare parts</a>!
+        </div></div>
+         )}
+
+          <div className="cart-total"><p>Total: {totalAmount}€</p></div>
         </div>
       </div>
     </div>

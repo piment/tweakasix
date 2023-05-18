@@ -1,9 +1,10 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, Suspense } from "react";
 
 import "./Visualizer.css";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, ContactShadows, PerspectiveCamera } from "@react-three/drei";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { OrbitControls, Environment, ContactShadows, PerspectiveCamera, Text, useFont} from "@react-three/drei";
 import axios from "axios";
+import * as THREE from 'three'
 import { useMotionValue, MotionConfig } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import Modelos from "./ESguitar";
@@ -26,38 +27,40 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged }) {
 
 
 const orbCam = useRef()
+const gtrnameref =useRef()
+
 
   const [colorList, setColorList] = useState(colus);
-  // const [col335, setCol335] = useState(colorList.es335)
-  // const [colTele, setColTele] = useState(colorList.telecaster)
   const [clickedPart, setClickedPart] = useState("");
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
   const dispatch = useDispatch();
-  // const handleSelectGuitar = async (e) => {
-  //   const chosen = guitarsList.filter((item) => item.parts.id == e.target.value);
-  //   await setColorList(chosen[0].parts);
-  //   console.log(chosen[0].parts.guitar_id)
-  //   setModel(chosen[0].parts.guitar_id);
-  // };
+
+
+const fontPath = '/NothingYouCouldDo-regular.ttf'
+console.log(fontPath)
+
   const handleSelectGuitar = async (e) => {
 const gtr = e.target.value
 console.log(gtr)
    axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitar`,{params :{gtr : gtr}}).then((res) => {
-     console.log(res.data)
+
      const fetched = res.data
     const object = Object.values(fetched).reduce((acc, item) => {
+   
       acc[item.name] = item.color
      acc.id = item.id_guitar
      acc.gloss = item.gloss
-     acc.wood = item.wood
-     acc.scratch = item.scratch
+     acc.wood = parseInt(item.wood,10)
+     acc.scratch = parseInt(item.scratch,10)
     item.id_texture  ? acc.texture_path = "stocked/1681217837265.png" : item.texture_path
+
       return acc;
     }, {});
 
         setModel(fetched[0].model)
-      setColorList(object)
+      setColorList(object)   
+       console.log(typeof object.scratch)
     })
   };
 
@@ -69,7 +72,6 @@ const resetCam =() => {
   orbCam.current.reset()
   // orbCam.current.lookAt = [0,1,0]
 }
-
 
   const addGuitar = () => {
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
@@ -111,20 +113,149 @@ const resetCam =() => {
 
       filesReached.push(response.data);
       setAllTx(filesReached);
+   
     });
 
     // )
   }, [triggs]);
 
 
+
+function GuitarName(){
+  useFrame(({ camera }) => {
+  // Make text face the camera
+  gtrnameref.current.quaternion.copy(camera.quaternion)
+
+})
+
+
+return(
+  <group          ref={gtrnameref} position={[0.2,-0.5,0.9]} scale={0.2} onClick={() => gtrnameref.current.visible = false}>
+  <Suspense fallback={null}>
+  
+            <Text
+          
+  
+          color={'#000000'}
+          fontSize={2}
+          maxWidth={3}
+ 
+          lineHeight={.8}
+          // letterSpacing={0.02}
+          textAlign={'left'}
+          // depthOffset={100}
+          // glyphGeometryDetail={0}
+          // font="/NothingYouCouldDo-Regular.ttf"
+          // font="/Quentin.otf"
+          font="/Summer_Pisces.ttf"
+          anchorX="-60%"
+          anchorY="middle"
+          outlineOffsetX={'-1%'}
+          outlineOffsetY={'1%'}
+          // fillOpacity={0}
+          outlineOpacity={1}
+          // outlineColor="#020202" 
+             strokeWidth={0}
+          outlineWidth={0.02}
+          >
+            <meshBasicMaterial
+           side={THREE.DoubleSide}
+           color={'#000000'}
+           transparent
+       
+           opacity={1}
+         />
+          {gtrName}
+          <group position={[0,0,0.01]}  scale={1.01}>
+
+  
+            <Text
+      
+          color={'#000000'}
+      
+          fontSize={2}
+          maxWidth={3}
+          fontWeight={'bold'}
+          lineHeight={.8}
+          // letterSpacing={0.02}
+          textAlign={'left'}
+          fillOpacity={0}
+          glyphGeometryDetail={0}
+    
+          font="/Summer_Pisces.ttf"
+
+          anchorX="-60%"
+          anchorY="middle" 
+           outlineBlur={'2%'}
+          outlineOpacity={0.9}
+          outlineColor="#000000"
+          >
+            <meshBasicMaterial
+           side={THREE.DoubleSide}
+           color={'#000000'}
+           transparent
+           opacity={1}
+         />
+          {gtrName}
+        </Text>
+   
+          </group>
+        </Text>
+
+        <Text
+          position={[4,-1,0.2]}
+  
+          color={'#000000'}
+      
+          fontSize={1}
+          maxWidth={3}
+          fontWeight={'bold'}
+          lineHeight={.8}
+          // letterSpacing={0.02}
+          textAlign={'left'}
+          fillOpacity={1}
+          glyphGeometryDetail={0}
+    
+          font="/Summer_Pisces.ttf"
+          strokeWidth={0}
+          outlineWidth={0.002}
+          anchorX="100%"
+          anchorY="middle" 
+           outlineBlur={'2%'}
+          outlineOpacity={0.9}
+          outlineColor="#000000"
+          >
+            <meshBasicMaterial
+           side={THREE.DoubleSide}
+           color={'#000000'}
+           transparent
+           opacity={1}
+         />
+         by {gtrName}
+        </Text>
+          </Suspense>
+          </group>
+          
+)
+}
+
+
+
+
+
+
+
+
+      
   return (
     <div className="mainviz">
       <div className="visualizer">
         <div    className="canvas">
+          
         <Canvas
        
           fallback={null}
-          camera={{ position: [0, 2, 3], fov: 60 }}
+          camera={{ position: [0, 0, 3], fov: 60 }}
           // shadows ={{type : PCFSoftShadowMap}}
           
           linear
@@ -139,7 +270,7 @@ const resetCam =() => {
 
         >
           {/* <PerspectiveCamera ref={orbCam}   position={[0, 2, 3]} fov={60}/> */}
-          <OrbitControls  ref={orbCam} target={[0, 1, 0]}  enableZoom={false} />
+          <OrbitControls  ref={orbCam} target={[0, 0, 0]}  enableZoom={false} position0={[0,0,3]}/>
           <Environment files="/decor_shop_2k.hdr" blur={2} />
 
           <ambientLight intensity={0.4} />
@@ -165,7 +296,7 @@ const resetCam =() => {
   <ContactShadows
                 depthWrite={false}
             //  matrixAutoUpdate={true}
-            position={[0, -0.8, 0]}
+            position={[0, -1.3, 0]}
             opacity={0.85}
             scale={10}
             blur={0.7}
@@ -192,7 +323,7 @@ const resetCam =() => {
       
                   setClickedPart={setClickedPart}
                   tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-                  pos={[-1, -0.2, -0.3]}
+                  pos={[-1,-0.5, -0.3]}
                 />
        
 
@@ -210,14 +341,14 @@ const resetCam =() => {
       
                   setClickedPart={setClickedPart}
                   tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-                  pos={[-1, -0.2, -0.3]}
+                  pos={[-1, -0.8, -0.4]}
                 />
               </motion.group>
             </motion.group>
           </MotionConfig>
           {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
-        </Canvas>
-      </div>
+       <GuitarName/>
+     </Canvas> 
         {model == 1 && (
           <Tweaker
        
@@ -238,9 +369,12 @@ const resetCam =() => {
           />
         )}
       </div>
+       
+      </div>
       <div id="select-guitarset">
       <FloppyDisk size={56} />
-        <input type="text" onChange={(e) => setGtrName(e.target.value)}></input>{" "}
+      <div className="guitar-name">
+        <input  type="text" onChange={(e) => setGtrName(e.target.value)} placeholder="Give it a name..."></input></div>
         <Button
          onClick={(e) => (e.stopPropagation(), addGuitar())}
         // onClick={() => orbCam.current.reset()}
