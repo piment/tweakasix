@@ -16,7 +16,7 @@ function Cart() {
     <div>
       {/* <Construction/> */}
       <div className="cart">
-        <h1>Cart</h1>
+        <h1 id="cart-title">Cart</h1>
 
         <div className="cart-items">
           {cartItems && cartItems.length != 0 && (cartItems.map((itemInfo) => {
@@ -44,12 +44,13 @@ return null; // Return null for items without 'item' property
         <div className="empty-cart"><p id="title">Your cart is empty</p>
 
        <div className="empty-redirect"> 
-        <a href="/">Create your guitar</a> or <a href="/parts">find spare parts</a>!
+        <a href="/">Create your guitar</a> &nbsp; or &nbsp; <a href="/parts">find spare parts</a>!
         </div></div>
          )}
 
           <div className="cart-total"><p>Total: {totalAmount}€</p></div>
         </div>
+        <div className="country-delivery"> Average time estimated : 10 days</div>
       </div>
     </div>
   );

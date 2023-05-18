@@ -91,11 +91,22 @@ const loginPost = (req, res) => {
             const id = result[0].id
             const token = jwt.sign({id}, process.env.JWT_AUTH_SECRET, {
                 expiresIn : 300,
-            })
+            });
+            db.query("SELECT * FROM user_info  WHERE id_user = ?;", id, (err, otherResult) => {
+              if (err) {
+                res.send({ err: err });
+              }
 
+              // Modify the response as needed with additional data
+              const modifiedResponse = {
+                auth: true,
+                token: token,
+                result: result,
+                otherData: otherResult,
+              };
 
-
-            res.json({auth : true, token: token, result: result})
+              res.json(modifiedResponse);
+            });
           } else {
             res.json({ auth : false, message: "Wrong username/password combination!" });
           }

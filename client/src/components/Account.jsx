@@ -2,26 +2,32 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Registration from "./Register";
 import "./account.css";
+import { useDispatch, useSelector } from "react-redux";
+import { userOut } from "../features/UserReducer";
 
 function Account() {
+  const userData = useSelector((state) => state.user_data.userData.user)
+  const userDataInfo = useSelector((state) => state.user_data.userData.user_info)
   const [loginStatus, setLoginStatus] = useState(false);
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState({userData});
 
   const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
 
+  const dispatch = useDispatch()
 
   const logout = () => {
-    localStorage.removeItem("token");
     setLoginStatus(false);
+dispatch(userOut())
+
+localStorage.removeItem('token')
   };
-  const storedUserString = localStorage.getItem("userInfo");
-  const storeUser = JSON.parse(storedUserString);
+
+useEffect(() => {
+setUserInfo(userData)
+},[loginStatus])
 
 
-  useEffect(() => {
-    setUserInfo(storeUser);
-
-  }, [setUserInfo]);
+console.log(userInfo)
 
   return (
     <div className="account-main">
@@ -36,7 +42,7 @@ function Account() {
           />
         </>
       )}
-      {localStorage.getItem("token") && userInfo && (
+      {localStorage.getItem("token") && userInfo.firstname && (
         <div className="user-auth-true">
           <div className="user-welcome">
             <h1> Welcome <span id="username">{toPascalCase(userInfo.username)}</span></h1>
@@ -50,7 +56,10 @@ function Account() {
                   {userInfo.firstname} {userInfo.lastname}
                 </li>
                 <li>{userInfo.email}</li>
-                <li>adress</li>
+                <li id="adress">{userDataInfo.number} {userDataInfo.street}, <br/>
+                {userDataInfo.postal} {toPascalCase(userDataInfo.city)}, <br/>
+                {(userDataInfo.country).toUpperCase()}</li>
+                <li>{userDataInfo.phone}</li>
               </ul>
             </div>
           </div>

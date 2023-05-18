@@ -120,6 +120,13 @@ const resetCam =() => {
     // )
   }, [triggs]);
 
+// useEffect(() => {
+
+//   const loggedIn = localStorage.getItem('token')
+//   console.log(loggedIn);
+// },[])
+
+
 const handleGtrNameSet =  () => {
   setGtrName(gtrNameInput)
   setGtrNameInput('')
@@ -207,27 +214,28 @@ return(
    
           </group>
         </Text>
+{loggedIn &&(
 
-        <Text
-          position={[4,-1,0.2]}
+  <Text
+  position={[4,-1,0.2]}
   
-          color={'#000000'}
-      
-          fontSize={1}
-          maxWidth={3}
-          fontWeight={'bold'}
-          lineHeight={.8}
-          // letterSpacing={0.02}
-          textAlign={'left'}
-          fillOpacity={1}
-          glyphGeometryDetail={0}
-    
-          font="/Summer_Pisces.ttf"
-          strokeWidth={0}
-          outlineWidth={0.002}
+  color={'#000000'}
+  
+  fontSize={1}
+  maxWidth={3}
+  fontWeight={'bold'}
+  lineHeight={.8}
+  // letterSpacing={0.02}
+  textAlign={'left'}
+  fillOpacity={1}
+  glyphGeometryDetail={0}
+  
+  font="/Summer_Pisces.ttf"
+  strokeWidth={0}
+  outlineWidth={0.002}
           anchorX="100%"
           anchorY="middle" 
-           outlineBlur={'2%'}
+          outlineBlur={'2%'}
           outlineOpacity={0.9}
           outlineColor="#000000"
           >
@@ -236,9 +244,10 @@ return(
            color={'#000000'}
            transparent
            opacity={1}
-         />
+           />
          by {gtrName}
         </Text>
+          )}
           </Suspense>
           </group>
           

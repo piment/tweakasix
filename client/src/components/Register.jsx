@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { userIn } from "../features/UserReducer";
 
 
 
@@ -15,10 +17,12 @@ const [firstnameReg, setFirstnameReg] = useState("");
   const [password, setPassword] = useState("");
 
 
-
   Axios.defaults.withCredentials = true;
 
+const userData = useSelector((state) => state.user_data.userData)
+console.log(userData)
 
+const dispatch = useDispatch()
 
   const register = () => {
     Axios.post("http://localhost:3001/register", {
@@ -36,7 +40,7 @@ const userAuthenticated = () => {
             "x-access-token": localStorage.getItem("token")
         }
     }).then((response)=> {
-        console.log(response)
+        // console.log(response)
     })
 }
 
@@ -49,22 +53,16 @@ const userAuthenticated = () => {
         setLoginStatus(false);
       } else {
         const user = response.data.result[0]
-        // console.log(response.data.result[0])
-        setUserInfo(user)
+        const user_info = response.data.otherData[0]
         localStorage.setItem("token", response.data.token)
-        setLoginStatus(true);
+        setLoginStatus(true)
+        dispatch(userIn({user, user_info}))
       }
+    // }).then((response) => {
+    //   console.log(response)
     }).then(userAuthenticated)
   };
 
-
-  useEffect(() => {
-    if (userInfo) {
-      const sessionUserInfo = JSON.stringify(userInfo);
-      localStorage.setItem("userInfo", sessionUserInfo);
-      // Perform any other actions or logic here
-    }
-  }, [userInfo]);
 
 
   useEffect(() => {
@@ -75,7 +73,6 @@ const userAuthenticated = () => {
         // setUserInfo(response.data.user[0])
       } else if(response.data.loggedIn == false){
         setLoginStatus(false)
-        setUserInfo(null)
       }
     });
   }, [loginStatus]);

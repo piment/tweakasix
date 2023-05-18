@@ -25,9 +25,9 @@ const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
-    thunk: {
-    serializableCheck: false, // Disable serializable check temporarily
- } }),
+    serializableCheck: {
+      ignoredActions: ['register'], // Exclude 'register' action from serialization
+    }, }),
 });
 const persistor = persistStore(store);
 
