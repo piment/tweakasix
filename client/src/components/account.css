@@ -1,3 +1,11 @@
+@font-face {
+    font-family: NothingYou;
+    src: url('/client/public/NothingYouCouldDo-Regular.ttf');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
 .login-register-wrap{
     /* width: 100%; */
     margin: auto;
@@ -87,6 +95,7 @@
 .user-auth-true{
 /* height: 100vh; */
 height: 100%;
+width: 100%;
 
 }
 .user-welcome{
@@ -96,5 +105,69 @@ height: 100%;
     align-items: center; 
     height: 25%;
     width: 100%;
+ 
 }
 
+.user-welcome #username{
+       font-family: NothingYou;
+       color: black;
+       letter-spacing: -0.1em;
+}
+
+.dashboard{
+ font-family: Oswald;
+ display: flex;
+ width: 100%;
+ justify-content: space-evenly;
+}
+
+
+.user-infos{
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    height:60vh;
+    /* border: red solid 2px; */
+    border-radius: 8px;
+    /* position: relative; */
+    left: 5%;
+    width: 20%;
+   
+    font-size: 1.2em;
+}
+.personnal-infos{
+    display: flex;
+    height: 100%;
+}
+.personnal-infos #list{
+    height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+}
+
+
+.user-activities{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* padding:  1% 0; */
+}
+
+.user-activities > .order-history{
+    display: flex;
+    height: 30%;
+    align-items: center;
+    border: black solid 2px;
+    border-radius: 12px;
+    justify-content: center;
+}
+
+.user-activities > .saved-guitars{
+    display: flex;
+    height: 60%;
+    align-items: center;
+    border: black solid 2px;
+    border-radius: 12px;
+    justify-content: center;
+}
