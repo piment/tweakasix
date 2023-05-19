@@ -14,7 +14,7 @@ import MyDropzone from "../Dropzone";
 
 
 function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setDropped }) {
-  // const actual = useRef(null)
+  const actual = useRef(null)
   const dispatch = useDispatch();
 
   const tweakDrag = useRef()
@@ -26,8 +26,8 @@ function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setD
     handle="strong"
     bounds={`parent`}
     allowAnyClick={false}
-    nodeRef={tweakDrag}
-    // defaultPosition={{x : 100, y:-150}}
+    // nodeRef={tweakDrag}
+    defaultPosition={{x : 0, y:-150}}
     onStart={(e) => e.preventDefault()}
     >
             <div className="pickers-main"> 
@@ -105,10 +105,10 @@ function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setD
                 mouseTrackTop: 15,
               }}
               id={clickedPart === "neckwood" ? "clickedPart" : ""}
-              name="neckwood"
-              value={colorList.neckwood}
+              name="neck"
+              value={colorList.neck}
               onChange={(e) =>
-                setColorList({ ...colorList, neckwood: `#${e.value}` })
+                setColorList({ ...colorList, neck: `#${e.value}` })
               }
             />
             <ColorPicker

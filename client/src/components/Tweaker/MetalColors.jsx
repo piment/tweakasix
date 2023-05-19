@@ -40,7 +40,7 @@ function MetalColors({ colorList, setColorList, clickedPart }) {
       const handleMetalSelect = (e) => {
         const selectedMetal = metals.find(metals => metals.name === e.target.name)
         setMetalType(selectedMetal)
-        setColorList({...colorList, metalpieces : metalType.value})
+        setColorList({...colorList, metal_pieces : metalType.value})
         dispatch(addColor(colorList))
       };
 

@@ -30,7 +30,7 @@ const addGuitar = (req, res) => {
   const frets = req.body.frets;
   const inlay = req.body.inlay;
   const nut = req.body.nut;
-  const metalpieces = req.body.metalpieces;
+  const metal_pieces = req.body.metal_pieces;
   const pickup_cover = req.body.pickup_cover;
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
@@ -61,7 +61,7 @@ const addGuitar = (req, res) => {
    ((SELECT id FROM parts WHERE name = 'frets'), ? ),
    ((SELECT id FROM parts WHERE name = 'inlay'), ? ),
    ((SELECT id FROM parts WHERE name = 'nut'), ?),
-   ((SELECT id FROM parts WHERE name = 'metalpieces'), ? ),
+   ((SELECT id FROM parts WHERE name = 'metal_pieces'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickup_cover'), ?),
    ((SELECT id FROM parts WHERE name = 'pickup_ring'), ?),
    ((SELECT id FROM parts WHERE name = 'knobs'), ? ),
@@ -100,7 +100,7 @@ const addGuitar = (req, res) => {
            [frets, texID, gloss, scratch, wood, addedId],
            [inlay, texID, gloss, scratch, wood, addedId],
            [nut, texID, gloss, scratch, wood, addedId],
-           [metalpieces, texID, gloss, scratch, wood, addedId],
+           [metal_pieces, texID, gloss, scratch, wood, addedId],
            [pickup_cover, texID, gloss, scratch, wood, addedId],
            [pickup_ring, texID, gloss, scratch, wood, addedId],
            [knobs, texID, gloss, scratch, wood, addedId],
@@ -128,16 +128,32 @@ const addGuitar = (req, res) => {
   }
 };
 
+
 const getGuitars = (req, res) => {
   const sqlSelect =
     // "SELECT guitar_id FROM model_parts GROUP BY color_set;"
-`SELECT *, g.name
+`SELECT  g.name, g.model
+FROM guitar g
+
+ORDER BY g.name`
+  db.query(sqlSelect, (err, result) => {
+    res.send(result);
+    // console.log(result)
+  });
+};
+
+const fetchGuitar = (req, res) => {
+  const gtr = req.query.gtr
+  console.log(gtr)
+  const sqlSelect =
+`SELECT *
 FROM guitar g
 INNER JOIN composition c ON g.id = c.id_guitar
 INNER JOIN parts p ON c.id_part = p.id
-GROUP BY c.id, g.name
-ORDER BY g.id, p.model`
-  db.query(sqlSelect, (err, result) => {
+WHERE g.name = ?`;
+
+  db.query(sqlSelect, gtr,(err, result) => {
+    
     res.send(result);
     // console.log(result)
   });
@@ -145,4 +161,5 @@ ORDER BY g.id, p.model`
 
 
 
-module.exports = { getItems, addGuitar, getGuitars };
+
+module.exports = { getItems, addGuitar, getGuitars, fetchGuitar };

@@ -16,8 +16,8 @@ position: absolute;
   margin: none;
   left: 0%;
   transform: rotate(-10deg);
-
-  padding: 1.5em;
+  top: -.8em;
+  padding: 1em;
   will-change: filter;
   transition: filter 300ms;
   position: absolute;

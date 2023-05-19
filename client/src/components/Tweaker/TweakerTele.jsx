@@ -28,7 +28,7 @@ function TweakerTele({ colorList, setColorList, clickedPart,  resetCam, dropped,
     handle="strong"
     bounds={`parent`}
     allowAnyClick={false}
-    nodeRef={tweakDrag}
+    // nodeRef={tweakDrag}
     // defaultPosition={{x : 100, y:-150}}
     onStart={(e) => e.preventDefault()}
     >
@@ -107,9 +107,9 @@ function TweakerTele({ colorList, setColorList, clickedPart,  resetCam, dropped,
               }}
               id={clickedPart === "neckwood" ? "clickedPart" : ""}
               name="neckwood"
-              value={colorList.neckwood}
+              value={colorList.neck}
               onChange={(e) =>
-                setColorList({ ...colorList, neckwood: `#${e.value}` })
+                setColorList({ ...colorList, neck: `#${e.value}` })
               }
             />
             {/* <ColorPicker

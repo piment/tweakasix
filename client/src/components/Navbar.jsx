@@ -12,9 +12,9 @@ function Navbar() {
       <div className="navbar-triangle">
             <div id="triangle-code"></div>
         <ul className="navbar-cont">
-          <li className="indiv-parts"  ><a href="/parts" >Spare parts</a></li>
-          <li className="account"> <a href="/account"> My Account</a></li>
-          <li className="cart"><a href="/cart">My Cart</a></li>
+          <li className="indiv-parts-link"  ><a href="/parts" >Spare parts</a></li>
+          <li className="account-link"> <a href="/account"> My Account</a></li>
+          <li className="cart-link"><a href="/cart">My Cart</a></li>
         </ul>
         <div></div>
       </div>

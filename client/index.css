@@ -6,7 +6,13 @@
   font-display: swap;
 }
 
-
+@font-face {
+  font-family: NothingYou;
+  src: url('/src/assets/NothingYouCouldDo-Regular.ttf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* @font-face {
   font-family: Vanguard;
@@ -16,6 +22,7 @@
 
 #root{
 width: 100%;
+height: 100%;
  /* max-height: 100vh;  */
 }
 

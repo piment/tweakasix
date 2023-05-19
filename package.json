@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Xaboule/basetweak#readme",
   "dependencies": {
+    "@phosphor-icons/react": "^2.0.9",
     "@react-spring/three": "^9.7.2",
     "multer": "^1.4.5-lts.1",
     "react-filepond": "^7.1.2"
