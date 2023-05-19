@@ -30,7 +30,7 @@ function ESguitar({
   const ref = useRef();
   const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/335whole OPT4.glb");
+  const { nodes, materials } = useGLTF("/guitar/335whole_5.glb");
 
   const path = `${import.meta.env.VITE_BACKEND_URL}/`;
 
@@ -122,10 +122,10 @@ materials.fretboard.map = rosewood
 
  const reactMap = useTexture(path + colorList.texture_path);
  reactMap.flipY = false
-
+// reactMap.magFilter = THREE.NearestFilter
 //  reactMap.wrapS = THREE.RepeatWrapping;
 //  reactMap.wrapT = THREE.RepeatWrapping;
-//  reactMap.repeat.set(2, 2);
+//  reactMap.repeat.set(2,4);
 
 //  materials.tablefront.map = reactMap
 
