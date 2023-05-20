@@ -11,9 +11,11 @@ const db = mysql.createPool({
   multipleStatements: true,
 });
 
-const getItems = (req, res) => {
-  const sqlSelect = "SELECT * FROM model_parts where color_set_id < 100;";
-  db.query(sqlSelect, (err, result) => {
+const getItemsFullGtr = (req, res) => {
+  const sqlSelect = "SELECT * FROM parts where model_comp like ?";
+  const model = req.query.model
+  db.query(sqlSelect, `%${model}%`,(err, result) => {
+    console.log(result)
     res.send(result);
   });
 };
@@ -162,4 +164,4 @@ WHERE g.name = ?`;
 
 
 
-module.exports = { getItems, addGuitar, getGuitars, fetchGuitar };
+module.exports = { getItemsFullGtr, addGuitar, getGuitars, fetchGuitar };

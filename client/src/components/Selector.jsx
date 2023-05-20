@@ -17,7 +17,7 @@ function Selector() {
 
 
   
-  const [itemsList, setItemsList] = useState([]);
+  const [itemsListFull, setItemsListFull] = useState([]);
   const [guitarsList, setGuitarsList] = useState([])
   const [body, setBody] = useState(initialValues);
   const [neck, setNeck] = useState(initialValues);
@@ -25,10 +25,14 @@ function Selector() {
   const [pickup2, setPickup2] = useState(initialValues);
  const [model, setModel] = useState('1')
  const [changed, setChanged] = useState(false)
-  const getItems = () => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/items`, {}).then((res) => {
-      // console.log(res.data)
-      // setItemsList(res.data[0]);
+const [gtrPrice, setGtrPrice] = useState()
+
+
+
+  const getItemsFullGtr = () => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/itemsall`, {params :{model : model}}).then((res) => {
+      console.log(res.data)
+      setItemsListFull(res.data);
       // setVariationList(res.data[1])
     });
   };
@@ -48,14 +52,33 @@ console.log(res.data)
   }
 
 
-  const total = parseInt(body.price) + parseInt(neck.price) + parseInt(pickup1.price)+ parseInt(pickup2.price)
-  useEffect(() => {
-    getGuitars()
-    getItems();
-  }, []);
 
 
- 
+
+function fullPrice(){
+  let fullGtrPrice =0
+  for(let i = 0; i< itemsListFull.length; i++){
+   fullGtrPrice += itemsListFull[i].price
+  
+  }
+  // return fullGtrPrice  
+ setGtrPrice(fullGtrPrice)
+}
+
+useEffect(() => {
+  
+
+  fullPrice()
+},[setModel])
+
+
+
+useEffect(() => {
+  
+  getItemsFullGtr();
+  // fullPrice()
+},[])
+
 
 
 
@@ -73,7 +96,7 @@ console.log(res.data)
    </div>
 
    <div className="visu-sum">
-   <Visualizer guitarsList={guitarsList} model={model} setModel={setModel} changed={changed} setChanged={setChanged}/>
+   <Visualizer guitarsList={guitarsList} model={model} setModel={setModel} changed={changed} setChanged={setChanged} gtrPrice={gtrPrice}/>
 
    </div>
  

@@ -13,12 +13,17 @@ import dragIcon from '../../assets/drag.svg'
 import MyDropzone from "../Dropzone";
 
 
-function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setDropped }) {
+function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setDropped, gtrPriceFull }) {
   const actual = useRef(null)
   const dispatch = useDispatch();
 
   const tweakDrag = useRef()
 
+  console.log(gtrPriceFull)
+
+  useEffect(() => {
+
+  }, [gtrPriceFull])
 
   return (
     <>
@@ -234,6 +239,8 @@ function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setD
           dropped={dropped}
         />
               <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button>   </div>  
+
+              <div>{gtrPriceFull}</div>
 </div></Draggable>
     </>
   );

@@ -91,7 +91,6 @@ materials.pickup_ring.metalness = 0.5
 
 
 
-console.log(materials.pickup_ring)
   woodFull.encoding = sRGBEncoding
   
   materials.tablefront.opacity = 1 - (colorList.wood/1000) 
