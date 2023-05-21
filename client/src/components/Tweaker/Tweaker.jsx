@@ -11,7 +11,7 @@ import MetalColors from "./MetalColors";
 import Draggable from "react-draggable"
 import dragIcon from '../../assets/drag.svg'
 import MyDropzone from "../Dropzone";
-
+import ChipsDemo from "./Multiselect";
 
 function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setDropped, gtrPriceFull }) {
   const actual = useRef(null)
@@ -238,6 +238,8 @@ function Tweaker({ colorList, setColorList, clickedPart, resetCam, dropped, setD
           setDropped={setDropped}
           dropped={dropped}
         />
+
+       
               <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button>   </div>  
 
               <div>{gtrPriceFull}</div>
