@@ -11,7 +11,7 @@ export const textureSlice = createSlice({
 
   reducers: {
     textureAdd: (state, action) => {
-        console.log(typeof state.texture_files)
+   
  state.texture_files = action.payload
     },
     textureDelete: (state, action) => {

@@ -15,7 +15,7 @@ const getItemsFullGtr = (req, res) => {
   const sqlSelect = "SELECT * FROM parts where model_comp like ?";
   const model = req.query.model
   db.query(sqlSelect, `%${model}%`,(err, result) => {
-    console.log(result)
+    // console.log(result)
     res.send(result);
   });
 };

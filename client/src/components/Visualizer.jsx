@@ -7,18 +7,16 @@ import React, {
 } from "react";
 
 import "./Visualizer.css";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import {
   OrbitControls,
   Environment,
   ContactShadows,
-  PerspectiveCamera,
   Text,
-  useFont,
 } from "@react-three/drei";
 import axios from "axios";
 import * as THREE from "three";
-import { useMotionValue, MotionConfig } from "framer-motion";
+import { MotionConfig } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import { useDispatch, useSelector } from "react-redux";
 import Tweaker from "./Tweaker/Tweaker";
@@ -28,9 +26,15 @@ import Teleguitar from "./Teleguitar";
 import { Button } from "primereact/button";
 import { FloppyDisk } from "@phosphor-icons/react";
 
-function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPrice }) {
+function Visualizer({
+  guitarsList,
+  model,
+  setModel,
+  gtrPrice,
+}) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
+  const loggedIn = useSelector((state) => state.user_data.userData);
 
   const orbCam = useRef();
   const gtrnameref = useRef();
@@ -40,15 +44,18 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
   const [gtrNameInput, setGtrNameInput] = useState("");
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
- 
- 
-  const gtrPriceFull = gtrPrice
- 
- 
+
+  const toPascalCase = (str) =>
+    (str.match(/[a-zA-Z0-9]+/g) || [])
+      .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
+      .join(" ");
+
+  const gtrPriceFull = gtrPrice;
+
   const dispatch = useDispatch();
 
-  const fontPath = "/NothingYouCouldDo-regular.ttf";
- 
+  const [files, setFiles] = useState([]);
+  const [selectedParts, setSelectedParts] = useState([]);
 
   const handleSelectGuitar = async (e) => {
     const gtr = e.target.value;
@@ -74,7 +81,6 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
 
         setModel(fetched[0].model);
         setColorList(object);
-        console.log(typeof object.scratch);
       });
   };
 
@@ -130,6 +136,7 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
 
   useEffect(() => {
     setColorList(colus);
+    // setDropped(dropped-dropped)
   }, []);
 
   const handleGtrNameSet = () => {
@@ -223,7 +230,7 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
                 transparent
                 opacity={1}
               />
-              by {gtrName}
+              by {toPascalCase(loggedIn.user.username)}
             </Text>
           )}
         </Suspense>
@@ -301,6 +308,8 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
                     setClickedPart={setClickedPart}
                     tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
                     pos={[-1, -0.5, -0.3]}
+                    files={files}
+                    selectedParts={selectedParts}
                   />
                 </motion.group>
 
@@ -316,6 +325,8 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
                     setClickedPart={setClickedPart}
                     tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
                     pos={[-1, -0.8, -0.4]}
+                    files={files}
+                    selectedParts={selectedParts}
                   />
                 </motion.group>
               </motion.group>
@@ -331,6 +342,10 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
               setDropped={setDropped}
               dropped={dropped}
               gtrPriceFull={gtrPriceFull}
+              selectedParts={selectedParts}
+              setSelectedParts={setSelectedParts}
+              files={files}
+              setFiles={setFiles}
             />
           )}
           {model == 2 && (
@@ -341,6 +356,10 @@ function Visualizer({ guitarsList, model, setModel, changed, setChanged, gtrPric
               dropped={dropped}
               resetCam={resetCam}
               gtrPriceFull={gtrPriceFull}
+              selectedParts={selectedParts}
+              setSelectedParts={setSelectedParts}
+              files={files}
+              setFiles={setFiles}
             />
           )}
         </div>

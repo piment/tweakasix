@@ -121,22 +121,22 @@ materials.varnish = new THREE.MeshStandardMaterial({
     bumpScale: 0.001 * (colorList.scratch / 5),
 })
 
-const reactMap = useTexture(txUse);
-reactMap.encoding = sRGBEncoding
-useEffect(() => {
+// const reactMap = useTexture(txUse);
+// reactMap.encoding = sRGBEncoding
+// useEffect(() => {
 
-  // console.log(reactMap.source.data.currentSrc);
-  setTxUse(path + colorList.texture_path);
-  // console.log(txUse)
-reactMap.needsUpdate
+//   // console.log(reactMap.source.data.currentSrc);
+//   setTxUse(path + colorList.texture_path);
+//   // console.log(txUse)
+// reactMap.needsUpdate
 
-}, [ setDropped, dropped, colorList]);
-  useFrame(() => {
-    meshRefs.current.forEach((mesh) => {
-      mesh.material = mesh.material.clone();
+// }, [ setDropped, dropped, colorList]);
+//   useFrame(() => {
+//     meshRefs.current.forEach((mesh) => {
+//       mesh.material = mesh.material.clone();
 
-    });
-  });
+//     });
+//   });
 
 // console.log(woodMatTele)
 
@@ -208,7 +208,7 @@ reactMap.needsUpdate
         geometry={nodes.body.geometry}
         material={materials.body}
         material-color={colorList.body}
-        material-map={triggs > 0 ? reactMap : ''}
+        // material-map={triggs > 0 ? reactMap : ''}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[7] = mesh)}

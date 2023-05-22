@@ -4,6 +4,7 @@
     z-index: 500;  
     margin-bottom: 1vh;
        z-index: 2500;
+
   }
   
   .dropzone-div > input{
@@ -21,19 +22,30 @@
     color: black;
   }
 
-  .exaside{
-    display: inline-flex;
-    /* margin: 0;*/
-    /* padding: 0;  */
-    
 
+  
+  .exaside{
+    /* display: flex; */
+    flex-direction: column-reverse;
+    /* flex-flow: row-reverse; */
+    margin: 0;
+  padding: 0;
+  position: relative; 
+  width: 100%;
+
+       /* display: flex;
+       flex-direction: row; */
   }
 
 
 .preview-cart{
   display: flex;
-  
-  max-width: 60%;
+  flex-direction: row-reverse;
+  max-width: 60%;  
+  max-height: 40%;  
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 8px;
 }
 .preview-cart > * {
   margin:auto;

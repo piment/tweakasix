@@ -10,19 +10,49 @@ const fs = require("fs")
 
 const session = require("express-session");
 // setup multer for file upload
-var storage = multer.diskStorage(
-    {
-      destination: function (req, file, cb) {
-        cb(null, './stocked')
-      },
-        filename: function (req, file, cb ) {
 
-            cb( null, Date.now() + path.extname(file.originalname));
-        }
+
+
+///////// Clean up the temp directory
+const temporaryFolder = './stocked/temporary'; // Temporary folder path
+
+const clearTemporaryFolder = () => {
+  const files = fs.readdirSync(temporaryFolder);
+
+  files.forEach((file) => {
+    const filePath = path.join(temporaryFolder, file);
+    const { ctime } = fs.statSync(filePath);
+    const currentTime = new Date().getTime();
+    const fileAge = currentTime - ctime;
+
+    const timeLimit = (24 * 60 * 60 * 1000);  // 24 hours in milliseconds
+console.log(filePath)
+    if (fileAge > timeLimit) {
+      fs.unlinkSync(filePath); // Delete the file
     }
+  });
+};
+
+// Middleware to clear temporary folder
+app.use((req, res, next) => {
+  clearTemporaryFolder();
+  next();
+});
+
+
+
+app.use(
+  session({
+    key: "userId",
+    secret: "subscribe",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60 * 60 * 24,
+    },
+  })
 );
 
-const upload = multer({ storage: storage } )
 
 
 // app.set('view engine', "ejs")
@@ -41,12 +71,40 @@ app.use(express.json());
 app.use('/stocked', express.static(path.join(__dirname + "/stocked")));
 // app.use(express.static((__dirname, "public")));
 // route for file upload
-app.post("/upload",upload.single('file'),(req, res, next) => {
+// app.post("/upload",uploadTemp.array('file'),(req, res, next) => {
    
-      res.send(req.file.path);
-      // res.render(JSON.stringify(req.file.url))
-      // (req.file.path)
+//   const file = req.file;
+//   console.log(file);
+
+// // console.log(req.file)
+
+//       res.send(req.file);
+//       // res.render(JSON.stringify(req.file.url))
+//       // (req.file.path)
    
+// });
+
+
+const temporaryStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './stocked/temporary');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+// Create a multer instance with temporary storage
+const upload = multer({ storage: temporaryStorage });
+
+// Handle file upload
+
+app.post('/upload', upload.array('file'), (req, res) => {
+
+const id = req.body.id
+  const fileRes = {id, ...req.files[0] }
+  res.send(fileRes);
+
 });
 
 
@@ -80,24 +138,65 @@ app.get('/stocked/',(req, res) => {
 
 
 
-app.use(
-  session({
-    key: "userId",
-    secret: "subscribe",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60 * 60 * 24,
-    },
-  })
-);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const router = require("./router");
 
 app.use(router);
 
 
+
 app.listen(port, () => {
   console.log(`server running on ${port}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = app

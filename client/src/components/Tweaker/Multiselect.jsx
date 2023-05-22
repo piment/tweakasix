@@ -7,18 +7,17 @@ import 'primeicons/primeicons.css';                                 // icons
 // import 'primeflex/primeflex.css'; 
 
 
-export default function ChipsDemo() {
-    const [selectedParts, setSelectedParts] = useState(null);
+export default function TextureSelect({selectedParts, setSelectedParts, fileid}) {
     const parts = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
+        { name: 'Front' },
+        { name: 'Back'},
+        { name: 'Side'},
+        { name: 'Neck' },
+        { name: 'Pickguard' }
     ];
-
+  
     return (
-        <div className="multi-sel">
+        <div className="multi-sel" key={fileid}>
             <MultiSelect value={selectedParts} onChange={(e) => setSelectedParts(e.value)} options={parts} optionLabel="name" 
                 placeholder="Select Parts" maxSelectedLabels={3}  />
         </div>

@@ -25,15 +25,19 @@ function ESguitar({
   changed,
   setChanged,
   dropped,
-  setDropped
+  setDropped,
+  files,
+  selectedParts
 }) {
   const ref = useRef();
   const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/335whole_5.glb");
 
-  const path = `${import.meta.env.VITE_BACKEND_URL}/`;
+  const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
+  const tempPath = `${import.meta.env.VITE_BACKEND_URL}/stocked/temporary/`;
 
+  
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
 
@@ -44,12 +48,17 @@ function ESguitar({
   ]);
   // const texture_path = useSelector(
   //   (state) => state.guitar_set.colorSet.texture_path
-  // );
-  const texture_path = colorList.texture_path
-  const [txUse, setTxUse] = useState(path + texture_path);
-
-
+  // );   
+   let texture_path = colorList.texture_path
  
+  
+
+
+const up_texture_path =  files.length !== 0 ? files[0].file.path : ''
+
+//  [0].file.path
+  // console.log(files[0].file.path)
+ const [txUse, setTxUse] = useState(path + colorList.texture_path);
 
   const woodFull = useTexture("woodFullminH.png");
   woodFull.flipY = false;
@@ -117,9 +126,9 @@ rosewood.encoding = sRGBEncoding
 
 
 materials.fretboard.map = rosewood
-
-
- const reactMap = useTexture(path + colorList.texture_path);
+console.log(txUse)
+//  const reactMap = useTexture(path + colorList.texture_path);
+const reactMap = useTexture(txUse)
  reactMap.flipY = false
 // reactMap.magFilter = THREE.NearestFilter
 //  reactMap.wrapS = THREE.RepeatWrapping;
@@ -129,13 +138,17 @@ materials.fretboard.map = rosewood
 //  materials.tablefront.map = reactMap
 
   useEffect(() => {
-
+      const up_texture_path =  files.length !== 0 ? files[0].file.path : ''
     // console.log(reactMap.source.data.currentSrc);
-    setTxUse(path + colorList.texture_path);
-    // console.log(txUse)
+    if(files.length !==0 ){
+      console.log(files)
+
+      setTxUse(tempPath + files[files.length-1].file.path);
+      console.log(txUse)
+    }
 reactMap.needsUpdate
 
-  }, [ setDropped, dropped, colorList]);
+  }, [ setDropped, dropped, colorList, files]);
 
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
