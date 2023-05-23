@@ -21,7 +21,7 @@ export const textureSlice = createSlice({
 
    const tempArr = {}
 const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = part.file) )
-// console.log(JSON.stringify(state.texture_assign))
+
         return {
             ...state, 
          texture_assign:{...state.texture_assign, ...tempArr}

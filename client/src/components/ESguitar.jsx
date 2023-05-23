@@ -54,7 +54,7 @@ function ESguitar({
   
 
 
-const up_texture_path =  files.length !== 0 ? files[0].file.path : ''
+// let up_texture_path =  files.length !== 0 ? files[0].file.path : ''
 
 //  [0].file.path
   // console.log(files[0].file.path)
@@ -123,12 +123,19 @@ const rosewood = useTexture('rosewood.png')
 rosewood.flipY = false
 rosewood.encoding = sRGBEncoding
 
-
-
 materials.fretboard.map = rosewood
-// console.log(txUse)
- const reactMap = useTexture(path + colorList.texture_path);
-// const reactMap = useTexture(txUse)
+
+
+
+
+console.log(files)
+ let reactMap
+ if(txUse){
+
+   reactMap = useTexture(txUse)
+  } else if (!txUse){
+ reactMap = useTexture(path + colorList.texture_path);
+  }
  reactMap.flipY = false
 // reactMap.magFilter = THREE.NearestFilter
 //  reactMap.wrapS = THREE.RepeatWrapping;
@@ -138,17 +145,17 @@ materials.fretboard.map = rosewood
 //  materials.tablefront.map = reactMap
 
   useEffect(() => {
-      const up_texture_path =  files.length !== 0 ? files[0].file.path : ''
+      // up_texture_path =  files.length !== 0 ? files[0].file.path : ''
     // console.log(reactMap.source.data.currentSrc);
     if(files.length !==0 ){
       console.log(files)
 
-      setTxUse(tempPath + files[files.length-1].file.path);
+      setTxUse(tempPath + files[files.length-1].modifiedFilename);
       console.log(txUse)
     }
 reactMap.needsUpdate
 
-  }, [ setDropped, dropped, colorList, files]);
+  }, [ setDropped, dropped, files]);
 
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {

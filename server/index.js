@@ -90,7 +90,8 @@ const temporaryStorage = multer.diskStorage({
     cb(null, './stocked/temporary');
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, file.originalname.replace(/[^a-z0-9.\s]/g,'').replace(/[\u00B0-\u036f]/g,'').replace(/\s/g, '').replace(/[\u2018\u2019]/g, ""));
+    console.log(this.filename)
   },
 });
 

@@ -14,7 +14,7 @@ export default function TextureSelect({selectedParts, setSelectedParts, fileid})
  
  const partsAv = Object.keys(partsTx).map((part) => ({name : part, file: fileid}))
  
- const [partsSelected, setPartsSelected] = useState([])
+//  const [partsSelected, setPartsSelected] = useState([])
 
 
 
@@ -22,27 +22,27 @@ const dispatch = useDispatch()
 
 
 useEffect(() => {
-console.log('partouze', partsSelected)
-dispatch(textureAdd(partsSelected))
-},[partsSelected])
+
+dispatch(textureAdd(selectedParts))
+},[selectedParts])
 
   
 const handleSelect = (e) => {
-    console.log(e.value)
-    if(partsSelected.length > e.value.length){
-        const removed = partsSelected.filter(part => !e.value.includes(part))
+ 
+    if(selectedParts.length > e.value.length){
+        const removed = selectedParts.filter(part => !e.value.includes(part))
         dispatch(textureDelete(removed))
     }
-    console.log(partsSelected)
 
-    setPartsSelected(e.value)
+
+    setSelectedParts(e.value)
 
 }
 
 
     return (
         <div className="multi-sel" key={fileid}>
-            <MultiSelect value={partsSelected} onChange={(e) => {
+            <MultiSelect value={selectedParts} onChange={(e) => {
                 // console.log(e),
             // setPartsSelected(e.value)
             handleSelect(e)

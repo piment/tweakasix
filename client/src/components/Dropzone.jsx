@@ -14,7 +14,14 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import TextureSelect from "./Tweaker/Multiselect";
 
-function MyDropzone({ setDropped, dropped, selectedParts, setSelectedParts, files, setFiles }) {
+function MyDropzone({
+  setDropped,
+  dropped,
+  selectedParts,
+  setSelectedParts,
+  files,
+  setFiles,
+}) {
   const thumb = {
     borderRadius: 2,
   };
@@ -39,9 +46,13 @@ function MyDropzone({ setDropped, dropped, selectedParts, setSelectedParts, file
 
   const onDrop = useCallback((acceptedFiles) => {
     const updatedFiles = acceptedFiles.map((file) => {
-      const modifiedFilename = file.name.replace(/[\s.]+/g, "");
-      console.log(modifiedFilename);
-
+      const modifiedFilename = file.name
+        .replace(/[^a-z0-9.\s]/g, "")
+        .replace(/[\u00B0-\u036f]/g, "")
+        .replace(/\s/g, "")
+        .replace(/[\u2018\u2019]/g, "");
+      console.log("MOD", modifiedFilename);
+      console.log(file);
       return {
         id: uuidv4(),
         file,
@@ -50,7 +61,7 @@ function MyDropzone({ setDropped, dropped, selectedParts, setSelectedParts, file
       };
     });
     setFiles((prevFiles) => [...prevFiles, ...updatedFiles]);
-
+    console.log(acceptedFiles);
     const formData = new FormData();
     updatedFiles.forEach((img) => {
       formData.append("file", img.file);
@@ -77,15 +88,15 @@ function MyDropzone({ setDropped, dropped, selectedParts, setSelectedParts, file
   });
 
   useEffect(() => {
-    // const filesId = [];
-    // if(files && filesId.length > 0){
-    //   files.forEach((file) => {
-    //     if(!filesId.includes(file.id)){
-    //       filesId.push(file.id);
-    //     }
-    //   });
-    //   dispatch(textureAdd(filesId));
-    // }
+    const filesId = [];
+    if (files && filesId.length > 0) {
+      files.forEach((file) => {
+        if (!filesId.includes(file.id)) {
+          filesId.push(file.id);
+        }
+      });
+      //   dispatch(textureAdd(filesId));
+    }
   }, [setFiles, dispatch]);
 
   const [getPic, setGetPic] = useState([]);
