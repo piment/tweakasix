@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.css';
 import './Multiselect.css' 
 import 'primeicons/primeicons.css';                                 // icons
 import { useDispatch, useSelector } from "react-redux";
-import { textureAdd } from "../../features/TextureReducer";
+import { textureAdd, textureDelete } from "../../features/TextureReducer";
 // import 'primeflex/primeflex.css'; 
 
 
@@ -28,7 +28,14 @@ dispatch(textureAdd(partsSelected))
 
   
 const handleSelect = (e) => {
-setPartsSelected(e.value)
+    console.log(e.value)
+    if(partsSelected.length > e.value.length){
+        const removed = partsSelected.filter(part => !e.value.includes(part))
+        dispatch(textureDelete(removed))
+    }
+    console.log(partsSelected)
+
+    setPartsSelected(e.value)
 
 }
 
@@ -36,9 +43,11 @@ setPartsSelected(e.value)
     return (
         <div className="multi-sel" key={fileid}>
             <MultiSelect value={partsSelected} onChange={(e) => {
-                console.log(e),
-            setPartsSelected(e.value)}
-        } options={partsAv} optionLabel="name" 
+                // console.log(e),
+            // setPartsSelected(e.value)
+            handleSelect(e)
+        }} 
+        options={partsAv} optionLabel="name" 
                 placeholder="Select Parts" maxSelectedLabels={3}  />
         </div>
     );

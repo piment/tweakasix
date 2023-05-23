@@ -17,11 +17,11 @@ export const textureSlice = createSlice({
 
   reducers: {
     textureAdd: (state, action) => {
-   console.log('CHUIBO')
+
 
    const tempArr = {}
 const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = part.file) )
-console.log(JSON.stringify(state.texture_assign))
+// console.log(JSON.stringify(state.texture_assign))
         return {
             ...state, 
          texture_assign:{...state.texture_assign, ...tempArr}
@@ -30,14 +30,17 @@ console.log(JSON.stringify(state.texture_assign))
 
     },
     textureDelete: (state, action) => {
-    //   const imgId = action.payload;
-    //   console.log(imgId)
-    //   state.texture_files = state.texture_files.filter((file) => file !== imgId);
+   
 
-    //   return {
-    //     ...state,
-    //     texture_files: state.texture_files.filter((file) => file !== imgId),
-    //   };
+      const tempArr = {}
+      const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = null) )
+
+    return {
+      ...state, 
+   texture_assign:{...state.texture_assign, ...tempArr}
+  }
+
+
     },
     textureAssign: (state, action) => {
         console.log('assign')
