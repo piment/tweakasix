@@ -1,20 +1,18 @@
-require("dotenv").config()
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3001;
-const path = require("path")
+const path = require("path");
 const cors = require("cors");
-const multer  = require("multer")
-const fs = require("fs")
+const multer = require("multer");
+const fs = require("fs");
 
 const session = require("express-session");
 // setup multer for file upload
 
-
-
 ///////// Clean up the temp directory
-const temporaryFolder = './stocked/temporary'; // Temporary folder path
+const temporaryFolder = "./stocked/temporary"; // Temporary folder path
 
 const clearTemporaryFolder = () => {
   const files = fs.readdirSync(temporaryFolder);
@@ -25,8 +23,8 @@ const clearTemporaryFolder = () => {
     const currentTime = new Date().getTime();
     const fileAge = currentTime - ctime;
 
-    const timeLimit = (24 * 60 * 60 * 1000);  // 24 hours in milliseconds
-// console.log(filePath)
+    const timeLimit = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    // console.log(filePath)
     if (fileAge > timeLimit) {
       fs.unlinkSync(filePath); // Delete the file
     }
@@ -38,8 +36,6 @@ app.use((req, res, next) => {
   clearTemporaryFolder();
   next();
 });
-
-
 
 app.use(
   session({
@@ -53,11 +49,9 @@ app.use(
   })
 );
 
-
-
 // app.set('view engine', "ejs")
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 // app.use(cors());
 app.use(
   cors({
@@ -68,11 +62,11 @@ app.use(
 );
 app.use(express.json());
 
-app.use('/stocked', express.static(path.join(__dirname + "/stocked")));
+app.use("/stocked", express.static(path.join(__dirname + "/stocked")));
 // app.use(express.static((__dirname, "public")));
 // route for file upload
 // app.post("/upload",uploadTemp.array('file'),(req, res, next) => {
-   
+
 //   const file = req.file;
 //   console.log(file);
 
@@ -81,17 +75,23 @@ app.use('/stocked', express.static(path.join(__dirname + "/stocked")));
 //       res.send(req.file);
 //       // res.render(JSON.stringify(req.file.url))
 //       // (req.file.path)
-   
-// });
 
+// });
 
 const temporaryStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './stocked/temporary');
+    cb(null, "./stocked/temporary");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname.replace(/[^a-z0-9.\s]/g,'').replace(/[\u00B0-\u036f]/g,'').replace(/\s/g, '').replace(/[\u2018\u2019]/g, ""));
-    console.log(this.filename)
+    cb(
+      null,
+      file.originalname
+        .replace(/[^A-Za-z0-9.\s]/g, "")
+        .replace(/\s/g, "")
+        .replace(/[\u2018\u2019]/g, "")
+        .toLowerCase()
+    );
+
   },
 });
 
@@ -100,18 +100,14 @@ const upload = multer({ storage: temporaryStorage });
 
 // Handle file upload
 
-app.post('/upload', upload.array('file'), (req, res) => {
-
-const id = req.body.id
-  const fileRes = {id, ...req.files[0] }
+app.post("/upload", upload.array("file"), (req, res) => {
+  const id = req.body.id;
+  const fileRes = { id, ...req.files[0] };
   res.send(fileRes);
-
 });
 
-
-
-const folder = './'
-app.get('/stocked/',(req, res) => {
+const folder = "./";
+app.get("/stocked/", (req, res) => {
   const directoryPath = "./stocked/";
 
   fs.readdir(directoryPath, function (err, files) {
@@ -124,80 +120,25 @@ app.get('/stocked/',(req, res) => {
     let fileInfos = [];
 
     files.forEach((file) => {
-      const absolutePath = path.resolve( folder, file );
+      const absolutePath = path.resolve(folder, file);
 
       fileInfos.push({
         name: file,
         url: "/stocked/" + file,
-        file : file
+        file: file,
       });
     });
 
     res.status(200).send(fileInfos);
   });
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 const router = require("./router");
 
 app.use(router);
 
-
-
 app.listen(port, () => {
   console.log(`server running on ${port}`);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = app
+module.exports = app;

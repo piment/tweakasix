@@ -47,10 +47,10 @@ function MyDropzone({
   const onDrop = useCallback((acceptedFiles) => {
     const updatedFiles = acceptedFiles.map((file) => {
       const modifiedFilename = file.name
-        .replace(/[^a-z0-9.\s]/g, "")
-        .replace(/[\u00B0-\u036f]/g, "")
+        .replace(/[^A-Za-z0-9.\s]/g, "")
         .replace(/\s/g, "")
-        .replace(/[\u2018\u2019]/g, "");
+      .replace(/[\u2018\u2019]/g, "").toLowerCase()
+        
       console.log("MOD", modifiedFilename);
       console.log(file);
       return {
