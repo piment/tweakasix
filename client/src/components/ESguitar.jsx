@@ -126,9 +126,9 @@ rosewood.encoding = sRGBEncoding
 
 
 materials.fretboard.map = rosewood
-console.log(txUse)
-//  const reactMap = useTexture(path + colorList.texture_path);
-const reactMap = useTexture(txUse)
+// console.log(txUse)
+ const reactMap = useTexture(path + colorList.texture_path);
+// const reactMap = useTexture(txUse)
  reactMap.flipY = false
 // reactMap.magFilter = THREE.NearestFilter
 //  reactMap.wrapS = THREE.RepeatWrapping;

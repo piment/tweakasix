@@ -26,7 +26,7 @@ const clearTemporaryFolder = () => {
     const fileAge = currentTime - ctime;
 
     const timeLimit = (24 * 60 * 60 * 1000);  // 24 hours in milliseconds
-console.log(filePath)
+// console.log(filePath)
     if (fileAge > timeLimit) {
       fs.unlinkSync(filePath); // Delete the file
     }
