@@ -25,6 +25,7 @@ function Tweaker({
   setSelectedParts,
   files,
   setFiles,
+  model
 }) {
   const actual = useRef(null);
   const dispatch = useDispatch();
@@ -247,6 +248,7 @@ function Tweaker({
               dropped={dropped}
               files={files}
               setFiles={setFiles}
+              model={model}
             />
             <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button>{" "}
           </div>

@@ -346,6 +346,7 @@ function Visualizer({
               setSelectedParts={setSelectedParts}
               files={files}
               setFiles={setFiles}
+              model={model}
             />
           )}
           {model == 2 && (
@@ -360,6 +361,7 @@ function Visualizer({
               setSelectedParts={setSelectedParts}
               files={files}
               setFiles={setFiles}
+              model={model}
             />
           )}
         </div>

@@ -21,6 +21,7 @@ function MyDropzone({
   setSelectedParts,
   files,
   setFiles,
+  model
 }) {
   const thumb = {
     borderRadius: 2,
@@ -114,7 +115,7 @@ function MyDropzone({
 
   useEffect(() => {
 
-    },[selectedParts])
+    },[selectedParts, model])
     
 
 
@@ -144,6 +145,7 @@ function MyDropzone({
             selectedParts={selectedParts}
             setSelectedParts={setSelectedParts}
             fileModName={file.modifiedFilename}
+            model={model}
           />
           <div style={thumbInner}>
             <button

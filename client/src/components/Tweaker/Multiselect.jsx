@@ -9,15 +9,23 @@ import { textureAdd, textureDelete } from "../../features/TextureReducer";
 // import 'primeflex/primeflex.css'; 
 
 
-export default function TextureSelect({selectedParts, setSelectedParts, fileModName}) {
+export default function TextureSelect({selectedParts, setSelectedParts, fileModName, model}) {
+
+    const toPascalCase = (str) =>
+    (str.match(/[a-zA-Z0-9]+/g) || [])
+      .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
+      .join(" ");
+
  const partsTx = useSelector((state) => state.texture_data.texture_assign)
  console.log(fileModName)
  const partsAv = Object.keys(partsTx).map((part) => ({name : part, file: fileModName}))
  
- console.log(partsTx, partsAv)
+//  console.log(partsTx, partsAv)
 //  const [partsSelected, setPartsSelected] = useState([])
+const partsAv335 = partsAv.filter((part) => part.name !== 'Pickguard')
+const partsAvTele = partsAv.filter((part) => part.name !== 'Back' && part.name !== 'Side')
 
-
+console.log(partsAvTele)
 
 const dispatch = useDispatch()
 
@@ -50,7 +58,7 @@ const handleSelect = (e) => {
             // setPartsSelected(e.value)
             handleSelect(e)
         }} 
-        options={partsAv} optionLabel="name" 
+        options={model == 1 ? partsAv335 : partsAvTele} optionLabel={"name"} 
                 placeholder="Select Parts" maxSelectedLabels={3}  />
         </div>
     );

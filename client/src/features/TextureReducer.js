@@ -3,11 +3,11 @@ import { createSlice, createAction } from "@reduxjs/toolkit";
 const initialState = {
 //   texture_files: [],
   texture_assign: {
-    front : null,
-    back : null,
-    side : null,
-    neck : null,
-    pickguard : null
+    Front : null,
+    Back : null,
+    Side : null,
+   Neck : null,
+   Pickguard : null
   },
 };
 

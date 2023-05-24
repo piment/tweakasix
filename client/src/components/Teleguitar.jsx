@@ -45,8 +45,8 @@ setDropped,
 //   const texture_path = useSelector(
 //     (state) => state.guitar_set.colorSet.texture_path
 //   );
-const texture_path = colorList.texture_path
-  const [txUse, setTxUse] = useState(path + texture_path);
+// const texture_path = colorList.texture_path
+  // const [txUse, setTxUse] = useState(path + texture_path);
 
 
 
@@ -128,11 +128,11 @@ materials.varnish = new THREE.MeshStandardMaterial({
 // useEffect(() => {
 
 const partTextures = {
-  front: useTexture( texturesFromReducer.front ? tempPath + texturesFromReducer.front : path + '/1681217837265.png'),
+  Body: useTexture( texturesFromReducer.Front ? tempPath + texturesFromReducer.Front : path + '/1681217837265.png'),
 //  back: useTexture( texturesFromReducer.back ? tempPath + texturesFromReducer.back : path + '/1681217837265.png'),
 //  side: useTexture( texturesFromReducer.side ? tempPath + texturesFromReducer.side : path + '/1681217837265.png'),
- neck: useTexture( texturesFromReducer.neck ? tempPath + texturesFromReducer.neck : path + '/1681217837265.png'),
-pickguard:  useTexture( texturesFromReducer.pickguard ? tempPath + texturesFromReducer.pickguard : path + '/1681217837265.png')
+ Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
 };
 
 
@@ -173,7 +173,7 @@ pickguard:  useTexture( texturesFromReducer.pickguard ? tempPath + texturesFromR
         geometry={nodes.pickguard.geometry}
         material={materials.plastic}
         material-color={colorList.pickguard}
-        material-map={texturesFromReducer.pickguard !== null ? partTextures.pickguard : ''}
+        material-map={texturesFromReducer.Pickguard !== null ? partTextures.Pickguard : ''}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[1] = mesh)}
@@ -222,7 +222,7 @@ pickguard:  useTexture( texturesFromReducer.pickguard ? tempPath + texturesFromR
         geometry={nodes.body.geometry}
         material={materials.body}
         material-color={colorList.body}
-        material-map={texturesFromReducer.front !== null ? partTextures.front : ''}
+        material-map={texturesFromReducer.Front !== null ? partTextures.Body : ''}
         // material-map={triggs > 0 ? reactMap : ''}
       />
       <mesh
@@ -232,7 +232,7 @@ pickguard:  useTexture( texturesFromReducer.pickguard ? tempPath + texturesFromR
         geometry={nodes.neck.geometry}
         material={materials.neckwood}
         material-color={colorList.neck}
-        material-map={texturesFromReducer.neck !== null ? partTextures.neck : ''}
+        material-map={texturesFromReducer.Neck !== null ? partTextures.Neck : ''}
       />
       {/* WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOD */}
 

@@ -128,11 +128,11 @@ materials.fretboard.map = rosewood
 
 
 const partTextures = {
-  front: useTexture( texturesFromReducer.front ? tempPath + texturesFromReducer.front : path + '/1681217837265.png'),
- back: useTexture( texturesFromReducer.back ? tempPath + texturesFromReducer.back : path + '/1681217837265.png'),
- side: useTexture( texturesFromReducer.side ? tempPath + texturesFromReducer.side : path + '/1681217837265.png'),
- neck: useTexture( texturesFromReducer.neck ? tempPath + texturesFromReducer.neck : path + '/1681217837265.png'),
-pickguard:  useTexture( texturesFromReducer.pickguard ? tempPath + texturesFromReducer.pickguard : path + '/1681217837265.png')
+  Front: useTexture( texturesFromReducer.Front ? tempPath + texturesFromReducer.Front : path + '/1681217837265.png'),
+ Back: useTexture( texturesFromReducer.Back ? tempPath + texturesFromReducer.Back : path + '/1681217837265.png'),
+ Side: useTexture( texturesFromReducer.Side ? tempPath + texturesFromReducer.Side : path + '/1681217837265.png'),
+ Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
 };
 
 
@@ -174,7 +174,7 @@ pickguard:  useTexture( texturesFromReducer.pickguard ? tempPath + texturesFromR
             geometry={nodes.side.geometry}
             material={materials.side}
             material-color={colorList.side}
-            material-map={texturesFromReducer.side !== null ? partTextures.side : ''}
+            material-map={texturesFromReducer.Side !== null ? partTextures.Side : ''}
           />
 
           <mesh
@@ -191,7 +191,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tableback.geometry}
             material={materials.tableback}
             material-color={colorList.tableback}
-            material-map={texturesFromReducer.back !== null ? partTextures.back : ''}
+            material-map={texturesFromReducer.Back !== null ? partTextures.Back : ''}
           />
           <mesh
          ref={(mesh) => (meshRefs.current[3] = mesh)}
@@ -200,7 +200,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             material={materials.tablefront}
             material-color={colorList.tablefront}
             // material-map={triggs > 0 ? reactMap : ''}
-            material-map={texturesFromReducer.front !== null ? partTextures.front : ''}
+            material-map={texturesFromReducer.Front !== null ? partTextures.Front : ''}
 
           >
             {/* <Decal mesh={ref} >
@@ -305,7 +305,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.neckwood.geometry}
             material={materials.neckwood}
             material-color={colorList.neck}
-            material-map={texturesFromReducer.neck !== null ? partTextures.neck : ''}
+            material-map={texturesFromReducer.Neck !== null ? partTextures.Neck : ''}
           />
                <mesh
                         ref={(mesh) => (meshRefs.current[15] = mesh)}
