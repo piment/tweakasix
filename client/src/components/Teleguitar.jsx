@@ -128,9 +128,7 @@ materials.varnish = new THREE.MeshStandardMaterial({
 // useEffect(() => {
 
 const partTextures = {
-  Body: useTexture( texturesFromReducer.Front ? tempPath + texturesFromReducer.Front : path + '/1681217837265.png'),
-//  back: useTexture( texturesFromReducer.back ? tempPath + texturesFromReducer.back : path + '/1681217837265.png'),
-//  side: useTexture( texturesFromReducer.side ? tempPath + texturesFromReducer.side : path + '/1681217837265.png'),
+  Body: useTexture( texturesFromReducer.Body ? tempPath + texturesFromReducer.Body : path + '/1681217837265.png'),
  Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
 Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
 };
@@ -222,7 +220,7 @@ Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromR
         geometry={nodes.body.geometry}
         material={materials.body}
         material-color={colorList.body}
-        material-map={texturesFromReducer.Front !== null ? partTextures.Body : ''}
+        material-map={texturesFromReducer.Body !== null ? partTextures.Body : ''}
         // material-map={triggs > 0 ? reactMap : ''}
       />
       <mesh

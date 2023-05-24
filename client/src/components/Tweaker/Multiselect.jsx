@@ -22,8 +22,8 @@ export default function TextureSelect({selectedParts, setSelectedParts, fileModN
  
 //  console.log(partsTx, partsAv)
 //  const [partsSelected, setPartsSelected] = useState([])
-const partsAv335 = partsAv.filter((part) => part.name !== 'Pickguard')
-const partsAvTele = partsAv.filter((part) => part.name !== 'Back' && part.name !== 'Side')
+const partsAv335 = partsAv.filter((part) => part.name !== 'Pickguard' && part.name !== 'Body')
+const partsAvTele = partsAv.filter((part) => part.name !== 'Back' && part.name !== 'Side' && part.name !== 'Front')
 
 console.log(partsAvTele)
 
@@ -58,7 +58,7 @@ const handleSelect = (e) => {
             // setPartsSelected(e.value)
             handleSelect(e)
         }} 
-        options={model == 1 ? partsAv335 : partsAvTele} optionLabel={"name"} 
+        options={model == 1 ? partsAv335 : partsAvTele} optionLabel="name" 
                 placeholder="Select Parts" maxSelectedLabels={3}  />
         </div>
     );

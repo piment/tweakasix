@@ -4,6 +4,7 @@ const initialState = {
 //   texture_files: [],
   texture_assign: {
     Front : null,
+    Body : null,
     Back : null,
     Side : null,
    Neck : null,
