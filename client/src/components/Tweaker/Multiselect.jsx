@@ -9,11 +9,12 @@ import { textureAdd, textureDelete } from "../../features/TextureReducer";
 // import 'primeflex/primeflex.css'; 
 
 
-export default function TextureSelect({selectedParts, setSelectedParts, fileid}) {
+export default function TextureSelect({selectedParts, setSelectedParts, fileModName}) {
  const partsTx = useSelector((state) => state.texture_data.texture_assign)
+ console.log(fileModName)
+ const partsAv = Object.keys(partsTx).map((part) => ({name : part, file: fileModName}))
  
- const partsAv = Object.keys(partsTx).map((part) => ({name : part, file: fileid}))
- 
+ console.log(partsTx, partsAv)
 //  const [partsSelected, setPartsSelected] = useState([])
 
 
@@ -28,10 +29,12 @@ dispatch(textureAdd(selectedParts))
 
   
 const handleSelect = (e) => {
- 
+ console.log(selectedParts)
     if(selectedParts.length > e.value.length){
         const removed = selectedParts.filter(part => !e.value.includes(part))
         dispatch(textureDelete(removed))
+
+    
     }
 
 
@@ -41,7 +44,7 @@ const handleSelect = (e) => {
 
 
     return (
-        <div className="multi-sel" key={fileid}>
+        <div className="multi-sel" key={fileModName}>
             <MultiSelect value={selectedParts} onChange={(e) => {
                 // console.log(e),
             // setPartsSelected(e.value)

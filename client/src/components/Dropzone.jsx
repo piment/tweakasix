@@ -9,7 +9,7 @@ import {
   textureAdd,
   textureDelete,
   textureAssign,
-  textureUnassign,
+  textureClear,
 } from "../features/TextureReducer";
 import { v4 as uuidv4 } from "uuid";
 import TextureSelect from "./Tweaker/Multiselect";
@@ -44,6 +44,9 @@ function MyDropzone({
 
   const dispatch = useDispatch();
 
+
+
+
   const onDrop = useCallback((acceptedFiles) => {
     const updatedFiles = acceptedFiles.map((file) => {
       const modifiedFilename = file.name
@@ -61,7 +64,7 @@ function MyDropzone({
       };
     });
     setFiles((prevFiles) => [...prevFiles, ...updatedFiles]);
-    console.log(acceptedFiles);
+
     const formData = new FormData();
     updatedFiles.forEach((img) => {
       formData.append("file", img.file);
@@ -91,20 +94,42 @@ function MyDropzone({
     const filesId = [];
     if (files && filesId.length > 0) {
       files.forEach((file) => {
-        if (!filesId.includes(file.id)) {
-          filesId.push(file.id);
+        if (!filesId.includes(file.modifiedFilename)) {
+          filesId.push(file.modifiedFilename);
         }
       });
-      //   dispatch(textureAdd(filesId));
+    
+          //  dispatch(textureAdd(filesId));
     }
+        // console.log(files); 
   }, [setFiles, dispatch]);
 
   const [getPic, setGetPic] = useState([]);
 
-  const handleDeleteImg = (fileId) => {
-    setFiles((prevState) => prevState.filter((file) => file.id !== fileId));
-    // dispatch(textureDelete(fileId))
+  const partsTx = useSelector((state) => state.texture_data.texture_assign)
+// console.log(partsTx)
+//   const partsAv = Object.keys(partsTx).map((part) => ({name : part, file: part.modifiedFilename}))
+
+  // console.log(partsAv)
+
+  useEffect(() => {
+
+    },[selectedParts])
+    
+
+
+  const handleDeleteImg = (fileModName) => { 
+     console.log(fileModName, files)
+    setFiles((prevState) => prevState.filter((file) => file.modifiedFilename !== fileModName));
+    const removed = files.filter(part => part.modifiedFilename == fileModName)
+    console.log(removed)
+    // dispatch(textureDelete(removed.modifiedFilename))
+    dispatch(textureClear(fileModName))
   };
+
+
+
+
 
   const handleLoad = (file) => {
     URL.revokeObjectURL(file.preview);
@@ -118,14 +143,14 @@ function MyDropzone({
             key={file.name}
             selectedParts={selectedParts}
             setSelectedParts={setSelectedParts}
-            fileid={file.id}
+            fileModName={file.modifiedFilename}
           />
           <div style={thumbInner}>
             <button
               type="button"
-              value={file.id}
+              value={file.modifiedFilename}
               onClick={(e) => {
-                e.preventDefault(), handleDeleteImg(file.id);
+                e.preventDefault(), handleDeleteImg(file.modifiedFilename);
               }}
             >
               <span>pipi</span>

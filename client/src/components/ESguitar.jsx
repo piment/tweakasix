@@ -40,7 +40,8 @@ function ESguitar({
   
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
-
+const texturesFromReducer = useSelector((state)=> state.texture_data.texture_assign)
+// console.log(texturesFromReducer)
 
   const [scratches, scratchesrough] = useTexture([
     "guitar/imgs/DefaultMaterial_Roughness2.jpg",
@@ -58,7 +59,7 @@ function ESguitar({
 
 //  [0].file.path
   // console.log(files[0].file.path)
- const [txUse, setTxUse] = useState(path + colorList.texture_path);
+//  const [txUse, setTxUse] = useState(path + colorList.texture_path);
 
   const woodFull = useTexture("woodFullminH.png");
   woodFull.flipY = false;
@@ -126,36 +127,25 @@ rosewood.encoding = sRGBEncoding
 materials.fretboard.map = rosewood
 
 
+const partTextures = {
+  front: useTexture( texturesFromReducer.front ? tempPath + texturesFromReducer.front : path + '/1681217837265.png'),
+ back: useTexture( texturesFromReducer.back ? tempPath + texturesFromReducer.back : path + '/1681217837265.png'),
+ side: useTexture( texturesFromReducer.side ? tempPath + texturesFromReducer.side : path + '/1681217837265.png'),
+ neck: useTexture( texturesFromReducer.neck ? tempPath + texturesFromReducer.neck : path + '/1681217837265.png'),
+pickguard:  useTexture( texturesFromReducer.pickguard ? tempPath + texturesFromReducer.pickguard : path + '/1681217837265.png')
+};
 
 
-console.log(files)
- let reactMap
- if(txUse){
 
-   reactMap = useTexture(txUse)
-  } else if (!txUse){
- reactMap = useTexture(path + colorList.texture_path);
-  }
- reactMap.flipY = false
-// reactMap.magFilter = THREE.NearestFilter
-//  reactMap.wrapS = THREE.RepeatWrapping;
-//  reactMap.wrapT = THREE.RepeatWrapping;
-//  reactMap.repeat.set(2,4);
 
-//  materials.tablefront.map = reactMap
+//  if(txUse){
+//    reactMap = useTexture(txUse)
+//   } else if (!txUse){
+//  const reactMap = useTexture(path + colorList.texture_path);
+//   }
+//  reactMap.flipY = false
 
-  useEffect(() => {
-      // up_texture_path =  files.length !== 0 ? files[0].file.path : ''
-    // console.log(reactMap.source.data.currentSrc);
-    if(files.length !==0 ){
-      console.log(files)
 
-      setTxUse(tempPath + files[files.length-1].modifiedFilename);
-      console.log(txUse)
-    }
-reactMap.needsUpdate
-
-  }, [ setDropped, dropped, files]);
 
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
@@ -184,7 +174,7 @@ reactMap.needsUpdate
             geometry={nodes.side.geometry}
             material={materials.side}
             material-color={colorList.side}
-            material-map={triggs > 0 ? reactMap : ''}
+            material-map={texturesFromReducer.side !== null ? partTextures.side : ''}
           />
 
           <mesh
@@ -201,7 +191,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tableback.geometry}
             material={materials.tableback}
             material-color={colorList.tableback}
-            material-map={triggs > 0 ? reactMap : ''}
+            material-map={texturesFromReducer.back !== null ? partTextures.back : ''}
           />
           <mesh
          ref={(mesh) => (meshRefs.current[3] = mesh)}
@@ -209,7 +199,8 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tablefront.geometry}
             material={materials.tablefront}
             material-color={colorList.tablefront}
-            material-map={triggs > 0 ? reactMap : ''}
+            // material-map={triggs > 0 ? reactMap : ''}
+            material-map={texturesFromReducer.front !== null ? partTextures.front : ''}
 
           >
             {/* <Decal mesh={ref} >
@@ -314,6 +305,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.neckwood.geometry}
             material={materials.neckwood}
             material-color={colorList.neck}
+            material-map={texturesFromReducer.neck !== null ? partTextures.neck : ''}
           />
                <mesh
                         ref={(mesh) => (meshRefs.current[15] = mesh)}

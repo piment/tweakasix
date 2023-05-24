@@ -30,7 +30,7 @@ const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = par
 
     },
     textureDelete: (state, action) => {
-   
+   console.log(action.payload)
 
       const tempArr = {}
       const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = null) )
@@ -45,12 +45,26 @@ const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = par
     textureAssign: (state, action) => {
         console.log('assign')
     },
-    textureUnassign: (state, action) => {
-      console.log('unassign')
-    },
+
+
+    textureClear: (state, action) => {
+      console.log(action.payload)
+      const cleared = Object.fromEntries(Object.entries(state.texture_assign).map(([key, value]) => {
+        if (value === action.payload) {
+          return [key, null];
+        }
+        return [key, value];
+      }));
+      
+  
+      return {
+        ...state,
+        texture_assign: cleared
+      };
+    }
   },
 });
-export const { textureAdd, textureDelete, textureAssign, textureUnassign } =
+export const { textureAdd, textureDelete, textureAssign, textureClear } =
   textureSlice.actions;
 
 export default textureSlice.reducer;
