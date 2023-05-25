@@ -35,6 +35,7 @@ function MyDropzone({
   const img = {
     display: "flex",
     maxWidth: "10vw",
+    maxHeight: '12vh',
     height: "auto",
     objectFit: "cover",
   };
@@ -167,12 +168,13 @@ function MyDropzone({
   ));
 
   useEffect(() => {
-    // return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
   return (
     <>
       <form encType="multipart/form-data">
+      <section className="dropzone-container">
         <div {...getRootProps()} className="dropzone-div">
           <input {...getInputProps()} type="file" />
           {isDragActive ? (
@@ -183,6 +185,7 @@ function MyDropzone({
 
           <div className="exaside">{thumbs}</div>
         </div>
+        </section>
       </form>
     </>
   );

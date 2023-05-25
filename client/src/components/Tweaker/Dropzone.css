@@ -1,3 +1,8 @@
+.dropzone-container{
+  display: flex;
+
+}
+
 .dropzone-div{
     /* position: absolute; */
     height : 5vh;
@@ -25,13 +30,14 @@
 
   
   .exaside{
-    /* display: flex; */
-    flex-direction: column-reverse;
+    display: flex;
+    flex-direction: row-reverse;
     /* flex-flow: row-reverse; */
+
     margin: 0;
   padding: 0;
-  position: relative; 
-  width: 100%;
+  /* position: relative;  */
+  width: 90%;
 
        /* display: flex;
        flex-direction: row; */
@@ -41,18 +47,28 @@
 .preview-cart{
   display: flex;
   flex-direction: row-reverse;
-  max-width: 60%;  
+  justify-content: space-around;
+  max-width: 50%;  
   max-height: 40%;  
     background-color: aliceblue;
-    padding: 10px;
+    /* padding: 10px; */
     border-radius: 8px;
+    margin: 0 2px;
 }
 .preview-cart > * {
-  margin:auto;
-padding: 0;
+  /* margin:auto; */
+/* padding: 0; */
 z-index: 2500;
-max-width: 80%;
+/* max-width: 80%; */
 
 /* max-height: 40%; */
 
+}
+
+.preview-cart > div {
+  display: flex;
+  flex-wrap: wrap;
+/* border : red solid 2px; */
+justify-content: space-around;
+margin: 6px;
 }

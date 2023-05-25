@@ -139,6 +139,7 @@ function Visualizer({
     // setDropped(dropped-dropped)
   }, []);
 
+  console.log(loggedIn)
   const handleGtrNameSet = () => {
     setGtrName(gtrNameInput);
     setGtrNameInput("");
@@ -203,7 +204,7 @@ function Visualizer({
               </Text>
             </group>
           </Text>
-          {loggedIn && (
+          {loggedIn[0]&&(
             <Text
               position={[4, -1, 0.2]}
               color={"#000000"}

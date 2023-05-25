@@ -83,16 +83,20 @@ cursor:grab;
 
 
 .pickers-main > .box >button {
-  
+  display: flex;
+  justify-content: space-around;
   border-radius: 10px;
   width: 50%;
   height: 10%;
 
-  margin:auto ;
+  margin: auto ;
   color: black;
+  
 }  
 
 }
+
+/* .p-button.p-component{ */
 
 /* Smartphones (portrait and landscape) ----------- */
 /* @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {

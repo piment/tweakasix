@@ -30,7 +30,7 @@ setDropped,
 }) {
   const tele = useRef();
   const meshRefs = useRef([]);
-  const { nodes, materials } = useGLTF("/guitar/TeleOPT3.glb");
+  const { nodes, materials } = useGLTF("/guitar/TeleOPTPG.glb");
 
   const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
   const tempPath = `${import.meta.env.VITE_BACKEND_URL}/stocked/temporary/`;

@@ -32,7 +32,7 @@ function ESguitar({
   const ref = useRef();
   const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/335whole_5.glb");
+  const { nodes, materials } = useGLTF("/guitar/ES335UV.glb");
 
   const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
   const tempPath = `${import.meta.env.VITE_BACKEND_URL}/stocked/temporary/`;
@@ -61,7 +61,7 @@ const texturesFromReducer = useSelector((state)=> state.texture_data.texture_ass
   // console.log(files[0].file.path)
 //  const [txUse, setTxUse] = useState(path + colorList.texture_path);
 
-  const woodFull = useTexture("woodFullminH.png");
+  const woodFull = useTexture("335Wood-min.png");
   woodFull.flipY = false;
 
 
@@ -129,15 +129,16 @@ materials.fretboard.map = rosewood
 
 const partTextures = {
   Front: useTexture( texturesFromReducer.Front ? tempPath + texturesFromReducer.Front : path + '/1681217837265.png'),
+
  Back: useTexture( texturesFromReducer.Back ? tempPath + texturesFromReducer.Back : path + '/1681217837265.png'),
  Side: useTexture( texturesFromReducer.Side ? tempPath + texturesFromReducer.Side : path + '/1681217837265.png'),
  Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
 Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
 };
-
-
-
-
+partTextures.Front.flipY = false
+partTextures.Back.flipY = false
+partTextures.Side.flipY = false
+partTextures.Neck.flipY = false
 //  if(txUse){
 //    reactMap = useTexture(txUse)
 //   } else if (!txUse){

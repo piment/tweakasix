@@ -250,7 +250,7 @@ function Tweaker({
               setFiles={setFiles}
               model={model}
             />
-            <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button>{" "}
+            <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button>
           </div>
 
           <div>{gtrPriceFull}</div>
