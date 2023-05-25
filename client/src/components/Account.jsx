@@ -9,7 +9,7 @@ function Account() {
   const userData = useSelector((state) => state.user_data.userData.user)
   const userDataInfo = useSelector((state) => state.user_data.userData.user_info)
   const [loginStatus, setLoginStatus] = useState(false);
-  const [userInfo, setUserInfo] = useState({userData});
+  const [userInfo, setUserInfo] = useState(userData);
 
   const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
 
@@ -42,7 +42,7 @@ console.log(userInfo)
           />
         </>
       )}
-      {localStorage.getItem("token") && userInfo.firstname && (
+      {localStorage.getItem("token") && userInfo && (
         <div className="user-auth-true">
           <div className="user-welcome">
             <h1> Welcome <span id="username">{toPascalCase(userInfo.username)}</span></h1>

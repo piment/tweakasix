@@ -25,18 +25,23 @@ function ESguitar({
   changed,
   setChanged,
   dropped,
-  setDropped
+  setDropped,
+  files,
+  selectedParts
 }) {
   const ref = useRef();
   const meshRefs = useRef([]);
   const [hovered, setHovered] = useState(null);
-  const { nodes, materials } = useGLTF("/guitar/335whole_5.glb");
+  const { nodes, materials } = useGLTF("/guitar/ES335UV.glb");
 
-  const path = `${import.meta.env.VITE_BACKEND_URL}/`;
+  const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
+  const tempPath = `${import.meta.env.VITE_BACKEND_URL}/stocked/temporary/`;
 
+  
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
-
+const texturesFromReducer = useSelector((state)=> state.texture_data.texture_assign)
+// console.log(texturesFromReducer)
 
   const [scratches, scratchesrough] = useTexture([
     "guitar/imgs/DefaultMaterial_Roughness2.jpg",
@@ -44,14 +49,19 @@ function ESguitar({
   ]);
   // const texture_path = useSelector(
   //   (state) => state.guitar_set.colorSet.texture_path
-  // );
-  const texture_path = colorList.texture_path
-  const [txUse, setTxUse] = useState(path + texture_path);
-
-
+  // );   
+   let texture_path = colorList.texture_path
  
+  
 
-  const woodFull = useTexture("woodFullminH.png");
+
+// let up_texture_path =  files.length !== 0 ? files[0].file.path : ''
+
+//  [0].file.path
+  // console.log(files[0].file.path)
+//  const [txUse, setTxUse] = useState(path + colorList.texture_path);
+
+  const woodFull = useTexture("335Wood-min.png");
   woodFull.flipY = false;
 
 
@@ -91,7 +101,6 @@ materials.pickup_ring.metalness = 0.5
 
 
 
-console.log(materials.pickup_ring)
   woodFull.encoding = sRGBEncoding
   
   materials.tablefront.opacity = 1 - (colorList.wood/1000) 
@@ -115,28 +124,29 @@ const rosewood = useTexture('rosewood.png')
 rosewood.flipY = false
 rosewood.encoding = sRGBEncoding
 
-
-
 materials.fretboard.map = rosewood
 
 
- const reactMap = useTexture(path + colorList.texture_path);
- reactMap.flipY = false
-// reactMap.magFilter = THREE.NearestFilter
-//  reactMap.wrapS = THREE.RepeatWrapping;
-//  reactMap.wrapT = THREE.RepeatWrapping;
-//  reactMap.repeat.set(2,4);
+const partTextures = {
+  Front: useTexture( texturesFromReducer.Front ? tempPath + texturesFromReducer.Front : path + '/1681217837265.png'),
 
-//  materials.tablefront.map = reactMap
+ Back: useTexture( texturesFromReducer.Back ? tempPath + texturesFromReducer.Back : path + '/1681217837265.png'),
+ Side: useTexture( texturesFromReducer.Side ? tempPath + texturesFromReducer.Side : path + '/1681217837265.png'),
+ Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
+};
+partTextures.Front.flipY = false
+partTextures.Back.flipY = false
+partTextures.Side.flipY = false
+partTextures.Neck.flipY = false
+//  if(txUse){
+//    reactMap = useTexture(txUse)
+//   } else if (!txUse){
+//  const reactMap = useTexture(path + colorList.texture_path);
+//   }
+//  reactMap.flipY = false
 
-  useEffect(() => {
 
-    // console.log(reactMap.source.data.currentSrc);
-    setTxUse(path + colorList.texture_path);
-    // console.log(txUse)
-reactMap.needsUpdate
-
-  }, [ setDropped, dropped, colorList]);
 
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
@@ -165,7 +175,7 @@ reactMap.needsUpdate
             geometry={nodes.side.geometry}
             material={materials.side}
             material-color={colorList.side}
-            material-map={triggs > 0 ? reactMap : ''}
+            material-map={texturesFromReducer.Side !== null ? partTextures.Side : ''}
           />
 
           <mesh
@@ -182,7 +192,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tableback.geometry}
             material={materials.tableback}
             material-color={colorList.tableback}
-            material-map={triggs > 0 ? reactMap : ''}
+            material-map={texturesFromReducer.Back !== null ? partTextures.Back : ''}
           />
           <mesh
          ref={(mesh) => (meshRefs.current[3] = mesh)}
@@ -190,7 +200,8 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.tablefront.geometry}
             material={materials.tablefront}
             material-color={colorList.tablefront}
-            material-map={triggs > 0 ? reactMap : ''}
+            // material-map={triggs > 0 ? reactMap : ''}
+            material-map={texturesFromReducer.Front !== null ? partTextures.Front : ''}
 
           >
             {/* <Decal mesh={ref} >
@@ -295,6 +306,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             geometry={nodes.neckwood.geometry}
             material={materials.neckwood}
             material-color={colorList.neck}
+            material-map={texturesFromReducer.Neck !== null ? partTextures.Neck : ''}
           />
                <mesh
                         ref={(mesh) => (meshRefs.current[15] = mesh)}

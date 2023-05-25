@@ -3,7 +3,7 @@ const fs = require('fs')
 const router = express.Router();
 
 // const movieController = require("../controllers/movieController");
-const {  addGuitar, getGuitars, fetchGuitar} = require("./controllers/itemController");
+const {  addGuitar, getGuitars, fetchGuitar, getItemsFullGtr} = require("./controllers/itemController");
 const {register, loginGet, loginPost, isUserAuth, userInfo} = require ("./controllers/userController")
 const {getItems} = require('./controllers/shopController')
 const FilePond = require('react-filepond')
@@ -24,10 +24,10 @@ var storage = multer.diskStorage(
 const upload = multer({ storage: storage } )
 
 router.get("/items", getItems);
+router.get("/itemsall", getItemsFullGtr);
 router.post("/items/saveguitar", addGuitar);
 router.get("/items/getguitars",getGuitars)
 router.get("/items/fetchguitar",fetchGuitar)
-
 
 router.post("/register", register)
 

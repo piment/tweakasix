@@ -624,7 +624,7 @@ max-height: 30px;
 }
 
 #metalIcons-parent .p-button.p-component{
- 
+ /* display: flex; */
   background: black;
   max-height: 2.2rem;
 border: none;
@@ -642,4 +642,8 @@ height: 32px;
 border-radius: 4px;
 
 }
+
+
+
+
 

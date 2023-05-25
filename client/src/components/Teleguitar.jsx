@@ -25,16 +25,18 @@ dropped,
 setDropped,
   tilt,
   pos,
+  files,
+  selectedParts
 }) {
   const tele = useRef();
   const meshRefs = useRef([]);
-  const { nodes, materials } = useGLTF("/guitar/TeleOPT3.glb");
+  const { nodes, materials } = useGLTF("/guitar/TeleOPTPG.glb");
 
-  const path = `${import.meta.env.VITE_BACKEND_URL}/`;
-
+  const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
+  const tempPath = `${import.meta.env.VITE_BACKEND_URL}/stocked/temporary/`;
 
   const triggs = useSelector((state) => state.guitar_set.dropped);
-
+  const texturesFromReducer = useSelector((state)=> state.texture_data.texture_assign)
 
   const [scratches, scratchesrough] = useTexture([
     "guitar/imgs/DefaultMaterial_Roughness2.jpg",
@@ -43,8 +45,8 @@ setDropped,
 //   const texture_path = useSelector(
 //     (state) => state.guitar_set.colorSet.texture_path
 //   );
-const texture_path = colorList.texture_path
-  const [txUse, setTxUse] = useState(path + texture_path);
+// const texture_path = colorList.texture_path
+  // const [txUse, setTxUse] = useState(path + texture_path);
 
 
 
@@ -121,16 +123,25 @@ materials.varnish = new THREE.MeshStandardMaterial({
     bumpScale: 0.001 * (colorList.scratch / 5),
 })
 
-const reactMap = useTexture(txUse);
-reactMap.encoding = sRGBEncoding
-useEffect(() => {
+// const reactMap = useTexture(txUse);
+// reactMap.encoding = sRGBEncoding
+// useEffect(() => {
 
-  // console.log(reactMap.source.data.currentSrc);
-  setTxUse(path + colorList.texture_path);
-  // console.log(txUse)
-reactMap.needsUpdate
+const partTextures = {
+  Body: useTexture( texturesFromReducer.Body ? tempPath + texturesFromReducer.Body : path + '/1681217837265.png'),
+ Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
+};
 
-}, [ setDropped, dropped, colorList]);
+
+
+//   // console.log(reactMap.source.data.currentSrc);
+//   setTxUse(path + colorList.texture_path);
+//   // console.log(txUse)
+// reactMap.needsUpdate
+
+// }, [ setDropped, dropped, colorList]);
+
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
       mesh.material = mesh.material.clone();
@@ -160,6 +171,7 @@ reactMap.needsUpdate
         geometry={nodes.pickguard.geometry}
         material={materials.plastic}
         material-color={colorList.pickguard}
+        material-map={texturesFromReducer.Pickguard !== null ? partTextures.Pickguard : ''}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[1] = mesh)}
@@ -208,7 +220,8 @@ reactMap.needsUpdate
         geometry={nodes.body.geometry}
         material={materials.body}
         material-color={colorList.body}
-        material-map={triggs > 0 ? reactMap : ''}
+        material-map={texturesFromReducer.Body !== null ? partTextures.Body : ''}
+        // material-map={triggs > 0 ? reactMap : ''}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[7] = mesh)}
@@ -217,6 +230,7 @@ reactMap.needsUpdate
         geometry={nodes.neck.geometry}
         material={materials.neckwood}
         material-color={colorList.neck}
+        material-map={texturesFromReducer.Neck !== null ? partTextures.Neck : ''}
       />
       {/* WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOD */}
 

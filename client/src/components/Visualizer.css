@@ -78,6 +78,9 @@ height: 150vh;
   }
   }
 
+.guitar-name > *{
+  z-index: 0;
+}
 
 .guitar-name > input{
   width: 300px;
@@ -89,6 +92,7 @@ height: 150vh;
    position: relative;
   top:-30vh;
   left: -14vw;
+  z-index: -100;
 }
  
 .guitar-name > input:focus{
