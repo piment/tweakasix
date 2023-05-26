@@ -40,10 +40,10 @@ function Visualizer({
   const gtrnameref = useRef();
 
   const [colorList, setColorList] = useState(colus);
-  const [clickedPart, setClickedPart] = useState("");
   const [gtrNameInput, setGtrNameInput] = useState("");
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
+  const [showPreview, setShowPreview] = useState(false);
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -306,7 +306,7 @@ function Visualizer({
                   <ESguitar
                     setColorList={setColorList}
                     colorList={colorList}
-                    setClickedPart={setClickedPart}
+               
                     tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
                     pos={[-1, -0.5, -0.3]}
                     files={files}
@@ -322,9 +322,8 @@ function Visualizer({
                 >
                   <Teleguitar
                     setColorList={setColorList}
-                    colorList={colorList}
-                    setClickedPart={setClickedPart}
-                    tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+                    colorList={colorList}   
+                      tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
                     pos={[-1, -0.8, -0.4]}
                     files={files}
                     selectedParts={selectedParts}
@@ -348,6 +347,8 @@ function Visualizer({
               files={files}
               setFiles={setFiles}
               model={model}
+              showPreview={showPreview}
+              setShowPreview={setShowPreview}
             />
           )}
           {model == 2 && (
@@ -363,12 +364,18 @@ function Visualizer({
               files={files}
               setFiles={setFiles}
               model={model}
+              showPreview={showPreview}
+             setShowPreview={setShowPreview}
             />
           )}
         </div>
       </div>
       <div id="select-guitarset">
-        <FloppyDisk size={56} />
+        <div className="floppydisk-wrap" 
+        onClick={(e) => 
+        (e.stopPropagation(), addGuitar())
+        }>
+       <FloppyDisk size={56} className="floppydisk" /></div>
         <div className="guitar-name">
           <input
             type="text"
@@ -376,19 +383,20 @@ function Visualizer({
             onChange={(e) => setGtrNameInput(e.target.value)}
             placeholder="Give it a name..."
           ></input>
-          <button onClick={handleGtrNameSet}>ok</button>
-        </div>
-        <Button onClick={(e) => (e.stopPropagation(), addGuitar())}>
+          <button onClick={handleGtrNameSet}><p>OK</p></button>
+        </div> 
+        
+        {/* <Button >
           Save this guitar
-        </Button>
-        <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
+        </Button> */}
+        {/* <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
           {guitarsList &&
             guitarsList.map((guitar, key) => (
               <option value={guitar.name} key={key}>
                 {guitar.name}
               </option>
             ))}
-        </select>
+        </select> */}
       </div>
     </div>
   );
