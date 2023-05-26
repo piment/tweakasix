@@ -12,11 +12,11 @@ import Draggable from "react-draggable";
 import dragIcon from "../../assets/drag.svg";
 import MyDropzone from "../Dropzone";
 import ChipsDemo from "./Multiselect";
+import { StackSimple } from "@phosphor-icons/react";
 
 function Tweaker({
   colorList,
   setColorList,
-  clickedPart,
   resetCam,
   dropped,
   setDropped,
@@ -25,7 +25,9 @@ function Tweaker({
   setSelectedParts,
   files,
   setFiles,
-  model
+  model,
+  showPreview,
+  setShowPreview
 }) {
   const actual = useRef(null);
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ function Tweaker({
 
   useEffect(() => {}, [gtrPriceFull]);
 
+  console.log(model, showPreview)
   return (
     <>
       <Draggable
@@ -41,7 +44,7 @@ function Tweaker({
         bounds={`parent`}
         allowAnyClick={false}
         // nodeRef={tweakDrag}
-        defaultPosition={{ x: 0, y: -150 }}
+        defaultPosition={{ x: 0, y: -210 }}
         onStart={(e) => e.preventDefault()}
       >
         <div className="pickers-main">
@@ -49,8 +52,7 @@ function Tweaker({
             <strong className="cursor">
               <img className="drag-icon" src={dragIcon} alt="Click to drag" />
             </strong>
-            <Button onClick={resetCam}>Reset Camera</Button>
-            <div className="pickers-colors" ref={tweakDrag}>
+            <Button id="resetcam" onClick={resetCam}><p>Reset Camera</p></Button>            <div className="pickers-colors" ref={tweakDrag}>
               <div className="body-colors">
                 <ColorPicker
                   tooltip="Front table"
@@ -59,7 +61,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "tablefront" ? "clickedPart" : ""}
+                  // id={clickedPart === "tablefront" ? "clickedPart" : ""}
                   name="tablefront"
                   value={colorList.tablefront}
                   onChange={(e) =>
@@ -73,7 +75,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "tableback" ? "clickedPart" : ""}
+                  // id={clickedPart === "tableback" ? "clickedPart" : ""}
                   name="tableback"
                   value={colorList.tableback}
                   onChange={(e) =>
@@ -87,7 +89,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "side" ? "clickedPart" : ""}
+                  // id={clickedPart === "side" ? "clickedPart" : ""}
                   name="side"
                   value={colorList.side}
                   onChange={(e) =>
@@ -103,7 +105,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "binding" ? "clickedPart" : ""}
+                  // id={clickedPart === "binding" ? "clickedPart" : ""}
                   name="binding"
                   value={colorList.binding}
                   onChange={(e) =>
@@ -119,7 +121,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "neckwood" ? "clickedPart" : ""}
+                  // id={clickedPart === "neckwood" ? "clickedPart" : ""}
                   name="neck"
                   value={colorList.neck}
                   onChange={(e) =>
@@ -133,7 +135,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "fretbinding" ? "clickedPart" : ""}
+                  // id={clickedPart === "fretbinding" ? "clickedPart" : ""}
                   name="fretbinding"
                   value={colorList.fretbinding}
                   onChange={(e) =>
@@ -147,7 +149,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "fretboard" ? "clickedPart" : ""}
+                  // id={clickedPart === "fretboard" ? "clickedPart" : ""}
                   name="fretboard"
                   value={colorList.fretboard}
                   onChange={(e) =>
@@ -161,7 +163,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "inlay" ? "clickedPart" : ""}
+                  // id={clickedPart === "inlay" ? "clickedPart" : ""}
                   name="inlay"
                   value={colorList.inlay}
                   onChange={(e) =>
@@ -175,7 +177,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "nut" ? "clickedPart" : ""}
+                  // id={clickedPart === "nut" ? "clickedPart" : ""}
                   name="nut"
                   value={colorList.nut}
                   onChange={(e) =>
@@ -189,7 +191,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "frets" ? "clickedPart" : ""}
+                  // id={clickedPart === "frets" ? "clickedPart" : ""}
                   name="frets"
                   value={colorList.frets}
                   onChange={(e) =>
@@ -202,7 +204,7 @@ function Tweaker({
                 <MetalColors
                   setColorList={setColorList}
                   colorList={colorList}
-                  clickedPart={clickedPart}
+               
                 />
                 <ColorPicker
                   tooltip="Pickup rings"
@@ -211,7 +213,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "pickup_ring" ? "clickedPart" : ""}
+                  // id={clickedPart === "pickup_ring" ? "clickedPart" : ""}
                   name="pickup_ring"
                   value={colorList.pickup_ring}
                   onChange={(e) =>
@@ -225,7 +227,7 @@ function Tweaker({
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  id={clickedPart === "knobs" ? "clickedPart" : ""}
+                  // id={clickedPart === "knobs" ? "clickedPart" : ""}
                   name="knobs"
                   value={colorList.knobs}
                   onChange={(e) =>
@@ -238,10 +240,13 @@ function Tweaker({
               <Sliders
                 setColorList={setColorList}
                 colorList={colorList}
-                clickedPart={clickedPart}
+            
               />
             </div>
-            <MyDropzone
+          <div className="dropzone-line" onClick={()=> setShowPreview(!showPreview)}>  <StackSimple id='dropzone-icon'size={56} />Add an image</div>
+            <div className={model == 1  && showPreview ? "dropzone-visible" : "dropzone-hidden"}>
+
+            <MyDropzone 
               selectedParts={selectedParts}
               setSelectedParts={setSelectedParts}
               setDropped={setDropped}
@@ -249,11 +254,16 @@ function Tweaker({
               files={files}
               setFiles={setFiles}
               model={model}
-            />
-            <Button onClick={() => dispatch(resetDrop(0))}>Remove image</Button>
+              showPreview={showPreview}
+              />
+              </div>
+            
+
+            <Button id="remove" onClick={() => dispatch(resetDrop(0))}><p>Remove image</p></Button>
+           
           </div>
 
-          <div>{gtrPriceFull}</div>
+          <div className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFull}</div><span id='€'>€</span></div>
         </div>
       </Draggable>
     </>

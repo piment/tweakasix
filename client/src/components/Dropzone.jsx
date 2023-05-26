@@ -13,6 +13,7 @@ import {
 } from "../features/TextureReducer";
 import { v4 as uuidv4 } from "uuid";
 import TextureSelect from "./Tweaker/Multiselect";
+import { Trash } from "@phosphor-icons/react";
 
 function MyDropzone({
   setDropped,
@@ -21,7 +22,8 @@ function MyDropzone({
   setSelectedParts,
   files,
   setFiles,
-  model
+  model,
+  showPreview
 }) {
   const thumb = {
     borderRadius: 2,
@@ -34,8 +36,7 @@ function MyDropzone({
 
   const img = {
     display: "flex",
-    maxWidth: "10vw",
-    maxHeight: '12vh',
+    maxWidth: "8vw",
     height: "auto",
     objectFit: "cover",
   };
@@ -44,18 +45,17 @@ function MyDropzone({
 
   const path = `${import.meta.env.VITE_BACKEND_URL}`;
 
+  // const [showPreview, setShowPreview] = useState(false);
   const dispatch = useDispatch();
-
-
-
 
   const onDrop = useCallback((acceptedFiles) => {
     const updatedFiles = acceptedFiles.map((file) => {
       const modifiedFilename = file.name
         .replace(/[^A-Za-z0-9.\s]/g, "")
         .replace(/\s/g, "")
-      .replace(/[\u2018\u2019]/g, "").toLowerCase()
-        
+        .replace(/[\u2018\u2019]/g, "")
+        .toLowerCase();
+
       console.log("MOD", modifiedFilename);
       console.log(file);
       return {
@@ -83,7 +83,7 @@ function MyDropzone({
       })
       .then(setDropped(dropped + 1))
       // .then(dispatch(addColor(colorList)))
-      .then(dispatch(triggerDrop(dropped)));
+      .then(dispatch(triggerDrop(dropped)))
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -100,38 +100,28 @@ function MyDropzone({
           filesId.push(file.modifiedFilename);
         }
       });
-    
-          //  dispatch(textureAdd(filesId));
+
+      //  dispatch(textureAdd(filesId));
     }
-        // console.log(files); 
+    // console.log(files);
   }, [setFiles, dispatch]);
 
-  const [getPic, setGetPic] = useState([]);
-
-  const partsTx = useSelector((state) => state.texture_data.texture_assign)
-// console.log(partsTx)
-//   const partsAv = Object.keys(partsTx).map((part) => ({name : part, file: part.modifiedFilename}))
-
-  // console.log(partsAv)
-
-  useEffect(() => {
-
-    },[selectedParts, model])
-    
 
 
-  const handleDeleteImg = (fileModName) => { 
-     console.log(fileModName, files)
-    setFiles((prevState) => prevState.filter((file) => file.modifiedFilename !== fileModName));
-    const removed = files.filter(part => part.modifiedFilename == fileModName)
-    console.log(removed)
+  useEffect(() => {}, [selectedParts, model]);
+
+  const handleDeleteImg = (fileModName) => {
+    console.log(fileModName, files);
+    setFiles((prevState) =>
+      prevState.filter((file) => file.modifiedFilename !== fileModName)
+    );
+    const removed = files.filter(
+      (part) => part.modifiedFilename == fileModName
+    );
+    console.log(removed);
     // dispatch(textureDelete(removed.modifiedFilename))
-    dispatch(textureClear(fileModName))
+    dispatch(textureClear(fileModName));
   };
-
-
-
-
 
   const handleLoad = (file) => {
     URL.revokeObjectURL(file.preview);
@@ -139,7 +129,7 @@ function MyDropzone({
 
   const thumbs = files.map((file) => (
     <>
-      <div className="preview-cart">
+      <div className={showPreview ? "preview-tex" : "preview-tex-hidden"}>
         <div style={thumb} key={file.name}>
           <TextureSelect
             key={file.name}
@@ -150,13 +140,15 @@ function MyDropzone({
           />
           <div style={thumbInner}>
             <button
+              key={file.name}
+            className="trash-button"
               type="button"
               value={file.modifiedFilename}
               onClick={(e) => {
                 e.preventDefault(), handleDeleteImg(file.modifiedFilename);
               }}
             >
-              <span>pipi</span>
+              <span><Trash size={26} color={"red"} /></span>
             </button>
             {files.some((f) => f.id === file.id) && (
               <img src={file.preview} style={img} onLoad={handleLoad} />
@@ -173,20 +165,26 @@ function MyDropzone({
 
   return (
     <>
-      <form encType="multipart/form-data">
-      <section className="dropzone-container">
-        <div {...getRootProps()} className="dropzone-div">
-          <input {...getInputProps()} type="file" />
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
-          ) : (
-            <p>Drag 'n' drop some files here, or click to select files</p>
-          )}
+  <div className="dropzone-visible">
 
-          <div className="exaside">{thumbs}</div>
-        </div>
+      <form encType="multipart/form-data">
+        <section className="dropzone-container">
+          <div {...getRootProps()} className="dropzone-div">
+            <input {...getInputProps()} type="file" />
+            <div className={files.length !== 0 ? 'dragtext-hidden' : 'dragtext-visible'}>
+
+            {isDragActive ? (
+              <p>Drop the files here ...</p>
+              ) : (
+                <p >Drag 'n' drop some files here</p>
+                )}
+                </div>
+
+            <div className={showPreview && files.length !== 0? "exaside" :"exaside-hidden"}>{thumbs}</div>
+          </div>
         </section>
       </form>
+                </div>
     </>
   );
 }

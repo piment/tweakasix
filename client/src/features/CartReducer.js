@@ -34,10 +34,14 @@ initialState,
           }
         }
       },
-      
+       clearCart: (state) => {
+
+        state.cartItems = []
+
+       }
   }
   
 });
-export const { cartAdd, cartRemove } = cartSlice.actions;
+export const { cartAdd, cartRemove, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

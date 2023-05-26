@@ -56,6 +56,13 @@ function MetalColors({ colorList, setColorList, clickedPart }) {
     type="button"
     className="p-colorpicker-preview main-metal-button"
     onClick={(e) => op1.current.toggle(e)}
+    tooltip="Pickup cover"
+    tooltipoptions={{
+      position: "bottom",
+      mouseTrack: true,
+      mouseTrackTop: 15,
+      event: "hover",
+    }}
   >
     {" "}
     <img

@@ -370,12 +370,7 @@
   border-color: #ececec;
   border-width: 0.2rem;
 }
-#clickedPart .p-inputtext {
-    outline: 0 none;
-  outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #bfdbfe;
-  border-color: #afafaf;
-  }
+
 .p-inputtext:enabled:focus {
   outline: 0 none;
   outline-offset: 0;

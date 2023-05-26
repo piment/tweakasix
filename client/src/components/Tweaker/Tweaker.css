@@ -40,7 +40,7 @@
   --surface-overlay:#ffffff;
   --surface-border:#dfe7ef;
   --surface-hover:#f6f9fc;
-  --focus-ring: 0 0 0 0.2rem #BFDBFE;
+  /* --focus-ring: 0 0 0 0.2rem #BFDBFE; */
   --maskbg: rgba(0, 0, 0, 0.4);
   --highlight-bg: #EFF6FF;
   --highlight-text-color: #3B82F6;
@@ -86,7 +86,7 @@
 .p-link:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #BFDBFE;
+  /* box-shadow: 0 0 0 0.2rem #BFDBFE; */
 }
 
 .p-component-overlay-enter {
@@ -4283,7 +4283,7 @@
 .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #BFDBFE;
+  /* box-shadow: 0 0 0 0.2rem #BFDBFE; */
 }
 .p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
   margin-right: 0;
@@ -6051,7 +6051,7 @@
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link {
-  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  /* transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s; */
 }
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {

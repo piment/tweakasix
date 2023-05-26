@@ -1,5 +1,5 @@
 .e-shop{
-    margin: 20vh 0;
+    margin: 15vh 0;
     font-family: Oswald;
 }
 
@@ -13,7 +13,7 @@
     grid-template-columns: repeat(3, 1fr);
     
 
-      margin: 60px auto;
+      margin: 80px auto;
       max-width: 80%;
 }
 
@@ -22,7 +22,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: black solid 2px
+    /* border: black solid 2px; */
+    background-color: #424242ce;
+       border-radius: 6px;
 }
 
 
@@ -30,13 +32,50 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
+ 
 }
 
+
+.e-shop > .parts-products > .product > .cart-actions > button {
+    border-radius: 6px;
+    border: none;
+    height: 80%;
+    padding: 0 .8em;
+}
+
+
+
 .e-shop  > .sub-cart{
+
     display: flex;
+    justify-content: space-between;
+
+    margin: 10vh auto 0 auto;
+    max-height: 3em;
+    max-width: 30%;
+    align-items: baseline;
+
+}
+.e-shop  > .sub-cart > h3{
+    margin-top: 0;
+    font-size: 5em;
+    font-weight: 400;
+    -webkit-text-stroke: #16161692 2px;
+    filter: drop-shadow(0 1px 3px #2c2c2c);
+
+}
+
+.e-shop > .sub-cart > button {
+    padding: .2em 1em;
+    border-radius: 6px;
+    border: none;
+    display: flex;
+    width: 120px;
+    position: static;
+    right: -10%;
+    height: 3em;
+    align-items: center;
     justify-content: space-around;
-    width: 50%;
-    margin: auto;
 }
 
 
@@ -52,21 +91,25 @@
 /*--------- CART-CART-CART-------------*/
  .cart{
     
-    margin: 20vh 20vw;
+    margin: 20vh 15vw;
     font-family: Oswald;
     height: 100%;
+  
 }
 
 #cart-title{
-    margin: 2vh 0;
+    margin: 2vh -2vw 0vh;
     filter: drop-shadow(-5px 10px 3px  rgba(2, 2, 2, 0.537));
+    color: rgba(255, 255, 255, 0.868);
+    font-size: 10rem;
 }
 .cart-items{
-    margin-top: 4vh;
+    /* margin-top: 4vh; */
     min-height: 20em;
-    width: 80%;
+    width: 90%;
     border-radius: 12px;
-
+    padding: 4em;
+  background-color: #292929bf;
 }
 
 .cart-items > *{
@@ -79,6 +122,7 @@
 flex-direction: row; 
 justify-content: space-between;
 padding: 0 1em ;
+border-bottom: #292929bf 2px solid;
 }
 
 .item-unit{
@@ -97,6 +141,7 @@ padding: 0 1em ;
  /* margin: auto  ; */
  justify-content: flex-start;
  /* align-items: center; */
+ 
 }
 
 .cart-list-item > .cart-actions{
@@ -111,9 +156,37 @@ padding: 0 1em ;
     height: 50%;
     display: flex;
     align-items: center;
-    border: green solid 2px;
+    /* border: green solid 2px; */
     justify-content: center;
-    width: 20%;
+    border-radius: 8px;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    outline: none;
+    border: none;
+    width: 30%;
+    box-shadow: 0px 2px 5px 2px #292929bf;
+    transition : 171ms;
+    background-color: #e0e0e0e7;
+    /* margin: auto 1em; */
+}
+
+.cart-list-item > .cart-actions > button:active{
+    height: 50%;
+    display: flex;
+    align-items: center;
+    /* border: green solid 2px; */
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    outline: none;
+    /* border: none; */
+    width: 30%;
+    box-shadow: 0px 1px 3px 2px #646464e7; 
+     transition : 171ms;
+     transform: scale(98%);
+     outline: #4f4d4dbf solid 2px;
+     background-color: #ffffffc6;
     /* margin: auto 1em; */
 }
 
@@ -131,10 +204,38 @@ justify-content: flex-end;
 }
 
 
-.country-delivery{
-    margin: 2em;
+.delivery-checkout{
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.country-delivery{
+    margin: 2em;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #101010ce;
+    /* filter: drop-shadow(0 0 2px #646464); */
+}
+
+
+.checkout-button{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 2em;
+    background-color: #16161692;
+    padding: .6em .8em;
+    border-radius: 6px;
+    border: white solid 2px;
+}
+
+.checkout-button > #arrow{
+    margin: auto;
+    margin-bottom: -6px;
+}
 .empty-cart{
     display: flex;
     /* flex-direction: row; */

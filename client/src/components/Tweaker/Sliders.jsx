@@ -38,7 +38,7 @@ function Sliders({ colorList, setColorList, clickedPart }) {
     Scratched varnish
     <Tooltip
       target=".slider-scratch>.p-slider-handle"
-      content={`${colorList.gloss}%`}
+      content={`${colorList.scratch}%`}
       position="top"
       event="focus"
     />

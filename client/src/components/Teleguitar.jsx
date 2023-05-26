@@ -15,7 +15,6 @@ import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
 import {addColor } from "../features/Colors";
 import { LinearEncoding, sRGBEncoding } from "three";
-import materials from './materials'
 
 function Teleguitar({
   trig,

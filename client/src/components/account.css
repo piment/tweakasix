@@ -10,6 +10,7 @@
     /* width: 100%; */
     margin: auto;
     width: 80%;
+    
 }
 
 
@@ -18,10 +19,14 @@
     /* flex-direction: column; */
     /* position: relative; */
     /* left: 40%; */
-    margin:10vh 0 10vh 0;
+    margin:8vh 0 6vh 0;
+    height: auto;
+    border-radius: 24px;
     /* top: 100%; */
     justify-content: space-around;
+    padding-bottom: 4vh;
     align-items: center;
+background-color: #2828284f;
 
     
 }
@@ -31,13 +36,14 @@
     flex-direction: column;
     width: 30%;
     align-items: center;
-    margin-top: 5vh;
+    margin-top: 2vh;
 }
 
 .login{
     z-index: 20;
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 30%;
 }
 
@@ -49,10 +55,44 @@
     z-index: 2000;
     width: 100%;
     margin:  1vh 0;
+    height: 2rem;
+    border-radius: 12px;
+    border: none;
+    background-color: rgba(235, 235, 235, 0.702);
+    padding: 12px;
+}
+
+
+.login-register input:focus-visible{
+    z-index: 2000;
+    width: 100%;
+    margin:  1vh 0;
+    height: 2rem;
+    border-radius: 12px;
+    border: transparent;
+    outline: none;
+    background-color: rgb(255, 255, 255);
+    padding: 12px;
 }
 .login-register h2 {
     z-index: 0;
 
+}
+.login > h2 input:focus-within {
+    color: red;
+    /* background-color: rgb(255, 255, 255); */
+}
+.login-register-button  {
+    height: 3em;
+    width: 6em;
+    border-radius: 12px;
+    font-size: 1em;
+    outline: none;
+    border: none;
+    margin-top: 3rem;
+    color: whitesmoke;
+    background-color: #282828;
+    font-family: Oswald
 }
 
 .logout{
@@ -62,10 +102,34 @@
 }
 
 
+
 .otherlog{
     display: flex;
-    height: 20vh;
+    justify-content: space-around;
+    align-items: center;
+    -moz-transform: translate(4px, 0px) skew(-45deg, 0deg);
+-webkit-transform: translate(4px, 0px) skew(-45deg, 0deg);
+-o-transform: translate(4px, 0px) skew(-45deg, 0deg);
+-ms-transform: translate(4px, 0px) skew(-45deg, 0deg);
+transform: translate(4px, 0px) skew(-45deg, 0deg);
+background-color: #282828;
+height: 6vh;
+box-shadow: 5px 5px 6px 2px #111111
+}
+.otherlog > p {
+    display: flex;
+    /* height: 18vh; */
     justify-content: center;
+    align-items: center;
+    font-family: Oswald;
+    /* font-style: italic; */
+    font-size: 1.2rem;
+    color: #c9c9c9;
+    -moz-transform: translate(4px, 0px) skew(40deg, 0deg);
+    -webkit-transform: translate(4px, 0px) skew(40deg, 0deg);
+    -o-transform: translate(4px, 0px) skew(40deg, 0deg);
+    -ms-transform: translate(4px, 0px) skew(40deg, 0deg);
+    transform: translate(4px, 0px) skew(40deg, 0deg);
 }
 
 
