@@ -43,8 +43,6 @@
   
 .p-button {
     color: #ffffff;
-     /* border: 1px solid #f9f9f9; */
-    /* font-size: 1rem; */
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     border-radius: 6px;
  
@@ -104,7 +102,7 @@
   .p-button:focus {
     outline: 0 none;
     outline-offset: 0;
-    box-shadow: 0 0 0 0.2rem #f4f4f4;
+    /* box-shadow: 0 0 0 0.2rem #f4f4f4; */
   }
   .p-button .p-button-label {
     transition-duration: 0.2s;

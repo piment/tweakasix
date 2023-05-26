@@ -23,15 +23,14 @@ import Tweaker from "./Tweaker/Tweaker";
 import TweakerTele from "./Tweaker/TweakerTele";
 import ESguitar from "./ESguitar";
 import Teleguitar from "./Teleguitar";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
+import "./confirm-modal.css";
+import "./confirm-lara-blue.css";
 import { FloppyDisk } from "@phosphor-icons/react";
 
-function Visualizer({
-  guitarsList,
-  model,
-  setModel,
-  gtrPrice,
-}) {
+function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
   const loggedIn = useSelector((state) => state.user_data.userData);
@@ -51,12 +50,33 @@ function Visualizer({
       .join(" ");
 
   const gtrPriceFull = gtrPrice;
+  console.log(gtrPriceFull);
 
   const dispatch = useDispatch();
 
   const [files, setFiles] = useState([]);
   const [selectedParts, setSelectedParts] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const toast = useRef(null);
 
+  const accept = () => {
+    addGuitar(),
+      toast.current.show({
+        severity: "info",
+        summary: "Confirmed",
+        detail: "Saved !",
+        life: 3000,
+      });
+  };
+
+  const reject = () => {
+    toast.current.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "Not saved...",
+      life: 3000,
+    });
+  };
   const handleSelectGuitar = async (e) => {
     const gtr = e.target.value;
     console.log(gtr);
@@ -136,10 +156,9 @@ function Visualizer({
 
   useEffect(() => {
     setColorList(colus);
-    // setDropped(dropped-dropped)
   }, []);
 
-  console.log(loggedIn)
+  console.log(loggedIn);
   const handleGtrNameSet = () => {
     setGtrName(gtrNameInput);
     setGtrNameInput("");
@@ -204,7 +223,7 @@ function Visualizer({
               </Text>
             </group>
           </Text>
-          {loggedIn[0]&&(
+          {loggedIn[0] && (
             <Text
               position={[4, -1, 0.2]}
               color={"#000000"}
@@ -306,7 +325,6 @@ function Visualizer({
                   <ESguitar
                     setColorList={setColorList}
                     colorList={colorList}
-               
                     tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
                     pos={[-1, -0.5, -0.3]}
                     files={files}
@@ -322,8 +340,8 @@ function Visualizer({
                 >
                   <Teleguitar
                     setColorList={setColorList}
-                    colorList={colorList}   
-                      tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+                    colorList={colorList}
+                    tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
                     pos={[-1, -0.8, -0.4]}
                     files={files}
                     selectedParts={selectedParts}
@@ -365,27 +383,52 @@ function Visualizer({
               setFiles={setFiles}
               model={model}
               showPreview={showPreview}
-             setShowPreview={setShowPreview}
+              setShowPreview={setShowPreview}
             />
           )}
         </div>
       </div>
-      <div id="select-guitarset">
-        <div className="floppydisk-wrap" 
-        onClick={(e) => 
-        (e.stopPropagation(), addGuitar())
-        }>
-       <FloppyDisk size={56} className="floppydisk" /></div>
+      <div id="save-guitar">
+        <Toast ref={toast} />
+        <ConfirmDialog
+          draggable={false}
+          className="confirm-save"
+          visible={visible}
+          onHide={() => setVisible(false)}
+          message="Are you sure you want to save this guitar?"
+          closeOnEscape
+          header="Confirmation"
+          label="Confirm"
+          icon="pi pi-exclamation-triangle"
+          accept={accept}
+          reject={reject}
+        />
+        <div className="card flex justify-content-center">
+          {/* <Button onClick={() => setVisible(true)} icon="pi pi-check" /> */}
+          <div
+            className="floppydisk-wrap"
+            onClick={(e) => (e.stopPropagation(), setVisible(true))}
+          >
+            <FloppyDisk size={56} className="floppydisk" />
+          </div>{" "}
+        </div>
         <div className="guitar-name">
           <input
             type="text"
             value={gtrNameInput}
             onChange={(e) => setGtrNameInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleGtrNameSet();
+              }
+            }}
             placeholder="Give it a name..."
           ></input>
-          <button onClick={handleGtrNameSet}><p>OK</p></button>
-        </div> 
-        
+          <button onClick={handleGtrNameSet}>
+            <p>OK</p>
+          </button>
+        </div>
+
         {/* <Button >
           Save this guitar
         </Button> */}

@@ -17,23 +17,17 @@
 }
 .canvas {
 height: 150vh;
-  /* max-width: 100vw; */
-  /* background-color: rgb(230, 230, 230); */
+
   background: rgb(196, 196, 196);
   z-index: 50 !important;
 }
 
-#select-guitarset {
+#save-guitar {
   position: absolute;
   margin-left: 70vw;
   z-index: 500;
 }
 
-#clickedPart .p-inputtext {
-  /* padding: 1.5rem 1.5rem ; */
-  /* position: absolute; */
-  /* box-shadow: 0 0 10px 5px rgba(129, 129, 129, 0.467); */
-}
 
   }
 
@@ -65,7 +59,7 @@ height: 150vh;
     z-index: 50 !important;
   }
   
-  #select-guitarset {
+  #save-guitar {
     position: absolute;
     /* margin-left: 70em; */
     z-index: 500;
@@ -84,8 +78,8 @@ height: 150vh;
   align-items: center;
 right: -20vw;
 top: -24vh;
-height: 9vh;
-width: 5.5vw;
+height: 75px;
+width: 75px;
 cursor: pointer;
 z-index: 600;
   background-color: #292929;

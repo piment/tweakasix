@@ -3,6 +3,7 @@ import Construction from "./Construction/MainConstruction";
 import { ShopContext } from "../context/shop-context";
 import { useSelector } from "react-redux";
 import './eshop.css'
+import { CaretRight } from "@phosphor-icons/react";
 function Cart() {
   const { addToCart, removeFromCart, getCartAmount } = useContext(ShopContext);
   const totalAmount = getCartAmount();
@@ -50,7 +51,11 @@ return null; // Return null for items without 'item' property
 
           <div className="cart-total"><p>Total: {totalAmount}€</p></div>
         </div>
+        <div className="delivery-checkout">
+
         <div className="country-delivery"> Average time estimated : 10 days</div>
+        <div className="checkout-button">Checkout<CaretRight id="arrow" size={32} weight="bold"/></div>
+        </div>
       </div>
     </div>
   );

@@ -9,8 +9,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from '../../public/DRACOLoader';
 import { ShopContext } from '../context/shop-context';
 import { ArrowCounterClockwise } from '@phosphor-icons/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCart } from '../features/CartReducer';
 function Parts() {
+
+  const dispatch = useDispatch()
 const {addToCart, removeFromCart, getCartAmount} = useContext(ShopContext)
 
 const totalAmount = getCartAmount()
@@ -26,11 +29,23 @@ const totalAmount = getCartAmount()
     });
   };
   
-  console.log(cartItems.qty)
+
+  const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
+
+  console.log(localStorage)
+  const handleClearStorage = () => {
+  
+    // localStorage.clear()
+    dispatch(clearCart())
+    // removeFromCart(itemsList)
+
+   
+  }
+
   useEffect(() => {
     getItems()
   },[])
-  const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
+
 
 
   return (
@@ -46,7 +61,7 @@ const totalAmount = getCartAmount()
 <div className='cart-actions'>
 
         <button onClick={() => removeFromCart(item)}>Remove</button>
-        <p> {cartItems.find(element => console.log(element.item.id, item.id) )}</p>
+        <p> {cartItems.find(element => element.item.id === item.id)?.qty || 0}</p>
         <button onClick={() => addToCart(item)}>Add to cart</button>
 </div>
       </div>)}
@@ -54,7 +69,7 @@ const totalAmount = getCartAmount()
 <div className='sub-cart'>
     <h3>{totalAmount}€</h3>
 
-    <button onClick={() => localStorage.clear()}>Clear cart <ArrowCounterClockwise size={26} /></button>
+    <button onClick={() => {handleClearStorage()} }>Clear cart <ArrowCounterClockwise size={26} /></button>
     </div>
     </div>
   )

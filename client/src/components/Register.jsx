@@ -82,21 +82,23 @@ const userAuthenticated = () => {
     <div className="login-register">
       <div className="login">
         <h2>Login</h2>
+        <label >Username</label>
         <input
           type="text"
-          placeholder="Username..."
+          // placeholder="Username..."
           onChange={(e) => {
             setUsername(e.target.value);
           }}
         />
+        <label >Password</label>
         <input
           type="password"
-          placeholder="Password..."
+          // placeholder="..."
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         />
-        <button onClick={login}> Login </button>
+        <button className="login-register-button" onClick={login}> Login </button>
       </div>
       <div className="registration">
         <h2>Sign up</h2>
@@ -135,14 +137,14 @@ const userAuthenticated = () => {
             setPasswordReg(e.target.value);
           }}
         />
-        <button onClick={register}> Register </button>
+        <button className="login-register-button" onClick={register}> Register </button>
       </div>
 
 
 
 </div>
 <div className="otherlog">
-  Signing up allows you to save your custom guitar(s) and will keep you updated on all new features!</div>      
+  <p>Signing up allows you to save your custom guitar(s) and will keep you updated on all new features!</p></div>      
     </div>
   );
 }

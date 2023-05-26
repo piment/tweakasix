@@ -44,7 +44,7 @@ function Tweaker({
         bounds={`parent`}
         allowAnyClick={false}
         // nodeRef={tweakDrag}
-        defaultPosition={{ x: 0, y: -150 }}
+        defaultPosition={{ x: 0, y: -210 }}
         onStart={(e) => e.preventDefault()}
       >
         <div className="pickers-main">
@@ -52,8 +52,7 @@ function Tweaker({
             <strong className="cursor">
               <img className="drag-icon" src={dragIcon} alt="Click to drag" />
             </strong>
-            <Button onClick={resetCam}><p>Reset Camera</p></Button>
-            <div className="pickers-colors" ref={tweakDrag}>
+            <Button id="resetcam" onClick={resetCam}><p>Reset Camera</p></Button>            <div className="pickers-colors" ref={tweakDrag}>
               <div className="body-colors">
                 <ColorPicker
                   tooltip="Front table"
@@ -244,7 +243,7 @@ function Tweaker({
             
               />
             </div>
-            <StackSimple size={56} onClick={()=> setShowPreview(!showPreview)}/>
+          <div className="dropzone-line" onClick={()=> setShowPreview(!showPreview)}>  <StackSimple id='dropzone-icon'size={56} />Add an image</div>
             <div className={model == 1  && showPreview ? "dropzone-visible" : "dropzone-hidden"}>
 
             <MyDropzone 
@@ -258,10 +257,13 @@ function Tweaker({
               showPreview={showPreview}
               />
               </div>
-            <Button onClick={() => dispatch(resetDrop(0))}><p>Remove image</p></Button>
+            
+
+            <Button id="remove" onClick={() => dispatch(resetDrop(0))}><p>Remove image</p></Button>
+           
           </div>
 
-          <div>{gtrPriceFull}</div>
+          <div className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFull}</div><span id='€'>€</span></div>
         </div>
       </Draggable>
     </>
