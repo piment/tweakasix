@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useCallback,
   Suspense,
+  useContext,
 } from "react";
 
 import "./Visualizer.css";
@@ -29,6 +30,9 @@ import { Button } from "primereact/button";
 import "./confirm-modal.css";
 import "./confirm-lara-blue.css";
 import { FloppyDisk } from "@phosphor-icons/react";
+import { ThemeContext } from "../App";
+import LightAmb from "./LightAmb";
+import LightRock from "./LightRock";
 
 function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
@@ -43,6 +47,9 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
   const [showPreview, setShowPreview] = useState(false);
+
+  const themeContext = useContext(ThemeContext)
+  const theme = themeContext.theme
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -258,6 +265,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     );
   }
 
+  console.log(themeContext)
   return (
     <div className="mainviz">
       <div className="visualizer">
@@ -282,15 +290,13 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
             />
             <Environment files="/decor_shop_2k.hdr" blur={2} />
 
-            <ambientLight intensity={0.4} />
-            <directionalLight
-              castShadow
-              intensity={3}
-              position={[0, 5, 0.5]}
-              lookAt={[0, 0, 0]}
-              shadow-mapSize-height={1024}
-              shadow-mapSize-width={1024}
-            />
+
+            {theme === "light" ?(
+
+              <LightAmb/>
+            ):
+            <LightRock/>
+            }
 
             <MotionConfig
               transition={{
