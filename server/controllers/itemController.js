@@ -14,7 +14,6 @@ const db = mysql.createPool({
 const getItemsFullGtr = (req, res) => {
   const sqlSelect = "SELECT * FROM parts where model_comp like ?";
   const model = req.query.model
-  console.log(model)
   db.query(sqlSelect, `%${model}%`,(err, result) => {
     res.send(result);
   });

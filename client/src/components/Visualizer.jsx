@@ -15,6 +15,7 @@ import {
   ContactShadows,
   Text,
 } from "@react-three/drei";
+import {Perf} from 'r3f-perf'
 import axios from "axios";
 import * as THREE from "three";
 import { MotionConfig } from "framer-motion";
@@ -33,6 +34,7 @@ import { FloppyDisk } from "@phosphor-icons/react";
 import { ThemeContext } from "../App";
 import LightAmb from "./LightAmb";
 import LightRock from "./LightRock";
+import PostProc from "./PostProc";
 
 function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
@@ -146,7 +148,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     });
   };
 
-  useEffect(() => {}, [handleSelectGuitar, model]);
+  useEffect(() => {}, [handleSelectGuitar, model, theme]);
 
   const [allTx, setAllTx] = useState([]);
 
@@ -265,7 +267,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     );
   }
 
-  console.log(themeContext)
+
   return (
     <div className="mainviz">
       <div className="visualizer">
@@ -288,25 +290,12 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               enableZoom={false}
               position0={[0, 0, 3]}
             />
-            <Environment files="/decor_shop_2k.hdr" blur={2} />
+    
 
 
-            {theme === "light" ?(
-
-              <LightAmb/>
-            ):
-            <LightRock/>
-            }
-
-            <MotionConfig
-              transition={{
-                type: "spring",
-                duration: 2,
-                ease: "easeInOut",
-                repeat: 0,
-                repeatDelay: 1,
-              }}
-            >
+            {theme === "light" &&(
+<>
+              <LightAmb/>     
               <ContactShadows
                 depthWrite={false}
                 position={[0, -1.3, 0]}
@@ -316,7 +305,27 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 far={5}
                 frames={100}
                 resolution={512}
-              />
+              /></>
+            )  }
+            {theme === "dark" && theme !== "light" &&(
+
+              <>
+            <LightRock theme={theme}/>
+            
+            </>
+            )}
+          
+         
+            <MotionConfig
+              transition={{
+                type: "spring",
+                duration: 2,
+                ease: "easeInOut",
+                repeat: 0,
+                repeatDelay: 1,
+              }}
+            >
+         
 
               <motion.group animate={model === "1" ? "es335" : "tele"}>
                 <motion.group
@@ -355,8 +364,9 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 </motion.group>
               </motion.group>
             </MotionConfig>
-            {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
+            <Perf deepAnalyze={true} position={"top-left"} />
             {gtrName && <GuitarName />}
+             <PostProc theme={theme} />
           </Canvas>
           {model == 1 && (
             <Tweaker
