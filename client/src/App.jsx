@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
+  useLocation
 } from "react-router-dom";
 import Home from "./components/Home";
 import Parts from "./components/Parts";
