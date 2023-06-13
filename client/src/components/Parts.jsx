@@ -11,7 +11,7 @@ import { ShopContext } from '../context/shop-context';
 import { ArrowCounterClockwise } from '@phosphor-icons/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../features/CartReducer';
-import Product from './Product';
+import Product from './ProductMain';
 function Parts() {
 
   const dispatch = useDispatch()
@@ -59,7 +59,7 @@ const totalAmount = getCartAmount()
         <h3>{item.name === "pickup_cover" ? (
           item.name = "Humbucker")
          : (toPascalCase(item.name))}</h3> 
- <Product/>
+ <Product classname="canvas" item={item.name}/>
         <p>{item.price}€</p>
 <div className='cart-actions'>
 

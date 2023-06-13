@@ -27,6 +27,12 @@
        border-radius: 6px;
 }
 
+.e-shop > .parts-products > .product > .canvas{
+background-color: red;
+border: red solid 2px;
+}
+
+
 
 .e-shop > .parts-products > .product > .cart-actions{
     display: flex;
