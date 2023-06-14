@@ -1,4 +1,4 @@
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import React, { useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -11,9 +11,8 @@ import Pickguard from "./Products/Pickguard";
 import SingleMetal from "./Products/SingleMetal";
 import SinglePlastic from "./Products/SinglePlastic";
 
-function Product({ item }){
+function Product({ item, activeItem }){
 
-console.log(item)
 
 useEffect(() => {
 
@@ -21,9 +20,16 @@ useEffect(() => {
 
   return (
     <>
-      <Canvas>
-      <OrbitControls/>
+      <Canvas camera={{
+        fov: 30,
+        position:[0,2,5]
+      }}>
+        {item === activeItem &&(
+
+          <OrbitControls/>
+        )}
    <ambientLight intensity={0.5}/>
+   <Environment preset="city" background blur={1}/>
       { item === 'Humbucker' &&
        ( <Humbucker key={item.id} />)
         } 

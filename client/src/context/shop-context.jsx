@@ -17,7 +17,6 @@ export const ShopContextProvider = (props) => {
   };
 
   const getCartAmount = () => {
-    console.log(cartItems);
     let totalAmount = 0;
     if (cartItems.length >= 1) {
       for (const itemId in cartItems) {
