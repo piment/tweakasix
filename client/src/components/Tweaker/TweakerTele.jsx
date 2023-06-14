@@ -13,6 +13,7 @@ import copperIcon from "../../assets/img/Copper.jpg";
 import MetalColors from "./MetalColors";
 import Draggable from "react-draggable";
 import dragIcon from "../../assets/drag.svg";
+import resetIcon from "../../assets/reset.svg";
 import MyDropzone from "../Dropzone";
 import { ArrowBendDoubleUpLeft, StackSimple } from "@phosphor-icons/react";
 

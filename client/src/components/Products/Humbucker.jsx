@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-
+import * as THREE from 'three'
 function Humbucker() {
 
-
-
-
-
   const { nodes, materials } = useGLTF("/products/product-humbucker.glb");
+
+materials.brass = new THREE.MeshStandardMaterial({ color : "#746106", metalness: 1, roughness:0.1})
+materials.hbcover = new THREE.MeshStandardMaterial({ color : "#c5a04e", metalness: 1, roughness:0.1})
+
   return (
     <group dispose={null}>
      <mesh
