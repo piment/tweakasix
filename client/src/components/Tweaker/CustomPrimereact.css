@@ -279,7 +279,7 @@
   height: 1.143rem;
   width: 1.143rem;
   background: #ffffff;
-  border: 2px solid #3b82f6;
+  border: 2px solid #b0b0b1;
   border-radius: 50%;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s,
     box-shadow 0.2s;
@@ -290,11 +290,11 @@
   box-shadow: 0 0 0 0.2rem #bfdbfe;
 }
 .p-slider .p-slider-range {
-  background: #3b82f6;
+  background: #3b3b3b;
 }
 .p-slider:not(.p-disabled) .p-slider-handle:hover {
-  background: #3b82f6;
-  border-color: #3b82f6;
+  background: #bababa;
+  border-color: #e1e1e1;
 }
 
 .p-tooltip {

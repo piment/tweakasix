@@ -28,9 +28,9 @@ function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="App" id={theme}>
-        <div className="switch">
+        {/* <div className="switch">
           <ReactSwitch onChange={toggleTheme} checked={theme === "dark"}/>
-        </div>
+        </div> */}
         <ShopContextProvider>
           <Router>
             <Navbar />

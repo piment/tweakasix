@@ -14,7 +14,7 @@ import MetalColors from "./MetalColors";
 import Draggable from "react-draggable";
 import dragIcon from "../../assets/drag.svg";
 import MyDropzone from "../Dropzone";
-import { StackSimple } from "@phosphor-icons/react";
+import { ArrowBendDoubleUpLeft, StackSimple } from "@phosphor-icons/react";
 
 function TweakerTele({
   colorList,
@@ -29,7 +29,7 @@ function TweakerTele({
   setFiles,
   model,
   showPreview,
-  setShowPreview
+  setShowPreview,
 }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ function TweakerTele({
         bounds={`parent`}
         allowAnyClick={false}
         // nodeRef={tweakDrag}
-        defaultPosition={{x : 0, y:-210}}
+        defaultPosition={{ x: 0, y: -210 }}
         onStart={(e) => e.preventDefault()}
       >
         <div className="pickers-main">
@@ -51,7 +51,19 @@ function TweakerTele({
             <strong className="cursor">
               <img className="drag-icon" src={dragIcon} alt="Click to drag" />
             </strong>
-            <Button id="resetcam" onClick={resetCam}><p>Reset Camera</p></Button>
+
+            <Button id="resetcam" onClick={resetCam}>
+              <p>Reset Camera</p>
+            </Button>
+            <Button id="resetgtr" onClick={() => resetGtr()}>
+              <p>Start again</p>{" "}
+              <img
+                className="reset-icon"
+                src={resetIcon}
+                size={24}
+                weight="bold"
+              />
+            </Button>
             <div className="pickers-colors" ref={tweakDrag}>
               <div className="body-colors">
                 <ColorPicker
@@ -204,7 +216,6 @@ function TweakerTele({
                 <MetalColors
                   setColorList={setColorList}
                   colorList={colorList}
- 
                 />
                 <ColorPicker
                   tooltip="Pickup cap"
@@ -240,30 +251,41 @@ function TweakerTele({
               </div>
             </div>
             <div className="pickers-sliders">
-              <Sliders
-                setColorList={setColorList}
-                colorList={colorList}
-         
+              <Sliders setColorList={setColorList} colorList={colorList} />
+            </div>
+            <div
+              className="dropzone-line"
+              onClick={() => setShowPreview(!showPreview)}
+            >
+              {" "}
+              <StackSimple id="dropzone-icon" size={56} />
+              Add an image
+            </div>
+            <div
+              className={
+                model == 2 && showPreview
+                  ? "dropzone-visible"
+                  : "dropzone-hidden"
+              }
+            >
+              <MyDropzone
+                selectedParts={selectedParts}
+                setSelectedParts={setSelectedParts}
+                setDropped={setDropped}
+                dropped={dropped}
+                files={files}
+                setFiles={setFiles}
+                model={model}
+                showPreview={showPreview}
               />
             </div>
-            <div className="dropzone-line" onClick={()=> setShowPreview(!showPreview)}>  <StackSimple id='dropzone-icon'size={56} />Add an image</div>
-            <div className={model == 2 && showPreview? "dropzone-visible" : "dropzone-hidden"}>
-
-            <MyDropzone 
-              selectedParts={selectedParts}
-              setSelectedParts={setSelectedParts}
-              setDropped={setDropped}
-              dropped={dropped}
-              files={files}
-              setFiles={setFiles}
-              model={model}
-              showPreview={showPreview}
-              />
-              </div>
-            <Button id='remove' onClick={() => dispatch(resetDrop(0))}><p>Remove image</p></Button>
+            <Button id="remove" onClick={() => dispatch(resetDrop(0))}>
+              <p>Remove image</p>
+            </Button>
           </div>{" "}
-
-          <div className="gtr-price-full">Total:<div className="price-number">&nbsp;{gtrPriceFull}€</div></div>
+          <div className="gtr-price-full">
+            Total:<div className="price-number">&nbsp;{gtrPriceFull}€</div>
+          </div>
         </div>
       </Draggable>
     </>

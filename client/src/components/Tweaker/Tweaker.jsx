@@ -10,9 +10,10 @@ import "./Choice-CustomPrimereact.css";
 import MetalColors from "./MetalColors";
 import Draggable from "react-draggable";
 import dragIcon from "../../assets/drag.svg";
+import resetIcon from "../../assets/reset.svg";
 import MyDropzone from "../Dropzone";
 import ChipsDemo from "./Multiselect";
-import { StackSimple } from "@phosphor-icons/react";
+import { ArrowBendDoubleUpLeft, StackSimple } from "@phosphor-icons/react";
 
 function Tweaker({
   colorList,
@@ -37,6 +38,34 @@ function Tweaker({
   useEffect(() => {}, [gtrPriceFull]);
 
   console.log(model, showPreview)
+
+const resetGtr = () => {
+ setColorList({...colorList, side: "#ffffff",
+ binding: "#ffffff",
+ tablefront: "#ffffff",
+ tableback: "#ffffff",
+ fretbinding: "#ffffff",
+ fretboard: "#ffffff",
+ inlay: "#ffffff",
+ nut: "#ffffff",
+ frets: "#ffffff",
+ knobs: "#ffffff",
+ pickup_cover: "#ffffff",
+ pickup_ring: "#ffffff",
+ neck: "#ffffff",
+ metal_pieces: "#ffffff",
+ gloss : 50,
+ scratch : 0,
+ wood : 0,
+ texture_path : "/1681217837265.png",
+ body: "#ffffff",
+ pickguard: "#ffffff",
+ single_plastic: "#ffffff",
+ single_metal: "#ffffff",
+ backplate: "#ffffff"})
+}
+
+
   return (
     <>
       <Draggable
@@ -52,7 +81,14 @@ function Tweaker({
             <strong className="cursor">
               <img className="drag-icon" src={dragIcon} alt="Click to drag" />
             </strong>
-            <Button id="resetcam" onClick={resetCam}><p>Reset Camera</p></Button>            <div className="pickers-colors" ref={tweakDrag}>
+
+
+            <Button id="resetcam" onClick={resetCam}><p>Reset Camera</p></Button>          
+            <Button id="resetgtr" onClick={() => resetGtr()}>
+              <p>Start again</p> 
+                <img className="reset-icon" src={resetIcon} size={24} weight="bold"/></Button> 
+
+              <div className="pickers-colors" ref={tweakDrag}>
               <div className="body-colors">
                 <ColorPicker
                   tooltip="Front table"
