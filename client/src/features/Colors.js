@@ -13,10 +13,10 @@ const initialState = {
         nut: "#ffffff",
         frets: "#ffffff",
         knobs: "#ffffff",
-        pickup_cover: "#ffffff",
+        pickup_cover: "#d0cbc4",
         pickup_ring: "#ffffff",
         neck: "#ffffff",
-        metal_pieces: "#ffffff",
+        metal_pieces: "#d0cbc4",
         gloss : 50,
         scratch : 0,
         wood : 0,
@@ -24,7 +24,7 @@ const initialState = {
         body: "#ffffff",
         pickguard: "#ffffff",
         single_plastic: "#ffffff",
-        single_metal: "#ffffff",
+        single_metal: "#d0cbc4",
         backplate: "#ffffff"
       },
   

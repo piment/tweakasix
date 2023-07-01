@@ -362,7 +362,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.pickup_screws.geometry}
             material={materials.pickup_cover}
-            material-color={colorList.metal_pieces}
+            material-color={colorList.pickup_cover}
           />
         </group>
         <group position={[0, -0.5, 0]} dispose={null} scale={2}>

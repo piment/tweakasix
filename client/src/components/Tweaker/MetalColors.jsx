@@ -31,22 +31,36 @@ function MetalColors({
     const selectedMetal = metals.find(
       (metals) => metals.name === e.target.name
     );
-    setPickupCover(selectedMetal);
-    setColorList({ ...colorList, pickup_cover: pickupCover.value });
-    dispatch(addColor(colorList));
+
+    if(selectedMetal !== pickupCover.name.toLowerCase()){
+       setPickupCover(selectedMetal);
+     
+    }
   };
 
   const handleMetalSelect = (e) => {
     const selectedMetal = metals.find(
       (metals) => metals.name === e.target.name
     );
-    setMetalType(selectedMetal);
-    setColorList({ ...colorList, metal_pieces: metalType.value });
-    dispatch(addColor(colorList));
+    if(selectedMetal !== metalType.name.toLowerCase()){
+console.log(metalType)
+      setMetalType(selectedMetal);
+     
+    }
   };
 
   // console.log('PICKUPS' , pickupCover.name ,'METAL', metalType.name)
 
+  useEffect(() =>{  
+ setColorList({ ...colorList, metal_pieces: metalType.value });
+      dispatch(addColor(colorList));
+  },[metalType])
+
+  useEffect(() =>{  
+    setColorList({ ...colorList, pickup_cover: pickupCover.value });
+  dispatch(addColor(colorList));
+
+},[ pickupCover])
   const op1 = useRef(null);
   const op2 = useRef(null);
 

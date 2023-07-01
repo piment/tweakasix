@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import "./TweakerMain.css";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor, triggerDrop, resetDrop } from "../../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
@@ -43,23 +44,54 @@ function Tweaker({
   const [metalType, setMetalType] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
 
 
-  const [metalVar, setMetalVar] = useState()
-const [singleVar, setSingleVar] = useState()
+  const [metalVar, setMetalVar] = useState([])
+  const [hBVar, setHBVar] = useState([])
 
   const getVariation = () => {    
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/itemsall/getvariation`, {}).then((res) => {
       const metalRes=res.data.filter(vari => vari.part_id ===19 )
     setMetalVar(metalRes);
-    const singleRes=res.data.filter(vari => vari.part_id === 15 )
-    setSingleVar(singleRes)
+    const HBRes=res.data.filter(vari => vari.part_id === 12 )
+    setHBVar(HBRes)
   })}
   
+  const [metalPrice, setMetalPrice] = useState()
+  const [hBPrice, setHBPrice] = useState()
+  const [gtrPriceFullVar, setGtrPriceFullVar] = useState(gtrPriceFull)
+
 
   useEffect(() => {}, [gtrPriceFull]);
 
-  console.log(model, showPreview)
+  useEffect(() => {
+    getVariation()
+      for(let i = 0; i< metalVar.length; i++){
+        
+        if(metalVar[i].color == metalType.name.toLowerCase()){
+          setMetalPrice(metalVar[i].price)
+    
+        }
+      };
+    
+      for(let i = 0; i< hBVar.length; i++){
+        
+        if(hBVar[i].color == pickupCover.name.toLowerCase()){
+    
+          setHBPrice(hBVar[i].price)
+    
+        }
+      }
+      
+      setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice)
+    },[ metalVar, hBVar])
+    
 
-const resetGtr = () => {
+
+  // console.log(model, showPreview)
+
+
+  const resetGtr = () => { 
+    setMetalType({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
+ setPickupCover({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
  setColorList({...colorList, side: "#ffffff",
  binding: "#ffffff",
  tablefront: "#ffffff",
@@ -81,9 +113,11 @@ const resetGtr = () => {
  body: "#ffffff",
  pickguard: "#ffffff",
  single_plastic: "#ffffff",
- single_metal: "#ffffff",
- backplate: "#ffffff"})
+ single_metal: "#d0cbc4",
+ backplate: "#ffffff"});
+ setGtrPriceFullVar(gtrPriceFull)
 }
+
 
 
   return (
@@ -322,7 +356,7 @@ const resetGtr = () => {
            
           </div>
 
-          <div className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFull}</div><span id='€'>€</span></div>
+          <div className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFullVar}</div><span id='€'>€</span></div>
         </div>
       </Draggable>
     </>
