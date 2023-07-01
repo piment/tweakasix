@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect, useContext } from "react";
 import "./TweakerMain.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ import resetIcon from "../../assets/reset.svg";
 import MyDropzone from "../Dropzone";
 import ChipsDemo from "./Multiselect";
 import silverIcon from "../../assets/img/Silver.jpg";
+import { ShopContext } from "../../context/shop-context";
 import { ArrowBendDoubleUpLeft, StackSimple } from "@phosphor-icons/react";
 
 function Tweaker({
@@ -30,7 +31,8 @@ function Tweaker({
   setFiles,
   model,
   showPreview,
-  setShowPreview
+  setShowPreview,
+  gtrName
 }) {
   const actual = useRef(null);
   const dispatch = useDispatch();
@@ -86,7 +88,7 @@ function Tweaker({
     
 
 
-  // console.log(model, showPreview)
+
 
 
   const resetGtr = () => { 
@@ -117,7 +119,44 @@ function Tweaker({
  backplate: "#ffffff"});
  setGtrPriceFullVar(gtrPriceFull)
 }
+const { addToCart, removeFromCart, getCartAmount, addGuitarToCart } = useContext(ShopContext);
 
+const addGtrToCart = () => {
+  const guitarToAdd = {
+        id: model,
+    gtrname: gtrName,
+    side: colorList.side,
+    binding: colorList.binding,
+    tablefront: colorList.tablefront,
+    tableback: colorList.tableback,
+    neckwood: colorList.neck,
+    fretboard: colorList.fretboard,
+    fretbinding: colorList.fretbinding,
+    frets: colorList.frets,
+    inlay: colorList.inlay,
+    nut: colorList.nut,
+    metal_pieces: colorList.metal_pieces,
+    pickup_cover: colorList.pickup_cover,
+    pickup_ring: colorList.pickup_ring,
+    knobs: colorList.knobs,
+    texture_path: colorList.texture_path,
+    gloss: colorList.gloss,
+    scratch: colorList.scratch,
+    body: colorList.body,
+    wood: colorList.wood,
+    pickguard: colorList.pickguard,
+    single_plastic: colorList.single_plastic,
+    single_metal: colorList.single_metal,
+    backplate: colorList.backplate,
+  };
+  // console.log(guitarToAdd)
+  const gtrAndPrice = {guitarToAdd, gtrPriceFullVar}
+ addGuitarToCart(gtrAndPrice)
+//  ,
+//   axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
+// guitarToAdd
+//   });
+};
 
 
   return (
@@ -356,7 +395,7 @@ function Tweaker({
            
           </div>
 
-          <div className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFullVar}</div><span id='€'>€</span></div>
+          <div onClick={addGtrToCart} className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFullVar}</div><span id='€'>€</span></div>
         </div>
       </Draggable>
     </>

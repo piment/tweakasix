@@ -43,7 +43,7 @@ function MetalColors({
       (metals) => metals.name === e.target.name
     );
     if(selectedMetal !== metalType.name.toLowerCase()){
-console.log(metalType)
+
       setMetalType(selectedMetal);
      
     }

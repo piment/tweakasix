@@ -21,11 +21,10 @@ function Selector() {
  const [changed, setChanged] = useState(false)
 const [gtrPrice, setGtrPrice] = useState(0)
 
-console.log('model', model)
 
   const getItemsFullGtr = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/itemsall`, {params :{model : model}}).then((res) => {
-      console.log(res.data)
+  
       setItemsListFull(res.data);
       // setVariationList(res.data[1])
     });
@@ -34,7 +33,7 @@ console.log('model', model)
 
   const getGuitars = () =>{
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`,{}).then((res) => {
-console.log(res.data)
+
       setGuitarsList(res.data)
 
     })
@@ -49,8 +48,7 @@ console.log(res.data)
    fullGtrPrice += itemsListFull[i].price
   
   }
-  // return fullGtrPrice  
-  // console.log(fullGtrPrice)
+
  setGtrPrice(fullGtrPrice)
 }
 

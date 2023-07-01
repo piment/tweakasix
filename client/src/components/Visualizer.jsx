@@ -59,7 +59,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       .join(" ");
 
   const gtrPriceFull = gtrPrice;
-  console.log(gtrPriceFull);
+
 
   const dispatch = useDispatch();
 
@@ -167,7 +167,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     setColorList(colus);
   }, []);
 
-  console.log(loggedIn);
+
   const handleGtrNameSet = () => {
     setGtrName(gtrNameInput);
     setGtrNameInput("");
@@ -383,6 +383,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               model={model}
               showPreview={showPreview}
               setShowPreview={setShowPreview}
+              gtrName={gtrName}
             />
           )}
           {model == 2 && (
@@ -400,6 +401,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               model={model}
               showPreview={showPreview}
               setShowPreview={setShowPreview}
+              gtrName={gtrName}
             />
           )}
         </div>

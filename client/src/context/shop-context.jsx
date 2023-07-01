@@ -1,11 +1,12 @@
 import React, { createContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartAdd, cartRemove } from "../features/CartReducer";
+import { cartAdd, cartRemove, addCustomToCart } from "../features/CartReducer";
 export const ShopContext = createContext([]);
 
 export const ShopContextProvider = (props) => {
   const cartItemsObj = useSelector((state) => state.cart_items.cartItems);
   const cartItems = Object.values(cartItemsObj).filter((item) => item !== null);
+  const cartGuitars = useSelector((state) => state.cart_items.cartGuitars)
   const dispatch = useDispatch();
 
   const addToCart = (item) => {
@@ -27,13 +28,19 @@ export const ShopContextProvider = (props) => {
           totalAmount += cartItem.qty * item.price;
         }
       }
-    } else if (cartItems.length <= 0) {
+    }else if (cartGuitars.length >= 1) {
+      totalAmount = totalAmount + cartGuitars.gtrPriceFullVar
+    } else if (cartGuitars.length <= 0 && cartItems.length <= 0) {
       totalAmount = 0;
     }
     return totalAmount;
   };
 
-  const contextValue = { cartItems, addToCart, removeFromCart, getCartAmount };
+  const addGuitarToCart = (guitarToAdd) => {
+    dispatch(addCustomToCart(guitarToAdd))
+  }
+
+  const contextValue = { cartItems, addToCart, removeFromCart, getCartAmount, addGuitarToCart };
   return (
     <ShopContext.Provider value={contextValue}>
       {props.children}
