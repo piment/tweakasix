@@ -23,7 +23,6 @@ const getItems = (req, res) => {
 const getVariation = (req, res) => {
   const sqlSelect = "SELECT * FROM part_variations"
   db.query(sqlSelect, (err, result)=> {
-
     res.send(result)
   })
 }

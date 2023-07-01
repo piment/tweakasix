@@ -62,6 +62,7 @@ const getVariation = () => {
 
 
 const [metalPrice, setMetalPrice] = useState()
+const [singlePrice, setSinglePrice] = useState()
 const [gtrPriceFullVar, setGtrPriceFullVar] = useState(gtrPriceFull)
   useEffect(() => {
 
@@ -75,16 +76,28 @@ getVariation()
     
     if(metalVar[i].color == metalType.name.toLowerCase()){
       setMetalPrice(metalVar[i].price)
-      // return a
+
+    }
+  };
+
+  for(let i = 0; i< singleVar.length; i++){
+    
+    if(singleVar[i].color == pickupCover.name.toLowerCase()){
+
+      setSinglePrice(singleVar[i].price)
+
     }
   }
   
-  setGtrPriceFullVar(gtrPriceFull + metalPrice)
+  setGtrPriceFullVar(gtrPriceFull + metalPrice + singlePrice)
 },[ metalVar, singleVar])
 
 
 
-  const resetGtr = () => {
+
+  const resetGtr = () => { 
+       setMetalType({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
+    setPickupCover({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
     setColorList({...colorList, side: "#ffffff",
     binding: "#ffffff",
     tablefront: "#ffffff",
@@ -106,8 +119,9 @@ getVariation()
     body: "#ffffff",
     pickguard: "#ffffff",
     single_plastic: "#ffffff",
-    single_metal: "#ffffff",
-    backplate: "#ffffff"})
+    single_metal: "#d0cbc4",
+    backplate: "#ffffff"});
+    setGtrPriceFullVar(gtrPriceFull)
    }
    
 
