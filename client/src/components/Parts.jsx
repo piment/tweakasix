@@ -32,7 +32,6 @@ function Parts() {
   const getItems = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items`, {}).then((res) => {
       setItemsList(res.data);
-      // setVariationList(res.data[1])
     });
   };
 

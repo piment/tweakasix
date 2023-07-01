@@ -29,7 +29,7 @@ useEffect(() => {
           <OrbitControls/>
         )}
    <ambientLight intensity={0.5}/>
-   <Environment preset="city" background blur={1}/>
+   <Environment files="colorful_studio_2k.hdr" background blur={1}/>
       { item === 'Humbucker' &&
        ( <Humbucker key={item.id} />)
         } 

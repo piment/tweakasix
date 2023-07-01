@@ -13,6 +13,7 @@ import dragIcon from "../../assets/drag.svg";
 import resetIcon from "../../assets/reset.svg";
 import MyDropzone from "../Dropzone";
 import ChipsDemo from "./Multiselect";
+import silverIcon from "../../assets/img/Silver.jpg";
 import { ArrowBendDoubleUpLeft, StackSimple } from "@phosphor-icons/react";
 
 function Tweaker({
@@ -34,6 +35,25 @@ function Tweaker({
   const dispatch = useDispatch();
 
   const tweakDrag = useRef();
+
+
+
+
+  const [pickupCover, setPickupCover] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
+  const [metalType, setMetalType] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
+
+
+  const [metalVar, setMetalVar] = useState()
+const [singleVar, setSingleVar] = useState()
+
+  const getVariation = () => {    
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/itemsall/getvariation`, {}).then((res) => {
+      const metalRes=res.data.filter(vari => vari.part_id ===19 )
+    setMetalVar(metalRes);
+    const singleRes=res.data.filter(vari => vari.part_id === 15 )
+    setSingleVar(singleRes)
+  })}
+  
 
   useEffect(() => {}, [gtrPriceFull]);
 
@@ -240,7 +260,10 @@ const resetGtr = () => {
                 <MetalColors
                   setColorList={setColorList}
                   colorList={colorList}
-               
+                  setPickupCover={setPickupCover}
+                  setMetalType={setMetalType}
+                  pickupCover={pickupCover}
+                  metalType={metalType}
                 />
                 <ColorPicker
                   tooltip="Pickup rings"

@@ -50,7 +50,7 @@ console.log(res.data)
   
   }
   // return fullGtrPrice  
-  console.log(fullGtrPrice)
+  // console.log(fullGtrPrice)
  setGtrPrice(fullGtrPrice)
 }
 

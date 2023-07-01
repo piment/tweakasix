@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import "./TweakerMain.css";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor, resetDrop } from "../../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
@@ -31,11 +32,88 @@ function TweakerTele({
   model,
   showPreview,
   setShowPreview,
+
 }) {
   // const actual = useRef(null)
   const dispatch = useDispatch();
 
   const tweakDrag = useRef();
+
+
+
+
+  const [pickupCover, setPickupCover] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
+  const [metalType, setMetalType] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
+
+ 
+ 
+
+
+const [metalVar, setMetalVar] = useState([])
+const [singleVar, setSingleVar] = useState([])
+
+const getVariation = () => {    
+  axios.get(`${import.meta.env.VITE_BACKEND_URL}/itemsall/getvariation`, {}).then((res) => {
+    const metalRes=res.data.filter(vari => vari.part_id ===19 )
+  setMetalVar(metalRes);
+  const singleRes=res.data.filter(vari => vari.part_id === 15 )
+  setSingleVar(singleRes)
+})}
+
+
+const [metalPrice, setMetalPrice] = useState()
+const [gtrPriceFullVar, setGtrPriceFullVar] = useState(gtrPriceFull)
+  useEffect(() => {
+
+
+
+}, [gtrPriceFull]);
+
+useEffect(() => {
+getVariation()
+  for(let i = 0; i< metalVar.length; i++){
+    
+    if(metalVar[i].color == metalType.name.toLowerCase()){
+      setMetalPrice(metalVar[i].price)
+      // return a
+    }
+  }
+  
+  setGtrPriceFullVar(gtrPriceFull + metalPrice)
+},[ metalVar, singleVar])
+
+
+
+  const resetGtr = () => {
+    setColorList({...colorList, side: "#ffffff",
+    binding: "#ffffff",
+    tablefront: "#ffffff",
+    tableback: "#ffffff",
+    fretbinding: "#ffffff",
+    fretboard: "#ffffff",
+    inlay: "#ffffff",
+    nut: "#ffffff",
+    frets: "#ffffff",
+    knobs: "#ffffff",
+    pickup_cover: "#ffffff",
+    pickup_ring: "#ffffff",
+    neck: "#ffffff",
+    metal_pieces: "#ffffff",
+    gloss : 50,
+    scratch : 0,
+    wood : 0,
+    texture_path : "/1681217837265.png",
+    body: "#ffffff",
+    pickguard: "#ffffff",
+    single_plastic: "#ffffff",
+    single_metal: "#ffffff",
+    backplate: "#ffffff"})
+   }
+   
+
+
+  
+
 
   return (
     <>
@@ -217,6 +295,10 @@ function TweakerTele({
                 <MetalColors
                   setColorList={setColorList}
                   colorList={colorList}
+                  pickupCover={pickupCover}
+                  metalType={metalType}
+                  setPickupCover={setPickupCover}
+                  setMetalType={setMetalType}
                 />
                 <ColorPicker
                   tooltip="Pickup cap"
@@ -284,8 +366,8 @@ function TweakerTele({
               <p>Remove image</p>
             </Button>
           </div>{" "}
-          <div className="gtr-price-full">
-            Total:<div className="price-number">&nbsp;{gtrPriceFull}€</div>
+          <div  className="gtr-price-full">
+            Total:<div className="price-number">&nbsp;{gtrPriceFullVar}€</div>
           </div>
         </div>
       </Draggable>
