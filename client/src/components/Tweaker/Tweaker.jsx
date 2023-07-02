@@ -121,10 +121,21 @@ function Tweaker({
 }
 const { addToCart, removeFromCart, getCartAmount, addGuitarToCart } = useContext(ShopContext);
 
+
+const currentDate = new Date();
+
+const currentDayOfMonth = currentDate.getDate();
+const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
+const currentYear = currentDate.getFullYear();
+
+const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+// "27-11-2020"
+
+// console.log(dateString)
 const addGtrToCart = () => {
   const guitarToAdd = {
         id: model,
-    gtrname: gtrName,
+    gtrname: gtrName != null ? gtrName : 'guitar'+ dateString,
     side: colorList.side,
     binding: colorList.binding,
     tablefront: colorList.tablefront,
@@ -149,13 +160,42 @@ const addGtrToCart = () => {
     single_metal: colorList.single_metal,
     backplate: colorList.backplate,
   };
-  // console.log(guitarToAdd)
   const gtrAndPrice = {guitarToAdd, gtrPriceFullVar}
  addGuitarToCart(gtrAndPrice)
-//  ,
-//   axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
-// guitarToAdd
-//   });
+ ,
+  axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
+  id: model,
+    gtrname: gtrName != '' ? gtrName : 'guitar'+ dateString,
+    side: colorList.side,
+    binding: colorList.binding,
+    tablefront: colorList.tablefront,
+    tableback: colorList.tableback,
+    neckwood: colorList.neck,
+    fretboard: colorList.fretboard,
+    fretbinding: colorList.fretbinding,
+    frets: colorList.frets,
+    inlay: colorList.inlay,
+    nut: colorList.nut,
+    metal_pieces: colorList.metal_pieces,
+    pickup_cover: colorList.pickup_cover,
+    pickup_ring: colorList.pickup_ring,
+    knobs: colorList.knobs,
+    texture_path: colorList.texture_path,
+    gloss: colorList.gloss,
+    scratch: colorList.scratch,
+    body: colorList.body,
+    wood: colorList.wood,
+    pickguard: colorList.pickguard,
+    single_plastic: colorList.single_plastic,
+    single_metal: colorList.single_metal,
+    backplate: colorList.backplate,
+  }) .then((res) => {
+    const lastEntryId = res.data.id;
+    // console.log(lastEntryId);
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitartocart`,
+   {guitar_id : lastEntryId}
+    // Do something with the last entry ID
+  )})
 };
 
 

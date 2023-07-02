@@ -116,7 +116,7 @@ const addGuitar = (req, res) => {
               throw err;
             }
             console.log(result);
-            res.sendStatus(200);
+            res.status(200).json({ id: addedId });
           }
         );
       }
@@ -161,6 +161,16 @@ WHERE g.name = ?`;
 };
 
 
+const guitarToCart = (req, res) => {
+  const cartGtrId = req.body.guitar_id
+  const sqlInsert = 'INSERT INTO cart_guitar (guitar_id) VALUES (?)'
+  db.query(sqlInsert, cartGtrId, (err, result) => {
+    res.sendStatus(200)
+  })
+console.log('REQQQQQ', req.body)
+
+}
 
 
-module.exports = { getItemsFullGtr, addGuitar, getGuitars, fetchGuitar };
+
+module.exports = { getItemsFullGtr, addGuitar, getGuitars, fetchGuitar, guitarToCart };
