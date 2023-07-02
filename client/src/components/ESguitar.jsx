@@ -41,7 +41,7 @@ function ESguitar({
   const triggs = useSelector((state) => state.guitar_set.dropped);
 
 const texturesFromReducer = useSelector((state)=> state.texture_data.texture_assign)
-// console.log(texturesFromReducer)
+
 
   const [scratches, scratchesrough] = useTexture([
     "guitar/imgs/DefaultMaterial_Roughness2.jpg",
@@ -58,7 +58,7 @@ const texturesFromReducer = useSelector((state)=> state.texture_data.texture_ass
 // let up_texture_path =  files.length !== 0 ? files[0].file.path : ''
 
 //  [0].file.path
-  // console.log(files[0].file.path)
+
 //  const [txUse, setTxUse] = useState(path + colorList.texture_path);
 
   const woodFull = useTexture("335Wood-min.png");
@@ -362,7 +362,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.pickup_screws.geometry}
             material={materials.pickup_cover}
-            material-color={colorList.metal_pieces}
+            material-color={colorList.pickup_cover}
           />
         </group>
         <group position={[0, -0.5, 0]} dispose={null} scale={2}>

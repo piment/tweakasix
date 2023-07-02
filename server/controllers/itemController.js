@@ -14,7 +14,6 @@ const db = mysql.createPool({
 const getItemsFullGtr = (req, res) => {
   const sqlSelect = "SELECT * FROM parts where model_comp like ?";
   const model = req.query.model
-  console.log(model)
   db.query(sqlSelect, `%${model}%`,(err, result) => {
     res.send(result);
   });
@@ -117,7 +116,7 @@ const addGuitar = (req, res) => {
               throw err;
             }
             console.log(result);
-            res.sendStatus(200);
+            res.status(200).json({ id: addedId });
           }
         );
       }
@@ -162,6 +161,16 @@ WHERE g.name = ?`;
 };
 
 
+const guitarToCart = (req, res) => {
+  const cartGtrId = req.body.guitar_id
+  const sqlInsert = 'INSERT INTO cart_guitar (guitar_id) VALUES (?)'
+  db.query(sqlInsert, cartGtrId, (err, result) => {
+    res.sendStatus(200)
+  })
+console.log('REQQQQQ', req.body)
+
+}
 
 
-module.exports = { getItemsFullGtr, addGuitar, getGuitars, fetchGuitar };
+
+module.exports = { getItemsFullGtr, addGuitar, getGuitars, fetchGuitar, guitarToCart };

@@ -4,6 +4,7 @@
   /* Styles */
 
 
+
 .visualizer {
 
   height: 140vh;
@@ -15,12 +16,21 @@
 .mainviz{
   height: 140vh;
 }
-.canvas {
+#light .canvas {
 height: 150vh;
 
   background: rgb(196, 196, 196);
   z-index: 50 !important;
+  transition: 0.3s;
 }
+#dark .canvas {
+  height: 150vh;
+  
+    background: rgb(16, 16, 16);
+    z-index: 50 !important;
+    transition: 0.3s;
+  }
+  
 
 #save-guitar {
   position: absolute;

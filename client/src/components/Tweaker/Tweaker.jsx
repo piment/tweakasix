@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect, useContext } from "react";
 import "./TweakerMain.css";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor, triggerDrop, resetDrop } from "../../features/Colors";
 import { ColorPicker } from "primereact/colorpicker";
@@ -10,9 +11,12 @@ import "./Choice-CustomPrimereact.css";
 import MetalColors from "./MetalColors";
 import Draggable from "react-draggable";
 import dragIcon from "../../assets/drag.svg";
+import resetIcon from "../../assets/reset.svg";
 import MyDropzone from "../Dropzone";
 import ChipsDemo from "./Multiselect";
-import { StackSimple } from "@phosphor-icons/react";
+import silverIcon from "../../assets/img/Silver.jpg";
+import { ShopContext } from "../../context/shop-context";
+import { ArrowBendDoubleUpLeft, StackSimple } from "@phosphor-icons/react";
 
 function Tweaker({
   colorList,
@@ -27,16 +31,174 @@ function Tweaker({
   setFiles,
   model,
   showPreview,
-  setShowPreview
+  setShowPreview,
+  gtrName
 }) {
   const actual = useRef(null);
   const dispatch = useDispatch();
 
   const tweakDrag = useRef();
 
+
+
+
+  const [pickupCover, setPickupCover] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
+  const [metalType, setMetalType] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
+
+
+  const [metalVar, setMetalVar] = useState([])
+  const [hBVar, setHBVar] = useState([])
+
+  const getVariation = () => {    
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/itemsall/getvariation`, {}).then((res) => {
+      const metalRes=res.data.filter(vari => vari.part_id ===19 )
+    setMetalVar(metalRes);
+    const HBRes=res.data.filter(vari => vari.part_id === 12 )
+    setHBVar(HBRes)
+  })}
+  
+  const [metalPrice, setMetalPrice] = useState()
+  const [hBPrice, setHBPrice] = useState()
+  const [gtrPriceFullVar, setGtrPriceFullVar] = useState(gtrPriceFull)
+
+
   useEffect(() => {}, [gtrPriceFull]);
 
-  console.log(model, showPreview)
+  useEffect(() => {
+    getVariation()
+      for(let i = 0; i< metalVar.length; i++){
+        
+        if(metalVar[i].color == metalType.name.toLowerCase()){
+          setMetalPrice(metalVar[i].price)
+    
+        }
+      };
+    
+      for(let i = 0; i< hBVar.length; i++){
+        
+        if(hBVar[i].color == pickupCover.name.toLowerCase()){
+    
+          setHBPrice(hBVar[i].price)
+    
+        }
+      }
+      
+      setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice)
+    },[ metalVar, hBVar])
+    
+
+
+
+
+
+  const resetGtr = () => { 
+    setMetalType({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
+ setPickupCover({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
+ setColorList({...colorList, side: "#ffffff",
+ binding: "#ffffff",
+ tablefront: "#ffffff",
+ tableback: "#ffffff",
+ fretbinding: "#ffffff",
+ fretboard: "#ffffff",
+ inlay: "#ffffff",
+ nut: "#ffffff",
+ frets: "#ffffff",
+ knobs: "#ffffff",
+ pickup_cover: "#ffffff",
+ pickup_ring: "#ffffff",
+ neck: "#ffffff",
+ metal_pieces: "#ffffff",
+ gloss : 50,
+ scratch : 0,
+ wood : 0,
+ texture_path : "/1681217837265.png",
+ body: "#ffffff",
+ pickguard: "#ffffff",
+ single_plastic: "#ffffff",
+ single_metal: "#d0cbc4",
+ backplate: "#ffffff"});
+ setGtrPriceFullVar(gtrPriceFull)
+}
+const { addToCart, removeFromCart, getCartAmount, addGuitarToCart } = useContext(ShopContext);
+
+
+const currentDate = new Date();
+
+const currentDayOfMonth = currentDate.getDate();
+const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
+const currentYear = currentDate.getFullYear();
+
+const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+// "27-11-2020"
+
+// console.log(dateString)
+const addGtrToCart = () => {
+  const guitarToAdd = {
+        id: model,
+    gtrname: gtrName != null ? gtrName : 'guitar'+ dateString,
+    side: colorList.side,
+    binding: colorList.binding,
+    tablefront: colorList.tablefront,
+    tableback: colorList.tableback,
+    neckwood: colorList.neck,
+    fretboard: colorList.fretboard,
+    fretbinding: colorList.fretbinding,
+    frets: colorList.frets,
+    inlay: colorList.inlay,
+    nut: colorList.nut,
+    metal_pieces: colorList.metal_pieces,
+    pickup_cover: colorList.pickup_cover,
+    pickup_ring: colorList.pickup_ring,
+    knobs: colorList.knobs,
+    texture_path: colorList.texture_path,
+    gloss: colorList.gloss,
+    scratch: colorList.scratch,
+    body: colorList.body,
+    wood: colorList.wood,
+    pickguard: colorList.pickguard,
+    single_plastic: colorList.single_plastic,
+    single_metal: colorList.single_metal,
+    backplate: colorList.backplate,
+  };
+  const gtrAndPrice = {guitarToAdd, gtrPriceFullVar}
+ addGuitarToCart(gtrAndPrice)
+ ,
+  axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
+  id: model,
+    gtrname: gtrName != '' ? gtrName : 'guitar'+ dateString,
+    side: colorList.side,
+    binding: colorList.binding,
+    tablefront: colorList.tablefront,
+    tableback: colorList.tableback,
+    neckwood: colorList.neck,
+    fretboard: colorList.fretboard,
+    fretbinding: colorList.fretbinding,
+    frets: colorList.frets,
+    inlay: colorList.inlay,
+    nut: colorList.nut,
+    metal_pieces: colorList.metal_pieces,
+    pickup_cover: colorList.pickup_cover,
+    pickup_ring: colorList.pickup_ring,
+    knobs: colorList.knobs,
+    texture_path: colorList.texture_path,
+    gloss: colorList.gloss,
+    scratch: colorList.scratch,
+    body: colorList.body,
+    wood: colorList.wood,
+    pickguard: colorList.pickguard,
+    single_plastic: colorList.single_plastic,
+    single_metal: colorList.single_metal,
+    backplate: colorList.backplate,
+  }) .then((res) => {
+    const lastEntryId = res.data.id;
+    // console.log(lastEntryId);
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitartocart`,
+   {guitar_id : lastEntryId}
+    // Do something with the last entry ID
+  )})
+};
+
+
   return (
     <>
       <Draggable
@@ -52,7 +214,14 @@ function Tweaker({
             <strong className="cursor">
               <img className="drag-icon" src={dragIcon} alt="Click to drag" />
             </strong>
-            <Button id="resetcam" onClick={resetCam}><p>Reset Camera</p></Button>            <div className="pickers-colors" ref={tweakDrag}>
+
+
+            <Button id="resetcam" onClick={resetCam}><p>Reset Camera</p></Button>          
+            <Button id="resetgtr" onClick={() => resetGtr()}>
+              <p>Start again</p> 
+                <img className="reset-icon" src={resetIcon} size={24} weight="bold"/></Button> 
+
+              <div className="pickers-colors" ref={tweakDrag}>
               <div className="body-colors">
                 <ColorPicker
                   tooltip="Front table"
@@ -204,7 +373,10 @@ function Tweaker({
                 <MetalColors
                   setColorList={setColorList}
                   colorList={colorList}
-               
+                  setPickupCover={setPickupCover}
+                  setMetalType={setMetalType}
+                  pickupCover={pickupCover}
+                  metalType={metalType}
                 />
                 <ColorPicker
                   tooltip="Pickup rings"
@@ -263,7 +435,7 @@ function Tweaker({
            
           </div>
 
-          <div className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFull}</div><span id='€'>€</span></div>
+          <div onClick={addGtrToCart} className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFullVar}</div><span id='€'>€</span></div>
         </div>
       </Draggable>
     </>

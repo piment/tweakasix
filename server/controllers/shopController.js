@@ -12,7 +12,7 @@ const db = mysql.createPool({
 });
 
 const getItems = (req, res) => {
-  const sqlSelect = "SELECT * FROM parts WHERE spare =1";
+  const sqlSelect = "SELECT * FROM parts WHERE spare = 1";
   db.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -20,5 +20,14 @@ const getItems = (req, res) => {
 
 
 
+const getVariation = (req, res) => {
+  const sqlSelect = "SELECT * FROM part_variations"
+  db.query(sqlSelect, (err, result)=> {
+    res.send(result)
+  })
+}
 
-module.exports = { getItems };
+
+
+
+module.exports = { getItems, getVariation };

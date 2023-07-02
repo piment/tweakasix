@@ -10,6 +10,9 @@ function Cart() {
   const cartItemsObj = useSelector((state) => state.cart_items.cartItems)
   console.log(cartItemsObj)
   const cartItems = Object.values(cartItemsObj).filter(item => item && item !== null);
+    const cartGuitarsObj = useSelector((state) => state.cart_items.cartGuitars)
+  console.log(cartGuitarsObj)
+  const cartGuitars = Object.values(cartGuitarsObj).filter(item => item && item !== null);
   const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
 
 
@@ -40,8 +43,27 @@ if (itemInfo.item) { // Add this check
 return null; // Return null for items without 'item' property
 })
 )}
+{cartGuitars && cartGuitars.length != 0 && (cartGuitars.map((itemInfo) => {
 
-          {cartItems.length === 0 &&(
+if (itemInfo.item) { // Add this check
+  return (
+    <div key={itemInfo.id} className="cart-list-item">
+      <div className="item-unit">
+        <h2>{toPascalCase(itemInfo.item.name)}</h2>
+        <p id="unit"> unit: {itemInfo.item.price}€</p>
+      </div>
+      <div className='cart-actions'>
+        <button onClick={() => removeFromCart(itemInfo.item)}>-</button>
+        <p>{itemInfo.qty}</p>
+        <button onClick={() => addToCart(itemInfo.item)}>+</button>
+      </div>
+    </div>
+  );
+}
+return null; // Return null for items without 'item' property
+})
+)}
+          {cartItems.length === 0 && cartGuitars.length === 0 &&(
         <div className="empty-cart"><p id="title">Your cart is empty</p>
 
        <div className="empty-redirect"> 

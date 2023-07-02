@@ -3,6 +3,8 @@
   /* Styles */
 
 
+
+
 .pickers-main {
   background-color: rgba(108, 108, 108, 0.287);
   /* height: 65vh; */
@@ -34,12 +36,20 @@ margin-bottom: 1rem;
 
 }
 .drag-icon {
-scale: 2;
-transform: rotate(90deg);
-fill: white;
-cursor:grab;
-}
+  scale: 2;
+  transform: rotate(90deg);
+  fill: white;
+  cursor:grab;
+  }
 
+
+/* 
+.reseters{
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  margin-top: -1em;
+} */
 
 .p-button#resetcam{
 
@@ -60,6 +70,7 @@ flex-direction: row;
 align-items: center;
 cursor: pointer;
 font-variant: small-caps;
+/* margin-top: -1vh; */
 
 }
 
@@ -79,6 +90,51 @@ border: solid 2px #ffffff;
   filter: drop-shadow(2px 2px 2px  #a2a2a2);
  }
 
+
+#resetgtr{
+  /* margin: auto; */
+position: absolute;
+  font-size: 14px;
+  color: #fff;
+  background-color: #616161;
+  padding: 0px 5px;
+  border: solid #ffffff 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  /* border-radius: 50px 0px; */
+  transition : 371ms;
+  /* transform: translateY(0); */
+  display: flex;
+  /* width: 3em; */
+  flex-direction: row-reverse;
+  /* align-items: flex-end; */
+  /* justify-content: flex-end; */
+  cursor: pointer;
+  font-variant: small-caps;
+  right: 4%;
+  top:2%
+  
+}
+
+#resetgtr > p {
+  display: none;
+}
+#resetgtr:hover{
+
+  transition : 0.71s;
+  padding: 0px 20%;
+  transform : translateY(-0px);
+  background-color: #fff;
+  color: #636363;
+  border: solid 2px #ffffff;
+  }
+  #resetgtr:hover > .reset-icon {
+    filter: invert(90%) ;
+   }
+ #resetgtr:hover > p{
+display: inline;
+
+
+ }
 .pickers-colors {
   display: flex;
   flex-direction: column;
@@ -191,6 +247,8 @@ border: solid 2px #ffffff;
   margin-bottom: 2vh;
   display: none;
 }
+
+
 
 
 .gtr-price-full{

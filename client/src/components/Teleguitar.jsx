@@ -148,6 +148,8 @@ Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromR
     });
   });
 
+  console.log(materials.body.color)
+
 // console.log(woodMatTele)
 
   return (
@@ -219,7 +221,7 @@ Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromR
         geometry={nodes.body.geometry}
         material={materials.body}
         material-color={colorList.body}
-        material-map={texturesFromReducer.Body !== null ? partTextures.Body : ''}
+        // material-map={texturesFromReducer.Body !== null ? partTextures.Body : ''}
         // material-map={triggs > 0 ? reactMap : ''}
       />
       <mesh

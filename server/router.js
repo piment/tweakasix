@@ -3,9 +3,9 @@ const fs = require('fs')
 const router = express.Router();
 
 // const movieController = require("../controllers/movieController");
-const {  addGuitar, getGuitars, fetchGuitar, getItemsFullGtr} = require("./controllers/itemController");
+const {  addGuitar, getGuitars, fetchGuitar, getItemsFullGtr, guitarToCart} = require("./controllers/itemController");
 const {register, loginGet, loginPost, isUserAuth, userInfo} = require ("./controllers/userController")
-const {getItems} = require('./controllers/shopController')
+const {getItems, getVariation} = require('./controllers/shopController')
 const FilePond = require('react-filepond')
 const multer  = require('multer');
 
@@ -28,6 +28,8 @@ router.get("/itemsall", getItemsFullGtr);
 router.post("/items/saveguitar", addGuitar);
 router.get("/items/getguitars",getGuitars)
 router.get("/items/fetchguitar",fetchGuitar)
+router.get("/itemsall/getvariation", getVariation)
+router.post("/items/saveguitartocart", guitarToCart)
 
 router.post("/register", register)
 

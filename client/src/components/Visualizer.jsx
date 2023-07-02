@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useCallback,
   Suspense,
+  useContext,
 } from "react";
 
 import "./Visualizer.css";
@@ -14,6 +15,7 @@ import {
   ContactShadows,
   Text,
 } from "@react-three/drei";
+import {Perf} from 'r3f-perf'
 import axios from "axios";
 import * as THREE from "three";
 import { MotionConfig } from "framer-motion";
@@ -29,6 +31,10 @@ import { Button } from "primereact/button";
 import "./confirm-modal.css";
 import "./confirm-lara-blue.css";
 import { FloppyDisk } from "@phosphor-icons/react";
+import { ThemeContext } from "../App";
+import LightAmb from "./LightAmb";
+import LightRock from "./LightRock";
+import PostProc from "./PostProc";
 
 function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
@@ -44,13 +50,16 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const [dropped, setDropped] = useState(triggs);
   const [showPreview, setShowPreview] = useState(false);
 
+  const themeContext = useContext(ThemeContext)
+  const theme = themeContext.theme
+
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
       .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
       .join(" ");
 
   const gtrPriceFull = gtrPrice;
-  console.log(gtrPriceFull);
+
 
   const dispatch = useDispatch();
 
@@ -139,7 +148,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     });
   };
 
-  useEffect(() => {}, [handleSelectGuitar, model]);
+  useEffect(() => {}, [handleSelectGuitar, model, theme]);
 
   const [allTx, setAllTx] = useState([]);
 
@@ -158,7 +167,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     setColorList(colus);
   }, []);
 
-  console.log(loggedIn);
+
   const handleGtrNameSet = () => {
     setGtrName(gtrNameInput);
     setGtrNameInput("");
@@ -258,6 +267,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     );
   }
 
+
   return (
     <div className="mainviz">
       <div className="visualizer">
@@ -280,27 +290,12 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               enableZoom={false}
               position0={[0, 0, 3]}
             />
-            <Environment files="/decor_shop_2k.hdr" blur={2} />
+    
 
-            <ambientLight intensity={0.4} />
-            <directionalLight
-              castShadow
-              intensity={3}
-              position={[0, 5, 0.5]}
-              lookAt={[0, 0, 0]}
-              shadow-mapSize-height={1024}
-              shadow-mapSize-width={1024}
-            />
 
-            <MotionConfig
-              transition={{
-                type: "spring",
-                duration: 2,
-                ease: "easeInOut",
-                repeat: 0,
-                repeatDelay: 1,
-              }}
-            >
+            {theme === "light" &&(
+<>
+              <LightAmb/>     
               <ContactShadows
                 depthWrite={false}
                 position={[0, -1.3, 0]}
@@ -310,7 +305,27 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 far={5}
                 frames={100}
                 resolution={512}
-              />
+              /></>
+            )  }
+            {theme === "dark" && theme !== "light" &&(
+
+              <>
+            <LightRock theme={theme}/>
+            
+            </>
+            )}
+          
+         
+            <MotionConfig
+              transition={{
+                type: "spring",
+                duration: 2,
+                ease: "easeInOut",
+                repeat: 0,
+                repeatDelay: 1,
+              }}
+            >
+         
 
               <motion.group animate={model === "1" ? "es335" : "tele"}>
                 <motion.group
@@ -349,8 +364,9 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 </motion.group>
               </motion.group>
             </MotionConfig>
-            {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
+            <Perf deepAnalyze={true} position={"top-left"} />
             {gtrName && <GuitarName />}
+             <PostProc theme={theme} />
           </Canvas>
           {model == 1 && (
             <Tweaker
@@ -367,6 +383,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               model={model}
               showPreview={showPreview}
               setShowPreview={setShowPreview}
+              gtrName={gtrName}
             />
           )}
           {model == 2 && (
@@ -384,6 +401,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               model={model}
               showPreview={showPreview}
               setShowPreview={setShowPreview}
+              gtrName={gtrName}
             />
           )}
         </div>

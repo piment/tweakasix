@@ -27,7 +27,6 @@ setUserInfo(userData)
 },[loginStatus])
 
 
-console.log(userInfo)
 
   return (
     <div className="account-main">
