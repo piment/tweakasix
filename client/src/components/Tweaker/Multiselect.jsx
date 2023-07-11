@@ -17,7 +17,7 @@ export default function TextureSelect({selectedParts, setSelectedParts, fileModN
       .join(" ");
 
  const partsTx = useSelector((state) => state.texture_data.texture_assign)
- console.log(fileModName)
+//  console.log(fileModName)
  const partsAv = Object.keys(partsTx).map((part) => ({name : part, file: fileModName}))
  
 //  console.log(partsTx, partsAv)
@@ -25,7 +25,7 @@ export default function TextureSelect({selectedParts, setSelectedParts, fileModN
 const partsAv335 = partsAv.filter((part) => part.name !== 'Pickguard' && part.name !== 'Body')
 const partsAvTele = partsAv.filter((part) => part.name !== 'Back' && part.name !== 'Side' && part.name !== 'Front')
 
-console.log(partsAvTele)
+// console.log(partsAvTele)
 
 const dispatch = useDispatch()
 
@@ -37,7 +37,7 @@ dispatch(textureAdd(selectedParts))
 
   
 const handleSelect = (e) => {
- console.log(selectedParts)
+//  console.log(selectedParts)
     if(selectedParts.length > e.value.length){
         const removed = selectedParts.filter(part => !e.value.includes(part))
         dispatch(textureDelete(removed))
