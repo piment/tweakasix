@@ -4,9 +4,14 @@ import { cartAdd, cartRemove, addCustomToCart } from "../features/CartReducer";
 export const ShopContext = createContext([]);
 
 export const ShopContextProvider = (props) => {
-  const cartItemsObj = useSelector((state) => state.cart_items.cartItems);
-  const cartItems = Object.values(cartItemsObj).filter((item) => item !== null);
-  const cartGuitars = useSelector((state) => state.cart_items.cartGuitars)
+ const cartItemsObj = useSelector((state) => state.cart_items.cartItems)
+  // console.log(cartItemsObj)
+  const cartSpare = Object.values(cartItemsObj).filter(item => item && item !== null);
+    const cartGuitarsObj = useSelector((state) => state.cart_items.cartGuitars)
+  console.log(cartGuitarsObj)
+  const cartGuitars = Object.values(cartGuitarsObj).filter(item => item && item !== null);
+
+  const cartItems = cartSpare.concat(cartGuitarsObj);
   const dispatch = useDispatch();
 
   const addToCart = (item) => {
@@ -28,9 +33,8 @@ export const ShopContextProvider = (props) => {
           totalAmount += cartItem.qty * item.price;
         }
       }
-    }else if (cartGuitars.length >= 1) {
-      totalAmount = totalAmount + cartGuitars.gtrPriceFullVar
-    } else if (cartGuitars.length <= 0 && cartItems.length <= 0) {
+    } 
+     else if ( cartItems.length <= 0) {
       totalAmount = 0;
     }
     return totalAmount;

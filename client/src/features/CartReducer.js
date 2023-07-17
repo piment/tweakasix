@@ -42,9 +42,11 @@ initialState,
 
        },
        addCustomToCart:(state, action) => {
-        state.cartGuitars = action.payload
-       cartAdd(state.cartGuitars)
-console.log(state.cartGuitars)
+        state.cartGuitars = {
+          item : action.payload,
+          qty:  1}
+      //  cartAdd(state.cartGuitars)
+console.log('pipi',state.cartGuitars)
        }
   }
   

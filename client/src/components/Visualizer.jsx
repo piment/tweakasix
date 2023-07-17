@@ -276,12 +276,14 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
             fallback={null}
             camera={{ position: [0, 0, 3], fov: 60 }}
             linear
-            shadows
+            // shadows
             dpr={[1, 2]}
             gl={{
               preserveDrawingBuffer: true,
               antialias: true,
               alpha: true,
+              precision: "lowp",
+              powerPreference: "low-power"
             }}
           >
             <OrbitControls
