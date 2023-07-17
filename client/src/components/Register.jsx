@@ -25,7 +25,7 @@ console.log(userData)
 const dispatch = useDispatch()
 
   const register = () => {
-    Axios.post("http://localhost:3001/register", {
+    Axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, {
         firstname : firstnameReg,
         lastname : lastnameReg,
         email : emailReg,
@@ -35,7 +35,7 @@ const dispatch = useDispatch()
   };
 
 const userAuthenticated = () => {
-    Axios.get('http://localhost:3001/isUserAuth', {
+    Axios.get(`${import.meta.env.VITE_BACKEND_URL}/isUserAuth`, {
         headers: {
             "x-access-token": localStorage.getItem("token")
         }
@@ -45,7 +45,7 @@ const userAuthenticated = () => {
 }
 
   const login = () => {
-    Axios.post("http://localhost:3001/login", {
+    Axios.post("${import.meta.env.VITE_BACKEND_URL}/login", {
       username: username,
       password: password,
     }).then((response) => {
@@ -66,7 +66,7 @@ const userAuthenticated = () => {
 
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/login").then((response) => {
+    Axios.get(`${import.meta.env.VITE_BACKEND_URL}/login`).then((response) => {
       if (response.data.loggedIn == true) {
         console.log(response.data)
         setLoginStatus(response.data.user[0].username);
