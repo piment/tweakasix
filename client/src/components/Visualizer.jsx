@@ -33,8 +33,8 @@ import "./confirm-lara-blue.css";
 import { FloppyDisk } from "@phosphor-icons/react";
 import { ThemeContext } from "../App";
 import LightAmb from "./LightAmb";
-import LightRock from "./LightRock";
-import PostProc from "./PostProc";
+
+
 
 function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
@@ -49,9 +49,20 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
   const [showPreview, setShowPreview] = useState(false);
+  const [mobSize, setMobSize] = useState(false)
+
 
   const themeContext = useContext(ThemeContext)
   const theme = themeContext.theme
+
+  function getSize(){
+
+    if (window.innerWidth < 1223){
+      setMobSize(true)
+    } else setMobSize(false)
+  }
+  window.addEventListener('resize', getSize);
+  console.log(window.innerWidth, mobSize)
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -165,6 +176,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
 
   useEffect(() => {
     setColorList(colus);
+    getSize()
   }, []);
 
 
@@ -271,13 +283,15 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   return (
     <div className="mainviz">
       <div className="visualizer">
-        <div className="canvas">
+        <div className="canvas" style={{display: 'flex'}}>
           <Canvas
             fallback={null}
-            camera={{ position: [0, 0, 3], fov: 60 }}
+            camera={{ position: mobSize ? [0,0,5]:[0, 0, 3], fov: 60 }}
             linear
+          
             // shadows
             dpr={[1, 2]}
+            // pixelRatio={window.devicePixelRatio}
             gl={{
               preserveDrawingBuffer: true,
               antialias: true,
@@ -288,14 +302,15 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
           >
             <OrbitControls
               ref={orbCam}
-              target={[0, 0, 0]}
+              target={mobSize ? [0, 2, 0] : [0,0,0]}
               enableZoom={false}
+              enableDamping={false}
               position0={[0, 0, 3]}
             />
     
 
 
-            {theme === "light" &&(
+        
 <>
               <LightAmb/>     
               <ContactShadows
@@ -308,14 +323,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 frames={100}
                 resolution={512}
               /></>
-            )  }
-            {theme === "dark" && theme !== "light" &&(
-
-              <>
-            <LightRock theme={theme}/>
-            
-            </>
-            )}
+           
           
          
             <MotionConfig
@@ -342,8 +350,8 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                   <ESguitar
                     setColorList={setColorList}
                     colorList={colorList}
-                    tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-                    pos={[-1, -0.5, -0.3]}
+                    tilt={mobSize? [0,0,0]:[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+                    pos={mobSize? [0,1,0]:[-1, -0.5, -0.3]}
                     files={files}
                     selectedParts={selectedParts}
                   />
@@ -366,27 +374,28 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 </motion.group>
               </motion.group>
             </MotionConfig>
-            <Perf deepAnalyze={true} position={"top-left"} />
+            {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
             {gtrName && <GuitarName />}
-             <PostProc theme={theme} />
+
           </Canvas>
           {model == 1 && (
-            <Tweaker
-              colorList={colorList}
-              setColorList={setColorList}
-              resetCam={resetCam}
-              setDropped={setDropped}
-              dropped={dropped}
-              gtrPriceFull={gtrPriceFull}
-              selectedParts={selectedParts}
-              setSelectedParts={setSelectedParts}
-              files={files}
-              setFiles={setFiles}
-              model={model}
-              showPreview={showPreview}
-              setShowPreview={setShowPreview}
-              gtrName={gtrName}
-            />
+            // <Tweaker
+            //   colorList={colorList}
+            //   setColorList={setColorList}
+            //   resetCam={resetCam}
+            //   setDropped={setDropped}
+            //   dropped={dropped}
+            //   gtrPriceFull={gtrPriceFull}
+            //   selectedParts={selectedParts}
+            //   setSelectedParts={setSelectedParts}
+            //   files={files}
+            //   setFiles={setFiles}
+            //   model={model}
+            //   showPreview={showPreview}
+            //   setShowPreview={setShowPreview}
+            //   gtrName={gtrName}
+            // />
+            ''
           )}
           {model == 2 && (
             <TweakerTele
