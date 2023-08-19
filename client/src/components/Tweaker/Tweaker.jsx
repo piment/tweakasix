@@ -200,7 +200,14 @@ addToCart(guitarToAdd)
   //   // Do something with the last entry ID
   // )})
 };
+const handlePointerDown = (e) => {
+  document.body.classList.add("no-scroll");
+  document.body.addEventListener("touchmove", preventScroll, { passive: false });
+};
 
+const preventScroll = (e) => {
+  e.preventDefault();
+};
 
   return (
     <>
@@ -224,8 +231,8 @@ addToCart(guitarToAdd)
               <p>Start again</p> 
                 <img className="reset-icon" src={resetIcon} size={24} weight="bold"/></Button> 
 
-              <div className="pickers-colors" ref={tweakDrag}>
-              <div className="body-colors">
+              <div className="pickers-colors" ref={tweakDrag} >
+              <div className="body-colors"onPointerDown={() => handlePointerDown}>
                 <ColorPicker
                   tooltip="Front table"
                   tooltipoptions={{

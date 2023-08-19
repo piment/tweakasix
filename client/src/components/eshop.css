@@ -446,7 +446,7 @@ justify-content: flex-end;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    
+        margin: 0.8em 0;
         background-color: #424242ce;
            border-radius: 6px;
            /* box-shadow: rgba(0, 0, 0, 0.476) 0px 20px 30px; */
@@ -472,11 +472,11 @@ justify-content: flex-end;
     .e-shop-active > .parts-products > .product-active{
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
     position: relative;
-    height: 70vh;
-    width: 55vw;
+    height: 55vh;
+    width: 95vw;
     left: 0%;
     top: 18vh;   
      /* margin: 20vh  auto 0 auto; */
@@ -536,7 +536,7 @@ justify-content: flex-end;
     cursor: pointer;
     max-height: 14em;
     max-width: inherit;
-    width: 90%;
+    width: 80%;
     margin: 0;
     transition: 0.2s;
     }
@@ -544,7 +544,7 @@ justify-content: flex-end;
     .e-shop-active > .parts-products > .product-active > .canvas-active{
        
         transition: 0s;
-        height: 50vh;
+        height: 20vh;
         width: 100%;
       
         }

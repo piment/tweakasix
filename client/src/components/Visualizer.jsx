@@ -366,8 +366,8 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                   <Teleguitar
                     setColorList={setColorList}
                     colorList={colorList}
-                    tilt={[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-                    pos={[-1, -0.8, -0.4]}
+                    tilt={mobSize? [0,0,0]:[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
+                    pos={mobSize? [0,1,0]:[-1, -0.8, -0.4]}
                     files={files}
                     selectedParts={selectedParts}
                   />

@@ -63,9 +63,7 @@ height: 150vh;
     margin-bottom: 10%;
     /* box-shadow: 0 0 20px 10px #0000008e; */
   }
-  .mainviz{
-    /* height: 100%; */
-  }
+
   .canvas {
   /* max-width: 100%; */
   height: 140vh;
@@ -79,15 +77,13 @@ height: 150vh;
   
   #save-guitar {
     position: absolute;
+    /* display: flex; */
     /* margin-left: 70em; */
     z-index: 500;
+    max-width: 70vw;
   }
   
-  #clickedPart .p-inputtext {
-    /* padding: 1.5rem 1.5rem ; */
-    /* position: absolute; */
-    /* box-shadow: 0 0 10px 5px rgba(129, 129, 129, 0.467); */
-  }
+
   }
 .floppydisk-wrap{
   position: relative ;
@@ -153,7 +149,9 @@ border: rgb(255, 255, 255) solid 6px;
   font-size: 1.8em;
    position: relative;
   top:-30vh;
-  left: -14vw;
+  /* left: -14vw; */
+display: flex;
+justify-content: space-around;
   z-index: -100;
 }
  

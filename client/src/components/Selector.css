@@ -151,11 +151,11 @@
     display: flex;
     justify-content: space-around;
     /* margin-left: 50vw; */
-    top: 18%;
-    right: 0;
+    top: 10%;
+    right: 10%;
     /* margin: auto; */
     height: 10%;
-    width: 40%;
+    width: 80%;
     /* border: red solid 2px */
   }
 
