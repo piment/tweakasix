@@ -442,7 +442,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
             <FloppyDisk size={56} className="floppydisk" />
           </div>{" "}
         </div>
-        <div className="guitar-name">
+       {!mobSize &&( <div className="guitar-name">
           <input
             type="text"
             value={gtrNameInput}
@@ -457,7 +457,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
           <button onClick={handleGtrNameSet}>
             <p>OK</p>
           </button>
-        </div>
+        </div>)}
 
         {/* <Button >
           Save this guitar

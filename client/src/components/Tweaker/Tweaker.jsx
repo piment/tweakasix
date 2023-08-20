@@ -232,7 +232,10 @@ const [tweakOpen, setTweakOpen] = useState(false)
       >
     
         <div className="pickers-main">   
-         <button className=  {tweakOpen ?"tweaker-toggle-open" : "tweaker-toggle-closed"} onClick={() => setTweakOpen(!tweakOpen)} > {tweakOpen ? <X size={32} /> : <Palette size={46} />}</button>
+      {mobSize && (
+
+        <button className=  {tweakOpen ?"tweaker-toggle-open" : "tweaker-toggle-closed"} onClick={() => setTweakOpen(!tweakOpen)} > {tweakOpen ? <X size={32} /> : <Palette size={46} />}</button>
+           )}
          <div className={tweakOpen ?"controls-open" : "controls-closed"}>
           <div className="box no-cursor">
             <strong className="cursor">
@@ -457,11 +460,11 @@ const [tweakOpen, setTweakOpen] = useState(false)
 
             <Button id="remove" onClick={() => dispatch(resetDrop(0))}><p>Remove image</p></Button>
            
-          </div>
+         
 
           <div onClick={addGtrToCart} className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFullVar}</div><span id='€'>€</span></div>
                   <button onClick={addGtrToCart} className='addtocart'>Add to cart</button>
-        </div>
+        </div> </div>
         </div>
       </Draggable>
     </>
