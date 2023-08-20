@@ -85,10 +85,10 @@ const texturesFromReducer = useSelector((state)=> state.texture_data.texture_ass
   materials.strings = new THREE.MeshLambertMaterial({ color: "#595959" });
   materials.varnish = new THREE.MeshStandardMaterial({
     transparent: true,
-    opacity: 0.2,
+    opacity: 0.32 * colorList.gloss/90,
     roughnessMap: scratchesrough,
     roughness: 0.1 * colorList.scratch,
-    metalness: colorList.gloss / 100,
+    metalness: colorList.gloss / 92,
     bumpMap: scratches,
     bumpScale: 0.001 * (colorList.scratch / 5),
   });
@@ -110,13 +110,13 @@ materials.pickup_ring.metalness = 0.5
   materials.side.opacity = 1 - (colorList.wood/1000) 
 
   materials.neckwood.opacity = 1 - (colorList.wood/1000) 
-// materials.tablefront.metalness = .5
-materials.tablefront.roughness = 1
-materials.tableback.roughness = 1
-materials.side.roughness = 1
-materials.neckwood.roughness = 1
+ materials.tablefront.metalness = .5
+materials.tablefront.roughness = 0.3
+materials.tableback.roughness = 0.3
+materials.side.roughness = 0.3
+materials.neckwood.roughness = 0.3
 
-
+console.log(materials.tablefront)
 
 const maple = useTexture('maple.png')
 maple.flipY = false
@@ -246,7 +246,8 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
      
           <mesh
                    ref={(mesh) => (meshRefs.current[6] = mesh)}
-            // castShadow            receiveShadow
+            castShadow          
+              receiveShadow
             geometry={nodes.tableback.geometry}
             material={woodMat}
             material-side={THREE.FrontSide}
@@ -301,7 +302,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.knobs.geometry}
             material={materials.knobs}
-            material-side={THREE.FrontSide}
+            // material-side={THREE.FrontSide}
             material-color={colorList.knobs}
           />
           <mesh
@@ -406,6 +407,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
 
           <mesh
          ref={(mesh) => (meshRefs.current[24] = mesh)}
+
             geometry={nodes.varnish.geometry}
             material={materials.varnish}
             material-side={THREE.FrontSide}
@@ -416,5 +418,5 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
     </>
   );
 }
-useGLTF.preload("/335whole OPT4.glb");
+useGLTF.preload("/335wholeUV.glb");
 export default ESguitar;

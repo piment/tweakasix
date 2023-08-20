@@ -14,6 +14,7 @@ import {
   Environment,
   ContactShadows,
   Text,
+  SoftShadows,
 } from "@react-three/drei";
 import {Perf} from 'r3f-perf'
 import axios from "axios";
@@ -33,6 +34,7 @@ import "./confirm-lara-blue.css";
 import { FloppyDisk } from "@phosphor-icons/react";
 import { ThemeContext } from "../App";
 import LightAmb from "./LightAmb";
+import { PCFSoftShadowMap } from "three";
 
 
 
@@ -287,18 +289,21 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
             fallback={null}
             camera={{ position: mobSize ? [0,0,5]:[0, 0, 3], fov: 60 }}
             linear
-          
-            // shadows
+        
+            shadows
             dpr={[1, 2]}
             // pixelRatio={window.devicePixelRatio}
             gl={{
               preserveDrawingBuffer: true,
               antialias: true,
               alpha: true,
-              precision: "lowp",
-              powerPreference: "low-power"
+              powerPreference: 'high-performance'
+              // precision: "lowp",
+              // powerPreference: "low-power"
             }}
           >
+
+          
             <OrbitControls
               ref={orbCam}
               target={mobSize ? [0, 2, 0] : [0,0,0]}
