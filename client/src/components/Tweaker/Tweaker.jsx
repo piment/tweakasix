@@ -16,9 +16,9 @@ import MyDropzone from "../Dropzone";
 import ChipsDemo from "./Multiselect";
 import silverIcon from "../../assets/img/Silver.jpg";
 import { ShopContext } from "../../context/shop-context";
-import { ArrowBendDoubleUpLeft, StackSimple } from "@phosphor-icons/react";
+import { ArrowBendDoubleUpLeft, Palette, StackSimple, X } from "@phosphor-icons/react";
 
-function Tweaker({
+function Tweaker({  mobSize,
   colorList,
   setColorList,
   resetCam,
@@ -32,15 +32,22 @@ function Tweaker({
   model,
   showPreview,
   setShowPreview,
-  gtrName
+  gtrName,
+
 }) {
-  const actual = useRef(null);
+  // const actual = useRef(null);
   const dispatch = useDispatch();
 
   const tweakDrag = useRef();
 
+  const [yPos, setYPos] = useState(0)
 
 
+  useEffect(() => {
+  
+ mobSize ?  setYPos(-510) : setYPos(-210)
+ console.log(yPos)
+  }, [yPos])
 
   const [pickupCover, setPickupCover] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
   const [metalType, setMetalType] = useState({ name: "Silver", value: "#d0cbc4", icon: silverIcon });
@@ -86,6 +93,7 @@ function Tweaker({
       setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice)
     },[ metalVar, hBVar])
     
+
 
 
 
@@ -209,17 +217,23 @@ const preventScroll = (e) => {
   e.preventDefault();
 };
 
+
+const [tweakOpen, setTweakOpen] = useState(false)
+
   return (
     <>
       <Draggable
-        handle="strong"
-        bounds={`parent`}
+ handle="strong"
+ bounds={`parent`}
         allowAnyClick={false}
         // nodeRef={tweakDrag}
-        defaultPosition={{ x: 0, y: -210 }}
+
         onStart={(e) => e.preventDefault()}
       >
-        <div className="pickers-main">
+    
+        <div className="pickers-main">   
+         <button className=  {tweakOpen ?"tweaker-toggle-open" : "tweaker-toggle-closed"} onClick={() => setTweakOpen(!tweakOpen)} > {tweakOpen ? <X size={32} /> : <Palette size={46} />}</button>
+         <div className={tweakOpen ?"controls-open" : "controls-closed"}>
           <div className="box no-cursor">
             <strong className="cursor">
               <img className="drag-icon" src={dragIcon} alt="Click to drag" />
@@ -446,6 +460,8 @@ const preventScroll = (e) => {
           </div>
 
           <div onClick={addGtrToCart} className="gtr-price-full"><p>Total: </p><div className="price-number">&nbsp;{gtrPriceFullVar}</div><span id='€'>€</span></div>
+                  <button onClick={addGtrToCart} className='addtocart'>Add to cart</button>
+        </div>
         </div>
       </Draggable>
     </>

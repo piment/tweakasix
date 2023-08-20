@@ -5,7 +5,7 @@
   .pickers-main {
     background-color: rgba(108, 108, 108, 0.287);
     /* height: 65vh; */
-    top: 75%;
+    top: 45%;
     left: 75%;
     display: flex;
     position: absolute;
@@ -268,24 +268,76 @@
 @media only screen and (min-device-width : 320px) and (max-device-width : 1223px) {
 
 
+
+
   .pickers-main {
 
-    background-color: rgba(108, 108, 108, 0.287);
-    /* height: 60vh; */
-    top: 75%;
+    /* background-color: rgba(108, 108, 108, 0.287); */
+    /* height: auto; */
+    top: 35%;
 right: 0%;
-    display: flex;
+    /* display: flex; */
     position: absolute;
-    width: 20vw;
-    flex-direction: column;
-    justify-content: space-evenly;
+    /* width: 20vw; */
+    /* flex-direction: column; */
+    /* justify-content: space-evenly; */
     z-index: 200;
     border-radius: 15px;
-    padding: 1vh;  
-    min-width: 70vw;
+
+    /* min-width: 70vw; */
+    /* border:red solid 3px */
       /* display: none; */
   }
-  
+  .controls-open{
+    background-color: rgba(108, 108, 108, 0.287);
+  position: relative;
+  top: 0;
+  right: 0vw;
+  width: 70vw;
+  height:70vh; 
+     padding: 1vh;  
+     border-radius: 15px;
+  /* background-color:#fff; */
+  /* color:#000; */
+  /* Centrage horizontal et vertical */
+  display: flex;
+  align-items: center;
+   flex-direction: column;
+  /* justify-content: center; */
+  /* Transition CSS sur l'opacité */
+  opacity: 1;
+  transition:right 1s;
+}
+.controls-closed{
+  position: absolute;
+  height: auto;
+  top: 0;
+ right: -100vw;
+ transition:right 1s;
+
+}
+.tweaker-toggle-open{
+  position: fixed;
+  top: 20vh;
+  right: 68vw;
+  height: 4em;
+  width: 4em;
+  transition:all 1s;
+  /* transition: height 1s; */
+  border-radius: 50%;
+  border: none;
+}
+.tweaker-toggle-closed{
+  position: fixed;
+  top: 20vh;
+padding: 0;
+  right: -20px;
+  height: 6em;
+  width: 6em;
+  transition:all 1s;
+  border-radius: 50%;
+  border: none;
+}
   .box{
       display: flex;
       flex-direction: column;

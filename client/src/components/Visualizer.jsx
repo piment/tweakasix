@@ -62,7 +62,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     } else setMobSize(false)
   }
   window.addEventListener('resize', getSize);
-  console.log(window.innerWidth, mobSize)
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -379,23 +378,24 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
 
           </Canvas>
           {model == 1 && (
-            // <Tweaker
-            //   colorList={colorList}
-            //   setColorList={setColorList}
-            //   resetCam={resetCam}
-            //   setDropped={setDropped}
-            //   dropped={dropped}
-            //   gtrPriceFull={gtrPriceFull}
-            //   selectedParts={selectedParts}
-            //   setSelectedParts={setSelectedParts}
-            //   files={files}
-            //   setFiles={setFiles}
-            //   model={model}
-            //   showPreview={showPreview}
-            //   setShowPreview={setShowPreview}
-            //   gtrName={gtrName}
-            // />
-            ''
+            <Tweaker
+              colorList={colorList}
+              setColorList={setColorList}
+              resetCam={resetCam}
+              setDropped={setDropped}
+              dropped={dropped}
+              gtrPriceFull={gtrPriceFull}
+              selectedParts={selectedParts}
+              setSelectedParts={setSelectedParts}
+              files={files}
+              setFiles={setFiles}
+              model={model}
+              showPreview={showPreview}
+              setShowPreview={setShowPreview}
+              gtrName={gtrName}
+              mobSize={mobSize}
+            />
+            // ''
           )}
           {model == 2 && (
             <TweakerTele
@@ -413,6 +413,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               showPreview={showPreview}
               setShowPreview={setShowPreview}
               gtrName={gtrName}
+                   mobSize={mobSize}
             />
           )}
         </div>
