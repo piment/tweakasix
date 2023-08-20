@@ -85,10 +85,10 @@ const texturesFromReducer = useSelector((state)=> state.texture_data.texture_ass
   materials.strings = new THREE.MeshLambertMaterial({ color: "#595959" });
   materials.varnish = new THREE.MeshStandardMaterial({
     transparent: true,
-    opacity: 0.2,
+    opacity: 0.32 * colorList.gloss/90,
     roughnessMap: scratchesrough,
     roughness: 0.1 * colorList.scratch,
-    metalness: colorList.gloss / 100,
+    metalness: colorList.gloss / 92,
     bumpMap: scratches,
     bumpScale: 0.001 * (colorList.scratch / 5),
   });
@@ -110,13 +110,13 @@ materials.pickup_ring.metalness = 0.5
   materials.side.opacity = 1 - (colorList.wood/1000) 
 
   materials.neckwood.opacity = 1 - (colorList.wood/1000) 
-// materials.tablefront.metalness = .5
-materials.tablefront.roughness = 1
-materials.tableback.roughness = 1
-materials.side.roughness = 1
-materials.neckwood.roughness = 1
+ materials.tablefront.metalness = .5
+materials.tablefront.roughness = 0.3
+materials.tableback.roughness = 0.3
+materials.side.roughness = 0.3
+materials.neckwood.roughness = 0.3
 
-
+console.log(materials.tablefront)
 
 const maple = useTexture('maple.png')
 maple.flipY = false
@@ -174,6 +174,7 @@ partTextures.Neck.flipY = false
             receiveShadow
             geometry={nodes.side.geometry}
             material={materials.side}
+            material-side={THREE.FrontSide}
             material-color={colorList.side}
             material-map={texturesFromReducer.Side !== null ? partTextures.Side : ''}
           />
@@ -184,6 +185,7 @@ partTextures.Neck.flipY = false
             receiveShadow
             geometry={nodes.binding.geometry}
             material={materials.binding}
+            material-side={THREE.FrontSide}
             material-color={colorList.binding}
           />
           <mesh
@@ -191,6 +193,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.tableback.geometry}
             material={materials.tableback}
+            material-side={THREE.FrontSide}
             material-color={colorList.tableback}
             material-map={texturesFromReducer.Back !== null ? partTextures.Back : ''}
           />
@@ -199,6 +202,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.tablefront.geometry}
             material={materials.tablefront}
+            material-side={THREE.FrontSide}
             material-color={colorList.tablefront}
             // material-map={triggs > 0 ? reactMap : ''}
             material-map={texturesFromReducer.Front !== null ? partTextures.Front : ''}
@@ -225,6 +229,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.tablefront.geometry}
             material={woodMat}
+            material-side={THREE.FrontSide}
 
           ></mesh>
                     <mesh
@@ -233,6 +238,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.side.geometry}
             material={woodMat}
+            material-side={THREE.FrontSide}
 
           />
 
@@ -240,9 +246,11 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
      
           <mesh
                    ref={(mesh) => (meshRefs.current[6] = mesh)}
-            // castShadow            receiveShadow
+            castShadow          
+              receiveShadow
             geometry={nodes.tableback.geometry}
             material={woodMat}
+            material-side={THREE.FrontSide}
             // material-color={colorList.tableback}
           />
               {/* WOOOOOOOOOOOOOOOOD */}
@@ -251,6 +259,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.inlay.geometry}
             material={materials.inlay}
+            material-side={THREE.FrontSide}
             material-color={colorList.inlay}
           />
           <mesh
@@ -259,6 +268,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.jackinput.geometry}
             material={materials.metalpieces}
+            material-side={THREE.FrontSide}
             material-color={colorList.metal_pieces}
           />
           <mesh
@@ -266,6 +276,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.fretbinding.geometry}
             material={materials.fretbinding}
+            material-side={THREE.FrontSide}
             material-color={colorList.fretbinding}
           />
           <mesh
@@ -273,6 +284,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.fretboard.geometry}
             material={materials.fretboard}
+            material-side={THREE.FrontSide}
             material-color={colorList.fretboard}
           />
           <mesh
@@ -281,6 +293,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.frets.geometry}
             material={materials.frets}
+            material-side={THREE.FrontSide}
             material-color={colorList.frets}
           />
           <mesh
@@ -289,6 +302,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.knobs.geometry}
             material={materials.knobs}
+            // material-side={THREE.FrontSide}
             material-color={colorList.knobs}
           />
           <mesh
@@ -297,6 +311,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.nut.geometry}
             material={materials.nut}
+            material-side={THREE.FrontSide}
             material-color={colorList.nut}
           />
           <mesh
@@ -305,6 +320,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
 
             geometry={nodes.neckwood.geometry}
             material={materials.neckwood}
+            material-side={THREE.FrontSide}
             material-color={colorList.neck}
             material-map={texturesFromReducer.Neck !== null ? partTextures.Neck : ''}
           />
@@ -314,6 +330,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.neckwood.geometry}
             material={woodMat}
+            material-side={THREE.FrontSide}
 
           />
           <mesh
@@ -322,6 +339,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.pickup_cover.geometry}
             material={materials.pickup_cover}
+            material-side={THREE.FrontSide}
             material-color={colorList.pickup_cover}
           />
           <mesh
@@ -330,6 +348,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             // receiveShadow
             geometry={nodes.pickup_ring.geometry}
             material={materials.pickup_ring}
+            material-side={THREE.FrontSide}
             material-color={colorList.pickup_ring}
           />
           <mesh
@@ -338,6 +357,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.mechs.geometry}
             material={materials.metalpieces}
+            material-side={THREE.FrontSide}
             material-color={colorList.metal_pieces}
           />
           <mesh
@@ -346,6 +366,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.selector.geometry}
             material={materials.metalpieces}
+            material-side={THREE.FrontSide}
             material-color={colorList.metal_pieces}
           />
           <mesh
@@ -354,6 +375,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.tail_saddle.geometry}
             material={materials.metalpieces}
+            material-side={THREE.FrontSide}
             material-color={colorList.metal_pieces}
           />
           <mesh
@@ -362,6 +384,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
             receiveShadow
             geometry={nodes.pickup_screws.geometry}
             material={materials.pickup_cover}
+            material-side={THREE.FrontSide}
             material-color={colorList.pickup_cover}
           />
         </group>
@@ -370,6 +393,7 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
          ref={(mesh) => (meshRefs.current[22] = mesh)}
             geometry={nodes.UN_inside.geometry}
             material={materials.un_black}
+            material-side={THREE.FrontSide}
 
           />
           <mesh
@@ -378,12 +402,15 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
 
             geometry={nodes.strings.geometry}
             material={materials.strings}
+            material-side={THREE.FrontSide}
           />
 
           <mesh
          ref={(mesh) => (meshRefs.current[24] = mesh)}
+
             geometry={nodes.varnish.geometry}
             material={materials.varnish}
+            material-side={THREE.FrontSide}
 
           />
         </group>
@@ -391,5 +418,5 @@ ref={(mesh) => (meshRefs.current[2] = mesh)}
     </>
   );
 }
-useGLTF.preload("/335whole OPT4.glb");
+useGLTF.preload("/335wholeUV.glb");
 export default ESguitar;

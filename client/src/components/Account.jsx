@@ -4,6 +4,7 @@ import Registration from "./Register";
 import "./account.css";
 import { useDispatch, useSelector } from "react-redux";
 import { userOut } from "../features/UserReducer";
+import { SignOut } from "@phosphor-icons/react";
 
 function Account() {
   const userData = useSelector((state) => state.user_data.userData.user)
@@ -68,7 +69,7 @@ setUserInfo(userData)
           </div>
           <div className="logout-wrap">
             <button className="logout" onClick={logout}>
-              Log out
+              Log out <SignOut size={32} />
             </button>
           </div>
         </div>

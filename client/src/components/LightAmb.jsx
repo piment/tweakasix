@@ -17,8 +17,9 @@ function LightAmb() {
       intensity={3}
       position={[0, 5, 0.5]}
       lookAt={[0, 0, 0]}
-      shadow-mapSize-height={1024}
-      shadow-mapSize-width={1024}
+      shadow-mapSize-height={2048}
+      shadow-mapSize-width={2048}
+     
       />
 
       </>

@@ -68,7 +68,7 @@ return null; // Return null for items without 'item' property
         <div className="empty-cart"><p id="title">Your cart is empty</p>
 
        <div className="empty-redirect"> 
-        <a href="/">Create your guitar</a> &nbsp; or &nbsp; <a href="/parts">find spare parts</a>!
+        <a href="/">Create your guitar</a> &nbsp; or &nbsp; <a href="/parts">find spare parts!</a>
         </div></div>
          )}
 

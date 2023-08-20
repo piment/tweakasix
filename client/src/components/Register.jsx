@@ -45,7 +45,7 @@ const userAuthenticated = () => {
 }
 
   const login = () => {
-    Axios.post("${import.meta.env.VITE_BACKEND_URL}/login", {
+    Axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, {
       username: username,
       password: password,
     }).then((response) => {
@@ -58,8 +58,8 @@ const userAuthenticated = () => {
         setLoginStatus(true)
         dispatch(userIn({user, user_info}))
       }
-    // }).then((response) => {
-    //   console.log(response)
+    }).then((response) => {
+      console.log(response)
     }).then(userAuthenticated)
   };
 
