@@ -94,35 +94,8 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       life: 3000,
     });
   };
-  // const handleSelectGuitar = async (e) => {
-  //   const gtr = e.target.value;
-  //   console.log(gtr);
-  //   axios
-  //     .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitar`, {
-  //       params: { gtr: gtr },
-  //     })
-  //     .then((res) => {
-  //       const fetched = res.data;
-  //       const object = Object.values(fetched).reduce((acc, item) => {
-  //         acc[item.name] = item.color;
-  //         acc.id = item.id_guitar;
-  //         acc.gloss = item.gloss;
-  //         acc.wood = parseInt(item.wood, 10);
-  //         acc.scratch = parseInt(item.scratch, 10);
-  //         item.id_texture
-  //           ? (acc.texture_path = "stocked/1681217837265.png")
-  //           : item.texture_path;
-
-  //         return acc;
-  //       }, {});
-
-  //       setModel(fetched[0].model);
-  //       setColorList(object);
-  //     });
-  // };
 
   const resetCam = () => {
-    console.log(orbCam.current);
     orbCam.current.reset();
   };
 
@@ -182,7 +155,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     getSize();
   }, []);
 
-  console.log(guitarsList);
+
   const handleGtrNameSet = () => {
     setGtrName(gtrNameInput);
     setGtrNameInput("");
@@ -282,7 +255,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     );
   }
 
-  console.log(loggedIn);
+
   return (
     <div className="mainviz">
       <div className="visualizer">

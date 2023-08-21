@@ -55,33 +55,25 @@ const handleSelectGuitar = async (e) => {
         acc.wood = parseInt(item.wood, 10);
         acc.scratch = parseInt(item.scratch, 10);
         item.id_texture
-          ? (acc.texture_path = "stocked/1681217837265.png")
-          : item.texture_path;
+          ? acc.texture_path = item.id_texture
+          : (acc.texture_path = "stocked/1681217837265.png");
 
+          console.log(acc.texture_path)
         return acc;
       }, {});
 
       // setModel(fetched[0].model);
-      dispatch(addColor(object));
       console.log('objjjj', object)
+      dispatch(addColor(object));
     });
 };
 console.log(userGtrs)
-  const getGuitars = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`, {
-        id_user: userData.user.id,
-      })
-      .then((res) => {
-        console.log(res.data)
-        setUserGtrs(res.data);
-      });
-  };
+
 
 
 
   useEffect(() => {
-// getGuitars()
+
   },[])
   
 
@@ -131,9 +123,9 @@ const editgtr = () => {
         <div className="guitars-all">
          { userGuitars ? 
           userGuitars.map((gtr, key) => <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id}>
-      <a href="/">
-          {  gtr.id_guitar}
-        </a>
+      {/* <a href="/"> */}
+          { gtr.id_guitar}
+        {/* </a> */}
         
           </div>)
  : "Start tweaking your six strings now! " }

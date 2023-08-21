@@ -63,20 +63,7 @@ app.use(
 app.use(express.json());
 
 app.use("/stocked", express.static(path.join(__dirname + "/stocked")));
-// app.use(express.static((__dirname, "public")));
-// route for file upload
-// app.post("/upload",uploadTemp.array('file'),(req, res, next) => {
 
-//   const file = req.file;
-//   console.log(file);
-
-// // console.log(req.file)
-
-//       res.send(req.file);
-//       // res.render(JSON.stringify(req.file.url))
-//       // (req.file.path)
-
-// });
 
 const temporaryStorage = multer.diskStorage({
   destination: function (req, file, cb) {
