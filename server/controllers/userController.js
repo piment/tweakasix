@@ -9,15 +9,9 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 
+const {dbConnection : db} = require('./dbController')
 
-const db = mysql.createConnection({
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-});
 
 const register = (req, res) => {
     const firstname = req.body.firstname;
@@ -92,6 +86,10 @@ const loginPost = (req, res) => {
             const token = jwt.sign({id}, process.env.JWT_AUTH_SECRET, {
                 expiresIn : 300,
             });
+                 db.query("SELECT * FROM user_guitar  WHERE id_user = ?;", id, (err, gtrs) => {
+              if (err) {
+                res.send({ err: err });
+              }
             db.query("SELECT * FROM user_info  WHERE id_user = ?;", id, (err, otherResult) => {
               if (err) {
                 res.send({ err: err });
@@ -103,10 +101,11 @@ const loginPost = (req, res) => {
                 token: token,
                 result: result,
                 otherData: otherResult,
+                guitars : gtrs
               };
 
               res.json(modifiedResponse);
-            });
+            });});
           } else {
             res.json({ auth : false, message: "Wrong username/password combination!" });
           }

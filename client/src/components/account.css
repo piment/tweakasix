@@ -240,6 +240,29 @@ justify-content: space-evenly;
     border-radius: 12px;
     justify-content: center;
 }
+
+.guitars-all{
+    /* display: flex; */
+    display: grid;
+grid-template-columns: repeat(5, 1fr);
+/* grid-template-rows: repeat(5, 1fr); */
+/* grid-column-gap: 0px; */
+/* grid-row-gap: 0px; */
+height: 100%;
+    width: 100%;
+    /* justify-content: space-evenly; */
+    margin: auto;
+}
+.guitar-thb{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    /* border: red solid 2px */
+}
+
+
+
   }
 @media only screen and (min-device-width: 320px) and (max-device-width: 1223px) {
 

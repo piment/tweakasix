@@ -39,8 +39,7 @@ const userAuthenticated = () => {
         headers: {
             "x-access-token": localStorage.getItem("token")
         }
-    }).then((response)=> {
-        // console.log(response)
+
     })
 }
 
@@ -51,15 +50,14 @@ const userAuthenticated = () => {
     }).then((response) => {
       if (response.data.auth == false) {
         setLoginStatus(false);
-      } else {
+      } else {    
         const user = response.data.result[0]
         const user_info = response.data.otherData[0]
+        const user_guitars = response.data.guitars
         localStorage.setItem("token", response.data.token)
         setLoginStatus(true)
-        dispatch(userIn({user, user_info}))
+        dispatch(userIn({user, user_info, user_guitars}))
       }
-    }).then((response) => {
-      console.log(response)
     }).then(userAuthenticated)
   };
 
