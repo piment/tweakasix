@@ -11,7 +11,7 @@ const getItemsFullGtr = (req, res) => {
 };
 
 const addGuitar = (req, res, next) => {
-  console.log(req.body.texture_path)
+
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
@@ -27,7 +27,12 @@ const addGuitar = (req, res, next) => {
   const pickup_cover = req.body.pickup_cover;
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
-  const texture_path = req.body.texture_path;
+  const texture_path_front = req.body.texture_path_front;
+  // const texture_path_body = req.body.texture_path_body;
+  // const texture_path_back = req.body.texture_path_back;
+  // const texture_path_side = req.body.texture_path_side;
+  // const texture_path_neck = req.body.texture_path_neck;
+  // const texture_path_pickguard = req.body.texture_path_pickguard;
   const gloss = req.body.gloss;
   const scratch = req.body.scratch;
   const wood = req.body.wood;
@@ -72,7 +77,7 @@ const addGuitar = (req, res, next) => {
 
       db.query(
         sqlInsertTex,
-        [["user", texture_path, "original"]],
+        [["user", texture_path_front, "original"]],
         (err, result) => {
           if (err) {
             throw err;
@@ -122,9 +127,13 @@ const addGuitar = (req, res, next) => {
 
 const saveTexture = (req, res, next) => {
   const texture_path = req.body.texture_path;
-  const sourceFilePath = path.join( './','stocked', 'temporary', texture_path);
-  const destinationFolderPath = path.join( 'stocked', 'permanent');
-  const destinationFilePath = path.join(destinationFolderPath, texture_path);
+
+for (const partName in texture_path) {
+  console.log(texture_path[partName])
+    if (texture_path[partName] === !null && texture_path.hasOwnProperty(partName)) {
+      const sourceFilePath = path.join(__dirname, 'stocked', 'temporary', texture_path[partName]);
+      const destinationFolderPath = path.join(__dirname, 'stocked', 'permanent');
+      const destinationFilePath = path.join(destinationFolderPath, texture_path[partName]);
 
   // fs.access(sourceFilePath, fs.constants.F_OK, (err) => {
   //   if (err) {
@@ -138,11 +147,12 @@ const saveTexture = (req, res, next) => {
         return res.status(500).send({ message: 'Error copying file.' });
       }
 
-      // Continue to the next middleware
-      next();
-    });
+    //   // Continue to the next middleware
+    
+    }); 
+     next();
   };
-
+}}
 
 
 

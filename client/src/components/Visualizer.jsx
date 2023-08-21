@@ -55,9 +55,9 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const themeContext = useContext(ThemeContext);
   const theme = themeContext.theme;
 
-
-  const texturesFromReducer = useSelector((state)=> state.texture_data.texture_assign)
-
+  const texturesFromReducer = useSelector(
+    (state) => state.texture_data.texture_assign
+  );
 
   function getSize() {
     if (window.innerWidth < 1223) {
@@ -104,6 +104,14 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   };
 
   const addGuitar = () => {
+  const texture_path = {
+    front: texturesFromReducer.Front,
+    body: texturesFromReducer.Body,
+    back: texturesFromReducer.Back,
+    side: texturesFromReducer.Side,
+    neck: texturesFromReducer.Neck,
+    pickguard: texturesFromReducer.Pickguard}
+  
     const guitarData = {
       id: model,
       gtrname: gtrName !== "" ? gtrName : "Guitar" + date,
@@ -121,14 +129,8 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       pickup_cover: colorList.pickup_cover,
       pickup_ring: colorList.pickup_ring,
       knobs: colorList.knobs,
-      texture_path: {
-        Front: texturesFromReducer.Front,
-        Body: texturesFromReducer.Body,
-        Back: texturesFromReducer.Back,
-        Side: texturesFromReducer.Side,
-        Neck: texturesFromReducer.Neck,
-        Pickguard: texturesFromReducer.Pickguard,
-      },
+texture_path: texture_path,
+
       gloss: colorList.gloss,
       scratch: colorList.scratch,
       body: colorList.body,
@@ -138,12 +140,11 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-    };  
-    console.log(texturesFromReducer)
+    };
+    console.log(texturesFromReducer);
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
-      
         dispatch(userGuitarsSave(guitarData));
       });
   };
@@ -167,7 +168,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     setColorList(colus);
     getSize();
   }, []);
-
 
   const handleGtrNameSet = () => {
     setGtrName(gtrNameInput);
@@ -267,7 +267,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       </group>
     );
   }
-
 
   return (
     <div className="mainviz">
@@ -458,8 +457,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
             </button>
           </div>
         )}
-
-    
       </div>
     </div>
   );
