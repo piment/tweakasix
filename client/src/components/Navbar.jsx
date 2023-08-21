@@ -10,10 +10,10 @@ function Navbar() {
   const [mobSize, setMobSize] = useState(false)
 const [itemsQty, setItemsQty] = useState(0)
 const cartItemsObj = useSelector((state) => state.cart_items.cartItems)
-// console.log(cartItemsObj)
+
 const cartSpare = Object.values(cartItemsObj).filter(item => item && item !== null);
   const cartGuitarsObj = useSelector((state) => state.cart_items.cartGuitars)
-console.log(cartGuitarsObj)
+
 const cartGuitars = Object.values(cartGuitarsObj).filter(item => item && item !== null);
 const toPascalCase = str => (str.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
 

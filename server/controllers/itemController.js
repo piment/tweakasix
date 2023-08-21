@@ -10,8 +10,15 @@ const getItemsFullGtr = (req, res) => {
   });
 };
 
-const addGuitar = (req, res, next) => {
+const saveGuitarThumb = (req, res) =>{
+  const thumb = req.body.thb
+   const sqlUserGtr = `INSERT INTO user_guitar (id_user, id_guitar) VALUES (?)`;
+}
 
+
+
+const addGuitar = (req, res, next) => {
+console.log('ETZRTZETZETZE')
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
@@ -43,6 +50,7 @@ const addGuitar = (req, res, next) => {
   const single_metal = req.body.single_metal;
   const backplate = req.body.backplate;
   const user = req.body.user;
+  
 
   const sqlInsertGtr = ` INSERT INTO guitar (name, model, id_user) VALUES (?)`;
   const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`;
@@ -129,17 +137,17 @@ const saveTexture = (req, res, next) => {
   const texture_path = req.body.texture_path;
 
 for (const partName in texture_path) {
-  console.log(texture_path[partName])
+  console.log('texture_path[partName]')
     if (texture_path[partName] === !null && texture_path.hasOwnProperty(partName)) {
       const sourceFilePath = path.join(__dirname, 'stocked', 'temporary', texture_path[partName]);
       const destinationFolderPath = path.join(__dirname, 'stocked', 'permanent');
       const destinationFilePath = path.join(destinationFolderPath, texture_path[partName]);
 
-  // fs.access(sourceFilePath, fs.constants.F_OK, (err) => {
-  //   if (err) {
-  //     console.error('Source file does not exist:', err);
-  //     return res.status(404).send({ message: 'Source file does not exist.' });
-  //   }
+  fs.access(sourceFilePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error('Source file does not exist:', err);
+      return res.status(404).send({ message: 'Source file does not exist.' });
+    }})
 
     fs.copyFile(sourceFilePath, destinationFilePath, (copyErr) => {
       if (copyErr) {
@@ -222,8 +230,12 @@ const guitarToCart = (req, res) => {
   db.query(sqlInsert, cartGtrId, (err, result) => {
     res.sendStatus(200);
   });
-  console.log("REQQQQQ", req.body);
+
 };
+
+
+
+
 
 module.exports = {
   getItemsFullGtr,

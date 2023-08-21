@@ -38,7 +38,7 @@ function Selector() {
       params : { id_user: userData.user.id},
       })
       .then((res) => {
-      console.log(res.data)
+
         setGuitarsList(res.data);
       });
   };
@@ -59,10 +59,9 @@ function Selector() {
   useEffect(() => {
     // getGuitars();
     getItemsFullGtr();
-    console.log(guitarsList)
+
     fullPrice();
-    //  dispatch(userGuitars(guitarsList))
-    // dispatch(userGuitars(guitarsList))
+
   }, [model]);
 
 

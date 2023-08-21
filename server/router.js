@@ -24,12 +24,13 @@ const upload = multer({ storage: storage } )
 
 router.get("/items", getItems);
 router.get("/itemsall", getItemsFullGtr);
-router.post("/items/saveguitar", saveTexture, addGuitar);
+router.post("/items/saveguitar",  addGuitar);
 router.get("/items/getguitars",getGuitars)
 router.get("/items/fetchguitar",fetchGuitar)
 router.get("/items/fetchtextures",fetchTextures)
 router.get("/itemsall/getvariation", getVariation)
 router.post("/items/saveguitartocart", guitarToCart)
+// router.post("items/addguitarthumb", addThumb)
 
 router.post("/register", register)
 

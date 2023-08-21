@@ -82,14 +82,45 @@ const temporaryStorage = multer.diskStorage({
   },
 });
 
+const storageThb = multer.diskStorage(
+  {
+    destination: function (req, file, cb) {
+      cb(null, "./stocked/thumbnails");
+    },
+    filename: function (req, file, cb) {
+      cb(
+        null,
+        file.originalname
+          .replace(/[^A-Za-z0-9.\s]/g, "")
+          .replace(/\s/g, "")
+          .replace(/[\u2018\u2019]/g, "")
+          .toLowerCase()
+      );
+  
+    },
+  }
+);
+// Handle file upload
+const uploadthb = multer({ storage: storageThb } )
 // Create a multer instance with temporary storage
 const upload = multer({ storage: temporaryStorage });
 
-// Handle file upload
+
 
 app.post("/upload", upload.array("file"), (req, res) => {
+
   const id = req.body.id;
   const fileRes = { id, ...req.files[0] };
+  res.send(fileRes);
+});
+
+app.post("/uploadthb", uploadthb.array("file"), (req, res) => { 
+  const base = req.body.file
+  const actualBase64 = base.replace(/^data:image\/\w+;base64,/, '');;
+  const imageBuffer = Buffer.from(actualBase64, 'base64')
+  const imagePath = './stocked/thumbnails/'+ req.body.id + '.png'; // Provide the appropriate path and filename
+fs.writeFileSync(imagePath, imageBuffer);
+  const fileRes = imageBuffer;
   res.send(fileRes);
 });
 
