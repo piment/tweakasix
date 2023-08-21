@@ -116,8 +116,8 @@ app.post("/upload", upload.array("file"), (req, res) => {
 
 app.post("/uploadthb", uploadthb.array("file"), (req, res) => { 
   const base = req.body.file
-  const actualBase64 = base.replace(/^data:image\/\w+;base64,/, '');;
-  const imageBuffer = Buffer.from(actualBase64, 'base64')
+  // const actualBase64 = base.replace(/^data:image\/\w+;base64,/, '');;
+  const imageBuffer = Buffer.from(base, 'base64')
   const imagePath = './stocked/thumbnails/'+ req.body.id + '.png'; // Provide the appropriate path and filename
 fs.writeFileSync(imagePath, imageBuffer);
   const fileRes = imageBuffer;

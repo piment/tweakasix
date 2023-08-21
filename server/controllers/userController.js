@@ -132,4 +132,33 @@ const userInfo = (req, res) => {
 }
 
 
-module.exports = {register, loginGet, loginPost, isUserAuth, userInfo}
+const editUserInfo =(req, res) => {
+  const user_id = req.body.user_id;
+ const username = req.body.username;
+ const firstname = req.body.firstname;
+ const lastname = req.body.lastname;
+ const email = req.body.email;
+ const number = req.body.number;
+ const street = req.body.street;
+ const postal = req.body.postal;
+ const city = req.body.city;
+ const country = req.body.country;
+ const phone = req.body.phone;
+ 
+
+ const sqlUserUpdate = `UPDATE user
+ SET username = ?,firstname = ?,lastname = ?, email = ?
+ WHERE id = ?`;
+ db.query(sqlUserUpdate, [username,firstname,lastname,email,user_id],  (err, result) => {
+  if (err) {
+    // Handle the error
+    console.error("Error:", err);
+    res.status(500).send("An error occurred.");
+    return;
+  }
+
+  res.send(result);
+})
+}
+
+module.exports = {register, loginGet, loginPost, isUserAuth, userInfo, editUserInfo}

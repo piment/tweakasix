@@ -3,7 +3,7 @@ import axios from "axios";
 import Registration from "./Register";
 import "./account.css";
 import { useDispatch, useSelector } from "react-redux";
-import { userOut, userGuitarsSave } from "../features/UserReducer";
+import { userOut, userGuitarsSave, userUpdate } from "../features/UserReducer";
 import { SignOut } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/Colors";
 function Account() {
@@ -28,7 +28,7 @@ localStorage.removeItem('token')
 
 useEffect(() => {
 setUserInfo(userData)
-
+console.log(userInfo)
 },[loginStatus])
 
   useEffect(() => {
@@ -36,7 +36,7 @@ setUserInfo(userData)
 setUserGtrs(userGuitars)
 
 
-  },[])
+  },[userInfo])
 const handleSelectGuitar = async (e) => {
   const gtr = e;
   const user = userInfo.id
@@ -77,20 +77,65 @@ console.log(tex.data)
       dispatch(addColor(object));
     });
 };
-console.log(userGtrs)
 
 
+  const [editMode, setEditMode] = useState(false);
+  const [editedData, setEditedData] = useState({});
+
+  const handleEdit = () => {
+    setEditMode(true);
+    // Initialize editedData with the current user data
+    setEditedData({
+      username: userInfo.username,
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      email: userInfo.email,
+      number: userDataInfo.number,
+      street: userDataInfo.street,
+      postal: userDataInfo.postal,
+      city: userDataInfo.city,
+      country: userDataInfo.country,
+      phone: userDataInfo.phone,
+    });
+  };
+
+  const handleChange = (field, value) => {
+    setEditedData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
 
 
-  useEffect(() => {
+  const handleSave = () => {
+    const userEdited = {
+      user_id: userInfo.id,
+      username: editedData.username,
+      firstname: editedData.firstname,
+      lastname: editedData.lastname,
+      email: editedData.email,
+      number: editedData.number,
+      street: editedData.street,
+      postal: editedData.postal,
+      city: editedData.city,
+      country: editedData.country,
+      phone: editedData.phone,
+    }
+    axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/edit`,
+userEdited
+    ).then(() => {
+      dispatch(userUpdate(userEdited))
+      setUserInfo(userEdited)
+    }
 
-  },[])
+    )
+    setEditMode(false);
+  };
   
 
 const editgtr = () => {
 
 }
-
 
   return (
     <div className="account-main">
@@ -113,16 +158,45 @@ const editgtr = () => {
         <div className="dashboard">
           <div className="user-infos">
             <div className="personnal-infos">
-              <ul id="list">
-                <li>{toPascalCase(userInfo.username)}</li>
-                <li>
-                  {userInfo.firstname} {userInfo.lastname}
-                </li>
-                <li>{userInfo.email}</li>
+              <ul id="list">  
+              <li>{editMode ? <input type="text" value={editedData.username} onChange={(e) => handleChange('username', e.target.value)} /> : toPascalCase(userInfo.username)}</li>
+     
+          {editMode ? (
+            <>
+            <li>
+              <input type="text" value={editedData.firstname} onChange={(e) => handleChange('firstname', e.target.value)} />
+           </li>  <li> <input type="text" value={editedData.lastname} onChange={(e) => handleChange('lastname', e.target.value)} />
+             </li> <li><input type="text" value={editedData.email} onChange={(e) => handleChange('email', e.target.value)} />
+           </li>   
+           <li id="adress"> <input type="text" value={editedData.number} onChange={(e) => handleChange('number', e.target.value)} />
+              <input type="text" value={editedData.street} onChange={(e) => handleChange('street', e.target.value)} />
+              <input type="text" value={editedData.postal} onChange={(e) => handleChange('postal', e.target.value)} />
+              <input type="text" value={editedData.city} onChange={(e) => handleChange('city', e.target.value)} />
+              <input type="text" value={editedData.country} onChange={(e) => handleChange('country', e.target.value)} />
+              </li>
+             
+            </>
+          ) : (
+            <>
+            
+            {userInfo.firstname} {userInfo.lastname}
+          <li>{userInfo.email}</li>
                 <li id="adress">{userDataInfo.number} {userDataInfo.street}, <br/>
                 {userDataInfo.postal} {toPascalCase(userDataInfo.city)}, <br/>
                 {(userDataInfo.country).toUpperCase()}</li>
                 <li>{userDataInfo.phone}</li>
+            </>
+                 )} 
+             
+             <li>
+          {editMode ? (
+
+            <button id="edit-save" onClick={handleSave}>Save</button>
+          ) : (
+            <button id="edit-save" onClick={handleEdit}>Edit</button>
+          )}
+            </li>
+  
               </ul>
             </div>
           </div>
@@ -130,16 +204,19 @@ const editgtr = () => {
           <div className="order-history"> No orders yet</div>
       
         <div className="saved-guitars"> 
-        <div className="guitars-all">
-         { userGuitars ? 
+        "Start tweaking your six strings now! "
+        {/* <div className="guitars-all">
+         { userGuitars == 150 ? 
           userGuitars.map((gtr, key) => <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id}>
-      {/* <a href="/"> */}
+      <a href="/">
+    {/* { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} /> ) } }
           { gtr.id_guitar}
-        {/* </a> */}
+       
+        </a>
         
           </div>)
- : "Start tweaking your six strings now! " }
- </div>
+      : "Start tweaking your six strings now! " } */}
+ {/* </div> */}
     </div>
       </div>
           </div>

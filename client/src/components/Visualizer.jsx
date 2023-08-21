@@ -59,13 +59,13 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const themeContext = useContext(ThemeContext);
   const theme = themeContext.theme;
 
- 
+ const thbid =  'Guitar' + date
 
 const [thumbImg, setThumbImg] = useState()
   const ref = createRef(null) 
    const formData = new FormData();
   const [image, takeScreenshot] =  useScreenshot({
-    type: "image/jpeg",
+    type: "image/png",
     quality: 1.0
   });
 const [pic, setPic] = useState()
@@ -76,12 +76,12 @@ const [pic, setPic] = useState()
       // The capturedImage contains the screenshot
 
       // console.log('IMGGGGG', capturedImage);
-const id =  date
-      console.log(id)
+
+      // console.log(id)
       // Create a FormData object and append the image data
       const formData = new FormData();
       formData.append("file", capturedImage);
-      formData.append("id", id);
+      formData.append("id", thbid);
 
 setPic(capturedImage)
       // Make the API request
@@ -150,11 +150,11 @@ setPic(capturedImage)
   };
  
   const addGuitar = () => {  
-
+getImage()
 
     const guitarData = {
       id: model,
-      gtrname: gtrName !== "" ? gtrName : "Guitar" + date,
+      gtrname: gtrName !== "" ? gtrName : thbid,
       side: colorList.side,
       binding: colorList.binding,
       tablefront: colorList.tablefront,
@@ -179,11 +179,11 @@ texture_path: colorList.texture_path,
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
+      thumbnail : thbid,
     }
      axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
-        console.log("hrhetfhefhefqhqhqh", response)
         dispatch(userGuitarsSave(guitarData));
       });
   };
@@ -311,7 +311,7 @@ texture_path: colorList.texture_path,
     <div className="mainviz">
       <div className="visualizer">
       <div>
-      <div>
+      {/* <div>
         <button style={{position:"absolute", marginBottom: '10px', zIndex: 20000 }} onClick={getImage}>
           Take screenshot
         </button>
@@ -322,7 +322,7 @@ texture_path: colorList.texture_path,
         <p>
           <strong>hook by @vre2h which allows to create screenshots</strong>
         </p>
-      </div>
+      </div> */}
     </div>
         <div className="canvas" style={{ display: "flex" }}>
           <Canvas

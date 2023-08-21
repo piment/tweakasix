@@ -50,7 +50,7 @@ console.log('ETZRTZETZETZE')
   const single_metal = req.body.single_metal;
   const backplate = req.body.backplate;
   const user = req.body.user;
-  
+  const thumbnail = req.body.thumbnail
 
   const sqlInsertGtr = ` INSERT INTO guitar (name, model, id_user) VALUES (?)`;
   const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`;
@@ -75,7 +75,7 @@ console.log('ETZRTZETZETZE')
    ((SELECT id FROM parts WHERE name = 'single_metal'), ?),
    ((SELECT id FROM parts WHERE name = 'backplate'), ?)
    `;
-  const sqlUserGtr = `INSERT INTO user_guitar (id_user, id_guitar) VALUES (?)`;
+  const sqlUserGtr = `INSERT INTO user_guitar (id_user, id_guitar, thumbnail) VALUES (?)`;
   try {
     db.query(sqlInsertGtr, [[gtrname, modelId, user]], (err, result) => {
       if (err) {
@@ -119,7 +119,7 @@ console.log('ETZRTZETZETZE')
                 throw err;
               }
               console.log(result);
-              db.query(sqlUserGtr, [[user, addedId]]);
+              db.query(sqlUserGtr, [[user, addedId, thumbnail]]);
               // res.status(200).json({ id: addedId });
             }
           );
@@ -185,17 +185,19 @@ ORDER BY g.name`;
 const fetchGuitar = (req, res) => {
   const user = req.query.user
   const gtr = req.query.gtr;
-  const sqlSelect = `SELECT *
-  FROM guitar g
-  INNER JOIN composition c ON g.id = c.id_guitar
-  INNER JOIN parts p ON c.id_part = p.id
-  WHERE g.id_user = ? AND g.id = ?`;
+  const sqlSelect = `SELECT user_guitar.*, guitar.*
+  FROM user_guitar
+  INNER JOIN guitar ON user_guitar.id = guitar.id_user
+  INNER JOIN composition ON guitar.id = composition.id_guitar
+  INNER JOIN parts ON composition.id_part = parts.id
+  WHERE user_guitar.id_user = ? AND guitar.id = ?`;
 
 db.query(sqlSelect, [user, gtr], (err, result) => {
   if (err) {
     console.error(err);
     res.sendStatus(500); // Sending internal server error status
   } else {
+    console.log(result)
     res.send(result);
   }
 });

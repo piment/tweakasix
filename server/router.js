@@ -4,7 +4,7 @@ const router = express.Router();
 
 // const movieController = require("../controllers/movieController");
 const {  addGuitar, getGuitars, fetchGuitar, getItemsFullGtr, guitarToCart, fetchTextures, saveTexture} = require("./controllers/itemController");
-const {register, loginGet, loginPost, isUserAuth, userInfo} = require ("./controllers/userController")
+const {register, loginGet, loginPost, isUserAuth, userInfo, editUserInfo} = require ("./controllers/userController")
 const {getItems, getVariation} = require('./controllers/shopController')
 const multer  = require('multer');
 
@@ -38,5 +38,7 @@ router.get("/login", loginGet)
 router.post("/login", loginPost)
 router.get('/isUserAuth', isUserAuth)
 router.get('/getUserInfo', userInfo)
+
+router.put('/user/edit', editUserInfo)
 
 module.exports = router
