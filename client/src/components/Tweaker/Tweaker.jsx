@@ -17,6 +17,7 @@ import ChipsDemo from "./Multiselect";
 import silverIcon from "../../assets/img/Silver.jpg";
 import { ShopContext } from "../../context/shop-context";
 import { ArrowBendDoubleUpLeft, Palette, StackSimple, X } from "@phosphor-icons/react";
+import { textureClear, textureDelete, textureNone } from "../../features/TextureReducer";
 
 function Tweaker({  mobSize,
   colorList,
@@ -99,7 +100,8 @@ function Tweaker({  mobSize,
 
 
 
-  const resetGtr = () => { 
+  const resetGtr = () => {  
+  
     setMetalType({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
  setPickupCover({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
  setColorList({...colorList, side: "#ffffff",
@@ -119,12 +121,13 @@ function Tweaker({  mobSize,
  gloss : 50,
  scratch : 0,
  wood : 0,
- texture_path : "/1681217837265.png",
+ texture_path : "/HD_transparent_picture.png",
  body: "#ffffff",
  pickguard: "#ffffff",
  single_plastic: "#ffffff",
  single_metal: "#d0cbc4",
  backplate: "#ffffff"});
+  dispatch(textureNone())
  setGtrPriceFullVar(gtrPriceFull)
 }
 const { addToCart, removeFromCart, getCartAmount, addGuitarToCart } = useContext(ShopContext);
@@ -172,41 +175,7 @@ const addGtrToCart = () => {
 //   const gtrAndPrice = {guitarToAdd, gtrPriceFullVar}
 //  addGuitarToCart(gtrAndPrice)
 addToCart(guitarToAdd)
-//  ,
-  // axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
-  // id: model,
-  //   gtrname: gtrName != '' ? gtrName : 'guitar'+ dateString,
-  //   side: colorList.side,
-  //   binding: colorList.binding,
-  //   tablefront: colorList.tablefront,
-  //   tableback: colorList.tableback,
-  //   neckwood: colorList.neck,
-  //   fretboard: colorList.fretboard,
-  //   fretbinding: colorList.fretbinding,
-  //   frets: colorList.frets,
-  //   inlay: colorList.inlay,
-  //   nut: colorList.nut,
-  //   metal_pieces: colorList.metal_pieces,
-  //   pickup_cover: colorList.pickup_cover,
-  //   pickup_ring: colorList.pickup_ring,
-  //   knobs: colorList.knobs,
-  //   texture_path: colorList.texture_path,
-  //   gloss: colorList.gloss,
-  //   scratch: colorList.scratch,
-  //   body: colorList.body,
-  //   wood: colorList.wood,
-  //   pickguard: colorList.pickguard,
-  //   single_plastic: colorList.single_plastic,
-  //   single_metal: colorList.single_metal,
-  //   backplate: colorList.backplate,
-  // }) 
-  // .then((res) => {
-  //   const lastEntryId = res.data.id;
-  //   // console.log(lastEntryId);
-  //   axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitartocart`,
-  //  {guitar_id : lastEntryId}
-  //   // Do something with the last entry ID
-  // )})
+
 };
 const handlePointerDown = (e) => {
   document.body.classList.add("no-scroll");

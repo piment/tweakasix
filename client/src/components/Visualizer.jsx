@@ -55,6 +55,10 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const themeContext = useContext(ThemeContext);
   const theme = themeContext.theme;
 
+
+  const texturesFromReducer = useSelector((state)=> state.texture_data.texture_assign)
+
+
   function getSize() {
     if (window.innerWidth < 1223) {
       setMobSize(true);
@@ -117,7 +121,14 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       pickup_cover: colorList.pickup_cover,
       pickup_ring: colorList.pickup_ring,
       knobs: colorList.knobs,
-      texture_path: colorList.texture_path,
+      texture_path: {
+        Front: texturesFromReducer.Front,
+        Body: texturesFromReducer.Body,
+        Back: texturesFromReducer.Back,
+        Side: texturesFromReducer.Side,
+        Neck: texturesFromReducer.Neck,
+        Pickguard: texturesFromReducer.Pickguard,
+      },
       gloss: colorList.gloss,
       scratch: colorList.scratch,
       body: colorList.body,
@@ -127,10 +138,12 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-    };
+    };  
+    console.log(texturesFromReducer)
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
+      
         dispatch(userGuitarsSave(guitarData));
       });
   };

@@ -128,12 +128,12 @@ materials.fretboard.map = rosewood
 
 
 const partTextures = {
-  Front: useTexture( texturesFromReducer.Front ? tempPath + texturesFromReducer.Front : path + '/1681217837265.png'),
+  Front: useTexture( texturesFromReducer.Front ? tempPath + texturesFromReducer.Front : path + '/HD_transparent_picture.png'),
 
- Back: useTexture( texturesFromReducer.Back ? tempPath + texturesFromReducer.Back : path + '/1681217837265.png'),
- Side: useTexture( texturesFromReducer.Side ? tempPath + texturesFromReducer.Side : path + '/1681217837265.png'),
- Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
-Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
+ Back: useTexture( texturesFromReducer.Back ? tempPath + texturesFromReducer.Back : path + '/HD_transparent_picture.png'),
+ Side: useTexture( texturesFromReducer.Side ? tempPath + texturesFromReducer.Side : path + '/HD_transparent_picture.png'),
+ Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/HD_transparent_picture.png'),
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/HD_transparent_picture.png')
 };
 partTextures.Front.flipY = false
 partTextures.Back.flipY = false

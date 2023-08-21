@@ -1,4 +1,6 @@
 const { dbPool: db } = require("./dbController");
+const path = require("path");
+const fs = require("fs");
 
 const getItemsFullGtr = (req, res) => {
   const sqlSelect = "SELECT * FROM parts where model_comp like ?";
@@ -8,7 +10,8 @@ const getItemsFullGtr = (req, res) => {
   });
 };
 
-const addGuitar = (req, res) => {
+const addGuitar = (req, res, next) => {
+  console.log(req.body.texture_path)
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
@@ -104,7 +107,7 @@ const addGuitar = (req, res) => {
               }
               console.log(result);
               db.query(sqlUserGtr, [[user, addedId]]);
-              res.status(200).json({ id: addedId });
+              // res.status(200).json({ id: addedId });
             }
           );
         }
@@ -114,7 +117,39 @@ const addGuitar = (req, res) => {
     console.log(err);
     res.sendStatus(500);
   }
+  next();
 };
+
+const saveTexture = (req, res, next) => {
+  const texture_path = req.body.texture_path;
+  const sourceFilePath = path.join( './','stocked', 'temporary', texture_path);
+  const destinationFolderPath = path.join( 'stocked', 'permanent');
+  const destinationFilePath = path.join(destinationFolderPath, texture_path);
+
+  // fs.access(sourceFilePath, fs.constants.F_OK, (err) => {
+  //   if (err) {
+  //     console.error('Source file does not exist:', err);
+  //     return res.status(404).send({ message: 'Source file does not exist.' });
+  //   }
+
+    fs.copyFile(sourceFilePath, destinationFilePath, (copyErr) => {
+      if (copyErr) {
+        console.error('Error copying file:', copyErr);
+        return res.status(500).send({ message: 'Error copying file.' });
+      }
+
+      // Continue to the next middleware
+      next();
+    });
+  };
+
+
+
+
+
+
+
+
 
 const getGuitars = (req, res) => {
   const user = req.body.id_user;
@@ -148,6 +183,29 @@ db.query(sqlSelect, [user, gtr], (err, result) => {
 });
 };
 
+
+const fetchTextures = (req, res) => {
+  const texID = req.query.txID
+
+  const sqlSelect = `SELECT path
+  FROM texture t
+  INNER JOIN composition c ON t.id = c.id_texture
+  WHERE t.id = ? `;
+
+db.query(sqlSelect, texID, (err, result) => {
+  if (err) {
+    console.error(err);
+    res.sendStatus(500); // Sending internal server error status
+  } else {
+    res.send(result);
+  }
+});
+};
+
+
+
+
+
 const guitarToCart = (req, res) => {
   const cartGtrId = req.body.guitar_id;
   const sqlInsert = "INSERT INTO cart_guitar (guitar_id) VALUES (?)";
@@ -163,4 +221,6 @@ module.exports = {
   getGuitars,
   fetchGuitar,
   guitarToCart,
+  fetchTextures,
+  saveTexture
 };

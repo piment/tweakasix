@@ -115,7 +115,7 @@ getVariation()
     gloss : 50,
     scratch : 0,
     wood : 0,
-    texture_path : "/1681217837265.png",
+    texture_path : "//HD_transparent_picture.png",
     body: "#ffffff",
     pickguard: "#ffffff",
     single_plastic: "#ffffff",

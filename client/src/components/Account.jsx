@@ -46,7 +46,7 @@ const handleSelectGuitar = async (e) => {
       params: { gtr: gtr, user : user },
     })
     .then((res) => {
-      console.log(res)
+      let txPath
       const fetched = res.data;
       const object = Object.values(fetched).reduce((acc, item) => {
         acc[item.name] = item.color;
@@ -54,9 +54,19 @@ const handleSelectGuitar = async (e) => {
         acc.gloss = item.gloss;
         acc.wood = parseInt(item.wood, 10);
         acc.scratch = parseInt(item.scratch, 10);
-        item.id_texture
-          ? acc.texture_path = item.id_texture
-          : (acc.texture_path = "stocked/1681217837265.png");
+console.log(item.id_texture)
+        if(item.id_texture !== "stocked/HD_transparent_picture.png"){
+
+          (axios.get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchtextures`, {
+            params: { txID: item.id_texture},
+          }).then((tex) => {
+console.log(tex.data)
+        txPath = tex.data[0].path
+          return   acc.texture_path = txPath
+          }) )
+        
+        }
+          else (acc.texture_path = "stocked/HD_transparent_picture.png");
 
           console.log(acc.texture_path)
         return acc;

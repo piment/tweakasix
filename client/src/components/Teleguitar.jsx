@@ -127,9 +127,9 @@ materials.varnish = new THREE.MeshStandardMaterial({
 // useEffect(() => {
 
 const partTextures = {
-  Body: useTexture( texturesFromReducer.Body ? tempPath + texturesFromReducer.Body : path + '/1681217837265.png'),
- Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
-Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
+  Body: useTexture( texturesFromReducer.Body ? tempPath + texturesFromReducer.Body : path + '/HD_transparent_picture.png'),
+ Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/HD_transparent_picture.png'),
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/HD_transparent_picture.png')
 };
 
 

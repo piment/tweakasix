@@ -101,7 +101,7 @@ function MyDropzone({
         }
       });
 
-      //  dispatch(textureAdd(filesId));
+       dispatch(textureAdd(filesId));
     }
     // console.log(files);
   }, [setFiles, dispatch]);
@@ -118,8 +118,7 @@ function MyDropzone({
     const removed = files.filter(
       (part) => part.modifiedFilename == fileModName
     );
-    console.log(removed);
-    // dispatch(textureDelete(removed.modifiedFilename))
+
     dispatch(textureClear(fileModName));
   };
 
