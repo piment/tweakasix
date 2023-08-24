@@ -34,12 +34,7 @@ console.log('ETZRTZETZETZE')
   const pickup_cover = req.body.pickup_cover;
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
-  const texture_path_front = req.body.texture_path_front;
-  // const texture_path_body = req.body.texture_path_body;
-  // const texture_path_back = req.body.texture_path_back;
-  // const texture_path_side = req.body.texture_path_side;
-  // const texture_path_neck = req.body.texture_path_neck;
-  // const texture_path_pickguard = req.body.texture_path_pickguard;
+  const texture_path = req.body.texture_path;
   const gloss = req.body.gloss;
   const scratch = req.body.scratch;
   const wood = req.body.wood;

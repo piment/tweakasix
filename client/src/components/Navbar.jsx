@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import logo from "../assets/img/tweakasix.png";
 
-import "./Navbar.css";
+import "./css/Navbar.css";
 
 function Navbar() {
   const isHomePage = window.location.pathname == '/' || '';

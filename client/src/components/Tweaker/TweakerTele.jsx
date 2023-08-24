@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import "./TweakerMain.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addColor, resetDrop } from "../../features/Colors";
+import { addColor, resetDrop } from "../../features/ColorReducer";
 import { ColorPicker } from "primereact/colorpicker";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import "./Visualizer.css";
+import "./css/Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -13,7 +13,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
-import {addColor } from "../features/Colors";
+import {addColor } from "../features/ColorReducer";
 import { LinearEncoding, sRGBEncoding } from "three";
 
 function Teleguitar({

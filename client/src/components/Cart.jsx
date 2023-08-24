@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Construction from "./Construction/MainConstruction";
 import { ShopContext } from "../context/shop-context";
 import { useSelector } from "react-redux";
-import './eshop.css'
+import './css/eshop.css'
 import { CaretRight } from "@phosphor-icons/react";
 function Cart() {
   const { addToCart, removeFromCart, getCartAmount } = useContext(ShopContext);

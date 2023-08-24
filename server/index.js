@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const app = express();
 const port = 3001;
 const path = require("path");
@@ -8,34 +10,16 @@ const cors = require("cors");
 const multer = require("multer");
 const fs = require("fs");
 
-const session = require("express-session");
-// setup multer for file upload
 
-///////// Clean up the temp directory
-const temporaryFolder = "./stocked/temporary"; // Temporary folder path
+app.use(cookieParser())
 
-const clearTemporaryFolder = () => {
-  const files = fs.readdirSync(temporaryFolder);
+app.get('/', function (req, res) {
+  // Cookies that have not been signed
+  console.log('Cookies: ', req.cookies)
 
-  files.forEach((file) => {
-    const filePath = path.join(temporaryFolder, file);
-    const { ctime } = fs.statSync(filePath);
-    const currentTime = new Date().getTime();
-    const fileAge = currentTime - ctime;
-
-    const timeLimit = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-    // console.log(filePath)
-    if (fileAge > timeLimit) {
-      fs.unlinkSync(filePath); // Delete the file
-    }
-  });
-};
-
-// Middleware to clear temporary folder
-app.use((req, res, next) => {
-  clearTemporaryFolder();
-  next();
-});
+  // Cookies that have been signed
+  console.log('Signed Cookies: ', req.signedCookies)
+})
 
 app.use(
   session({
@@ -64,7 +48,33 @@ app.use(express.json());
 
 app.use("/stocked", express.static(path.join(__dirname + "/stocked")));
 
+// setup multer for file upload
 
+///////// Clean up the temp directory
+const temporaryFolder = "./stocked/temporary"; // Temporary folder path
+
+const clearTemporaryFolder = () => {
+  const files = fs.readdirSync(temporaryFolder);
+
+  files.forEach((file) => {
+    const filePath = path.join(temporaryFolder, file);
+    const { ctime } = fs.statSync(filePath);
+    const currentTime = new Date().getTime();
+    const fileAge = currentTime - ctime;
+
+    const timeLimit = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    // console.log(filePath)
+    if (fileAge > timeLimit) {
+      fs.unlinkSync(filePath); // Delete the file
+    }
+  });
+};
+
+// Middleware to clear temporary folder
+app.use((req, res, next) => {
+  clearTemporaryFolder();
+  next();
+});
 const temporaryStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./stocked/temporary");
@@ -78,48 +88,41 @@ const temporaryStorage = multer.diskStorage({
         .replace(/[\u2018\u2019]/g, "")
         .toLowerCase()
     );
-
   },
 });
 
-const storageThb = multer.diskStorage(
-  {
-    destination: function (req, file, cb) {
-      cb(null, "./stocked/thumbnails");
-    },
-    filename: function (req, file, cb) {
-      cb(
-        null,
-        file.originalname
-          .replace(/[^A-Za-z0-9.\s]/g, "")
-          .replace(/\s/g, "")
-          .replace(/[\u2018\u2019]/g, "")
-          .toLowerCase()
-      );
-  
-    },
-  }
-);
+const storageThb = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./stocked/thumbnails");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.originalname
+        .replace(/[^A-Za-z0-9.\s]/g, "")
+        .replace(/\s/g, "")
+        .replace(/[\u2018\u2019]/g, "")
+        .toLowerCase()
+    );
+  },
+});
 // Handle file upload
-const uploadthb = multer({ storage: storageThb } )
+const uploadthb = multer({ storage: storageThb });
 // Create a multer instance with temporary storage
 const upload = multer({ storage: temporaryStorage });
 
-
-
 app.post("/upload", upload.array("file"), (req, res) => {
-
   const id = req.body.id;
   const fileRes = { id, ...req.files[0] };
   res.send(fileRes);
 });
 
-app.post("/uploadthb", uploadthb.array("file"), (req, res) => { 
-  const base = req.body.file
+app.post("/uploadthb", uploadthb.array("file"), (req, res) => {
+  const base = req.body.file;
   // const actualBase64 = base.replace(/^data:image\/\w+;base64,/, '');;
-  const imageBuffer = Buffer.from(base, 'base64')
-  const imagePath = './stocked/thumbnails/'+ req.body.id + '.png'; // Provide the appropriate path and filename
-fs.writeFileSync(imagePath, imageBuffer);
+  const imageBuffer = Buffer.from(base, "base64");
+  const imagePath = "./stocked/thumbnails/" + req.body.id + ".png"; // Provide the appropriate path and filename
+  fs.writeFileSync(imagePath, imageBuffer);
   const fileRes = imageBuffer;
   res.send(fileRes);
 });

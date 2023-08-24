@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
 import Visualizer from "./Visualizer";
-import "./Selector.css";
+import "./css/Selector.css";
 import { useDispatch, useSelector } from "react-redux";
 import { userGuitarsSave } from "../features/UserReducer";
 
@@ -26,11 +26,8 @@ function Selector() {
       })
       .then((res) => {
         setItemsListFull(res.data);
-        // setVariationList(res.data[1])
       });
   };
-
-  console.log(userData)
 
   const getGuitars = () => {
     axios
@@ -57,16 +54,14 @@ function Selector() {
   }, [itemsListFull]);
 
   useEffect(() => {
-    // getGuitars();
     getItemsFullGtr();
 
     fullPrice();
-
   }, [model]);
 
 
 useEffect(() => {
-  // getGuitars()
+
 },[])
 
 

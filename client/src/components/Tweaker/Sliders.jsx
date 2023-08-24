@@ -2,7 +2,7 @@ import React from 'react'
 import { Tooltip } from "primereact/tooltip";
 import { SelectButton } from "primereact/selectbutton";
 import { Slider } from "primereact/slider";
-import { addColor } from '../../features/Colors';
+import { addColor } from '../../features/ColorReducer';
 
 import "./CustomPrimereact.css";
 import { useDispatch } from 'react-redux';

@@ -2,40 +2,32 @@ import React, {
   useRef,
   useState,
   useEffect,
-  useCallback,
   Suspense,
   useContext,
   createRef,
 } from "react";
 
-import "./Visualizer.css";
+import "./css/Visualizer.css";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Environment,
-  ContactShadows,
-  Text,
-  SoftShadows,
-} from "@react-three/drei";
+import { OrbitControls, ContactShadows, Text } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import axios from "axios";
 import * as THREE from "three";
 import { MotionConfig } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import { useDispatch, useSelector } from "react-redux";
-import Tweaker from "./Tweaker/Tweaker";
+import TweakerES from "./Tweaker/TweakerES";
 import TweakerTele from "./Tweaker/TweakerTele";
 import ESguitar from "./ESguitar";
 import Teleguitar from "./Teleguitar";
+import LightAmb from "./LightAmb";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import { Button } from "primereact/button";
-import "./confirm-modal.css";
-import "./confirm-lara-blue.css";
+import "./css/confirm-modal.css";
+import "./css/confirm-lara-blue.css";
 import { FloppyDisk } from "@phosphor-icons/react";
 import { ThemeContext } from "../App";
-import LightAmb from "./LightAmb";
-import { PCFSoftShadowMap } from "three";
+
 import { userGuitarsSave } from "../features/UserReducer";
 import { useScreenshot } from "use-react-screenshot";
 
@@ -53,26 +45,23 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const [dropped, setDropped] = useState(triggs);
   const [showPreview, setShowPreview] = useState(false);
   const [mobSize, setMobSize] = useState(false);
-  
-
 
   const themeContext = useContext(ThemeContext);
   const theme = themeContext.theme;
 
- const thbid =  'Guitar' + date
+  const thbid = "Guitar" + date;
 
-const [thumbImg, setThumbImg] = useState()
-  const ref = createRef(null) 
-   const formData = new FormData();
-  const [image, takeScreenshot] =  useScreenshot({
+  const [thumbImg, setThumbImg] = useState();
+  const ref = createRef(null);
+  const formData = new FormData();
+  const [image, takeScreenshot] = useScreenshot({
     type: "image/png",
-    quality: 1.0
+    quality: 1.0,
   });
-const [pic, setPic] = useState()
-  const thbArr = []
-  const getImage = () =>{ 
-    takeScreenshot(ref.current)
-    .then((capturedImage) => {
+  const [pic, setPic] = useState();
+  const thbArr = [];
+  const getImage = () => {
+    takeScreenshot(ref.current).then((capturedImage) => {
       // The capturedImage contains the screenshot
 
       // console.log('IMGGGGG', capturedImage);
@@ -83,7 +72,7 @@ const [pic, setPic] = useState()
       formData.append("file", capturedImage);
       formData.append("id", thbid);
 
-setPic(capturedImage)
+      setPic(capturedImage);
       // Make the API request
       axios
         .post(`${import.meta.env.VITE_BACKEND_URL}/uploadthb`, formData, {
@@ -91,18 +80,15 @@ setPic(capturedImage)
             "Content-Type": "multipart/form-data",
           },
         })
-        .then((response) => { 
-            // thbArr.push(response)
-        
-         setThumbImg(response)
-        })
+        .then((response) => {
+          // thbArr.push(response)
 
-      }
-    )
-};
+          setThumbImg(response);
+        });
+    });
+  };
 
-// console.log(pic)
-
+  // console.log(pic)
 
   function getSize() {
     if (window.innerWidth < 1223) {
@@ -126,8 +112,7 @@ setPic(capturedImage)
   const toast = useRef(null);
 
   const accept = () => {
-
- addGuitar(),
+    addGuitar(),
       toast.current.show({
         severity: "info",
         summary: "Confirmed",
@@ -148,9 +133,9 @@ setPic(capturedImage)
   const resetCam = () => {
     orbCam.current.reset();
   };
- 
-  const addGuitar = () => {  
-getImage()
+
+  const addGuitar = () => {
+    getImage();
 
     const guitarData = {
       id: model,
@@ -169,7 +154,7 @@ getImage()
       pickup_cover: colorList.pickup_cover,
       pickup_ring: colorList.pickup_ring,
       knobs: colorList.knobs,
-texture_path: colorList.texture_path,
+      texture_path: colorList.texture_path,
       gloss: colorList.gloss,
       scratch: colorList.scratch,
       body: colorList.body,
@@ -179,9 +164,9 @@ texture_path: colorList.texture_path,
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-      thumbnail : thbid,
-    }
-     axios
+      thumbnail: thbid,
+    };
+    axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
         dispatch(userGuitarsSave(guitarData));
@@ -310,23 +295,10 @@ texture_path: colorList.texture_path,
   return (
     <div className="mainviz">
       <div className="visualizer">
-      <div>
-      {/* <div>
-        <button style={{position:"absolute", marginBottom: '10px', zIndex: 20000 }} onClick={getImage}>
-          Take screenshot
-        </button>
-      </div>
-      <img style={{display: "flex"}} width={60} height={60} src={pic} alt={'Screenshot'} />
-      <div >
-        <h1>use-react-screenshot</h1>
-        <p>
-          <strong>hook by @vre2h which allows to create screenshots</strong>
-        </p>
-      </div> */}
-    </div>
+        <div></div>
         <div className="canvas" style={{ display: "flex" }}>
           <Canvas
-          ref={ref}
+            ref={ref}
             fallback={null}
             camera={{ position: mobSize ? [0, 0, 5] : [0, 0, 3], fov: 60 }}
             linear
@@ -414,11 +386,11 @@ texture_path: colorList.texture_path,
                 </motion.group>
               </motion.group>
             </MotionConfig>
-            {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
+            <Perf deepAnalyze={true} position={"top-left"} />
             {gtrName && <GuitarName />}
           </Canvas>
           {model == 1 && (
-            <Tweaker
+            <TweakerES
               colorList={colorList}
               setColorList={setColorList}
               resetCam={resetCam}
@@ -470,7 +442,7 @@ texture_path: colorList.texture_path,
           header="Confirmation"
           label="Confirm"
           icon="pi pi-exclamation-triangle"
-          accept={ accept}
+          accept={accept}
           reject={reject}
         />
         <div className="card flex justify-content-center">

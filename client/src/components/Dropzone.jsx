@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { addColor, triggerDrop } from "../features/Colors";
+import { addColor, triggerDrop } from "../features/ColorReducer";
 import { useDispatch, useSelector } from "react-redux";
 import "./Tweaker/Dropzone.css";
 import {
