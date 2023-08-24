@@ -2,47 +2,40 @@ import React, {
   useRef,
   useState,
   useEffect,
-  useCallback,
   Suspense,
   useContext,
+  createRef,
 } from "react";
 
-import "./Visualizer.css";
+import "./css/Visualizer.css";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Environment,
-  ContactShadows,
-  Text,
-  SoftShadows,
-} from "@react-three/drei";
-import {Perf} from 'r3f-perf'
+import { OrbitControls, ContactShadows, Text } from "@react-three/drei";
+import { Perf } from "r3f-perf";
 import axios from "axios";
 import * as THREE from "three";
 import { MotionConfig } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import { useDispatch, useSelector } from "react-redux";
-import Tweaker from "./Tweaker/Tweaker";
+import TweakerES from "./Tweaker/TweakerES";
 import TweakerTele from "./Tweaker/TweakerTele";
 import ESguitar from "./ESguitar";
 import Teleguitar from "./Teleguitar";
+import LightAmb from "./LightAmb";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import { Button } from "primereact/button";
-import "./confirm-modal.css";
-import "./confirm-lara-blue.css";
+import "./css/confirm-modal.css";
+import "./css/confirm-lara-blue.css";
 import { FloppyDisk } from "@phosphor-icons/react";
 import { ThemeContext } from "../App";
-import LightAmb from "./LightAmb";
-import { PCFSoftShadowMap } from "three";
 
-
+import { userGuitarsSave } from "../features/UserReducer";
+import { useScreenshot } from "use-react-screenshot";
 
 function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
   const loggedIn = useSelector((state) => state.user_data.userData);
-
+  let date = new Date().toJSON();
   const orbCam = useRef();
   const gtrnameref = useRef();
 
@@ -51,19 +44,58 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const [gtrName, setGtrName] = useState("");
   const [dropped, setDropped] = useState(triggs);
   const [showPreview, setShowPreview] = useState(false);
-  const [mobSize, setMobSize] = useState(false)
+  const [mobSize, setMobSize] = useState(false);
 
+  const themeContext = useContext(ThemeContext);
+  const theme = themeContext.theme;
 
-  const themeContext = useContext(ThemeContext)
-  const theme = themeContext.theme
+  const thbid = "Guitar" + date;
 
-  function getSize(){
+  const [thumbImg, setThumbImg] = useState();
+  const ref = createRef(null);
+  const formData = new FormData();
+  const [image, takeScreenshot] = useScreenshot({
+    type: "image/png",
+    quality: 1.0,
+  });
+  const [pic, setPic] = useState();
+  const thbArr = [];
+  const getImage = () => {
+    takeScreenshot(ref.current).then((capturedImage) => {
+      // The capturedImage contains the screenshot
 
-    if (window.innerWidth < 1223){
-      setMobSize(true)
-    } else setMobSize(false)
+      // console.log('IMGGGGG', capturedImage);
+
+      // console.log(id)
+      // Create a FormData object and append the image data
+      const formData = new FormData();
+      formData.append("file", capturedImage);
+      formData.append("id", thbid);
+
+      setPic(capturedImage);
+      // Make the API request
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/uploadthb`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          // thbArr.push(response)
+
+          setThumbImg(response);
+        });
+    });
+  };
+
+  // console.log(pic)
+
+  function getSize() {
+    if (window.innerWidth < 1223) {
+      setMobSize(true);
+    } else setMobSize(false);
   }
-  window.addEventListener('resize', getSize);
+  window.addEventListener("resize", getSize);
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -71,7 +103,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       .join(" ");
 
   const gtrPriceFull = gtrPrice;
-
 
   const dispatch = useDispatch();
 
@@ -98,42 +129,17 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       life: 3000,
     });
   };
-  const handleSelectGuitar = async (e) => {
-    const gtr = e.target.value;
-    console.log(gtr);
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitar`, {
-        params: { gtr: gtr },
-      })
-      .then((res) => {
-        const fetched = res.data;
-        const object = Object.values(fetched).reduce((acc, item) => {
-          acc[item.name] = item.color;
-          acc.id = item.id_guitar;
-          acc.gloss = item.gloss;
-          acc.wood = parseInt(item.wood, 10);
-          acc.scratch = parseInt(item.scratch, 10);
-          item.id_texture
-            ? (acc.texture_path = "stocked/1681217837265.png")
-            : item.texture_path;
-
-          return acc;
-        }, {});
-
-        setModel(fetched[0].model);
-        setColorList(object);
-      });
-  };
 
   const resetCam = () => {
-    console.log(orbCam.current);
     orbCam.current.reset();
   };
 
   const addGuitar = () => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, {
+    getImage();
+
+    const guitarData = {
       id: model,
-      gtrname: gtrName,
+      gtrname: gtrName !== "" ? gtrName : thbid,
       side: colorList.side,
       binding: colorList.binding,
       tablefront: colorList.tablefront,
@@ -157,10 +163,17 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       single_plastic: colorList.single_plastic,
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
-    });
+      user: loggedIn.user.id,
+      thumbnail: thbid,
+    };
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
+      .then((response) => {
+        dispatch(userGuitarsSave(guitarData));
+      });
   };
 
-  useEffect(() => {}, [handleSelectGuitar, model, theme]);
+  useEffect(() => {}, [model, theme]);
 
   const [allTx, setAllTx] = useState([]);
 
@@ -177,9 +190,8 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
 
   useEffect(() => {
     setColorList(colus);
-    getSize()
+    getSize();
   }, []);
-
 
   const handleGtrNameSet = () => {
     setGtrName(gtrNameInput);
@@ -280,16 +292,16 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     );
   }
 
-
   return (
     <div className="mainviz">
       <div className="visualizer">
-        <div className="canvas" style={{display: 'flex'}}>
+        <div></div>
+        <div className="canvas" style={{ display: "flex" }}>
           <Canvas
+            ref={ref}
             fallback={null}
-            camera={{ position: mobSize ? [0,0,5]:[0, 0, 3], fov: 60 }}
+            camera={{ position: mobSize ? [0, 0, 5] : [0, 0, 3], fov: 60 }}
             linear
-        
             shadows
             dpr={[1, 2]}
             // pixelRatio={window.devicePixelRatio}
@@ -297,26 +309,21 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               preserveDrawingBuffer: true,
               antialias: true,
               alpha: true,
-              powerPreference: 'high-performance'
+              powerPreference: "high-performance",
               // precision: "lowp",
               // powerPreference: "low-power"
             }}
           >
-
-          
             <OrbitControls
               ref={orbCam}
-              target={mobSize ? [0, 2, 0] : [0,0,0]}
+              target={mobSize ? [0, 2, 0] : [0, 0, 0]}
               enableZoom={false}
               enableDamping={false}
               position0={[0, 0, 3]}
             />
-    
 
-
-        
-<>
-              <LightAmb/>     
+            <>
+              <LightAmb />
               <ContactShadows
                 depthWrite={false}
                 position={[0, -1.3, 0]}
@@ -326,10 +333,9 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 far={5}
                 frames={100}
                 resolution={512}
-              /></>
-           
-          
-         
+              />
+            </>
+
             <MotionConfig
               transition={{
                 type: "spring",
@@ -339,8 +345,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 repeatDelay: 1,
               }}
             >
-         
-
               <motion.group animate={model === "1" ? "es335" : "tele"}>
                 <motion.group
                   variants={{
@@ -354,8 +358,10 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                   <ESguitar
                     setColorList={setColorList}
                     colorList={colorList}
-                    tilt={mobSize? [0,0,0]:[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-                    pos={mobSize? [0,1,0]:[-1, -0.5, -0.3]}
+                    tilt={
+                      mobSize ? [0, 0, 0] : [-Math.PI / 7, -0.2, -Math.PI * 0.3]
+                    }
+                    pos={mobSize ? [0, 1, 0] : [-1, -0.5, -0.3]}
                     files={files}
                     selectedParts={selectedParts}
                   />
@@ -370,20 +376,21 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                   <Teleguitar
                     setColorList={setColorList}
                     colorList={colorList}
-                    tilt={mobSize? [0,0,0]:[-Math.PI / 7, -0.2, -Math.PI * 0.3]}
-                    pos={mobSize? [0,1,0]:[-1, -0.8, -0.4]}
+                    tilt={
+                      mobSize ? [0, 0, 0] : [-Math.PI / 7, -0.2, -Math.PI * 0.3]
+                    }
+                    pos={mobSize ? [0, 1, 0] : [-1, -0.8, -0.4]}
                     files={files}
                     selectedParts={selectedParts}
                   />
                 </motion.group>
               </motion.group>
             </MotionConfig>
-            {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
+            <Perf deepAnalyze={true} position={"top-left"} />
             {gtrName && <GuitarName />}
-
           </Canvas>
           {model == 1 && (
-            <Tweaker
+            <TweakerES
               colorList={colorList}
               setColorList={setColorList}
               resetCam={resetCam}
@@ -418,7 +425,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
               showPreview={showPreview}
               setShowPreview={setShowPreview}
               gtrName={gtrName}
-                   mobSize={mobSize}
+              mobSize={mobSize}
             />
           )}
         </div>
@@ -440,41 +447,42 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
         />
         <div className="card flex justify-content-center">
           {/* <Button onClick={() => setVisible(true)} icon="pi pi-check" /> */}
-          <div
-            className="floppydisk-wrap"
-            onClick={(e) => (e.stopPropagation(), setVisible(true))}
-          >
-            <FloppyDisk size={56} className="floppydisk" />
-          </div>{" "}
+          {loggedIn ? (
+            <div
+              className="floppydisk-wrap"
+              onClick={(e) => (e.stopPropagation(), setVisible(true))}
+            >
+              <FloppyDisk size={56} className="floppydisk" />
+            </div>
+          ) : (
+            <div
+              className="floppydisk-wrap"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <a href="/account">
+                <FloppyDisk size={56} className="floppydisk" />
+              </a>
+            </div>
+          )}
         </div>
-       {!mobSize &&( <div className="guitar-name">
-          <input
-            type="text"
-            value={gtrNameInput}
-            onChange={(e) => setGtrNameInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleGtrNameSet();
-              }
-            }}
-            placeholder="Give it a name..."
-          ></input>
-          <button onClick={handleGtrNameSet}>
-            <p>OK</p>
-          </button>
-        </div>)}
-
-        {/* <Button >
-          Save this guitar
-        </Button> */}
-        {/* <select name="" id="" onClick={(e) => handleSelectGuitar(e)}>
-          {guitarsList &&
-            guitarsList.map((guitar, key) => (
-              <option value={guitar.name} key={key}>
-                {guitar.name}
-              </option>
-            ))}
-        </select> */}
+        {!mobSize && (
+          <div className="guitar-name">
+            <input
+              type="text"
+              value={gtrNameInput}
+              onChange={(e) => setGtrNameInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleGtrNameSet();
+                }
+              }}
+              placeholder="Give it a name..."
+            ></input>
+            <button onClick={handleGtrNameSet}>
+              <p>OK</p>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

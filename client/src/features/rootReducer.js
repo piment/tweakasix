@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import guitarReducer from './Colors';
+import guitarReducer from './ColorReducer';
 import cartReducer from './CartReducer';
 import userReducer from './UserReducer';
 import textureReducer  from './TextureReducer';

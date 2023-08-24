@@ -1,41 +1,44 @@
 const express = require("express");
-const fs = require('fs')
 const router = express.Router();
 
-// const movieController = require("../controllers/movieController");
-const {  addGuitar, getGuitars, fetchGuitar, getItemsFullGtr, guitarToCart} = require("./controllers/itemController");
-const {register, loginGet, loginPost, isUserAuth, userInfo} = require ("./controllers/userController")
-const {getItems, getVariation} = require('./controllers/shopController')
-const FilePond = require('react-filepond')
-const multer  = require('multer');
+const {
+  addGuitar,
+  getGuitars,
+  fetchGuitar,
+  getItemsFullGtr,
+  guitarToCart,
+  fetchTextures,
+} = require("./controllers/itemController");
+const {
+  register,
+  loginGet,
+  loginPost,
+  isUserAuth,
+  userInfo,
+  editUserInfo,
+  deleteUserInfo,
+} = require("./controllers/userController");
+const { getItems, getVariation } = require("./controllers/shopController");
 
-
-
-// setup multer for file upload
-var storage = multer.diskStorage(
-    {
-        destination: './stocked',
-        filename: function (req, file, cb ) {
-            cb( null, file.originalname);
-        }
-    }
-);
-
-const upload = multer({ storage: storage } )
-
+//To shopController
 router.get("/items", getItems);
+router.get("/itemsall/getvariation", getVariation);
+
+// To itemController
 router.get("/itemsall", getItemsFullGtr);
 router.post("/items/saveguitar", addGuitar);
-router.get("/items/getguitars",getGuitars)
-router.get("/items/fetchguitar",fetchGuitar)
-router.get("/itemsall/getvariation", getVariation)
-router.post("/items/saveguitartocart", guitarToCart)
+router.get("/items/getguitars", getGuitars);
+router.get("/items/fetchguitar", fetchGuitar);
+router.get("/items/fetchtextures", fetchTextures);
+router.post("/items/saveguitartocart", guitarToCart);
 
-router.post("/register", register)
+//To userController
+router.post("/register", register);
+router.post("/login", loginPost);
+router.get("/login", loginGet);
+router.get("/isUserAuth", isUserAuth);
+router.get("/getUserInfo", userInfo);
+router.put("/user/edit", editUserInfo);
+router.delete("/user/delete", deleteUserInfo);
 
-router.get("/login", loginGet)
-router.post("/login", loginPost)
-router.get('/isUserAuth', isUserAuth)
-router.get('/getUserInfo', userInfo)
-
-module.exports = router
+module.exports = router;

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/img/tweakasix.png";
 import plank from "../assets/img/plankHorNoShadow-min.png";
-// import './App.css'
 import axios from "axios";
-import "./Home.css";
+import "./css/Home.css";
 import Selector from "./Selector";
 import { useDispatch, useSelector } from "react-redux";
-import { addColor } from "../features/Colors";
+import { addColor } from "../features/ColorReducer";
 import Navbar from "./Navbar";
 
 

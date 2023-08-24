@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import "./TweakerMain.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addColor, resetDrop } from "../../features/Colors";
+import { addColor, resetDrop } from "../../features/ColorReducer";
 import { ColorPicker } from "primereact/colorpicker";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
@@ -115,7 +115,7 @@ getVariation()
     gloss : 50,
     scratch : 0,
     wood : 0,
-    texture_path : "/1681217837265.png",
+    texture_path : "//HD_transparent_picture.png",
     body: "#ffffff",
     pickguard: "#ffffff",
     single_plastic: "#ffffff",

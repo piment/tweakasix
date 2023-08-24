@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import * as THREE from "three";
 import Construction from "./Construction/MainConstruction";
-import "./eshop.css";
+import "./css/eshop.css";
 import {
   Environment,
   OrbitControls,
@@ -26,15 +26,15 @@ function Parts() {
   const [itemsList, setItemsList] = useState([]);
   const cartItemsObj = useSelector((state) => state.cart_items.cartItems);
 
-  const cartItems = Object.values(cartItemsObj).filter(
-    (item) => item && item !== null
-  );
   const getItems = () => {
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/items`, {}).then((res) => {
       setItemsList(res.data);
     });
   };
-
+  
+  const cartItems = Object.values(cartItemsObj).filter(
+    (item) => item && item !== null
+  );
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
       .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)

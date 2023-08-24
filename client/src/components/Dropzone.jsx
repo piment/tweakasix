@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { addColor, triggerDrop } from "../features/Colors";
+import { addColor, triggerDrop } from "../features/ColorReducer";
 import { useDispatch, useSelector } from "react-redux";
 import "./Tweaker/Dropzone.css";
 import {
@@ -101,7 +101,7 @@ function MyDropzone({
         }
       });
 
-      //  dispatch(textureAdd(filesId));
+       dispatch(textureAdd(filesId));
     }
     // console.log(files);
   }, [setFiles, dispatch]);
@@ -118,8 +118,7 @@ function MyDropzone({
     const removed = files.filter(
       (part) => part.modifiedFilename == fileModName
     );
-    console.log(removed);
-    // dispatch(textureDelete(removed.modifiedFilename))
+
     dispatch(textureClear(fileModName));
   };
 

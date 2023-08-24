@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import "./Visualizer.css";
+import "./css/Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -13,7 +13,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
-import {addColor } from "../features/Colors";
+import {addColor } from "../features/ColorReducer";
 import { LinearEncoding, sRGBEncoding } from "three";
 
 function Teleguitar({
@@ -127,9 +127,9 @@ materials.varnish = new THREE.MeshStandardMaterial({
 // useEffect(() => {
 
 const partTextures = {
-  Body: useTexture( texturesFromReducer.Body ? tempPath + texturesFromReducer.Body : path + '/1681217837265.png'),
- Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/1681217837265.png'),
-Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/1681217837265.png')
+  Body: useTexture( texturesFromReducer.Body ? tempPath + texturesFromReducer.Body : path + '/HD_transparent_picture.png'),
+ Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/HD_transparent_picture.png'),
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/HD_transparent_picture.png')
 };
 
 

@@ -1,25 +1,24 @@
-require("dotenv").config();
-const mysql = require("mysql2");
-
-const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
-
-const db = mysql.createPool({
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-  multipleStatements: true,
-});
+const { dbPool: db } = require("./dbController");
+const path = require("path");
+const fs = require("fs");
 
 const getItemsFullGtr = (req, res) => {
   const sqlSelect = "SELECT * FROM parts where model_comp like ?";
-  const model = req.query.model
-  db.query(sqlSelect, `%${model}%`,(err, result) => {
+  const model = req.query.model;
+  db.query(sqlSelect, `%${model}%`, (err, result) => {
     res.send(result);
   });
 };
 
-const addGuitar = (req, res) => {
+const saveGuitarThumb = (req, res) =>{
+  const thumb = req.body.thb
+   const sqlUserGtr = `INSERT INTO user_guitar (id_user, id_guitar) VALUES (?)`;
+}
+
+
+
+const addGuitar = (req, res, next) => {
+console.log('ETZRTZETZETZE')
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
@@ -45,12 +44,12 @@ const addGuitar = (req, res) => {
   const single_plastic = req.body.single_plastic;
   const single_metal = req.body.single_metal;
   const backplate = req.body.backplate;
+  const user = req.body.user;
+  const thumbnail = req.body.thumbnail
 
- 
- const sqlInsertGtr =  ` INSERT INTO guitar (name, model) VALUES (?)`;
- const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`
-   const sqlInsertComp = 
-   `INSERT INTO composition (id_part, color, id_texture, gloss, scratch, wood, id_guitar)
+  const sqlInsertGtr = ` INSERT INTO guitar (name, model, id_user) VALUES (?)`;
+  const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`;
+  const sqlInsertComp = `INSERT INTO composition (id_part, color, id_texture, gloss, scratch, wood, id_guitar)
     VALUES 
    ((SELECT id FROM parts WHERE name = 'tablefront'), ?),
    ((SELECT id FROM parts WHERE name = 'tableback'), ?),
@@ -71,106 +70,176 @@ const addGuitar = (req, res) => {
    ((SELECT id FROM parts WHERE name = 'single_metal'), ?),
    ((SELECT id FROM parts WHERE name = 'backplate'), ?)
    `;
-
+  const sqlUserGtr = `INSERT INTO user_guitar (id_user, id_guitar, thumbnail) VALUES (?)`;
   try {
-    db.query(
-      sqlInsertGtr,
-      [[gtrname, modelId]],
-      (err, result) => {
-        if (err) {
-          throw err;
-        }
-        const addedId = result.insertId;
+    db.query(sqlInsertGtr, [[gtrname, modelId, user]], (err, result) => {
+      if (err) {
+        throw err;
+      }
+      const addedId = result.insertId;
 
-        db.query( sqlInsertTex, [['user', texture_path, 'original'] ],
+      db.query(
+        sqlInsertTex,
+        [["user", texture_path_front, "original"]],
         (err, result) => {
           if (err) {
             throw err;
           }
           const texID = result.insertId;
-        db.query(
-          sqlInsertComp,
-          [
-            [tablefront, texID, gloss, scratch, wood, addedId],
-           [tableback, texID, gloss, scratch, wood, addedId],
-           [binding, texID, gloss, scratch, wood, addedId],
-           [side, texID, gloss, scratch, wood, addedId],
-           [neck, texID, gloss, scratch, wood, addedId],
-           [fretboard, texID, gloss, scratch, wood, addedId],
-           [fretbinding, texID, gloss, scratch, wood, addedId],
-           [frets, texID, gloss, scratch, wood, addedId],
-           [inlay, texID, gloss, scratch, wood, addedId],
-           [nut, texID, gloss, scratch, wood, addedId],
-           [metal_pieces, texID, gloss, scratch, wood, addedId],
-           [pickup_cover, texID, gloss, scratch, wood, addedId],
-           [pickup_ring, texID, gloss, scratch, wood, addedId],
-           [knobs, texID, gloss, scratch, wood, addedId],
-           [body, texID, gloss, scratch, wood, addedId],
-           [pickguard, texID, gloss, scratch, wood, addedId],
-           [single_plastic, texID, gloss, scratch, wood, addedId],
-           [single_metal, texID, gloss, scratch, wood, addedId],
-           [backplate, texID, gloss, scratch, wood, addedId],
-          ],
-          (err, result) => {
-            if (err) {
-              throw err;
+          db.query(
+            sqlInsertComp,
+            [
+              [tablefront, texID, gloss, scratch, wood, addedId],
+              [tableback, texID, gloss, scratch, wood, addedId],
+              [binding, texID, gloss, scratch, wood, addedId],
+              [side, texID, gloss, scratch, wood, addedId],
+              [neck, texID, gloss, scratch, wood, addedId],
+              [fretboard, texID, gloss, scratch, wood, addedId],
+              [fretbinding, texID, gloss, scratch, wood, addedId],
+              [frets, texID, gloss, scratch, wood, addedId],
+              [inlay, texID, gloss, scratch, wood, addedId],
+              [nut, texID, gloss, scratch, wood, addedId],
+              [metal_pieces, texID, gloss, scratch, wood, addedId],
+              [pickup_cover, texID, gloss, scratch, wood, addedId],
+              [pickup_ring, texID, gloss, scratch, wood, addedId],
+              [knobs, texID, gloss, scratch, wood, addedId],
+              [body, texID, gloss, scratch, wood, addedId],
+              [pickguard, texID, gloss, scratch, wood, addedId],
+              [single_plastic, texID, gloss, scratch, wood, addedId],
+              [single_metal, texID, gloss, scratch, wood, addedId],
+              [backplate, texID, gloss, scratch, wood, addedId],
+            ],
+            (err, result) => {
+              if (err) {
+                throw err;
+              }
+              console.log(result);
+              db.query(sqlUserGtr, [[user, addedId, thumbnail]]);
+              // res.status(200).json({ id: addedId });
             }
-            console.log(result);
-            res.status(200).json({ id: addedId });
-          }
-        );
-      }
-        )
-      }
-    );
+          );
+        }
+      );
+    });
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
   }
+  next();
 };
+
+const saveTexture = (req, res, next) => {
+  const texture_path = req.body.texture_path;
+
+for (const partName in texture_path) {
+  console.log('texture_path[partName]')
+    if (texture_path[partName] === !null && texture_path.hasOwnProperty(partName)) {
+      const sourceFilePath = path.join(__dirname, 'stocked', 'temporary', texture_path[partName]);
+      const destinationFolderPath = path.join(__dirname, 'stocked', 'permanent');
+      const destinationFilePath = path.join(destinationFolderPath, texture_path[partName]);
+
+  fs.access(sourceFilePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error('Source file does not exist:', err);
+      return res.status(404).send({ message: 'Source file does not exist.' });
+    }})
+
+    fs.copyFile(sourceFilePath, destinationFilePath, (copyErr) => {
+      if (copyErr) {
+        console.error('Error copying file:', copyErr);
+        return res.status(500).send({ message: 'Error copying file.' });
+      }
+
+    //   // Continue to the next middleware
+    
+    }); 
+     next();
+  };
+}}
+
+
+
+
+
+
 
 
 const getGuitars = (req, res) => {
-  const sqlSelect =
-    // "SELECT guitar_id FROM model_parts GROUP BY color_set;"
-`SELECT  g.name, g.model
+  const user = req.body.id_user;
+  const sqlSelect = `SELECT  g.name, g.model
 FROM guitar g
-
-ORDER BY g.name`
-  db.query(sqlSelect, (err, result) => {
+WHERE g.id_user = ?
+ORDER BY g.name`;
+  db.query(sqlSelect, user, (err, result) => {
+    console.log(result)
     res.send(result);
-    // console.log(result)
+
   });
 };
 
 const fetchGuitar = (req, res) => {
-  const gtr = req.query.gtr
-  console.log(gtr)
-  const sqlSelect =
-`SELECT *
-FROM guitar g
-INNER JOIN composition c ON g.id = c.id_guitar
-INNER JOIN parts p ON c.id_part = p.id
-WHERE g.name = ?`;
+  const user = req.query.user
+  const gtr = req.query.gtr;
+  const sqlSelect = `SELECT user_guitar.*, guitar.*
+  FROM user_guitar
+  INNER JOIN guitar ON user_guitar.id = guitar.id_user
+  INNER JOIN composition ON guitar.id = composition.id_guitar
+  INNER JOIN parts ON composition.id_part = parts.id
+  WHERE user_guitar.id_user = ? AND guitar.id = ?`;
 
-  db.query(sqlSelect, gtr,(err, result) => {
-    
+db.query(sqlSelect, [user, gtr], (err, result) => {
+  if (err) {
+    console.error(err);
+    res.sendStatus(500); // Sending internal server error status
+  } else {
+    console.log(result)
     res.send(result);
-    // console.log(result)
-  });
+  }
+});
 };
 
 
+const fetchTextures = (req, res) => {
+  const texID = req.query.txID
+
+  const sqlSelect = `SELECT path
+  FROM texture t
+  INNER JOIN composition c ON t.id = c.id_texture
+  WHERE t.id = ? `;
+
+db.query(sqlSelect, texID, (err, result) => {
+  if (err) {
+    console.error(err);
+    res.sendStatus(500); // Sending internal server error status
+  } else {
+    res.send(result);
+  }
+});
+};
+
+
+
+
+
 const guitarToCart = (req, res) => {
-  const cartGtrId = req.body.guitar_id
-  const sqlInsert = 'INSERT INTO cart_guitar (guitar_id) VALUES (?)'
+  const cartGtrId = req.body.guitar_id;
+  const sqlInsert = "INSERT INTO cart_guitar (guitar_id) VALUES (?)";
   db.query(sqlInsert, cartGtrId, (err, result) => {
-    res.sendStatus(200)
-  })
-console.log('REQQQQQ', req.body)
+    res.sendStatus(200);
+  });
 
-}
-
+};
 
 
-module.exports = { getItemsFullGtr, addGuitar, getGuitars, fetchGuitar, guitarToCart };
+
+
+
+module.exports = {
+  getItemsFullGtr,
+  addGuitar,
+  getGuitars,
+  fetchGuitar,
+  guitarToCart,
+  fetchTextures,
+  saveTexture
+};
