@@ -169,6 +169,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
+        console.log(response)
         dispatch(userGuitarsSave(guitarData));
       });
   };

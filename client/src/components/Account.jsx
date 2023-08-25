@@ -69,6 +69,7 @@ const {isAuthenticated, logoutContext} = useAuth()
         params: { gtr: gtr, user: user },
       })
       .then((res) => {
+        console.log(res.data)
         let txPath;
         const fetched = res.data;
         const object = Object.values(fetched).reduce((acc, item) => {
@@ -77,17 +78,17 @@ const {isAuthenticated, logoutContext} = useAuth()
           acc.gloss = item.gloss;
           acc.wood = parseInt(item.wood, 10);
           acc.scratch = parseInt(item.scratch, 10);
-          console.log(item.id_texture);
+          // console.log(item.id_texture);
           if (item.id_texture !== "stocked/HD_transparent_picture.png") {
-            axios
-              .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchtextures`, {
-                params: { txID: item.id_texture },
-              })
-              .then((tex) => {
-                console.log(tex.data);
-                txPath = tex.data[0].path;
-                return (acc.texture_path = txPath);
-              });
+            // axios
+            //   .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchtextures`, {
+            //     params: { txID: item.id_texture },
+            //   })
+            //   .then((tex) => {
+            //     console.log(tex.data);
+            //     txPath = tex.data[0].path;
+            //     return (acc.texture_path = txPath);
+            //   });
           } else acc.texture_path = "stocked/HD_transparent_picture.png";
 
           console.log(acc.texture_path);
@@ -375,9 +376,9 @@ const {isAuthenticated, logoutContext} = useAuth()
                 "Start tweaking your six strings now! "
                 <div className="guitars-all">
          { userGuitars.length <= 150 ? 
-          userGuitars.map((gtr, key) => <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id}>
+          userGuitars.map((gtr, key) => <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id_guitar}>
       <a href="/">
-   { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} /> ) } 
+   {/* { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} /> ) }  */}
           { gtr.id_guitar}
        
         </a>

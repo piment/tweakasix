@@ -18,7 +18,7 @@ const saveGuitarThumb = (req, res) =>{
 
 
 const addGuitar = (req, res, next) => {
-console.log('ETZRTZETZETZE')
+
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
@@ -80,7 +80,7 @@ console.log('ETZRTZETZETZE')
 
       db.query(
         sqlInsertTex,
-        [["user", texture_path_front, "original"]],
+        [["user", texture_path, "original"]],
         (err, result) => {
           if (err) {
             throw err;
@@ -113,6 +113,7 @@ console.log('ETZRTZETZETZE')
               if (err) {
                 throw err;
               }
+              console.log('ETZRTZETZETZE')
               console.log(result);
               db.query(sqlUserGtr, [[user, addedId, thumbnail]]);
               // res.status(200).json({ id: addedId });
@@ -125,7 +126,9 @@ console.log('ETZRTZETZETZE')
     console.log(err);
     res.sendStatus(500);
   }
-  next();
+  console.log('PROUT')
+  res.sendStatus(200)
+  // next();
 };
 
 const saveTexture = (req, res, next) => {
@@ -180,9 +183,10 @@ ORDER BY g.name`;
 const fetchGuitar = (req, res) => {
   const user = req.query.user
   const gtr = req.query.gtr;
+  console.log(user, gtr)
   const sqlSelect = `SELECT user_guitar.*, guitar.*
   FROM user_guitar
-  INNER JOIN guitar ON user_guitar.id = guitar.id_user
+  INNER JOIN guitar ON user_guitar.id_user = guitar.id_user
   INNER JOIN composition ON guitar.id = composition.id_guitar
   INNER JOIN parts ON composition.id_part = parts.id
   WHERE user_guitar.id_user = ? AND guitar.id = ?`;
