@@ -336,33 +336,56 @@ align-items: flex-start;
     justify-content: center;
 }
 
+.p-carousel{
+    /* max-width: inherit; */
+    width: 60vw;
+    height :auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* .p-carousel-content .p-carousel-container{
+background-color: aqua;
+max-width: 60vw;
+} */
+
+.p-carousel-items-container{
+    display: flex;
+    width: inherit;
+    justify-content: space-evenly;
+    /* width: 30%; */
+}
+/* .carousel{
+    max-width: 60vw;
+} */
+.p-carousel-item{
+    display: flex;
+    justify-content: space-around;
+    /* align-items: center; */
+    border: green solid 2px;
+
+
+}
 .guitars-all{
     display: flex;
-    /* display: grid; */
-grid-template-columns: repeat(5, 1fr);
-/* grid-template-rows: repeat(5, 1fr); */
-/* grid-column-gap: 0px; */
-/* grid-row-gap: 0px; */
-height: 100%;
-    width: 100%;
-    /* justify-content: space-evenly; */
-    margin: auto;
+/* max-width: 60vw */
 }
 .guitar-thb{
     display: flex;
     align-items: center;
-    height: 100%;
-    /* scale: 10%; */
-    /* justify-content: center; */
-    /* border: red solid 2px */
+justify-content: space-between;
+    /* width: max-content; */
+padding: 1em;
+
+}
+.guitar-thb > a {
+    /* width: 10vw; */
 }
 .guitar-thb-img{
-    display: flex;
-    /* align-items: center; */
-    /* height: 100%; */
-    scale: 10%;
-    /* justify-content: center; */
-    /* border: red solid 2px */
+    max-width: 14vw; /* Resize image to fit the width of the container */
+    max-height: 20vh; /* Resize image to fit the height of the container */
+    display: block; /* Ensures proper spacing and alignment */
+    margin: 0 auto; 
 }
 
 .edit-save-delete{

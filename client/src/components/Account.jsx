@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Registration from "./Register";
 import "./css/account.css";
+
 import { useDispatch, useSelector } from "react-redux";
 import { userOut, userGuitarsSave, userUpdate } from "../features/UserReducer";
 import { SignOut } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/ColorReducer";
 import { Toast } from "primereact/toast";
+import {Carousel} from "primereact/carousel"
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { useAuth } from "../context/authContext";
 function Account() {
@@ -198,6 +200,27 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
    ;
     // console.log(userInfo.id)
   };
+
+
+
+
+
+
+
+
+  const itemTemplate = (item) => {
+    return (
+      <div className="guitars-all">
+        <div className="guitar-thb"  onClick={() => handleSelectGuitar(item.id_guitar)} value={item.id_guitar}>
+    <a href="/">
+   { item.thumbnail &&(<img src={path + `${item.thumbnail}.png`} alt={`Guitar ${item.id_guitar}`} className="guitar-thb-img"/> ) } 
+         { item.id_guitar}
+       
+      </a>
+        
+         </div>
+      </div>
+    );}
   return (
     <div className="account-main">
       {!localStorage.getItem("token") && (
@@ -383,21 +406,24 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
 
               <div className="saved-guitars">
                 {/* "Start tweaking your six strings now! " */}
-                <div className="guitars-all">
-         { userGuitars.length <= 150 ? 
-          userGuitars.map((gtr, key) => 
-
-          <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id_guitar}>
-      <a href="/">
-   { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} className="guitar-thb-img"/> ) } 
-          { gtr.id_guitar}
        
-        </a>
+         { userGuitars.length <= 150 ? 
+  //         userGuitars.map((gtr, key) => 
+
+  //         <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id_guitar}>
+  //     <a href="/">
+  //  { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} className="guitar-thb-img"/> ) } 
+  //         { gtr.id_guitar}
+       
+  //       </a>
         
-          </div>)
+  //         </div>
+  //        )
+<Carousel className="carousel" value={userGuitars} itemTemplate={itemTemplate} numVisible={2} numScroll={3} />
+          
       : "Start tweaking your six strings now! " }
                 </div>
-              </div>
+        
             </div>
           </div>
           <div className="logout-wrap">

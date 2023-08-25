@@ -297,7 +297,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     <div className="mainviz">
       <div className="visualizer">
         <div>
-          <img src={pic}/>
         </div>
         <div className="canvas" style={{ display: "flex" }}>
           <Canvas
