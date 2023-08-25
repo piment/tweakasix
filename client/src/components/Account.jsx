@@ -382,14 +382,14 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
               <div className="order-history"> No orders yet</div>
 
               <div className="saved-guitars">
-                "Start tweaking your six strings now! "
+                {/* "Start tweaking your six strings now! " */}
                 <div className="guitars-all">
          { userGuitars.length <= 150 ? 
           userGuitars.map((gtr, key) => 
 
           <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id_guitar}>
       <a href="/">
-   { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} /> ) } 
+   { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} className="guitar-thb-img"/> ) } 
           { gtr.id_guitar}
        
         </a>

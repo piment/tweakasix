@@ -164,7 +164,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-      thumbnail: thbid,
+      thumbnail: thbid.replace(/[:.]/g, ''),
     };
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
@@ -296,7 +296,9 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   return (
     <div className="mainviz">
       <div className="visualizer">
-        <div></div>
+        <div>
+          <img src={pic}/>
+        </div>
         <div className="canvas" style={{ display: "flex" }}>
           <Canvas
             ref={ref}
@@ -387,7 +389,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 </motion.group>
               </motion.group>
             </MotionConfig>
-            <Perf deepAnalyze={true} position={"top-left"} />
+            {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
             {gtrName && <GuitarName />}
           </Canvas>
           {model == 1 && (
