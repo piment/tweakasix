@@ -8,6 +8,7 @@ import { SignOut } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/ColorReducer";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { useAuth } from "../context/authContext";
 function Account() {
   const userData = useSelector((state) => state.user_data.userData.user);
   const userDataInfo = useSelector(
@@ -16,10 +17,14 @@ function Account() {
   const userGuitars = useSelector(
     (state) => state.user_data.userData.user_guitars
   );
-  const [loginStatus, setLoginStatus] = useState(false);
+  const initialLoginStatus = localStorage.getItem("token") !== null;
+  const [loginStatus, setLoginStatus] = useState(initialLoginStatus);
   const [userInfo, setUserInfo] = useState(userData);
   const [userGtrs, setUserGtrs] = useState([]);
   const [visible, setVisible] = useState(false);
+
+const {isAuthenticated, logoutContext} = useAuth()
+
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -38,16 +43,22 @@ function Account() {
 
   useEffect(() => {
     setUserInfo(userData);
-  }, [loginStatus]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     setUserInfo(userData);
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
     setUserGtrs(userGuitars);
   }, [userInfo]);
 
+
   useEffect(() => {
-    userAuthenticated();
-  }, []);
+    if (isAuthenticated) {
+
+      userAuthenticated();
+    }
+  }, [isAuthenticated]);
+
 
   const handleSelectGuitar = async (e) => {
     const gtr = e;
@@ -93,7 +104,7 @@ function Account() {
   const [editedData, setEditedData] = useState({});
 
   let baseData;
-  if (loginStatus === true) {
+  if (loginStatus) {
     baseData = {
       username: userData.username,
       firstname: userData.firstname,
@@ -148,6 +159,7 @@ function Account() {
   };
   const logout = () => {
     setLoginStatus(false);
+    logoutContext()
     dispatch(userOut(""));
     localStorage.removeItem("token");
   };
