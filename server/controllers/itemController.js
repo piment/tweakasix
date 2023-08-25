@@ -196,6 +196,24 @@ db.query(sqlSelect, [user, gtr], (err, result) => {
     console.error(err);
     res.sendStatus(500); // Sending internal server error status
   } else {
+    res.send(result);
+  }
+});
+};
+
+const fetchGuitarColors = (req, res) => {
+
+  const gtr = req.query.gtr;
+
+  const sqlSelect = `SELECT composition.*, parts.name from composition
+  INNER JOIN parts ON composition.id_part = parts.id
+  WHERE id_guitar = ?`;
+
+db.query(sqlSelect, [ gtr], (err, result) => {
+  if (err) {
+    console.error(err);
+    res.sendStatus(500); // Sending internal server error status
+  } else {
     console.log(result)
     res.send(result);
   }
@@ -245,5 +263,6 @@ module.exports = {
   fetchGuitar,
   guitarToCart,
   fetchTextures,
-  saveTexture
+  saveTexture,
+  fetchGuitarColors
 };

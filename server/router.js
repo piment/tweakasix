@@ -8,6 +8,7 @@ const {
   getItemsFullGtr,
   guitarToCart,
   fetchTextures,
+  fetchGuitarColors,
 } = require("./controllers/itemController");
 const {
   register,
@@ -29,6 +30,7 @@ router.get("/itemsall", getItemsFullGtr);
 router.post("/items/saveguitar", addGuitar);
 router.get("/items/getguitars", getGuitars);
 router.get("/items/fetchguitar", fetchGuitar);
+router.get("/items/fetchguitarcolors", fetchGuitarColors);
 router.get("/items/fetchtextures", fetchTextures);
 router.post("/items/saveguitartocart", guitarToCart);
 

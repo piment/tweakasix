@@ -25,6 +25,7 @@ function Account() {
 
 const {isAuthenticated, logoutContext} = useAuth()
 
+const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -65,14 +66,22 @@ const {isAuthenticated, logoutContext} = useAuth()
     const user = userInfo.id;
     console.log(user, gtr);
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitar`, {
-        params: { gtr: gtr, user: user },
+      .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitarcolors`, {
+        params: { gtr: gtr },
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res)
         let txPath;
         const fetched = res.data;
+        const colorObject = {};
+
+        fetched.forEach((item) => {
+          colorObject[item.name] = item.color;
+        });
+
+        console.log('COLLLLLLLL4', colorObject)
         const object = Object.values(fetched).reduce((acc, item) => {
+          console.log(acc)
           acc[item.name] = item.color;
           acc.id = item.id_guitar;
           acc.gloss = item.gloss;
@@ -376,9 +385,11 @@ const {isAuthenticated, logoutContext} = useAuth()
                 "Start tweaking your six strings now! "
                 <div className="guitars-all">
          { userGuitars.length <= 150 ? 
-          userGuitars.map((gtr, key) => <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id_guitar}>
+          userGuitars.map((gtr, key) => 
+
+          <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id_guitar}>
       <a href="/">
-   {/* { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} /> ) }  */}
+   { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} /> ) } 
           { gtr.id_guitar}
        
         </a>
