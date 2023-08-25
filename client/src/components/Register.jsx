@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { userIn } from "../features/UserReducer";
+import { useAuth } from "../context/authContext";
 
 export default function Registration({
   loginStatus,
@@ -24,7 +25,7 @@ export default function Registration({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(null);
-
+  const { loginContext } = useAuth();
   Axios.defaults.withCredentials = true;
 
   const userData = useSelector((state) => state.user_data.userData);
@@ -72,20 +73,24 @@ export default function Registration({
           localStorage.setItem("token", response.data.token);
           setLoginStatus(true);
           dispatch(userIn({ user, user_info, user_guitars }));
+          loginContext()
         }
       })
       .then(userAuthenticated);
   };
 
   useEffect(() => {
-    Axios.get(`${import.meta.env.VITE_BACKEND_URL}/login`).then((response) => {
-      if (response.data.loggedIn == true) {
-        console.log(response.data);
-        setUserInfo(response.data.user[0]);
-      } else if (response.data.loggedIn == false) {
+    if(userAuthenticated){
+
+      Axios.get(`${import.meta.env.VITE_BACKEND_URL}/login`).then((response) => {
+   
+          console.log(response.data);
+          setUserInfo(userData);
+      });
+       }else if (!userAuthenticated) {
         setLoginStatus(false);
       }
-    });
+  
   }, [loginStatus]);
 
   return (

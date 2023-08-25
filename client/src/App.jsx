@@ -24,7 +24,8 @@ function App() {
   const toggleTheme = () => {
     setTheme((current) => (current === "light" ? "dark" : "light"));
   };
-
+  const initialLoginStatus = localStorage.getItem("token") !== null;
+  const [loginStatus, setLoginStatus] = useState(initialLoginStatus);
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="App" id={theme}>
