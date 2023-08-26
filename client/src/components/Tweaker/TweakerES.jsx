@@ -139,8 +139,9 @@ function TweakerES({
         single_plastic: "#ffffff",
         single_metal: "#d0cbc4",
         backplate: "#ffffff",
-      });
-    dispatch(textureNone());
+      }),
+    dispatch(textureNone()),
+    setSelectedParts([])
     setGtrPriceFullVar(gtrPriceFull);
   };
   const { addToCart, removeFromCart, getCartAmount, addGuitarToCart } =
