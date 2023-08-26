@@ -214,13 +214,13 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
 //       })
 //       .then((res) => {
 // console.log('GTRRRR', res.data)
-//         // setUserGuitars(res.data);
+//         setUserGuitars(res.data);
 //       });
 //   };
 
-useEffect(() => {
+// useEffect(() => {
 // getGuitars()
-},[])
+// },[])
   const itemTemplate = (item) => {
     return (
       <div className="guitars-all">
