@@ -59,6 +59,7 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
     if (isAuthenticated) {
 
       userAuthenticated();
+          setUserGtrs(userGuitars);
     }
   }, [isAuthenticated]);
 
@@ -206,15 +207,27 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
 
 
 
+//   const getGuitars = () => {
+//     axios
+//       .get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`, {
+//       params : { id_user: userData.id},
+//       })
+//       .then((res) => {
+// console.log('GTRRRR', res.data)
+//         // setUserGuitars(res.data);
+//       });
+//   };
 
-
+useEffect(() => {
+// getGuitars()
+},[])
   const itemTemplate = (item) => {
     return (
       <div className="guitars-all">
         <div className="guitar-thb"  onClick={() => handleSelectGuitar(item.id_guitar)} value={item.id_guitar}>
     <a href="/">
    { item.thumbnail &&(<img src={path + `${item.thumbnail}.png`} alt={`Guitar ${item.id_guitar}`} className="guitar-thb-img"/> ) } 
-         { item.id_guitar}
+         { item.name}
        
       </a>
         
@@ -407,19 +420,8 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
               <div className="saved-guitars">
                 {/* "Start tweaking your six strings now! " */}
        
-         { userGuitars.length <= 150 ? 
-  //         userGuitars.map((gtr, key) => 
-
-  //         <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id_guitar}>
-  //     <a href="/">
-  //  { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} className="guitar-thb-img"/> ) } 
-  //         { gtr.id_guitar}
-       
-  //       </a>
-        
-  //         </div>
-  //        )
-<Carousel className="carousel" value={userGuitars} itemTemplate={itemTemplate} numVisible={2} numScroll={3} />
+         { userGuitars.length != 0? 
+<Carousel className="carousel" value={userGuitars} circular itemTemplate={itemTemplate} numVisible={3} numScroll={1} pt />
           
       : "Start tweaking your six strings now! " }
                 </div>

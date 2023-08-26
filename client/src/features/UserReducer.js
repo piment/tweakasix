@@ -18,8 +18,12 @@ state.userData = action.payload
     state.userData = {}
   },
   userGuitarsSave : (state, action) => {
-    console.log(action.payload)
-    state.userData.guitarsList = action.payload
+    console.log('SAVE',action.payload)
+    const newGtr = action.payload
+    return{
+...state,
+    user_guitars :{ ...state.user_guitars, ...newGtr }
+    }
   },
   userUpdate : (state, action) => {
     console.log(action.payload)

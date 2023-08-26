@@ -80,7 +80,7 @@ const addGuitar = (req, res, next) => {
 
       db.query(
         sqlInsertTex,
-        [["user", texture_path, "original"]],
+        [[user, texture_path, "original"]],
         (err, result) => {
           if (err) {
             throw err;
@@ -113,8 +113,6 @@ const addGuitar = (req, res, next) => {
               if (err) {
                 throw err;
               }
-              console.log('ETZRTZETZETZE')
-              console.log(result);
               db.query(sqlUserGtr, [[user, addedId, thumbnail]]);
               // res.status(200).json({ id: addedId });
             }
@@ -126,16 +124,16 @@ const addGuitar = (req, res, next) => {
     console.log(err);
     res.sendStatus(500);
   }
-  console.log('PROUT')
   res.sendStatus(200)
-  // next();
+
 };
 
 const saveTexture = (req, res, next) => {
   const texture_path = req.body.texture_path;
-
+  console.log(texture_path)
+  const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`;
 for (const partName in texture_path) {
-  console.log('texture_path[partName]')
+
     if (texture_path[partName] === !null && texture_path.hasOwnProperty(partName)) {
       const sourceFilePath = path.join(__dirname, 'stocked', 'temporary', texture_path[partName]);
       const destinationFolderPath = path.join(__dirname, 'stocked', 'permanent');
@@ -156,6 +154,7 @@ for (const partName in texture_path) {
     //   // Continue to the next middleware
     
     }); 
+    
      next();
   };
 }}

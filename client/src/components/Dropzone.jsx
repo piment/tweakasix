@@ -82,7 +82,6 @@ function MyDropzone({
         console.log(response.data);
       })
       .then(setDropped(dropped + 1))
-      // .then(dispatch(addColor(colorList)))
       .then(dispatch(triggerDrop(dropped)))
   }, []);
 
@@ -103,7 +102,6 @@ function MyDropzone({
 
        dispatch(textureAdd(filesId));
     }
-    // console.log(files);
   }, [setFiles, dispatch]);
 
 

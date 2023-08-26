@@ -50,30 +50,31 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const theme = themeContext.theme;
 
   const thbid = "Guitar" + date;
+  const gtrPriceFull = gtrPrice;
 
+  const dispatch = useDispatch();
+
+  const [files, setFiles] = useState([]);
+  const [selectedParts, setSelectedParts] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const toast = useRef(null);
   const [thumbImg, setThumbImg] = useState();
   const ref = createRef(null);
   const formData = new FormData();
   const [image, takeScreenshot] = useScreenshot({
     type: "image/png",
     quality: 1.0,
+    width: 240,
+    height: 200,
   });
-  const [pic, setPic] = useState();
-  const thbArr = [];
+
   const getImage = () => {
     takeScreenshot(ref.current).then((capturedImage) => {
       // The capturedImage contains the screenshot
-
-      // console.log('IMGGGGG', capturedImage);
-
-      // console.log(id)
-      // Create a FormData object and append the image data
       const formData = new FormData();
       formData.append("file", capturedImage);
       formData.append("id", thbid);
 
-      setPic(capturedImage);
-      // Make the API request
       axios
         .post(`${import.meta.env.VITE_BACKEND_URL}/uploadthb`, formData, {
           headers: {
@@ -81,14 +82,10 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
           },
         })
         .then((response) => {
-          // thbArr.push(response)
-
           setThumbImg(response);
         });
     });
   };
-
-  // console.log(pic)
 
   function getSize() {
     if (window.innerWidth < 1223) {
@@ -101,15 +98,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     (str.match(/[a-zA-Z0-9]+/g) || [])
       .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
       .join(" ");
-
-  const gtrPriceFull = gtrPrice;
-
-  const dispatch = useDispatch();
-
-  const [files, setFiles] = useState([]);
-  const [selectedParts, setSelectedParts] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const toast = useRef(null);
 
   const accept = () => {
     addGuitar(),
@@ -136,7 +124,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
 
   const addGuitar = () => {
     getImage();
-
+    const textureData = useSelector((state) => state.texture_data.texture_assign)
     const guitarData = {
       id: model,
       gtrname: gtrName !== "" ? gtrName : thbid,
@@ -164,18 +152,18 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-      thumbnail: thbid.replace(/[:.]/g, ''),
+      thumbnail: thbid.replace(/[:.]/g, ""),
     };
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
-        console.log(response)
         dispatch(userGuitarsSave(guitarData));
       });
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/savetexture`, textureData)
   };
 
   useEffect(() => {}, [model, theme]);
-
+  console.log(colorList.id);
   const [allTx, setAllTx] = useState([]);
 
   useEffect(() => {
@@ -296,8 +284,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   return (
     <div className="mainviz">
       <div className="visualizer">
-        <div>
-        </div>
+        <div></div>
         <div className="canvas" style={{ display: "flex" }}>
           <Canvas
             ref={ref}
@@ -306,7 +293,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
             linear
             shadows
             dpr={[1, 2]}
-            // pixelRatio={window.devicePixelRatio}
             gl={{
               preserveDrawingBuffer: true,
               antialias: true,
