@@ -1,14 +1,11 @@
 import axios from "axios";
 import React, { useCallback, useEffect } from "react";
-import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { addColor, triggerDrop } from "../features/ColorReducer";
-import { useDispatch, useSelector } from "react-redux";
+import {  triggerDrop } from "../features/ColorReducer";
+import { useDispatch } from "react-redux";
 import "./Tweaker/Dropzone.css";
 import {
   textureAdd,
-  textureDelete,
-  textureAssign,
   textureClear,
 } from "../features/TextureReducer";
 import { v4 as uuidv4 } from "uuid";
@@ -41,9 +38,30 @@ function MyDropzone({
     objectFit: "cover",
   };
 
-  const imgs = [];
 
-  const path = `${import.meta.env.VITE_BACKEND_URL}`;
+const downloadBP =() => {
+  const fileUrl = model == 1 ? "guitar/blueprints/ES335-Blueprint.png" : "guitar/blueprints/Tele-Blueprints.zip";
+
+  // Fetch the file using the URL
+  fetch(fileUrl)
+    .then(response => response.blob())
+    .then(blob => {
+      // Create a download link
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = model == 1 ? "ES335-Blueprint.png" : "Tele-Blueprints.zip";
+  
+      // Append the link to the body and trigger the click event
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+  
+      // Clean up by revoking the object URL
+      URL.revokeObjectURL(downloadLink.href);
+  
+      // Remove the download link from the DOM
+      document.body.removeChild(downloadLink);
+    });
+}
 
   // const [showPreview, setShowPreview] = useState(false);
   const dispatch = useDispatch();
@@ -173,8 +191,20 @@ function MyDropzone({
             {isDragActive ? (
               <p>Drop the files here ...</p>
               ) : (
+                <>
+             
+             <div>
                 <p >Drag 'n' drop some files here</p>
-                )}
+                <a href="guitar/blueprints/ES335-Blueprint.png" download={'ES335-Blueprint.png'}>
+                <button onClick={(e) => {
+                  e.preventDefault()
+                  downloadBP()
+                }}> Download blueprints</button>
+                </a>
+                </div>
+                    
+              </>
+                  )}
                 </div>
 
             <div className={showPreview && files.length !== 0? "exaside" :"exaside-hidden"}>{thumbs}</div>
