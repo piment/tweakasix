@@ -1,20 +1,14 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useState } from "react";
 import "./css/Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
-  OrbitControls,
   useGLTF,
-  Environment,
-  Clone,
-  Html,
-  Decal,
   useTexture,
-  useSurfaceSampler,
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
 import {addColor } from "../features/ColorReducer";
-import { LinearEncoding, sRGBEncoding } from "three";
+import { sRGBEncoding } from "three";
 
 function Teleguitar({
   trig,
@@ -29,7 +23,7 @@ setDropped,
 }) {
   const tele = useRef();
   const meshRefs = useRef([]);
-  const { nodes, materials } = useGLTF("/guitar/TeleOPTPG.glb");
+  const { nodes, materials } = useGLTF("/guitar/TeleOPT3PG.glb");
 
   const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
   const tempPath = `${import.meta.env.VITE_BACKEND_URL}/stocked/temporary/`;
@@ -129,10 +123,12 @@ materials.varnish = new THREE.MeshStandardMaterial({
 const partTextures = {
   Body: useTexture( texturesFromReducer.Body ? tempPath + texturesFromReducer.Body : path + '/HD_transparent_picture.png'),
  Neck: useTexture( texturesFromReducer.Neck ? tempPath + texturesFromReducer.Neck : path + '/HD_transparent_picture.png'),
-Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/HD_transparent_picture.png')
+Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromReducer.Pickguard : path + '/HD_transparent_picture.png'),
 };
 
-
+partTextures.Body.flipY = false;
+partTextures.Neck.flipY = false;
+partTextures.Pickguard.flipY = false;
 
 //   // console.log(reactMap.source.data.currentSrc);
 //   setTxUse(path + colorList.texture_path);
@@ -188,6 +184,7 @@ Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromR
         receiveShadow
         geometry={nodes.selector.geometry}
         material={materials.plastic}
+        material-color={colorList.single_plastic}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[3] = mesh)}
@@ -221,7 +218,7 @@ Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromR
         geometry={nodes.body.geometry}
         material={materials.body}
         material-color={colorList.body}
-        // material-map={texturesFromReducer.Body !== null ? partTextures.Body : ''}
+        material-map={texturesFromReducer.Body !== null ? partTextures.Body : ''}
         // material-map={triggs > 0 ? reactMap : ''}
       />
       <mesh
@@ -288,7 +285,8 @@ Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromR
         castShadow
         receiveShadow
         geometry={nodes.neckplate.geometry}
-        material={materials.metal_pieces}
+        material={materials.metalpieces}
+        material-color={colorList.metal_pieces}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[13] = mesh)}
@@ -379,5 +377,5 @@ Pickguard:  useTexture( texturesFromReducer.Pickguard ? tempPath + texturesFromR
 }
 
 
-useGLTF.preload("/TeleOPT3.glb");
+useGLTF.preload("/TeleOPT3PG.glb");
 export default Teleguitar;
