@@ -82,7 +82,7 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
           colorObject[item.name] = item.color;
         });
 
-        console.log('COLLLLLLLL4', colorObject)
+        
         const object = Object.values(fetched).reduce((acc, item) => {
           console.log(acc)
           acc[item.name] = item.color;
@@ -203,7 +203,7 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
   };
 
 
-
+console.log(userGtrs)
 
 
 

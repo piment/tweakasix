@@ -121,10 +121,11 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const resetCam = () => {
     orbCam.current.reset();
   };
+  console.log(loggedIn)
 
   const addGuitar = () => {
     getImage();
-    const textureData = useSelector((state) => state.texture_data.texture_assign)
+    // const textureData = useSelector((state) => state.texture_data.texture_assign)
     const guitarData = {
       id: model,
       gtrname: gtrName !== "" ? gtrName : thbid,
@@ -159,7 +160,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       .then((response) => {
         dispatch(userGuitarsSave(guitarData));
       });
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/savetexture`, textureData)
+      // axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/savetexture`, textureData)
   };
 
   useEffect(() => {}, [model, theme]);
