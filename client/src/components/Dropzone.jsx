@@ -10,7 +10,7 @@ import {
 } from "../features/TextureReducer";
 import { v4 as uuidv4 } from "uuid";
 import TextureSelect from "./Tweaker/Multiselect";
-import { Trash } from "@phosphor-icons/react";
+import { DownloadSimple, Trash } from "@phosphor-icons/react";
 
 function MyDropzone({
   setDropped,
@@ -193,13 +193,13 @@ const downloadBP =() => {
               ) : (
                 <>
              
-             <div>
+             <div className="dropspace">
                 <p >Drag 'n' drop some files here</p>
                 <a href="guitar/blueprints/ES335-Blueprint.png" download={'ES335-Blueprint.png'}>
                 <button onClick={(e) => {
                   e.preventDefault()
                   downloadBP()
-                }}> Download blueprints</button>
+                }} className="bp-download"> <DownloadSimple size={32} />Download blueprints</button>
                 </a>
                 </div>
                     
