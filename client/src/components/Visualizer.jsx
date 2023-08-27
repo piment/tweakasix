@@ -158,7 +158,12 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
-        dispatch(userGuitarsSave(guitarData));
+        const gtrToAdd = {
+          id: response.data.id_guitar,
+          user: loggedIn.user.id,
+          thumbnail: thbid.replace(/[:.]/g, ""),
+        }
+        dispatch(userGuitarsSave(gtrToAdd));
       });
       // axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/savetexture`, textureData)
   };

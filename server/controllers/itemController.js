@@ -47,6 +47,8 @@ const addGuitar = (req, res, next) => {
   const user = req.body.user;
   const thumbnail = req.body.thumbnail
 
+  const responseData = {}
+
   const sqlInsertGtr = ` INSERT INTO guitar (name, model, id_user) VALUES (?)`;
   const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`;
   const sqlInsertComp = `INSERT INTO composition (id_part, color, id_texture, gloss, scratch, wood, id_guitar)
@@ -77,6 +79,8 @@ const addGuitar = (req, res, next) => {
         throw err;
       }
       const addedId = result.insertId;
+      responseData.id_guitar = addedId
+     
 
       db.query(
         sqlInsertTex,
@@ -115,7 +119,9 @@ const addGuitar = (req, res, next) => {
               }
 
               db.query(sqlUserGtr, [[user, addedId, thumbnail]]);
-              // res.status(200).json({ id: addedId });
+              responseData.user = user
+              responseData.thumbnail = thumbnail
+              res.status(200).json(responseData);
             }
           );
         }
@@ -126,8 +132,8 @@ const addGuitar = (req, res, next) => {
     res.sendStatus(500);
   }
  
-  res.sendStatus(200)
-  // next();
+  // res.sendStatus(200)
+
 };
 
 const saveTexture = (req, res, next) => {

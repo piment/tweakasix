@@ -22,8 +22,9 @@ state.userData = action.payload
     const newGtr = action.payload
     return{
 ...state,
-    user_guitars :{ ...state.user_guitars, ...newGtr }
-    }
+    userData : {
+      ...state.userData, user_guitars :[ ...state.userData.user_guitars, newGtr ]
+    }}
   },
   userUpdate : (state, action) => {
  
@@ -44,6 +45,14 @@ state.userData = action.payload
 
 },
 userGuitarDelete : (state, action) => {
+  // delete action.payload
+
+  const updatedUserGuitars = state.userData.user_guitars.filter(guitar => guitar.id_guitar !== action.payload.id_guitar);
+    
+return { ...state,
+  userData: {
+    ...state.userData,
+    user_guitars: updatedUserGuitars}}
 
 }
   }

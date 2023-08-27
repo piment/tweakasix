@@ -4,7 +4,7 @@ import Registration from "./Register";
 import "./css/account.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { userOut, userGuitarsSave, userUpdate } from "../features/UserReducer";
+import { userOut, userGuitarsSave, userUpdate, userGuitarDelete } from "../features/UserReducer";
 import { SignOut, Trash } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/ColorReducer";
 import { Toast } from "primereact/toast";
@@ -48,11 +48,6 @@ function Account() {
     setUserInfo(userData);
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    setUserInfo(userData);
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    setUserGtrs(userGuitars);
-  }, [userInfo]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -192,16 +187,29 @@ function Account() {
 
   const handleDeleteGuitar = (item) => {
     const id_guitar = item.id_guitar;
-    console.log(id_guitar);
-    axios
-      .delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, {
-        data: { id_guitar: id_guitar },
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      })
-      .then((response) => {});
+
+    dispatch(userGuitarDelete(item))
+    // axios
+    //   .delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, {
+    //     data: { id_guitar: id_guitar },
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     dispatch(userGuitarDelete(item))
+    //   });
   };
+
+
+
+
+  useEffect(() => {
+    setUserInfo(userData);
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    setUserGtrs(userGuitars);
+  }, [userInfo, handleDeleteGuitar]);
+
 
   const itemTemplate = (item) => {
     return (
@@ -427,7 +435,7 @@ function Account() {
                 {userGuitars.length != 0 ? (
                   <Carousel
                     className="carousel"
-                    value={userGuitars}
+                    value={userGtrs}
                     circular
                     itemTemplate={itemTemplate}
                     numVisible={3}
