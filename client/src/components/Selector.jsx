@@ -11,11 +11,10 @@ function Selector() {
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user_data.userData);
-
   const [itemsListFull, setItemsListFull] = useState([]);
   const [guitarsList, setGuitarsList] = useState([]);
 
-  const [model, setModel] = useState("1");
+  const [model, setModel] = useState(userData.user_guitars.model || '1');
   const [changed, setChanged] = useState(false);
   const [gtrPrice, setGtrPrice] = useState(0);
 
@@ -49,12 +48,14 @@ function Selector() {
     fullPrice();
   }, [model]);
 
-
-
+if(userData.user_guitars.model != undefined) {
+  setModel(userData.user_guitars.model)
+}
 
   const handleModelSelect = (e) => {
     setModel(e.target.value);
-
+   
+   
     getItemsFullGtr();
     setChanged(!changed);
   };

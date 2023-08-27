@@ -58,6 +58,7 @@ function Account() {
 
   const handleSelectGuitar = async (e) => {
     const gtr = e;
+    console.log(gtr)
     const user = userInfo.id;
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitarcolors`, {
@@ -67,7 +68,7 @@ function Account() {
         let txPath;
         const fetched = res.data;
         const colorObject = {};
-
+        console.log(fetched)
         fetched.forEach((item) => {
           colorObject[item.name] = item.color;
         });
@@ -95,7 +96,7 @@ function Account() {
         }, {});
 
         // setModel(fetched[0].model);
-
+console.log(object)
         dispatch(addColor(object));
       });
   };
@@ -212,12 +213,13 @@ function Account() {
 
 
   const itemTemplate = (item) => {
+    console.log(item)
     return (
       <div className="guitars-all">
         <div
           className="guitar-thb"
-          onClick={() => handleSelectGuitar(item.id_guitar)}
-          value={item.id_guitar}
+          onClick={() => handleSelectGuitar(item.id)}
+          value={item.id}
         >
           <a href="/">
             {item.thumbnail && (

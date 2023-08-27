@@ -24,7 +24,7 @@ const addGuitar = (req, res, next) => {
   const tableback = req.body.tableback;
   const binding = req.body.binding;
   const side = req.body.side;
-  const neck = req.body.neckwood;
+  const neck = req.body.neck;
   const fretboard = req.body.fretboard;
   const fretbinding = req.body.fretbinding;
   const frets = req.body.frets;
@@ -57,7 +57,8 @@ const addGuitar = (req, res, next) => {
    ((SELECT id FROM parts WHERE name = 'tableback'), ?),
    ((SELECT id FROM parts WHERE name = 'binding'), ?),
    ((SELECT id FROM parts WHERE name = 'side'), ?),
-   ((SELECT id FROM parts WHERE name = 'neck'), ?),
+   ((SELECT id FROM parts WHERE name = 'neck'), ?),  
+    ((SELECT id FROM parts WHERE name = 'body'), ?),
    ((SELECT id FROM parts WHERE name = 'fretboard'),?),
    ((SELECT id FROM parts WHERE name = 'fretbinding'), ? ),
    ((SELECT id FROM parts WHERE name = 'frets'), ? ),
@@ -80,6 +81,7 @@ const addGuitar = (req, res, next) => {
       }
       const addedId = result.insertId;
       responseData.id_guitar = addedId
+      responseData.model = modelId
      
 
       db.query(

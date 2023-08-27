@@ -160,6 +160,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       .then((response) => {
         const gtrToAdd = {
           id: response.data.id_guitar,
+          model : response.data.model,
           user: loggedIn.user.id,
           thumbnail: thbid.replace(/[:.]/g, ""),
         }
@@ -186,6 +187,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   useEffect(() => {
     setColorList(colus);
     getSize();
+   
   }, []);
 
   const handleGtrNameSet = () => {
