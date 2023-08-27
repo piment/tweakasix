@@ -234,6 +234,35 @@ const deleteUserInfo = (req, res) => {
 };
 
 const deleteUserGuitar = (req, res) => {
+  const id_guitar = req.body.id_guitar
+  const sqlDeleteGuitar = ``
+  db.query('DELETE FROM composition WHERE id_guitar = ?', [id_guitar], (err1, result1) => {
+    if (err1) {
+      console.error(err1);
+      res.status(500).send("An error occurred.");
+      return;
+    }
+
+    // Delete from user_guitar table
+    db.query('DELETE FROM user_guitar WHERE id_guitar = ?', [id_guitar], (err2, result2) => {
+      if (err2) {
+        console.error(err2);
+        res.status(500).send("An error occurred.");
+        return;
+      }
+
+      // Delete from user_info table
+      db.query('DELETE FROM guitar WHERE id = ?', [id_guitar], (err3, result3) => {
+        if (err3) {
+          console.error(err3);
+          res.status(500).send("An error occurred.");
+          return;
+        }
+        // Successfully deleted from all tables
+        res.sendStatus(200);
+      });
+    });
+  });
 
 }
 

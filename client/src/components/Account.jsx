@@ -8,7 +8,7 @@ import { userOut, userGuitarsSave, userUpdate } from "../features/UserReducer";
 import { SignOut, Trash } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/ColorReducer";
 import { Toast } from "primereact/toast";
-import {Carousel} from "primereact/carousel"
+import { Carousel } from "primereact/carousel";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { useAuth } from "../context/authContext";
 function Account() {
@@ -25,9 +25,9 @@ function Account() {
   const [userGtrs, setUserGtrs] = useState([]);
   const [visible, setVisible] = useState(false);
 
-const {isAuthenticated, logoutContext} = useAuth()
+  const { isAuthenticated, logoutContext } = useAuth();
 
-const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
+  const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`;
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -54,15 +54,12 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
     setUserGtrs(userGuitars);
   }, [userInfo]);
 
-
   useEffect(() => {
     if (isAuthenticated) {
-
       userAuthenticated();
-          setUserGtrs(userGuitars);
+      setUserGtrs(userGuitars);
     }
   }, [isAuthenticated]);
-
 
   const handleSelectGuitar = async (e) => {
     const gtr = e;
@@ -80,15 +77,13 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
           colorObject[item.name] = item.color;
         });
 
-        
         const object = Object.values(fetched).reduce((acc, item) => {
-
           acc[item.name] = item.color;
           acc.id = item.id_guitar;
           acc.gloss = item.gloss;
           acc.wood = parseInt(item.wood, 10);
           acc.scratch = parseInt(item.scratch, 10);
-      
+
           if (item.id_texture !== "stocked/HD_transparent_picture.png") {
             // axios
             //   .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchtextures`, {
@@ -131,7 +126,6 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
     baseData = {};
   }
 
-
   const handleEdit = () => {
     setEditMode(true);
     // Initialize editedData with the current user data
@@ -169,7 +163,7 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
   };
   const logout = () => {
     setLoginStatus(false);
-    logoutContext()
+    logoutContext();
     dispatch(userOut(""));
     localStorage.removeItem("token");
   };
@@ -194,46 +188,56 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
 
   const accept = () => {
     handleDelete(userInfo.id);
-   ;
- 
   };
 
-
-
-
-const handleDeleteGuitar = (item) => {
-  const id_guitar = item
-  console.log(id_guitar)
-  axios.delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, id_guitar)
-  .then((response) => {
-
-  })
-}
-
+  const handleDeleteGuitar = (item) => {
+    const id_guitar = item.id_guitar;
+    console.log(id_guitar);
+    axios
+      .delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, {
+        data: { id_guitar: id_guitar },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((response) => {});
+  };
 
   const itemTemplate = (item) => {
     return (
       <div className="guitars-all">
-        <div className="guitar-thb"  onClick={() => handleSelectGuitar(item.id_guitar)} value={item.id_guitar}>
-    <a href="/">
-   { item.thumbnail &&(<img src={path + `${item.thumbnail}.png`} alt={`Guitar ${item.id_guitar}`} className="guitar-thb-img"/> ) } 
-         { item.name}
-       
-      </a>
-      <button
-              key={item.name}
+        <div
+          className="guitar-thb"
+          onClick={() => handleSelectGuitar(item.id_guitar)}
+          value={item.id_guitar}
+        >
+          <a href="/">
+            {item.thumbnail && (
+              <img
+                src={path + `${item.thumbnail}.png`}
+                alt={`Guitar ${item.id_guitar}`}
+                className="guitar-thb-img"
+              />
+            )}
+            {item.name}
+          </a>
+          <button
+            key={item.name}
             className="trash-button"
-              type="button"
-              value={item.id_guitar}
-              onClick={(e) => {
-                e.preventDefault(), handleDeleteGuitar(item);
-              }}
-            >
-              <span><Trash size={26} color={"red"} /></span>
-            </button>
-         </div>
+            type="button"
+            value={item.id_guitar}
+            onClick={(e) => {
+              e.preventDefault(), handleDeleteGuitar(item);
+            }}
+          >
+            <span>
+              <Trash size={26} color={"red"} />
+            </span>
+          </button>
+        </div>
       </div>
-    );}
+    );
+  };
   return (
     <div className="account-main">
       {!localStorage.getItem("token") && (
@@ -419,13 +423,21 @@ const handleDeleteGuitar = (item) => {
 
               <div className="saved-guitars">
                 {/* "Start tweaking your six strings now! " */}
-       
-         { userGuitars.length != 0? 
-<Carousel className="carousel" value={userGuitars} circular itemTemplate={itemTemplate} numVisible={3} numScroll={1} pt />
-          
-      : "Start tweaking your six strings now! " }
-                </div>
-        
+
+                {userGuitars.length != 0 ? (
+                  <Carousel
+                    className="carousel"
+                    value={userGuitars}
+                    circular
+                    itemTemplate={itemTemplate}
+                    numVisible={3}
+                    numScroll={1}
+                    pt
+                  />
+                ) : (
+                  "Start tweaking your six strings now! "
+                )}
+              </div>
             </div>
           </div>
           <div className="logout-wrap">
