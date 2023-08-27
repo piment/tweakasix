@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Registration from "./Register";
 import "./css/account.css";
+
 import { useDispatch, useSelector } from "react-redux";
 import { userOut, userGuitarsSave, userUpdate } from "../features/UserReducer";
-import { SignOut } from "@phosphor-icons/react";
+import { SignOut, Trash } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/ColorReducer";
 import { Toast } from "primereact/toast";
+import { Carousel } from "primereact/carousel";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { useAuth } from "../context/authContext";
 function Account() {
@@ -23,8 +25,9 @@ function Account() {
   const [userGtrs, setUserGtrs] = useState([]);
   const [visible, setVisible] = useState(false);
 
-const {isAuthenticated, logoutContext} = useAuth()
+  const { isAuthenticated, logoutContext } = useAuth();
 
+  const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`;
 
   const toPascalCase = (str) =>
     (str.match(/[a-zA-Z0-9]+/g) || [])
@@ -51,51 +54,53 @@ const {isAuthenticated, logoutContext} = useAuth()
     setUserGtrs(userGuitars);
   }, [userInfo]);
 
-
   useEffect(() => {
     if (isAuthenticated) {
-
       userAuthenticated();
+      setUserGtrs(userGuitars);
     }
   }, [isAuthenticated]);
-
 
   const handleSelectGuitar = async (e) => {
     const gtr = e;
     const user = userInfo.id;
-    console.log(user, gtr);
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitar`, {
-        params: { gtr: gtr, user: user },
+      .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitarcolors`, {
+        params: { gtr: gtr },
       })
       .then((res) => {
         let txPath;
         const fetched = res.data;
+        const colorObject = {};
+
+        fetched.forEach((item) => {
+          colorObject[item.name] = item.color;
+        });
+
         const object = Object.values(fetched).reduce((acc, item) => {
           acc[item.name] = item.color;
           acc.id = item.id_guitar;
           acc.gloss = item.gloss;
           acc.wood = parseInt(item.wood, 10);
           acc.scratch = parseInt(item.scratch, 10);
-          console.log(item.id_texture);
+
           if (item.id_texture !== "stocked/HD_transparent_picture.png") {
-            axios
-              .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchtextures`, {
-                params: { txID: item.id_texture },
-              })
-              .then((tex) => {
-                console.log(tex.data);
-                txPath = tex.data[0].path;
-                return (acc.texture_path = txPath);
-              });
+            // axios
+            //   .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchtextures`, {
+            //     params: { txID: item.id_texture },
+            //   })
+            //   .then((tex) => {
+            //     console.log(tex.data);
+            //     txPath = tex.data[0].path;
+            //     return (acc.texture_path = txPath);
+            //   });
           } else acc.texture_path = "stocked/HD_transparent_picture.png";
 
-          console.log(acc.texture_path);
           return acc;
         }, {});
 
         // setModel(fetched[0].model);
-        console.log("objjjj", object);
+
         dispatch(addColor(object));
       });
   };
@@ -120,7 +125,6 @@ const {isAuthenticated, logoutContext} = useAuth()
   } else {
     baseData = {};
   }
-  console.log(loginStatus, baseData);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -159,7 +163,7 @@ const {isAuthenticated, logoutContext} = useAuth()
   };
   const logout = () => {
     setLoginStatus(false);
-    logoutContext()
+    logoutContext();
     dispatch(userOut(""));
     localStorage.removeItem("token");
   };
@@ -172,7 +176,6 @@ const {isAuthenticated, logoutContext} = useAuth()
         },
       })
       .then((response) => {
-        console.log("DEL", response);
         logout();
         localStorage.clear();
         setUserInfo("");
@@ -185,8 +188,55 @@ const {isAuthenticated, logoutContext} = useAuth()
 
   const accept = () => {
     handleDelete(userInfo.id);
-   ;
-    // console.log(userInfo.id)
+  };
+
+  const handleDeleteGuitar = (item) => {
+    const id_guitar = item.id_guitar;
+    console.log(id_guitar);
+    axios
+      .delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, {
+        data: { id_guitar: id_guitar },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((response) => {});
+  };
+
+  const itemTemplate = (item) => {
+    return (
+      <div className="guitars-all">
+        <div
+          className="guitar-thb"
+          onClick={() => handleSelectGuitar(item.id_guitar)}
+          value={item.id_guitar}
+        >
+          <a href="/">
+            {item.thumbnail && (
+              <img
+                src={path + `${item.thumbnail}.png`}
+                alt={`Guitar ${item.id_guitar}`}
+                className="guitar-thb-img"
+              />
+            )}
+            {item.name}
+          </a>
+          <button
+            key={item.name}
+            className="trash-button"
+            type="button"
+            value={item.id_guitar}
+            onClick={(e) => {
+              e.preventDefault(), handleDeleteGuitar(item);
+            }}
+          >
+            <span>
+              <Trash size={26} color={"red"} />
+            </span>
+          </button>
+        </div>
+      </div>
+    );
   };
   return (
     <div className="account-main">
@@ -372,19 +422,21 @@ const {isAuthenticated, logoutContext} = useAuth()
               <div className="order-history"> No orders yet</div>
 
               <div className="saved-guitars">
-                "Start tweaking your six strings now! "
-                {/* <div className="guitars-all">
-         { userGuitars == 150 ? 
-          userGuitars.map((gtr, key) => <div className="guitar-thb" key={key} onClick={() => handleSelectGuitar(gtr.id_guitar)} value={gtr.id}>
-      <a href="/">
-    {/* { gtr.thumbnail &&(<img src={path + `${gtr.thumbnail}.png`} alt={`Guitar ${gtr.id_guitar}`} /> ) } }
-          { gtr.id_guitar}
-       
-        </a>
-        
-          </div>)
-      : "Start tweaking your six strings now! " } */}
-                {/* </div> */}
+                {/* "Start tweaking your six strings now! " */}
+
+                {userGuitars.length != 0 ? (
+                  <Carousel
+                    className="carousel"
+                    value={userGuitars}
+                    circular
+                    itemTemplate={itemTemplate}
+                    numVisible={3}
+                    numScroll={1}
+                    pt
+                  />
+                ) : (
+                  "Start tweaking your six strings now! "
+                )}
               </div>
             </div>
           </div>

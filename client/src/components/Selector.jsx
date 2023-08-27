@@ -29,16 +29,6 @@ function Selector() {
       });
   };
 
-  const getGuitars = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`, {
-      params : { id_user: userData.user.id},
-      })
-      .then((res) => {
-
-        setGuitarsList(res.data);
-      });
-  };
 
   function fullPrice() {
     let fullGtrPrice = 0;
@@ -60,9 +50,6 @@ function Selector() {
   }, [model]);
 
 
-useEffect(() => {
-
-},[])
 
 
   const handleModelSelect = (e) => {

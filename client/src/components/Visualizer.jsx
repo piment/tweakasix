@@ -50,30 +50,31 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const theme = themeContext.theme;
 
   const thbid = "Guitar" + date;
+  const gtrPriceFull = gtrPrice;
 
+  const dispatch = useDispatch();
+
+  const [files, setFiles] = useState([]);
+  const [selectedParts, setSelectedParts] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const toast = useRef(null);
   const [thumbImg, setThumbImg] = useState();
   const ref = createRef(null);
   const formData = new FormData();
   const [image, takeScreenshot] = useScreenshot({
     type: "image/png",
     quality: 1.0,
+    width: 240,
+    height: 200,
   });
-  const [pic, setPic] = useState();
-  const thbArr = [];
+
   const getImage = () => {
     takeScreenshot(ref.current).then((capturedImage) => {
       // The capturedImage contains the screenshot
-
-      // console.log('IMGGGGG', capturedImage);
-
-      // console.log(id)
-      // Create a FormData object and append the image data
       const formData = new FormData();
       formData.append("file", capturedImage);
       formData.append("id", thbid);
 
-      setPic(capturedImage);
-      // Make the API request
       axios
         .post(`${import.meta.env.VITE_BACKEND_URL}/uploadthb`, formData, {
           headers: {
@@ -81,14 +82,10 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
           },
         })
         .then((response) => {
-          // thbArr.push(response)
-
           setThumbImg(response);
         });
     });
   };
-
-  // console.log(pic)
 
   function getSize() {
     if (window.innerWidth < 1223) {
@@ -101,15 +98,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     (str.match(/[a-zA-Z0-9]+/g) || [])
       .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
       .join(" ");
-
-  const gtrPriceFull = gtrPrice;
-
-  const dispatch = useDispatch();
-
-  const [files, setFiles] = useState([]);
-  const [selectedParts, setSelectedParts] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const toast = useRef(null);
 
   const accept = () => {
     addGuitar(),
@@ -134,9 +122,10 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     orbCam.current.reset();
   };
 
+
   const addGuitar = () => {
     getImage();
-
+    // const textureData = useSelector((state) => state.texture_data.texture_assign)
     const guitarData = {
       id: model,
       gtrname: gtrName !== "" ? gtrName : thbid,
@@ -144,7 +133,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       binding: colorList.binding,
       tablefront: colorList.tablefront,
       tableback: colorList.tableback,
-      neckwood: colorList.neckwood,
+      neck: colorList.neck,
       fretboard: colorList.fretboard,
       fretbinding: colorList.fretbinding,
       frets: colorList.frets,
@@ -164,13 +153,14 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-      thumbnail: thbid,
+      thumbnail: thbid.replace(/[:.]/g, ""),
     };
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
         dispatch(userGuitarsSave(guitarData));
       });
+      // axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/savetexture`, textureData)
   };
 
   useEffect(() => {}, [model, theme]);
@@ -304,7 +294,6 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
             linear
             shadows
             dpr={[1, 2]}
-            // pixelRatio={window.devicePixelRatio}
             gl={{
               preserveDrawingBuffer: true,
               antialias: true,
@@ -386,7 +375,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
                 </motion.group>
               </motion.group>
             </MotionConfig>
-            <Perf deepAnalyze={true} position={"top-left"} />
+            {/* <Perf deepAnalyze={true} position={"top-left"} /> */}
             {gtrName && <GuitarName />}
           </Canvas>
           {model == 1 && (

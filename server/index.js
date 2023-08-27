@@ -63,7 +63,7 @@ const clearTemporaryFolder = () => {
     const fileAge = currentTime - ctime;
 
     const timeLimit = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-    // console.log(filePath)
+
     if (fileAge > timeLimit) {
       fs.unlinkSync(filePath); // Delete the file
     }
@@ -118,10 +118,13 @@ app.post("/upload", upload.array("file"), (req, res) => {
 });
 
 app.post("/uploadthb", uploadthb.array("file"), (req, res) => {
-  const base = req.body.file;
+  const base = req.body.file.replace(/^data:image\/\w+;base64,/, '');
+
   // const actualBase64 = base.replace(/^data:image\/\w+;base64,/, '');;
   const imageBuffer = Buffer.from(base, "base64");
-  const imagePath = "./stocked/thumbnails/" + req.body.id + ".png"; // Provide the appropriate path and filename
+  const imageName = req.body.id.replace(/[:.]/g, '')
+ 
+  const imagePath = "./stocked/thumbnails/" + imageName + ".png"; // Provide the appropriate path and filename
   fs.writeFileSync(imagePath, imageBuffer);
   const fileRes = imageBuffer;
   res.send(fileRes);

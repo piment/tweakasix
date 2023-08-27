@@ -109,7 +109,7 @@ function ESguitar({
   materials.side.roughness = 0.3;
   materials.neckwood.roughness = 0.3;
 
-  console.log(materials.tablefront);
+
 
   const maple = useTexture("maple.png");
   maple.flipY = false;

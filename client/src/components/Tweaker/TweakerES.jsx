@@ -60,7 +60,7 @@ function TweakerES({
 
   useEffect(() => {
     mobSize ? setYPos(-510) : setYPos(-210);
-    console.log(yPos);
+
   }, [yPos]);
 
   const [pickupCover, setPickupCover] = useState({
@@ -139,8 +139,9 @@ function TweakerES({
         single_plastic: "#ffffff",
         single_metal: "#d0cbc4",
         backplate: "#ffffff",
-      });
-    dispatch(textureNone());
+      }),
+    dispatch(textureNone()),
+    setSelectedParts([])
     setGtrPriceFullVar(gtrPriceFull);
   };
   const { addToCart, removeFromCart, getCartAmount, addGuitarToCart } =
@@ -156,7 +157,7 @@ function TweakerES({
     currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
   // "27-11-2020"
 
-  // console.log(dateString)
+
   const addGtrToCart = () => {
     const guitarToAdd = {
       id: model,

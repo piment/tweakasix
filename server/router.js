@@ -8,6 +8,7 @@ const {
   getItemsFullGtr,
   guitarToCart,
   fetchTextures,
+  fetchGuitarColors,
 } = require("./controllers/itemController");
 const {
   register,
@@ -17,6 +18,7 @@ const {
   userInfo,
   editUserInfo,
   deleteUserInfo,
+  deleteUserGuitar,
 } = require("./controllers/userController");
 const { getItems, getVariation } = require("./controllers/shopController");
 
@@ -29,6 +31,7 @@ router.get("/itemsall", getItemsFullGtr);
 router.post("/items/saveguitar", addGuitar);
 router.get("/items/getguitars", getGuitars);
 router.get("/items/fetchguitar", fetchGuitar);
+router.get("/items/fetchguitarcolors", fetchGuitarColors);
 router.get("/items/fetchtextures", fetchTextures);
 router.post("/items/saveguitartocart", guitarToCart);
 
@@ -40,5 +43,5 @@ router.get("/isUserAuth", isUserAuth);
 router.get("/getUserInfo", userInfo);
 router.put("/user/edit", editUserInfo);
 router.delete("/user/delete", deleteUserInfo);
-
+router.delete("/user/deleteguitar", deleteUserGuitar);
 module.exports = router;

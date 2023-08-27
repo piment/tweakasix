@@ -49,7 +49,7 @@ function MetalColors({
     }
   };
 
-  // console.log('PICKUPS' , pickupCover.name ,'METAL', metalType.name)
+
 
   useEffect(() =>{  
  setColorList({ ...colorList, metal_pieces: metalType.value });

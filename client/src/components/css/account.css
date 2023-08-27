@@ -336,24 +336,54 @@ align-items: flex-start;
     justify-content: center;
 }
 
+.p-carousel{
+
+    width: 60vw;
+    height :auto;
+
+}
+
+.p-carousel-items-content{
+    /* width: 60vw; */
+ /* left: 0; */
+ /* position: relative; */
+ margin: auto
+}
+/* 
+.p-carousel-items-container{
+    display: flex;
+
+    width: inherit;
+
+}
+*/
+.p-carousel-item{
+    display: flex;
+    justify-content: space-around;
+
+
+
+
+} 
 .guitars-all{
-    /* display: flex; */
-    display: grid;
-grid-template-columns: repeat(5, 1fr);
-/* grid-template-rows: repeat(5, 1fr); */
-/* grid-column-gap: 0px; */
-/* grid-row-gap: 0px; */
-height: 100%;
-    width: 100%;
-    /* justify-content: space-evenly; */
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+/* max-width: 60vw */
 }
 .guitar-thb{
     display: flex;
     align-items: center;
-    height: 100%;
-    justify-content: center;
-    /* border: red solid 2px */
+justify-content: space-between;
+    padding: 1em;
+align-items: center;
+}
+
+.guitar-thb-img{
+    
+    max-width: 14em; 
+    max-height: 12em; 
+    display: block;
+    margin: 0 auto; 
 }
 
 .edit-save-delete{

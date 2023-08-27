@@ -18,7 +18,7 @@ const saveGuitarThumb = (req, res) =>{
 
 
 const addGuitar = (req, res, next) => {
-console.log('ETZRTZETZETZE')
+
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
@@ -80,7 +80,7 @@ console.log('ETZRTZETZETZE')
 
       db.query(
         sqlInsertTex,
-        [["user", texture_path_front, "original"]],
+        [["user", texture_path, "original"]],
         (err, result) => {
           if (err) {
             throw err;
@@ -113,7 +113,7 @@ console.log('ETZRTZETZETZE')
               if (err) {
                 throw err;
               }
-              console.log(result);
+
               db.query(sqlUserGtr, [[user, addedId, thumbnail]]);
               // res.status(200).json({ id: addedId });
             }
@@ -125,14 +125,16 @@ console.log('ETZRTZETZETZE')
     console.log(err);
     res.sendStatus(500);
   }
-  next();
+ 
+  res.sendStatus(200)
+  // next();
 };
 
 const saveTexture = (req, res, next) => {
   const texture_path = req.body.texture_path;
 
 for (const partName in texture_path) {
-  console.log('texture_path[partName]')
+
     if (texture_path[partName] === !null && texture_path.hasOwnProperty(partName)) {
       const sourceFilePath = path.join(__dirname, 'stocked', 'temporary', texture_path[partName]);
       const destinationFolderPath = path.join(__dirname, 'stocked', 'permanent');
@@ -171,7 +173,7 @@ FROM guitar g
 WHERE g.id_user = ?
 ORDER BY g.name`;
   db.query(sqlSelect, user, (err, result) => {
-    console.log(result)
+  
     res.send(result);
 
   });
@@ -180,9 +182,10 @@ ORDER BY g.name`;
 const fetchGuitar = (req, res) => {
   const user = req.query.user
   const gtr = req.query.gtr;
+
   const sqlSelect = `SELECT user_guitar.*, guitar.*
   FROM user_guitar
-  INNER JOIN guitar ON user_guitar.id = guitar.id_user
+  INNER JOIN guitar ON user_guitar.id_user = guitar.id_user
   INNER JOIN composition ON guitar.id = composition.id_guitar
   INNER JOIN parts ON composition.id_part = parts.id
   WHERE user_guitar.id_user = ? AND guitar.id = ?`;
@@ -192,7 +195,25 @@ db.query(sqlSelect, [user, gtr], (err, result) => {
     console.error(err);
     res.sendStatus(500); // Sending internal server error status
   } else {
-    console.log(result)
+    res.send(result);
+  }
+});
+};
+
+const fetchGuitarColors = (req, res) => {
+
+  const gtr = req.query.gtr;
+
+  const sqlSelect = `SELECT composition.*, parts.name from composition
+  INNER JOIN parts ON composition.id_part = parts.id
+  WHERE id_guitar = ?`;
+
+db.query(sqlSelect, [ gtr], (err, result) => {
+  if (err) {
+    console.error(err);
+    res.sendStatus(500); // Sending internal server error status
+  } else {
+
     res.send(result);
   }
 });
@@ -241,5 +262,6 @@ module.exports = {
   fetchGuitar,
   guitarToCart,
   fetchTextures,
-  saveTexture
+  saveTexture,
+  fetchGuitarColors
 };
