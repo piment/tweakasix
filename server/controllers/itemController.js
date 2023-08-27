@@ -47,18 +47,19 @@ const addGuitar = (req, res, next) => {
   const user = req.body.user;
   const thumbnail = req.body.thumbnail
 
+
   const responseData = {}
 
   const sqlInsertGtr = ` INSERT INTO guitar (name, model, id_user) VALUES (?)`;
   const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`;
   const sqlInsertComp = `INSERT INTO composition (id_part, color, id_texture, gloss, scratch, wood, id_guitar)
     VALUES 
+    ((SELECT id FROM parts WHERE name = 'body'), ?),
    ((SELECT id FROM parts WHERE name = 'tablefront'), ?),
    ((SELECT id FROM parts WHERE name = 'tableback'), ?),
    ((SELECT id FROM parts WHERE name = 'binding'), ?),
    ((SELECT id FROM parts WHERE name = 'side'), ?),
    ((SELECT id FROM parts WHERE name = 'neck'), ?),  
-    ((SELECT id FROM parts WHERE name = 'body'), ?),
    ((SELECT id FROM parts WHERE name = 'fretboard'),?),
    ((SELECT id FROM parts WHERE name = 'fretbinding'), ? ),
    ((SELECT id FROM parts WHERE name = 'frets'), ? ),
@@ -82,7 +83,7 @@ const addGuitar = (req, res, next) => {
       const addedId = result.insertId;
       responseData.id_guitar = addedId
       responseData.model = modelId
-     
+     console.log(responseData)
 
       db.query(
         sqlInsertTex,
@@ -94,26 +95,26 @@ const addGuitar = (req, res, next) => {
           const texID = result.insertId;
           db.query(
             sqlInsertComp,
-            [
+            [ 
+              [body, texID, gloss, scratch, wood, addedId],
               [tablefront, texID, gloss, scratch, wood, addedId],
               [tableback, texID, gloss, scratch, wood, addedId],
-              [binding, texID, gloss, scratch, wood, addedId],
               [side, texID, gloss, scratch, wood, addedId],
+              [binding, texID, gloss, scratch, wood, addedId],
               [neck, texID, gloss, scratch, wood, addedId],
               [fretboard, texID, gloss, scratch, wood, addedId],
               [fretbinding, texID, gloss, scratch, wood, addedId],
               [frets, texID, gloss, scratch, wood, addedId],
-              [inlay, texID, gloss, scratch, wood, addedId],
               [nut, texID, gloss, scratch, wood, addedId],
-              [metal_pieces, texID, gloss, scratch, wood, addedId],
+              [inlay, texID, gloss, scratch, wood, addedId],
               [pickup_cover, texID, gloss, scratch, wood, addedId],
               [pickup_ring, texID, gloss, scratch, wood, addedId],
-              [knobs, texID, gloss, scratch, wood, addedId],
-              [body, texID, gloss, scratch, wood, addedId],
-              [pickguard, texID, gloss, scratch, wood, addedId],
               [single_plastic, texID, gloss, scratch, wood, addedId],
               [single_metal, texID, gloss, scratch, wood, addedId],
+              [pickguard, texID, gloss, scratch, wood, addedId],
               [backplate, texID, gloss, scratch, wood, addedId],
+              [knobs, texID, gloss, scratch, wood, addedId],
+              [metal_pieces, texID, gloss, scratch, wood, addedId],
             ],
             (err, result) => {
               if (err) {

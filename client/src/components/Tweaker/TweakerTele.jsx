@@ -187,36 +187,7 @@ getVariation()
                     setColorList({ ...colorList, pickguard: `#${e.value}` })
                   }
                 />
-                {/* <ColorPicker
-              tooltip="Side"
-              tooltipoptions={{
-                position: "bottom",
-                mouseTrack: true,
-                mouseTrackTop: 15,
-              }}
-              // id={clickedPart === "side" ? "clickedPart" : ""}
-              name="side"
-              value={colorList.side}
-              onChange={(e) =>
-                setColorList({ ...colorList, side: `#${e.value}` })
-              }
-              onMouseUp={() => dispatch(addColor(colorList))}
-            />
-
-            <ColorPicker
-              tooltip="Binding"
-              tooltipoptions={{
-                position: "bottom",
-                mouseTrack: true,
-                mouseTrackTop: 15,
-              }}
-              // id={clickedPart === "binding" ? "clickedPart" : ""}
-              name="binding"
-              value={colorList.binding}
-              onChange={(e) =>
-                setColorList({ ...colorList, binding: `#${e.value}` })
-              }
-            /> */}
+               
               </div>
               <div className="neck-colors">
                 <ColorPicker
@@ -233,20 +204,7 @@ getVariation()
                     setColorList({ ...colorList, neck: `#${e.value}` })
                   }
                 />
-                {/* <ColorPicker
-              tooltip="Frets binding"
-              tooltipoptions={{
-                position: "bottom",
-                mouseTrack: true,
-                mouseTrackTop: 15,
-              }}
-              // id={clickedPart === "fretbinding" ? "clickedPart" : ""}
-              name="fretbinding"
-              value={colorList.fretbinding}
-              onChange={(e) =>
-                setColorList({ ...colorList, fretbinding: `#${e.value}` })
-              }
-            /> */}
+               
                 <ColorPicker
                   tooltip="Fretboard"
                   tooltipoptions={{
@@ -254,7 +212,7 @@ getVariation()
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  // id={clickedPart === "fretboard" ? "clickedPart" : ""}
+
                   name="fretboard"
                   value={colorList.fretboard}
                   onChange={(e) =>
@@ -268,7 +226,7 @@ getVariation()
                     mouseTrack: true,
                     mouseTrackTop: 15,
                   }}
-                  // id={clickedPart === "inlay" ? "clickedPart" : ""}
+            
                   name="inlay"
                   value={colorList.inlay}
                   onChange={(e) =>
@@ -289,20 +247,7 @@ getVariation()
                     setColorList({ ...colorList, nut: `#${e.value}` })
                   }
                 />
-                {/* <ColorPicker
-              tooltip="Frets"
-              tooltipoptions={{
-                position: "bottom",
-                mouseTrack: true,
-                mouseTrackTop: 15,
-              }}
-              // id={clickedPart === "frets" ? "clickedPart" : ""}
-              name="frets"
-              value={colorList.frets}
-              onChange={(e) =>
-                setColorList({ ...colorList, frets: `#${e.value}` })
-              }
-            /> */}
+                
               </div>
               <div className="metal-knobs">
                 {/* <Toast ref={toast} /> */}

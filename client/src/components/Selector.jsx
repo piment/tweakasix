@@ -13,7 +13,7 @@ function Selector() {
   const [itemsListFull, setItemsListFull] = useState([]);
   const [guitarsList, setGuitarsList] = useState([]);
 
-  const [model, setModel] = useState(modelFetched || '1');
+  const [model, setModel] = useState('1');
   const [changed, setChanged] = useState(false);
   const [gtrPrice, setGtrPrice] = useState(0);
 
@@ -49,7 +49,7 @@ function Selector() {
 
   useEffect(() => {
 
-    if(userData.user_guitars.model != undefined) {
+    if( modelFetched != undefined) {
       setModel(modelFetched)
     }
   }, [])
@@ -62,6 +62,7 @@ function Selector() {
     setChanged(!changed);
   };
 
+  console.log(model)
   return (
     <div className="main-select">
       <div className="buttonselect">

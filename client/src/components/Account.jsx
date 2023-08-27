@@ -56,10 +56,11 @@ function Account() {
     }
   }, [isAuthenticated]);
 
-  const handleSelectGuitar = async (e) => {
-    const gtr = e;
-    console.log(gtr)
-    const user = userInfo.id;
+console.log(userGtrs)
+
+  const handleSelectGuitar = async (item) => {
+    const gtr = item.id;
+    console.log(item)
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitarcolors`, {
         params: { gtr: gtr },
@@ -70,7 +71,7 @@ function Account() {
         const fetchedModel = res.data.model[0].model
         console.log(res.data)
         const colorObject = {};
-        console.log(fetched)
+        console.log(fetchedModel)
         fetched.forEach((item) => {
           colorObject[item.name] = item.color;
         });
@@ -217,13 +218,13 @@ console.log(object)
 
 
   const itemTemplate = (item) => {
-    console.log(item)
+    // console.log(item)
     return (
       <div className="guitars-all">
         <div
           className="guitar-thb"
-          onClick={(e) => handleSelectGuitar(item.id)}
-          value={item.id}
+          onClick={() => handleSelectGuitar(item)}
+          value={item.id_guitar}
         >
           <a href="/">
             {item.thumbnail && (
