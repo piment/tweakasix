@@ -211,7 +211,7 @@ db.query(sqlSelect, [user, gtr], (err, result) => {
 const fetchGuitarColors = (req, res) => {
 
   const gtr = req.query.gtr;
-
+console.log(gtr)
   const sqlSelect = `SELECT composition.*, parts.name from composition
   INNER JOIN parts ON composition.id_part = parts.id
   WHERE id_guitar = ?`;
@@ -230,7 +230,7 @@ const fetchGuitarColors = (req, res) => {
           return res.sendStatus(500); // Send error status if there's an error
         }
 
-        console.log(compositionResult);
+        console.log('PIOUPIOU',compositionResult);
         console.log(modelResult);
 
         // Send the response with the results

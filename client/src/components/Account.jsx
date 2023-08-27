@@ -222,7 +222,7 @@ console.log(object)
       <div className="guitars-all">
         <div
           className="guitar-thb"
-          onClick={() => handleSelectGuitar(item.id_guitar)}
+          onClick={(e) => handleSelectGuitar(item.id)}
           value={item.id}
         >
           <a href="/">
