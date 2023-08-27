@@ -69,6 +69,7 @@ console.log(userGtrs)
         let txPath;
         const fetched = res.data.composition;
         const fetchedModel = res.data.model[0].model
+  
         console.log(res.data)
         const colorObject = {};
         console.log(fetchedModel)
@@ -77,6 +78,7 @@ console.log(userGtrs)
         });
 
         const object = Object.values(fetched).reduce((acc, item) => {
+      
           acc.model = fetchedModel
           acc[item.name] = item.color;
           acc.id = item.id_guitar;
@@ -218,7 +220,7 @@ console.log(object)
 
 
   const itemTemplate = (item) => {
-    // console.log(item)
+    console.log(item)
     return (
       <div className="guitars-all">
         <div

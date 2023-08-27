@@ -22,16 +22,16 @@ const addGuitar = (req, res, next) => {
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
-  const binding = req.body.binding;
   const side = req.body.side;
+  const binding = req.body.binding;
   const neck = req.body.neck;
-  const fretboard = req.body.fretboard;
   const fretbinding = req.body.fretbinding;
-  const frets = req.body.frets;
+  const fretboard = req.body.fretboard;
   const inlay = req.body.inlay;
   const nut = req.body.nut;
-  const metal_pieces = req.body.metal_pieces;
+  const frets = req.body.frets;
   const pickup_cover = req.body.pickup_cover;
+  const metal_pieces = req.body.metal_pieces;
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
   const texture_path = req.body.texture_path;
@@ -57,16 +57,16 @@ const addGuitar = (req, res, next) => {
     ((SELECT id FROM parts WHERE name = 'body'), ?),
    ((SELECT id FROM parts WHERE name = 'tablefront'), ?),
    ((SELECT id FROM parts WHERE name = 'tableback'), ?),
-   ((SELECT id FROM parts WHERE name = 'binding'), ?),
    ((SELECT id FROM parts WHERE name = 'side'), ?),
+   ((SELECT id FROM parts WHERE name = 'binding'), ?),
    ((SELECT id FROM parts WHERE name = 'neck'), ?),  
-   ((SELECT id FROM parts WHERE name = 'fretboard'),?),
    ((SELECT id FROM parts WHERE name = 'fretbinding'), ? ),
-   ((SELECT id FROM parts WHERE name = 'frets'), ? ),
+   ((SELECT id FROM parts WHERE name = 'fretboard'),?),
    ((SELECT id FROM parts WHERE name = 'inlay'), ? ),
    ((SELECT id FROM parts WHERE name = 'nut'), ?),
-   ((SELECT id FROM parts WHERE name = 'metal_pieces'), ? ),
+   ((SELECT id FROM parts WHERE name = 'frets'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickup_cover'), ?),
+   ((SELECT id FROM parts WHERE name = 'metal_pieces'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickup_ring'), ?),
    ((SELECT id FROM parts WHERE name = 'knobs'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickguard'), ?),
@@ -83,6 +83,7 @@ const addGuitar = (req, res, next) => {
       const addedId = result.insertId;
       responseData.id_guitar = addedId
       responseData.model = modelId
+      responseData.name = gtrname
      console.log(responseData)
 
       db.query(
@@ -216,7 +217,7 @@ console.log(gtr)
   const sqlSelect = `SELECT composition.*, parts.name from composition
   INNER JOIN parts ON composition.id_part = parts.id
   WHERE id_guitar = ?`;
-  const sqlModelSelect = `SELECT model FROM guitar WHERE id = ?`;
+  const sqlModelSelect = `SELECT model, name FROM guitar WHERE id = ?`;
 
   try {
     db.query(sqlSelect, [gtr], (err, compositionResult) => {

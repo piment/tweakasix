@@ -38,31 +38,31 @@ export const guitarSlice = createSlice({
 
   reducers: {
     addColor: (state, action) => {
-      state.colorSet.id = action.payload.id
+      state.colorSet.body = action.payload.body
+      state.colorSet.tablefront = action.payload.tablefront;
+      state.colorSet.tableback = action.payload.tableback;
       state.colorSet.side = action.payload.side;
       state.colorSet.binding = action.payload.binding;
-      state.colorSet.tableback = action.payload.tableback;
-      state.colorSet.tablefront = action.payload.tablefront;
-      state.colorSet.fretbinding = action.payload.fretbinding;
+      state.colorSet.neck = action.payload.neck;
       state.colorSet.fretboard = action.payload.fretboard;
-      state.colorSet.inlay = action.payload.inlay;
-      state.colorSet.nut = action.payload.nut;
+      state.colorSet.fretbinding = action.payload.fretbinding;
       state.colorSet.frets = action.payload.frets;
-      state.colorSet.knobs = action.payload.knobs;
+      state.colorSet.nut = action.payload.nut;
+      state.colorSet.inlay = action.payload.inlay;
       state.colorSet.pickup_cover = action.payload.pickup_cover;
       state.colorSet.pickup_ring = action.payload.pickup_ring;
-      state.colorSet.neck = action.payload.neck;
+      state.colorSet.single_plastic = action.payload.single_plastic
+      state.colorSet.single_metal = action.payload.single_metal
+      state.colorSet.pickguard = action.payload.pickguard
+      state.colorSet.backplate = action.payload.backplate
+      state.colorSet.knobs = action.payload.knobs;
       state.colorSet.metal_pieces = action.payload.metal_pieces;
       state.colorSet.texture_path = action.payload.texture_path
       state.colorSet.gloss = action.payload.gloss
       state.colorSet.scratch = action.payload.scratch
       state.colorSet.wood = action.payload.wood
-      state.colorSet.body = action.payload.body
-      state.colorSet.pickguard = action.payload.pickguard
-      state.colorSet.single_plastic = action.payload.single_plastic
-      state.colorSet.single_metal = action.payload.single_metal
-      state.colorSet.backplate = action.payload.backplate
       state.colorSet.model = action.payload.model
+      state.colorSet.id = action.payload.id
     },
     triggerDrop: (state, action) => {
 

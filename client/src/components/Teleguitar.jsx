@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./css/Visualizer.css";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
@@ -160,7 +160,7 @@ partTextures.Pickguard.flipY = false;
         geometry={nodes.pickguard.geometry}
         material={materials.plastic}
         material-color={colorList.pickguard}
-        material-map={texturesFromReducer.Pickguard !== null ? partTextures.Pickguard : ''}
+        // material-map={texturesFromReducer.Pickguard !== null ? partTextures.Pickguard : ''}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[1] = mesh)}
@@ -256,6 +256,7 @@ partTextures.Pickguard.flipY = false;
         receiveShadow
         geometry={nodes.nut.geometry}
         material={materials.nut}
+        material-color={colorList.nut}
       />
       <mesh
        ref={(mesh) => (meshRefs.current[10] = mesh)}

@@ -31,7 +31,7 @@ import { ThemeContext } from "../App";
 import { userGuitarsSave } from "../features/UserReducer";
 import { useScreenshot } from "use-react-screenshot";
 
-function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
+function Visualizer({  model, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
   const loggedIn = useSelector((state) => state.user_data.userData);
@@ -127,8 +127,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     getImage();
     // const textureData = useSelector((state) => state.texture_data.texture_assign)
     const guitarData = {
-      id: model,
-      gtrname: gtrName !== "" ? gtrName : thbid,
+
       side: colorList.side,
       binding: colorList.binding,
       tablefront: colorList.tablefront,
@@ -153,7 +152,9 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-      thumbnail: thbid.replace(/[:.]/g, ""),
+      thumbnail: thbid.replace(/[:.]/g, ""), 
+           id: model,
+      gtrname: gtrName !== "" ? gtrName : thbid,
     };
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)

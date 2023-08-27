@@ -107,7 +107,7 @@ const loginPost = (req, res) => {
               expiresIn: 300,
             });
             db.query(
-              "SELECT * FROM user_guitar  WHERE id_user = ?;",
+              "SELECT * FROM user_guitar INNER JOIN guitar ON guitar.id = user_guitar.id_guitar   WHERE user_guitar.id_user = ?;",
               id,
               (err, gtrs) => {
                 if (err) {
