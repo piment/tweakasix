@@ -121,7 +121,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   const resetCam = () => {
     orbCam.current.reset();
   };
-  console.log(loggedIn)
+
 
   const addGuitar = () => {
     getImage();
@@ -133,7 +133,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
       binding: colorList.binding,
       tablefront: colorList.tablefront,
       tableback: colorList.tableback,
-      neckwood: colorList.neckwood,
+      neck: colorList.neck,
       fretboard: colorList.fretboard,
       fretbinding: colorList.fretbinding,
       frets: colorList.frets,
@@ -164,7 +164,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   };
 
   useEffect(() => {}, [model, theme]);
-  console.log(colorList.id);
+
   const [allTx, setAllTx] = useState([]);
 
   useEffect(() => {

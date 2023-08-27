@@ -5,10 +5,10 @@ export const ShopContext = createContext([]);
 
 export const ShopContextProvider = (props) => {
  const cartItemsObj = useSelector((state) => state.cart_items.cartItems)
-  // console.log(cartItemsObj)
+
   const cartSpare = Object.values(cartItemsObj).filter(item => item && item !== null);
     const cartGuitarsObj = useSelector((state) => state.cart_items.cartGuitars)
-  console.log(cartGuitarsObj)
+
   const cartGuitars = Object.values(cartGuitarsObj).filter(item => item && item !== null);
 
   const cartItems = cartSpare.concat(cartGuitarsObj);

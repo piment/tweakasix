@@ -233,6 +233,10 @@ const deleteUserInfo = (req, res) => {
   });
 };
 
+const deleteUserGuitar = (req, res) => {
+
+}
+
 module.exports = {
   register,
   loginGet,
@@ -241,4 +245,5 @@ module.exports = {
   userInfo,
   editUserInfo,
   deleteUserInfo,
+  deleteUserGuitar
 };

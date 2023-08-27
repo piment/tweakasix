@@ -74,8 +74,6 @@ const downloadBP =() => {
         .replace(/[\u2018\u2019]/g, "")
         .toLowerCase();
 
-      console.log("MOD", modifiedFilename);
-      console.log(file);
       return {
         id: uuidv4(),
         file,
@@ -97,7 +95,6 @@ const downloadBP =() => {
         },
       })
       .then((response) => {
-        console.log(response.data);
       })
       .then(setDropped(dropped + 1))
       .then(dispatch(triggerDrop(dropped)))
@@ -127,7 +124,7 @@ const downloadBP =() => {
   useEffect(() => {}, [selectedParts, model]);
 
   const handleDeleteImg = (fileModName) => {
-    console.log(fileModName, files);
+
     setFiles((prevState) =>
       prevState.filter((file) => file.modifiedFilename !== fileModName)
     );

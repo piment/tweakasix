@@ -81,8 +81,7 @@ export default function Registration({
   useEffect(() => {
     if (userAuthenticated) {
       Axios.get(`${import.meta.env.VITE_BACKEND_URL}/login`).then(
-        (response) => {
-          console.log(response.data);
+        (response) => {;
           setUserInfo(userData);
         }
       );

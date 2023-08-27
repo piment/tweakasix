@@ -23,7 +23,7 @@ export const textureSlice = createSlice({
    const tempArr = {}
 const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = part.file) )
 
-console.log(tempArr)
+
         return {
             ...state, 
          texture_assign:{...state.texture_assign, ...tempArr}
@@ -32,7 +32,7 @@ console.log(tempArr)
 
     },
     textureDelete: (state, action) => {
-   console.log(action.payload)
+
 
       const tempArr = {}
       const selectedPart = action.payload.forEach((part ) => (tempArr[part.name] = null) )
@@ -45,12 +45,12 @@ console.log(tempArr)
 
     },
     textureAssign: (state, action) => {
-        console.log('assign')
+   
     },
 
 
     textureClear: (state, action) => {
-      console.log(action.payload)
+    
       const cleared = Object.fromEntries(Object.entries(state.texture_assign).map(([key, value]) => {
         if (value === action.payload) {
           return [key, null];

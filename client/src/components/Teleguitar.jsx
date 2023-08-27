@@ -130,12 +130,6 @@ partTextures.Body.flipY = false;
 partTextures.Neck.flipY = false;
 partTextures.Pickguard.flipY = false;
 
-//   // console.log(reactMap.source.data.currentSrc);
-//   setTxUse(path + colorList.texture_path);
-//   // console.log(txUse)
-// reactMap.needsUpdate
-
-// }, [ setDropped, dropped, colorList]);
 
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
@@ -144,9 +138,7 @@ partTextures.Pickguard.flipY = false;
     });
   });
 
-  console.log(materials.body.color)
 
-// console.log(woodMatTele)
 
   return (
     <>

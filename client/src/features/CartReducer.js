@@ -46,7 +46,7 @@ initialState,
           item : action.payload,
           qty:  1}
       //  cartAdd(state.cartGuitars)
-console.log('pipi',state.cartGuitars)
+
        }
   }
   

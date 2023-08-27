@@ -9,7 +9,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
-console.log(isAuthenticated)
+
   const loginContext = () => {
     
     setIsAuthenticated(true);

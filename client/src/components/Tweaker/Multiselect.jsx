@@ -23,7 +23,7 @@ export default function TextureSelect({selectedParts, setSelectedParts, fileModN
 const partsAv335 = partsAv.filter((part) => part.name !== 'Pickguard' && part.name !== 'Body')
 const partsAvTele = partsAv.filter((part) => part.name !== 'Back' && part.name !== 'Side' && part.name !== 'Front')
 
-// console.log(partsAvTele)
+
 
 const dispatch = useDispatch()
 
@@ -35,8 +35,7 @@ dispatch(textureAdd(selectedParts))
 
   
 const handleSelect = (e) => {
-//  console.log(selectedParts)
-    if(selectedParts.length > e.value.length){
+        if(selectedParts.length > e.value.length){
         const removed = selectedParts.filter(part => !e.value.includes(part))
         dispatch(textureDelete(removed))
 
@@ -52,8 +51,7 @@ const handleSelect = (e) => {
     return (
         <div className="multi-sel" key={fileModName}>
             <MultiSelect value={selectedParts} onChange={(e) => {
-                // console.log(e),
-            // setPartsSelected(e.value)
+
             handleSelect(e)
         }} 
         options={model == 1 ? partsAv335 : partsAvTele} optionLabel="name" 

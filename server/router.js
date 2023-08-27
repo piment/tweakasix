@@ -18,6 +18,7 @@ const {
   userInfo,
   editUserInfo,
   deleteUserInfo,
+  deleteUserGuitar,
 } = require("./controllers/userController");
 const { getItems, getVariation } = require("./controllers/shopController");
 
@@ -42,5 +43,5 @@ router.get("/isUserAuth", isUserAuth);
 router.get("/getUserInfo", userInfo);
 router.put("/user/edit", editUserInfo);
 router.delete("/user/delete", deleteUserInfo);
-
+router.delete("/user/deleteguitar", deleteUserGuitar);
 module.exports = router;

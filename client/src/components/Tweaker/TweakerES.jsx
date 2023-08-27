@@ -60,7 +60,7 @@ function TweakerES({
 
   useEffect(() => {
     mobSize ? setYPos(-510) : setYPos(-210);
-    console.log(yPos);
+
   }, [yPos]);
 
   const [pickupCover, setPickupCover] = useState({
@@ -157,7 +157,7 @@ function TweakerES({
     currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
   // "27-11-2020"
 
-  // console.log(dateString)
+
   const addGtrToCart = () => {
     const guitarToAdd = {
       id: model,

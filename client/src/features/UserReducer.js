@@ -11,14 +11,14 @@ initialState,
 
  reducers : {
   userIn : (state, action) => {
-console.log(action.payload)
+
 state.userData = action.payload
   },
   userOut : (state) => {
     state.userData = {}
   },
   userGuitarsSave : (state, action) => {
-    console.log('SAVE',action.payload)
+
     const newGtr = action.payload
     return{
 ...state,
@@ -26,7 +26,7 @@ state.userData = action.payload
     }
   },
   userUpdate : (state, action) => {
-    console.log(action.payload)
+ 
     state.userData.user = {
       username: action.payload.username,
       firstname: action.payload.firstname,
@@ -42,10 +42,13 @@ state.userData = action.payload
     phone: action.payload.phone,
   }
 
+},
+userGuitarDelete : (state, action) => {
+
 }
   }
   
 });
-export const { userIn, userOut, userGuitarsSave, userUpdate } = userSlice.actions;
+export const { userIn, userOut, userGuitarsSave, userUpdate, userGuitarDelete } = userSlice.actions;
 
 export default userSlice.reducer;

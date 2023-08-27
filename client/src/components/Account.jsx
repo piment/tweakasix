@@ -5,7 +5,7 @@ import "./css/account.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userOut, userGuitarsSave, userUpdate } from "../features/UserReducer";
-import { SignOut } from "@phosphor-icons/react";
+import { SignOut, Trash } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/ColorReducer";
 import { Toast } from "primereact/toast";
 import {Carousel} from "primereact/carousel"
@@ -67,13 +67,11 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
   const handleSelectGuitar = async (e) => {
     const gtr = e;
     const user = userInfo.id;
-    console.log(user, gtr);
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitarcolors`, {
         params: { gtr: gtr },
       })
       .then((res) => {
-        console.log(res)
         let txPath;
         const fetched = res.data;
         const colorObject = {};
@@ -84,13 +82,13 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
 
         
         const object = Object.values(fetched).reduce((acc, item) => {
-          console.log(acc)
+
           acc[item.name] = item.color;
           acc.id = item.id_guitar;
           acc.gloss = item.gloss;
           acc.wood = parseInt(item.wood, 10);
           acc.scratch = parseInt(item.scratch, 10);
-          // console.log(item.id_texture);
+      
           if (item.id_texture !== "stocked/HD_transparent_picture.png") {
             // axios
             //   .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchtextures`, {
@@ -103,12 +101,11 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
             //   });
           } else acc.texture_path = "stocked/HD_transparent_picture.png";
 
-          console.log(acc.texture_path);
           return acc;
         }, {});
 
         // setModel(fetched[0].model);
-        console.log("objjjj", object);
+
         dispatch(addColor(object));
       });
   };
@@ -133,7 +130,7 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
   } else {
     baseData = {};
   }
-  console.log(loginStatus, baseData);
+
 
   const handleEdit = () => {
     setEditMode(true);
@@ -185,7 +182,6 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
         },
       })
       .then((response) => {
-        console.log("DEL", response);
         logout();
         localStorage.clear();
         setUserInfo("");
@@ -199,28 +195,22 @@ const path = `${import.meta.env.VITE_BACKEND_URL}/stocked/thumbnails/`
   const accept = () => {
     handleDelete(userInfo.id);
    ;
-    // console.log(userInfo.id)
+ 
   };
 
 
-console.log(userGtrs)
 
 
+const handleDeleteGuitar = (item) => {
+  const id_guitar = item
+  console.log(id_guitar)
+  axios.delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, id_guitar)
+  .then((response) => {
 
-//   const getGuitars = () => {
-//     axios
-//       .get(`${import.meta.env.VITE_BACKEND_URL}/items/getguitars`, {
-//       params : { id_user: userData.id},
-//       })
-//       .then((res) => {
-// console.log('GTRRRR', res.data)
-//         setUserGuitars(res.data);
-//       });
-//   };
+  })
+}
 
-// useEffect(() => {
-// getGuitars()
-// },[])
+
   const itemTemplate = (item) => {
     return (
       <div className="guitars-all">
@@ -230,7 +220,17 @@ console.log(userGtrs)
          { item.name}
        
       </a>
-        
+      <button
+              key={item.name}
+            className="trash-button"
+              type="button"
+              value={item.id_guitar}
+              onClick={(e) => {
+                e.preventDefault(), handleDeleteGuitar(item);
+              }}
+            >
+              <span><Trash size={26} color={"red"} /></span>
+            </button>
          </div>
       </div>
     );}
