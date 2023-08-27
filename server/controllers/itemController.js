@@ -215,16 +215,35 @@ const fetchGuitarColors = (req, res) => {
   const sqlSelect = `SELECT composition.*, parts.name from composition
   INNER JOIN parts ON composition.id_part = parts.id
   WHERE id_guitar = ?`;
+  const sqlModelSelect = `SELECT model FROM guitar WHERE id = ?`;
 
-db.query(sqlSelect, [ gtr], (err, result) => {
-  if (err) {
-    console.error(err);
-    res.sendStatus(500); // Sending internal server error status
-  } else {
+  try {
+    db.query(sqlSelect, [gtr], (err, compositionResult) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(500); // Send error status if there's an error
+      }
 
-    res.send(result);
+      db.query(sqlModelSelect, [gtr], (err, modelResult) => {
+        if (err) {
+          console.log(err);
+          return res.sendStatus(500); // Send error status if there's an error
+        }
+
+        console.log(compositionResult);
+        console.log(modelResult);
+
+        // Send the response with the results
+        res.status(200).json({
+          composition: compositionResult,
+          model: modelResult
+        });
+      });
+    });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500); // Send error status if there's a general error
   }
-});
 };
 
 

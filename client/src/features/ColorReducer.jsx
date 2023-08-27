@@ -25,7 +25,8 @@ const initialState = {
         pickguard: "#ffffff",
         single_plastic: "#ffffff",
         single_metal: "#d0cbc4",
-        backplate: "#ffffff"
+        backplate: "#ffffff",
+        model: '1'
       },
   
       dropped : 0,
@@ -61,6 +62,7 @@ export const guitarSlice = createSlice({
       state.colorSet.single_plastic = action.payload.single_plastic
       state.colorSet.single_metal = action.payload.single_metal
       state.colorSet.backplate = action.payload.backplate
+      state.colorSet.model = action.payload.model
     },
     triggerDrop: (state, action) => {
 

@@ -66,7 +66,9 @@ function Account() {
       })
       .then((res) => {
         let txPath;
-        const fetched = res.data;
+        const fetched = res.data.composition;
+        const fetchedModel = res.data.model[0].model
+        console.log(res.data)
         const colorObject = {};
         console.log(fetched)
         fetched.forEach((item) => {
@@ -74,6 +76,7 @@ function Account() {
         });
 
         const object = Object.values(fetched).reduce((acc, item) => {
+          acc.model = fetchedModel
           acc[item.name] = item.color;
           acc.id = item.id_guitar;
           acc.gloss = item.gloss;
@@ -97,6 +100,7 @@ function Account() {
 
         // setModel(fetched[0].model);
 console.log(object)
+
         dispatch(addColor(object));
       });
   };
@@ -190,16 +194,16 @@ console.log(object)
     const id_guitar = item.id_guitar;
 
     dispatch(userGuitarDelete(item))
-    // axios
-    //   .delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, {
-    //     data: { id_guitar: id_guitar },
-    //     headers: {
-    //       "Content-Type": "application/x-www-form-urlencoded",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     dispatch(userGuitarDelete(item))
-    //   });
+    axios
+      .delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, {
+        data: { id_guitar: id_guitar },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((response) => {
+        dispatch(userGuitarDelete(item))
+      });
   };
 
 
@@ -218,7 +222,7 @@ console.log(object)
       <div className="guitars-all">
         <div
           className="guitar-thb"
-          onClick={() => handleSelectGuitar(item.id)}
+          onClick={() => handleSelectGuitar(item.id_guitar)}
           value={item.id}
         >
           <a href="/">
