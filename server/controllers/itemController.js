@@ -22,16 +22,16 @@ const addGuitar = (req, res, next) => {
   const gtrname = req.body.gtrname;
   const tablefront = req.body.tablefront;
   const tableback = req.body.tableback;
-  const binding = req.body.binding;
   const side = req.body.side;
-  const neck = req.body.neckwood;
-  const fretboard = req.body.fretboard;
+  const binding = req.body.binding;
+  const neck = req.body.neck;
   const fretbinding = req.body.fretbinding;
-  const frets = req.body.frets;
+  const fretboard = req.body.fretboard;
   const inlay = req.body.inlay;
   const nut = req.body.nut;
-  const metal_pieces = req.body.metal_pieces;
+  const frets = req.body.frets;
   const pickup_cover = req.body.pickup_cover;
+  const metal_pieces = req.body.metal_pieces;
   const pickup_ring = req.body.pickup_ring;
   const knobs = req.body.knobs;
   const texture_path = req.body.texture_path;
@@ -47,22 +47,26 @@ const addGuitar = (req, res, next) => {
   const user = req.body.user;
   const thumbnail = req.body.thumbnail
 
+
+  const responseData = {}
+
   const sqlInsertGtr = ` INSERT INTO guitar (name, model, id_user) VALUES (?)`;
   const sqlInsertTex = `INSERT INTO texture (id_user, path, name) VALUES (?)`;
   const sqlInsertComp = `INSERT INTO composition (id_part, color, id_texture, gloss, scratch, wood, id_guitar)
     VALUES 
+    ((SELECT id FROM parts WHERE name = 'body'), ?),
    ((SELECT id FROM parts WHERE name = 'tablefront'), ?),
    ((SELECT id FROM parts WHERE name = 'tableback'), ?),
-   ((SELECT id FROM parts WHERE name = 'binding'), ?),
    ((SELECT id FROM parts WHERE name = 'side'), ?),
-   ((SELECT id FROM parts WHERE name = 'neck'), ?),
-   ((SELECT id FROM parts WHERE name = 'fretboard'),?),
+   ((SELECT id FROM parts WHERE name = 'binding'), ?),
+   ((SELECT id FROM parts WHERE name = 'neck'), ?),  
    ((SELECT id FROM parts WHERE name = 'fretbinding'), ? ),
-   ((SELECT id FROM parts WHERE name = 'frets'), ? ),
+   ((SELECT id FROM parts WHERE name = 'fretboard'),?),
    ((SELECT id FROM parts WHERE name = 'inlay'), ? ),
    ((SELECT id FROM parts WHERE name = 'nut'), ?),
-   ((SELECT id FROM parts WHERE name = 'metal_pieces'), ? ),
+   ((SELECT id FROM parts WHERE name = 'frets'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickup_cover'), ?),
+   ((SELECT id FROM parts WHERE name = 'metal_pieces'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickup_ring'), ?),
    ((SELECT id FROM parts WHERE name = 'knobs'), ? ),
    ((SELECT id FROM parts WHERE name = 'pickguard'), ?),
@@ -77,6 +81,10 @@ const addGuitar = (req, res, next) => {
         throw err;
       }
       const addedId = result.insertId;
+      responseData.id_guitar = addedId
+      responseData.model = modelId
+      responseData.name = gtrname
+     console.log(responseData)
 
       db.query(
         sqlInsertTex,
@@ -88,26 +96,26 @@ const addGuitar = (req, res, next) => {
           const texID = result.insertId;
           db.query(
             sqlInsertComp,
-            [
+            [ 
+              [body, texID, gloss, scratch, wood, addedId],
               [tablefront, texID, gloss, scratch, wood, addedId],
               [tableback, texID, gloss, scratch, wood, addedId],
-              [binding, texID, gloss, scratch, wood, addedId],
               [side, texID, gloss, scratch, wood, addedId],
+              [binding, texID, gloss, scratch, wood, addedId],
               [neck, texID, gloss, scratch, wood, addedId],
               [fretboard, texID, gloss, scratch, wood, addedId],
               [fretbinding, texID, gloss, scratch, wood, addedId],
               [frets, texID, gloss, scratch, wood, addedId],
-              [inlay, texID, gloss, scratch, wood, addedId],
               [nut, texID, gloss, scratch, wood, addedId],
-              [metal_pieces, texID, gloss, scratch, wood, addedId],
+              [inlay, texID, gloss, scratch, wood, addedId],
               [pickup_cover, texID, gloss, scratch, wood, addedId],
               [pickup_ring, texID, gloss, scratch, wood, addedId],
-              [knobs, texID, gloss, scratch, wood, addedId],
-              [body, texID, gloss, scratch, wood, addedId],
-              [pickguard, texID, gloss, scratch, wood, addedId],
               [single_plastic, texID, gloss, scratch, wood, addedId],
               [single_metal, texID, gloss, scratch, wood, addedId],
+              [pickguard, texID, gloss, scratch, wood, addedId],
               [backplate, texID, gloss, scratch, wood, addedId],
+              [knobs, texID, gloss, scratch, wood, addedId],
+              [metal_pieces, texID, gloss, scratch, wood, addedId],
             ],
             (err, result) => {
               if (err) {
@@ -115,7 +123,9 @@ const addGuitar = (req, res, next) => {
               }
 
               db.query(sqlUserGtr, [[user, addedId, thumbnail]]);
-              // res.status(200).json({ id: addedId });
+              responseData.user = user
+              responseData.thumbnail = thumbnail
+              res.status(200).json(responseData);
             }
           );
         }
@@ -126,8 +136,8 @@ const addGuitar = (req, res, next) => {
     res.sendStatus(500);
   }
  
-  res.sendStatus(200)
-  // next();
+  // res.sendStatus(200)
+
 };
 
 const saveTexture = (req, res, next) => {
@@ -203,20 +213,39 @@ db.query(sqlSelect, [user, gtr], (err, result) => {
 const fetchGuitarColors = (req, res) => {
 
   const gtr = req.query.gtr;
-
+console.log(gtr)
   const sqlSelect = `SELECT composition.*, parts.name from composition
   INNER JOIN parts ON composition.id_part = parts.id
   WHERE id_guitar = ?`;
+  const sqlModelSelect = `SELECT model, name FROM guitar WHERE id = ?`;
 
-db.query(sqlSelect, [ gtr], (err, result) => {
-  if (err) {
-    console.error(err);
-    res.sendStatus(500); // Sending internal server error status
-  } else {
+  try {
+    db.query(sqlSelect, [gtr], (err, compositionResult) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(500); // Send error status if there's an error
+      }
 
-    res.send(result);
+      db.query(sqlModelSelect, [gtr], (err, modelResult) => {
+        if (err) {
+          console.log(err);
+          return res.sendStatus(500); // Send error status if there's an error
+        }
+
+        console.log('PIOUPIOU',compositionResult);
+        console.log(modelResult);
+
+        // Send the response with the results
+        res.status(200).json({
+          composition: compositionResult,
+          model: modelResult
+        });
+      });
+    });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500); // Send error status if there's a general error
   }
-});
 };
 
 

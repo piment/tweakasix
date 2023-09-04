@@ -4,7 +4,7 @@ import Registration from "./Register";
 import "./css/account.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { userOut, userGuitarsSave, userUpdate } from "../features/UserReducer";
+import { userOut, userGuitarsSave, userUpdate, userGuitarDelete } from "../features/UserReducer";
 import { SignOut, Trash } from "@phosphor-icons/react";
 import { addColor, triggerDrop, resetDrop } from "../features/ColorReducer";
 import { Toast } from "primereact/toast";
@@ -48,11 +48,6 @@ function Account() {
     setUserInfo(userData);
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    setUserInfo(userData);
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    setUserGtrs(userGuitars);
-  }, [userInfo]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -61,23 +56,30 @@ function Account() {
     }
   }, [isAuthenticated]);
 
-  const handleSelectGuitar = async (e) => {
-    const gtr = e;
-    const user = userInfo.id;
+console.log(userGtrs)
+
+  const handleSelectGuitar = async (item) => {
+    const gtr = item.id;
+    console.log(item)
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/items/fetchguitarcolors`, {
         params: { gtr: gtr },
       })
       .then((res) => {
         let txPath;
-        const fetched = res.data;
+        const fetched = res.data.composition;
+        const fetchedModel = res.data.model[0].model
+  
+        console.log(res.data)
         const colorObject = {};
-
+        console.log(fetchedModel)
         fetched.forEach((item) => {
           colorObject[item.name] = item.color;
         });
 
         const object = Object.values(fetched).reduce((acc, item) => {
+      
+          acc.model = fetchedModel
           acc[item.name] = item.color;
           acc.id = item.id_guitar;
           acc.gloss = item.gloss;
@@ -100,6 +102,7 @@ function Account() {
         }, {});
 
         // setModel(fetched[0].model);
+console.log(object)
 
         dispatch(addColor(object));
       });
@@ -192,7 +195,8 @@ function Account() {
 
   const handleDeleteGuitar = (item) => {
     const id_guitar = item.id_guitar;
-    console.log(id_guitar);
+
+    dispatch(userGuitarDelete(item))
     axios
       .delete(`${import.meta.env.VITE_BACKEND_URL}/user/deleteguitar`, {
         data: { id_guitar: id_guitar },
@@ -200,15 +204,28 @@ function Account() {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       })
-      .then((response) => {});
+      .then((response) => {
+        dispatch(userGuitarDelete(item))
+      });
   };
 
+
+
+
+  useEffect(() => {
+    setUserInfo(userData);
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    setUserGtrs(userGuitars);
+  }, [userInfo, handleDeleteGuitar]);
+
+
   const itemTemplate = (item) => {
+    console.log(item)
     return (
       <div className="guitars-all">
         <div
           className="guitar-thb"
-          onClick={() => handleSelectGuitar(item.id_guitar)}
+          onClick={() => handleSelectGuitar(item)}
           value={item.id_guitar}
         >
           <a href="/">
@@ -427,7 +444,7 @@ function Account() {
                 {userGuitars.length != 0 ? (
                   <Carousel
                     className="carousel"
-                    value={userGuitars}
+                    value={userGtrs}
                     circular
                     itemTemplate={itemTemplate}
                     numVisible={3}

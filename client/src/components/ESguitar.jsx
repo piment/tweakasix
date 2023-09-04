@@ -13,25 +13,17 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useDispatch, useSelector } from "react-redux";
-import { addColor } from "../features/ColorReducer";
-import { LinearEncoding, sRGBEncoding } from "three";
+import { sRGBEncoding } from "three";
 
 function ESguitar({
-  trig,
-  setColorList,
+ 
   colorList,
   tilt,
   pos,
-  changed,
-  setChanged,
-  dropped,
-  setDropped,
-  files,
-  selectedParts,
+
 }) {
   const ref = useRef();
   const meshRefs = useRef([]);
-  const [hovered, setHovered] = useState(null);
   const { nodes, materials } = useGLTF("/guitar/ES335UV.glb");
 
   const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
@@ -168,7 +160,6 @@ function ESguitar({
     <>
       <group rotation={tilt} ref={ref} position={pos}>
         <group
-          //  dispose={[nodes, materials]}
           dispose={null}
           position={[0, -0.5, 0]}
           scale={2}

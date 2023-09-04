@@ -31,7 +31,7 @@ import { ThemeContext } from "../App";
 import { userGuitarsSave } from "../features/UserReducer";
 import { useScreenshot } from "use-react-screenshot";
 
-function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
+function Visualizer({  model, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
   const triggs = useSelector((state) => state.guitar_set.dropped);
   const loggedIn = useSelector((state) => state.user_data.userData);
@@ -127,38 +127,46 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
     getImage();
     // const textureData = useSelector((state) => state.texture_data.texture_assign)
     const guitarData = {
-      id: model,
-      gtrname: gtrName !== "" ? gtrName : thbid,
+
       side: colorList.side,
       binding: colorList.binding,
       tablefront: colorList.tablefront,
       tableback: colorList.tableback,
-      neck: colorList.neck,
-      fretboard: colorList.fretboard,
       fretbinding: colorList.fretbinding,
-      frets: colorList.frets,
-      inlay: colorList.inlay,
+      fretboard: colorList.fretboard,
+      inlay: colorList.inlay, 
       nut: colorList.nut,
-      metal_pieces: colorList.metal_pieces,
-      pickup_cover: colorList.pickup_cover,
-      pickup_ring: colorList.pickup_ring,
+      frets: colorList.frets,
       knobs: colorList.knobs,
+       pickup_cover: colorList.pickup_cover,
+      pickup_ring: colorList.pickup_ring,
+      neck: colorList.neck,
+      metal_pieces: colorList.metal_pieces,
       texture_path: colorList.texture_path,
       gloss: colorList.gloss,
       scratch: colorList.scratch,
-      body: colorList.body,
       wood: colorList.wood,
+      body: colorList.body,
       pickguard: colorList.pickguard,
       single_plastic: colorList.single_plastic,
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       user: loggedIn.user.id,
-      thumbnail: thbid.replace(/[:.]/g, ""),
+      thumbnail: thbid.replace(/[:.]/g, ""), 
+           id: model,
+      gtrname: gtrName !== "" ? gtrName : thbid,
     };
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/items/saveguitar`, guitarData)
       .then((response) => {
-        dispatch(userGuitarsSave(guitarData));
+        console.log(response.data)
+        const gtrToAdd = {
+          id: response.data.id_guitar,
+          model : response.data.model,
+          user: loggedIn.user.id,
+          thumbnail: thbid.replace(/[:.]/g, ""),
+        }
+        dispatch(userGuitarsSave(gtrToAdd));
       });
       // axios.post(`${import.meta.env.VITE_BACKEND_URL}/items/savetexture`, textureData)
   };
@@ -181,6 +189,7 @@ function Visualizer({ guitarsList, model, setModel, gtrPrice }) {
   useEffect(() => {
     setColorList(colus);
     getSize();
+   
   }, []);
 
   const handleGtrNameSet = () => {
