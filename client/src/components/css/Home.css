@@ -34,7 +34,7 @@
     margin-left: 1rem;
     margin-top: 10rem;
     transform: rotate(-10deg);
-
+    animation: slide-out-bck-tl-logo 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both !important;
     /* padding: 1.5em; */
     will-change: filter;
     transition: filter 300ms;
@@ -141,6 +141,64 @@
     line-height: 3ch;
   }
 }
+
+
+.home {
+	-webkit-animation: slide-out-bck-tl 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: slide-out-bck-tl 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;}
+
+          @-webkit-keyframes slide-out-bck-tl {
+            0% {
+              -webkit-transform: translateZ(0) translateY(0) translateX(0);
+                      transform: translateZ(0) translateY(0) translateX(0);
+              opacity: 1;
+            }
+            100% {
+              -webkit-transform: translateZ(-1100px) translateY(-1000px) translateX(-1000px);
+                      transform: translateZ(-1100px) translateY(-1000px) translateX(-1000px);
+              opacity: 0;
+            }
+          }
+          @keyframes slide-out-bck-tl {
+            0% {
+              -webkit-transform: translateZ(0) translateY(0) translateX(0);
+                      transform: translateZ(0) translateY(0) translateX(0);
+              opacity: 1;
+            }
+            100% {
+              -webkit-transform: translateZ(-1100px) translateY(-1000px) translateX(-1000px);
+                      transform: translateZ(-1100px) translateY(-1000px) translateX(-1000px);
+              opacity: 0;
+            }
+          }
+          
+
+
+          @-webkit-keyframes slide-out-bck-tl-logo {
+            0% {
+              -webkit-transform: translateZ(0) translateY(0) translateX(0);
+                      transform: translateZ(0) translateY(0) translateX(0);
+              opacity: 1;
+            }
+            100% {
+              margin-top: -2em;
+              margin-left: -3em;
+          height: 16vh
+            }
+          }
+          @keyframes slide-out-bck-tl-logo {
+            0% {
+                      /* opacity: 1; */
+            }
+            100% {
+         margin-top: -2em;
+         margin-left: -3em;
+     height: 16vh
+              /* opacity: 1; */
+            }
+          }
+          
+
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 1223px) {
