@@ -19,7 +19,7 @@
 #light .canvas {
 height: 150vh;
 
-  background: rgb(196, 196, 196);
+  background: rgb(221, 221, 221);
   z-index: 50 !important;
   transition: 0.3s;
 }

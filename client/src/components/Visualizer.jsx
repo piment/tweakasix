@@ -30,6 +30,7 @@ import { ThemeContext } from "../App";
 
 import { userGuitarsSave } from "../features/UserReducer";
 import { useScreenshot } from "use-react-screenshot";
+import Background from "./Background";
 
 function Visualizer({  model, gtrPrice }) {
   const colus = useSelector((state) => state.guitar_set.colorSet);
@@ -319,7 +320,9 @@ function Visualizer({  model, gtrPrice }) {
               enableDamping={false}
               position0={[0, 0, 3]}
             />
+<Background/>
 
+<fog attach="fog" color="#efefef" near={1} far={15} />
             <>
               <LightAmb />
               <ContactShadows
