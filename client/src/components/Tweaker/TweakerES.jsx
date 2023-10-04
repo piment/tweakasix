@@ -95,7 +95,7 @@ function TweakerES({
   useEffect(() => {}, [gtrPriceFull]);
 
   useEffect(() => {
-    getVariation();
+    // getVariation();
     for (let i = 0; i < metalVar.length; i++) {
       if (metalVar[i].color == metalType.name.toLowerCase()) {
         setMetalPrice(metalVar[i].price);
@@ -108,7 +108,7 @@ function TweakerES({
       }
     }
 
-    setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice);
+    // setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice);
   }, [metalVar, hBVar]);
 
   const resetGtr = () => {
