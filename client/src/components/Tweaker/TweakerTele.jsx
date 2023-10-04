@@ -71,7 +71,7 @@ const [gtrPriceFullVar, setGtrPriceFullVar] = useState(gtrPriceFull)
 }, [gtrPriceFull]);
 
 useEffect(() => {
-getVariation()
+// getVariation()
   for(let i = 0; i< metalVar.length; i++){
     
     if(metalVar[i].color == metalType.name.toLowerCase()){
