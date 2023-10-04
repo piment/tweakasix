@@ -108,7 +108,7 @@ function TweakerES({
       }
     }
 
-    // setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice);
+    setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice);
   }, [metalVar, hBVar]);
 
   const resetGtr = () => {
