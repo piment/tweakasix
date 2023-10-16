@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import "./css/Visualizer.css";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react'
+import './css/Visualizer.css'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import {
   OrbitControls,
   useGLTF,
@@ -10,39 +10,33 @@ import {
   Decal,
   useTexture,
   useSurfaceSampler,
-} from "@react-three/drei";
-import * as THREE from "three";
-import { useDispatch, useSelector } from "react-redux";
-import { sRGBEncoding } from "three";
+} from '@react-three/drei'
+import * as THREE from 'three'
+import { useDispatch, useSelector } from 'react-redux'
+import { sRGBEncoding } from 'three'
 
-function ESguitar({
- 
-  colorList,
-  tilt,
-  pos,
+function ESguitar({ colorList, tilt, pos }) {
+  const ref = useRef()
+  const meshRefs = useRef([])
+  const { nodes, materials } = useGLTF('/guitar/ES335UV.glb')
 
-}) {
-  const ref = useRef();
-  const meshRefs = useRef([]);
-  const { nodes, materials } = useGLTF("/guitar/ES335UV.glb");
+  const path = `http://localhost/api/stocked`
+  const tempPath = `http://localhost/api/stocked/temporary/`
 
-  const path = `${import.meta.env.VITE_BACKEND_URL}/stocked`;
-  const tempPath = `${import.meta.env.VITE_BACKEND_URL}/stocked/temporary/`;
-
-  const triggs = useSelector((state) => state.guitar_set.dropped);
+  const triggs = useSelector((state) => state.guitar_set.dropped)
 
   const texturesFromReducer = useSelector(
     (state) => state.texture_data.texture_assign
-  );
+  )
 
   const [scratches, scratchesrough] = useTexture([
-    "guitar/imgs/DefaultMaterial_Roughness2.jpg",
-    "guitar/imgs/DefaultMaterial_Roughness2-INV.jpg",
-  ]);
+    'guitar/imgs/DefaultMaterial_Roughness2.jpg',
+    'guitar/imgs/DefaultMaterial_Roughness2-INV.jpg',
+  ])
   // const texture_path = useSelector(
   //   (state) => state.guitar_set.colorSet.texture_path
   // );
-  let texture_path = colorList.texture_path;
+  let texture_path = colorList.texture_path
 
   // let up_texture_path =  files.length !== 0 ? files[0].file.path : ''
 
@@ -50,26 +44,26 @@ function ESguitar({
 
   //  const [txUse, setTxUse] = useState(path + colorList.texture_path);
 
-  const woodFull = useTexture("335Wood-min.png");
-  woodFull.flipY = false;
+  const woodFull = useTexture('335Wood-min.png')
+  woodFull.flipY = false
 
   const woodMat = new THREE.MeshLambertMaterial({
     map: woodFull,
     transparent: true,
     opacity: colorList.wood / 20,
-  });
-  scratches.flipY = false;
-  scratches.wrapS = THREE.RepeatWrapping;
-  scratches.wrapT = THREE.RepeatWrapping;
-  scratches.repeat.set(2, 2);
+  })
+  scratches.flipY = false
+  scratches.wrapS = THREE.RepeatWrapping
+  scratches.wrapT = THREE.RepeatWrapping
+  scratches.repeat.set(2, 2)
 
-  scratchesrough.flipY = false;
-  scratchesrough.wrapS = THREE.RepeatWrapping;
-  scratchesrough.wrapT = THREE.RepeatWrapping;
-  scratchesrough.repeat.set(10, 2);
+  scratchesrough.flipY = false
+  scratchesrough.wrapS = THREE.RepeatWrapping
+  scratchesrough.wrapT = THREE.RepeatWrapping
+  scratchesrough.repeat.set(10, 2)
 
-  materials.un_black = new THREE.MeshBasicMaterial({ color: "black" });
-  materials.strings = new THREE.MeshLambertMaterial({ color: "#595959" });
+  materials.un_black = new THREE.MeshBasicMaterial({ color: 'black' })
+  materials.strings = new THREE.MeshLambertMaterial({ color: '#595959' })
   materials.varnish = new THREE.MeshStandardMaterial({
     transparent: true,
     opacity: (0.32 * colorList.gloss) / 90,
@@ -78,71 +72,69 @@ function ESguitar({
     metalness: colorList.gloss / 92,
     bumpMap: scratches,
     bumpScale: 0.001 * (colorList.scratch / 5),
-  });
-  (materials.metalpieces.metalness = 1),
+  })
+  ;(materials.metalpieces.metalness = 1),
     (materials.metalpieces.roughness = 0),
     (materials.pickup_cover.metalness = 1),
-    (materials.pickup_cover.roughness = 0);
-  materials.pickup_ring.roughness = 0.5;
-  materials.pickup_ring.metalness = 0.5;
+    (materials.pickup_cover.roughness = 0)
+  materials.pickup_ring.roughness = 0.5
+  materials.pickup_ring.metalness = 0.5
 
-  woodFull.encoding = sRGBEncoding;
+  woodFull.encoding = sRGBEncoding
 
-  materials.tablefront.opacity = 1 - colorList.wood / 1000;
+  materials.tablefront.opacity = 1 - colorList.wood / 1000
 
-  materials.tableback.opacity = 1 - colorList.wood / 1000;
+  materials.tableback.opacity = 1 - colorList.wood / 1000
 
-  materials.side.opacity = 1 - colorList.wood / 1000;
+  materials.side.opacity = 1 - colorList.wood / 1000
 
-  materials.neckwood.opacity = 1 - colorList.wood / 1000;
-  materials.tablefront.metalness = 0.5;
-  materials.tablefront.roughness = 0.3;
-  materials.tableback.roughness = 0.3;
-  materials.side.roughness = 0.3;
-  materials.neckwood.roughness = 0.3;
+  materials.neckwood.opacity = 1 - colorList.wood / 1000
+  materials.tablefront.metalness = 0.5
+  materials.tablefront.roughness = 0.3
+  materials.tableback.roughness = 0.3
+  materials.side.roughness = 0.3
+  materials.neckwood.roughness = 0.3
 
+  const maple = useTexture('maple.png')
+  maple.flipY = false
+  const rosewood = useTexture('rosewood.png')
+  rosewood.flipY = false
+  rosewood.encoding = sRGBEncoding
 
-
-  const maple = useTexture("maple.png");
-  maple.flipY = false;
-  const rosewood = useTexture("rosewood.png");
-  rosewood.flipY = false;
-  rosewood.encoding = sRGBEncoding;
-
-  materials.fretboard.map = rosewood;
+  materials.fretboard.map = rosewood
 
   const partTextures = {
     Front: useTexture(
       texturesFromReducer.Front
         ? tempPath + texturesFromReducer.Front
-        : path + "/HD_transparent_picture.png"
+        : path + '/HD_transparent_picture.png'
     ),
 
     Back: useTexture(
       texturesFromReducer.Back
         ? tempPath + texturesFromReducer.Back
-        : path + "/HD_transparent_picture.png"
+        : path + '/HD_transparent_picture.png'
     ),
     Side: useTexture(
       texturesFromReducer.Side
         ? tempPath + texturesFromReducer.Side
-        : path + "/HD_transparent_picture.png"
+        : path + '/HD_transparent_picture.png'
     ),
     Neck: useTexture(
       texturesFromReducer.Neck
         ? tempPath + texturesFromReducer.Neck
-        : path + "/HD_transparent_picture.png"
+        : path + '/HD_transparent_picture.png'
     ),
     Pickguard: useTexture(
       texturesFromReducer.Pickguard
         ? tempPath + texturesFromReducer.Pickguard
-        : path + "/HD_transparent_picture.png"
+        : path + '/HD_transparent_picture.png'
     ),
-  };
-  partTextures.Front.flipY = false;
-  partTextures.Back.flipY = false;
-  partTextures.Side.flipY = false;
-  partTextures.Neck.flipY = false;
+  }
+  partTextures.Front.flipY = false
+  partTextures.Back.flipY = false
+  partTextures.Side.flipY = false
+  partTextures.Neck.flipY = false
   //  if(txUse){
   //    reactMap = useTexture(txUse)
   //   } else if (!txUse){
@@ -152,18 +144,14 @@ function ESguitar({
 
   useFrame(() => {
     meshRefs.current.forEach((mesh) => {
-      mesh.material = mesh.material.clone();
-    });
-  });
+      mesh.material = mesh.material.clone()
+    })
+  })
 
   return (
     <>
       <group rotation={tilt} ref={ref} position={pos}>
-        <group
-          dispose={null}
-          position={[0, -0.5, 0]}
-          scale={2}
-        >
+        <group dispose={null} position={[0, -0.5, 0]} scale={2}>
           <mesh
             ref={(mesh) => (meshRefs.current[0] = mesh)}
             castShadow
@@ -173,7 +161,7 @@ function ESguitar({
             material-side={THREE.FrontSide}
             material-color={colorList.side}
             material-map={
-              texturesFromReducer.Side !== null ? partTextures.Side : ""
+              texturesFromReducer.Side !== null ? partTextures.Side : ''
             }
           />
 
@@ -194,7 +182,7 @@ function ESguitar({
             material-side={THREE.FrontSide}
             material-color={colorList.tableback}
             material-map={
-              texturesFromReducer.Back !== null ? partTextures.Back : ""
+              texturesFromReducer.Back !== null ? partTextures.Back : ''
             }
           />
           <mesh
@@ -206,7 +194,7 @@ function ESguitar({
             material-color={colorList.tablefront}
             // material-map={triggs > 0 ? reactMap : ''}
             material-map={
-              texturesFromReducer.Front !== null ? partTextures.Front : ""
+              texturesFromReducer.Front !== null ? partTextures.Front : ''
             }
           >
             {/* <Decal mesh={ref} >
@@ -318,7 +306,7 @@ function ESguitar({
             material-side={THREE.FrontSide}
             material-color={colorList.neck}
             material-map={
-              texturesFromReducer.Neck !== null ? partTextures.Neck : ""
+              texturesFromReducer.Neck !== null ? partTextures.Neck : ''
             }
           />
           <mesh
@@ -408,7 +396,7 @@ function ESguitar({
         </group>
       </group>
     </>
-  );
+  )
 }
-useGLTF.preload("/335wholeUV.glb");
-export default ESguitar;
+useGLTF.preload('/335wholeUV.glb')
+export default ESguitar

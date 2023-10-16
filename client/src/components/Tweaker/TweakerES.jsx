@@ -4,35 +4,35 @@ import React, {
   useEffect,
   useLayoutEffect,
   useContext,
-} from "react";
-import "./TweakerMain.css";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { addColor, triggerDrop, resetDrop } from "../../features/ColorReducer";
-import { ColorPicker } from "primereact/colorpicker";
-import { OverlayPanel } from "primereact/overlaypanel";
-import { Button } from "primereact/button";
-import Sliders from "./Sliders";
-import "./Choice-CustomPrimereact.css";
-import MetalColors from "./MetalColors";
-import Draggable from "react-draggable";
-import dragIcon from "../../assets/drag.svg";
-import resetIcon from "../../assets/reset.svg";
-import MyDropzone from "../Dropzone";
-import ChipsDemo from "./Multiselect";
-import silverIcon from "../../assets/img/Silver.jpg";
-import { ShopContext } from "../../context/shop-context";
+} from 'react'
+import './TweakerMain.css'
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { addColor, triggerDrop, resetDrop } from '../../features/ColorReducer'
+import { ColorPicker } from 'primereact/colorpicker'
+import { OverlayPanel } from 'primereact/overlaypanel'
+import { Button } from 'primereact/button'
+import Sliders from './Sliders'
+import './Choice-CustomPrimereact.css'
+import MetalColors from './MetalColors'
+import Draggable from 'react-draggable'
+import dragIcon from '../../assets/drag.svg'
+import resetIcon from '../../assets/reset.svg'
+import MyDropzone from '../Dropzone'
+import ChipsDemo from './Multiselect'
+import silverIcon from '../../assets/img/Silver.jpg'
+import { ShopContext } from '../../context/shop-context'
 import {
   ArrowBendDoubleUpLeft,
   Palette,
   StackSimple,
   X,
-} from "@phosphor-icons/react";
+} from '@phosphor-icons/react'
 import {
   textureClear,
   textureDelete,
   textureNone,
-} from "../../features/TextureReducer";
+} from '../../features/TextureReducer'
 
 function TweakerES({
   mobSize,
@@ -52,116 +52,112 @@ function TweakerES({
   gtrName,
 }) {
   // const actual = useRef(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const tweakDrag = useRef();
+  const tweakDrag = useRef()
 
-  const [yPos, setYPos] = useState(0);
+  const [yPos, setYPos] = useState(0)
 
   useEffect(() => {
-    mobSize ? setYPos(-510) : setYPos(-210);
-
-  }, [yPos]);
+    mobSize ? setYPos(-510) : setYPos(-210)
+  }, [yPos])
 
   const [pickupCover, setPickupCover] = useState({
-    name: "Silver",
-    value: "#d0cbc4",
+    name: 'Silver',
+    value: '#d0cbc4',
     icon: silverIcon,
-  });
+  })
   const [metalType, setMetalType] = useState({
-    name: "Silver",
-    value: "#d0cbc4",
+    name: 'Silver',
+    value: '#d0cbc4',
     icon: silverIcon,
-  });
+  })
 
-  const [metalVar, setMetalVar] = useState([]);
-  const [hBVar, setHBVar] = useState([]);
+  const [metalVar, setMetalVar] = useState([])
+  const [hBVar, setHBVar] = useState([])
 
   const getVariation = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/itemsall/getvariation`, {})
-      .then((res) => {
-        const metalRes = res.data.filter((vari) => vari.part_id === 19);
-        setMetalVar(metalRes);
-        const HBRes = res.data.filter((vari) => vari.part_id === 12);
-        setHBVar(HBRes);
-      });
-  };
+    axios.get(`http://localhost/api/itemsall/getvariation`, {}).then((res) => {
+      const metalRes = res.data.filter((vari) => vari.part_id === 19)
+      setMetalVar(metalRes)
+      const HBRes = res.data.filter((vari) => vari.part_id === 12)
+      setHBVar(HBRes)
+    })
+  }
 
-  const [metalPrice, setMetalPrice] = useState();
-  const [hBPrice, setHBPrice] = useState();
-  const [gtrPriceFullVar, setGtrPriceFullVar] = useState(gtrPriceFull);
+  const [metalPrice, setMetalPrice] = useState()
+  const [hBPrice, setHBPrice] = useState()
+  const [gtrPriceFullVar, setGtrPriceFullVar] = useState(gtrPriceFull)
 
-  useEffect(() => {}, [gtrPriceFull]);
+  useEffect(() => {}, [gtrPriceFull])
 
   useEffect(() => {
     // getVariation();
     for (let i = 0; i < metalVar.length; i++) {
       if (metalVar[i].color == metalType.name.toLowerCase()) {
-        setMetalPrice(metalVar[i].price);
+        setMetalPrice(metalVar[i].price)
       }
     }
 
     for (let i = 0; i < hBVar.length; i++) {
       if (hBVar[i].color == pickupCover.name.toLowerCase()) {
-        setHBPrice(hBVar[i].price);
+        setHBPrice(hBVar[i].price)
       }
     }
 
-    setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice);
-  }, [metalVar, hBVar]);
+    setGtrPriceFullVar(gtrPriceFull + metalPrice + hBPrice)
+  }, [metalVar, hBVar])
 
   const resetGtr = () => {
-    setMetalType({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
-      setPickupCover({ name: "Silver", value: "#d0cbc4", icon: silverIcon }),
+    setMetalType({ name: 'Silver', value: '#d0cbc4', icon: silverIcon }),
+      setPickupCover({ name: 'Silver', value: '#d0cbc4', icon: silverIcon }),
       setColorList({
         ...colorList,
-        side: "#ffffff",
-        binding: "#ffffff",
-        tablefront: "#ffffff",
-        tableback: "#ffffff",
-        fretbinding: "#ffffff",
-        fretboard: "#ffffff",
-        inlay: "#ffffff",
-        nut: "#ffffff",
-        frets: "#ffffff",
-        knobs: "#ffffff",
-        pickup_cover: "#ffffff",
-        pickup_ring: "#ffffff",
-        neck: "#ffffff",
-        metal_pieces: "#ffffff",
+        side: '#ffffff',
+        binding: '#ffffff',
+        tablefront: '#ffffff',
+        tableback: '#ffffff',
+        fretbinding: '#ffffff',
+        fretboard: '#ffffff',
+        inlay: '#ffffff',
+        nut: '#ffffff',
+        frets: '#ffffff',
+        knobs: '#ffffff',
+        pickup_cover: '#ffffff',
+        pickup_ring: '#ffffff',
+        neck: '#ffffff',
+        metal_pieces: '#ffffff',
         gloss: 50,
         scratch: 0,
         wood: 0,
-        texture_path: "/HD_transparent_picture.png",
-        body: "#ffffff",
-        pickguard: "#ffffff",
-        single_plastic: "#ffffff",
-        single_metal: "#d0cbc4",
-        backplate: "#ffffff",
+        texture_path: '/HD_transparent_picture.png',
+        body: '#ffffff',
+        pickguard: '#ffffff',
+        single_plastic: '#ffffff',
+        single_metal: '#d0cbc4',
+        backplate: '#ffffff',
       }),
-    dispatch(textureNone()),
-    setSelectedParts([])
-    setGtrPriceFullVar(gtrPriceFull);
-  };
+      dispatch(textureNone()),
+      setSelectedParts([])
+    setGtrPriceFullVar(gtrPriceFull)
+  }
   const { addToCart, removeFromCart, getCartAmount, addGuitarToCart } =
-    useContext(ShopContext);
+    useContext(ShopContext)
 
-  const currentDate = new Date();
+  const currentDate = new Date()
 
-  const currentDayOfMonth = currentDate.getDate();
-  const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
-  const currentYear = currentDate.getFullYear();
+  const currentDayOfMonth = currentDate.getDate()
+  const currentMonth = currentDate.getMonth() // Be careful! January is 0, not 1
+  const currentYear = currentDate.getFullYear()
 
   const dateString =
-    currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+    currentDayOfMonth + '-' + (currentMonth + 1) + '-' + currentYear
   // "27-11-2020"
-
 
   const addGtrToCart = () => {
     const guitarToAdd = {
       id: model,
-      name: gtrName != "" ? gtrName : "guitar" + dateString,
+      name: gtrName != '' ? gtrName : 'guitar' + dateString,
       side: colorList.side,
       binding: colorList.binding,
       tablefront: colorList.tablefront,
@@ -186,104 +182,104 @@ function TweakerES({
       single_metal: colorList.single_metal,
       backplate: colorList.backplate,
       price: gtrPriceFullVar,
-    };
+    }
     //   const gtrAndPrice = {guitarToAdd, gtrPriceFullVar}
     //  addGuitarToCart(gtrAndPrice)
-    addToCart(guitarToAdd);
-  };
+    addToCart(guitarToAdd)
+  }
   const handlePointerDown = (e) => {
-    document.body.classList.add("no-scroll");
-    document.body.addEventListener("touchmove", preventScroll, {
+    document.body.classList.add('no-scroll')
+    document.body.addEventListener('touchmove', preventScroll, {
       passive: false,
-    });
-  };
+    })
+  }
 
   const preventScroll = (e) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
-  const [tweakOpen, setTweakOpen] = useState(false);
+  const [tweakOpen, setTweakOpen] = useState(false)
 
   return (
     <>
       <Draggable
-        handle="strong"
+        handle='strong'
         bounds={`parent`}
         allowAnyClick={false}
         // nodeRef={tweakDrag}
 
         onStart={(e) => e.preventDefault()}
       >
-        <div className="pickers-main">
+        <div className='pickers-main'>
           {mobSize && (
             <button
               className={
-                tweakOpen ? "tweaker-toggle-open" : "tweaker-toggle-closed"
+                tweakOpen ? 'tweaker-toggle-open' : 'tweaker-toggle-closed'
               }
               onClick={() => setTweakOpen(!tweakOpen)}
             >
-              {" "}
+              {' '}
               {tweakOpen ? <X size={32} /> : <Palette size={46} />}
             </button>
           )}
-          <div className={tweakOpen ? "controls-open" : "controls-closed"}>
-            <div className="box no-cursor">
-              <strong className="cursor">
-                <img className="drag-icon" src={dragIcon} alt="Click to drag" />
+          <div className={tweakOpen ? 'controls-open' : 'controls-closed'}>
+            <div className='box no-cursor'>
+              <strong className='cursor'>
+                <img className='drag-icon' src={dragIcon} alt='Click to drag' />
               </strong>
 
-              <Button id="resetcam" onClick={resetCam}>
+              <Button id='resetcam' onClick={resetCam}>
                 <p>Reset Camera</p>
               </Button>
-              <Button id="resetgtr" onClick={() => resetGtr()}>
+              <Button id='resetgtr' onClick={() => resetGtr()}>
                 <p>Start again</p>
                 <img
-                  className="reset-icon"
+                  className='reset-icon'
                   src={resetIcon}
                   size={24}
-                  weight="bold"
+                  weight='bold'
                 />
               </Button>
 
-              <div className="pickers-colors" ref={tweakDrag}>
+              <div className='pickers-colors' ref={tweakDrag}>
                 <div
-                  className="body-colors"
+                  className='body-colors'
                   onPointerDown={() => handlePointerDown}
                 >
                   <ColorPicker
-                    tooltip="Front table"
+                    tooltip='Front table'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="tablefront"
+                    name='tablefront'
                     value={colorList.tablefront}
                     onChange={(e) =>
                       setColorList({ ...colorList, tablefront: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Back table"
+                    tooltip='Back table'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="tableback"
+                    name='tableback'
                     value={colorList.tableback}
                     onChange={(e) =>
                       setColorList({ ...colorList, tableback: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Side"
+                    tooltip='Side'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="side"
+                    name='side'
                     value={colorList.side}
                     onChange={(e) =>
                       setColorList({ ...colorList, side: `#${e.value}` })
@@ -292,100 +288,100 @@ function TweakerES({
                   />
 
                   <ColorPicker
-                    tooltip="Binding"
+                    tooltip='Binding'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="binding"
+                    name='binding'
                     value={colorList.binding}
                     onChange={(e) =>
                       setColorList({ ...colorList, binding: `#${e.value}` })
                     }
                   />
                 </div>
-                <div className="neck-colors">
+                <div className='neck-colors'>
                   <ColorPicker
-                    tooltip="Neck"
+                    tooltip='Neck'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="neck"
+                    name='neck'
                     value={colorList.neck}
                     onChange={(e) =>
                       setColorList({ ...colorList, neck: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Frets binding"
+                    tooltip='Frets binding'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="fretbinding"
+                    name='fretbinding'
                     value={colorList.fretbinding}
                     onChange={(e) =>
                       setColorList({ ...colorList, fretbinding: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Fretboard"
+                    tooltip='Fretboard'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="fretboard"
+                    name='fretboard'
                     value={colorList.fretboard}
                     onChange={(e) =>
                       setColorList({ ...colorList, fretboard: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Inlay"
+                    tooltip='Inlay'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="inlay"
+                    name='inlay'
                     value={colorList.inlay}
                     onChange={(e) =>
                       setColorList({ ...colorList, inlay: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Nut"
+                    tooltip='Nut'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="nut"
+                    name='nut'
                     value={colorList.nut}
                     onChange={(e) =>
                       setColorList({ ...colorList, nut: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Frets"
+                    tooltip='Frets'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="frets"
+                    name='frets'
                     value={colorList.frets}
                     onChange={(e) =>
                       setColorList({ ...colorList, frets: `#${e.value}` })
                     }
                   />
                 </div>
-                <div className="metal-knobs">
+                <div className='metal-knobs'>
                   <MetalColors
                     setColorList={setColorList}
                     colorList={colorList}
@@ -395,26 +391,26 @@ function TweakerES({
                     metalType={metalType}
                   />
                   <ColorPicker
-                    tooltip="Pickup rings"
+                    tooltip='Pickup rings'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="pickup_ring"
+                    name='pickup_ring'
                     value={colorList.pickup_ring}
                     onChange={(e) =>
                       setColorList({ ...colorList, pickup_ring: `#${e.value}` })
                     }
                   />
                   <ColorPicker
-                    tooltip="Knobs"
+                    tooltip='Knobs'
                     tooltipoptions={{
-                      position: "bottom",
+                      position: 'bottom',
                       mouseTrack: true,
                       mouseTrackTop: 15,
                     }}
-                    name="knobs"
+                    name='knobs'
                     value={colorList.knobs}
                     onChange={(e) =>
                       setColorList({ ...colorList, knobs: `#${e.value}` })
@@ -422,22 +418,22 @@ function TweakerES({
                   />
                 </div>
               </div>
-              <div className="pickers-sliders">
+              <div className='pickers-sliders'>
                 <Sliders setColorList={setColorList} colorList={colorList} />
               </div>
               <div
-                className="dropzone-line"
+                className='dropzone-line'
                 onClick={() => setShowPreview(!showPreview)}
               >
-                {" "}
-                <StackSimple id="dropzone-icon" size={56} />
+                {' '}
+                <StackSimple id='dropzone-icon' size={56} />
                 Add an image
               </div>
               <div
                 className={
                   model == 1 && showPreview
-                    ? "dropzone-visible"
-                    : "dropzone-hidden"
+                    ? 'dropzone-visible'
+                    : 'dropzone-hidden'
                 }
               >
                 <MyDropzone
@@ -452,24 +448,24 @@ function TweakerES({
                 />
               </div>
 
-              <Button id="remove" onClick={() => dispatch(resetDrop(0))}>
+              <Button id='remove' onClick={() => dispatch(resetDrop(0))}>
                 <p>Remove image</p>
               </Button>
 
-              <div onClick={addGtrToCart} className="gtr-price-full">
+              <div onClick={addGtrToCart} className='gtr-price-full'>
                 <p>Total: </p>
-                <div className="price-number">&nbsp;{gtrPriceFullVar}</div>
-                <span id="€">€</span>
+                <div className='price-number'>&nbsp;{gtrPriceFullVar}</div>
+                <span id='€'>€</span>
               </div>
-              <button onClick={addGtrToCart} className="addtocart">
+              <button onClick={addGtrToCart} className='addtocart'>
                 Add to cart
               </button>
-            </div>{" "}
+            </div>{' '}
           </div>
         </div>
       </Draggable>
     </>
-  );
+  )
 }
 
-export default TweakerES;
+export default TweakerES
