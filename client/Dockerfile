@@ -5,7 +5,7 @@ COPY package*.json /app/
 RUN npm ci --legacy-peer-deps
 
 COPY . /app
-COPY ./.env /app/.env
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 RUN npm run build
 
 FROM nginx:alpine
